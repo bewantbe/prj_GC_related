@@ -4,7 +4,8 @@
 tic();
 s_signature = {'data_scan_stv/IF_net_100_rs01_w1'};
 
-s_neu_show = [1:10];
+ext_suffix = '_w1';
+s_neu_show = [1:2];
 p_val = 1e-3;
 
 pic_prefix0 = 'pic_tmp/';
@@ -80,7 +81,7 @@ for id_ps = s_id_ps
     fprintf('net:%s, sc:%.3f, ps:%.4f, time:%.2e, stv:%.2f, len:%.2e\n',...
      netstr, scee, s_ps(s_id_ps(1)), simu_time, s_stv(1), round(simu_time/s_stv(1)));
 
-    %p_select = length(s_neu_id);
+    p_select = length(s_neu_id);
     p_show = length(s_neu_show)
     s_aic_od = zeros(size(s_id_stv));
     s_bic_od = zeros(size(s_id_stv));
@@ -91,6 +92,7 @@ for id_ps = s_id_ps
     s_GC_cut    = zeros(1,length(s_id_stv));
     s_overguess = zeros(1,length(s_id_stv));
     s_lackguess = zeros(1,length(s_id_stv));
+    s_pairGC    = zeros(p_show,p_show,length(s_id_stv));
 
     ISI_a_b = prps_ps_aveISI(s_neu_show, id_prps, id_ps);
     ISI_dis = prps_ps_ISI_dis(s_neu_show,:,id_prps, id_ps);
@@ -99,7 +101,7 @@ for id_ps = s_id_ps
       stv = s_stv(id_stv);
       len = round(simu_time/stv);  % !! I don't know the exact expression
 
-      idshowR = false(p, maxod+1);
+      idshowR = false(p_select, maxod+1);
       idshowR(s_neu_show,:) = true;
       %idshowR = reshape(idshowR,1,[]);
       idshowR = find(idshowR);
@@ -120,12 +122,17 @@ for id_ps = s_id_ps
       s_upper_GC(:,:,id_stv) = uGC;
  %    [al, de] = ARregression(R(1,1:2:end));
  %    s_var_rate(id_id_ps, id_id_prps) = R(1,1) / de;
+
+      % count the correct edges
       gc_cut_line = chi2inv(1-p_val, od)/len;
       s_GC_cut(id_stv) = gc_cut_line;
       guess_network = GC >= gc_cut_line;
       diff_guess_network = guess_network - sub_network;
       s_overguess(id_stv) = sum(diff_guess_network(:)>0);
       s_lackguess(id_stv) = sum(diff_guess_network(:)<0);
+
+      % use pairwise GC
+      s_pairGC(:,:,id_stv) = pairRGrangerT(R(:,1:(od+1)*p_show));
     end  % stv
 
     %%%%%%%%%%%%%%%%%%%
@@ -139,7 +146,7 @@ for id_ps = s_id_ps
         pic_prefix = [pic_prefix, '_ST'];
     end
     pic_prefix = sprintf('%s_%s_sc=%.4f_pr=%.4f_ps=%.4f_', pic_prefix, netstr, scee, pr, ps);
-    pic_suffix = sprintf('_t=%.2e', simu_time);
+    pic_suffix = sprintf('_t=%.2e%s', simu_time, ext_suffix);
     %pic_output = @(st)print('-dpng',[pic_prefix, st, pic_suffix, '.png'],'-r100');    % output function
     %pic_output_color = pic_output;                                        % for color output
     pic_output       = @(st)print('-deps'  ,[pic_prefix, st, pic_suffix, '.eps']);
@@ -172,7 +179,7 @@ for id_ps = s_id_ps
 
     %% GC v.s. stv
     % draw on single graph
-    figure(8);  cla;  set(gca, 'fontsize',font_size);
+    figure(8);  cla();  set(gca, 'fontsize',font_size);
     hold on
     s_GC = permute(s_GC, [3,1,2]);
     s_lower_GC = permute(s_lower_GC, [3,1,2]);
@@ -209,12 +216,35 @@ for id_ps = s_id_ps
     hold off
     pic_output_color('GC_errbar');
 
-    figure(9);  set(gca, 'fontsize',font_size);
+    figure(9);  cla();  set(gca, 'fontsize',font_size);
+    hold on
+    for ii=1:p_show
+      for jj=1:p_show
+        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
+        if ii==jj
+            continue;
+        end
+        s_gc = 1000*squeeze(s_pairGC(ii,jj,:));
+        hd=plot(s_stv, s_gc);
+        if (neu_network(s_neu_show(ii),s_neu_show(jj))~=0)
+          set(hd, 'color', 'red');
+        end
+     end
+    end
+    plot(s_stv, 1000*s_GC_cut, 'g');
+    xlabel('\Delta{}t/ms');
+    ylabel('GC/0.001');
+    hold off
+    pic_output_color('GC_pairwise');
+ 
+    figure(10);  set(gca, 'fontsize',font_size);
     hd=plot(s_stv, s_overguess, s_stv, s_lackguess);
     set(hd, 'linewidth',line_width);
     hd=legend('over guess', 'lack guess');
     set(hd, 'fontsize',font_size-2);
     pic_output_color('GC_overlackguess');
+
+    figure(12);
 
 end  % ps
 end  % prps
