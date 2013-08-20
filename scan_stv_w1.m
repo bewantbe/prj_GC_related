@@ -5,7 +5,7 @@ t0=tic();
 tocs = @(st) fprintf('%s: t = %6.3fs\n', st, toc());
 
 % _ST _expIF
-signature = 'data_scan/template_w01';     % to distinguish different parallel program instances (also dir)
+signature = 'data_scan_stv/IF_net_100_rs01_w1';     % to distinguish different parallel program instances (also dir)
 
 if isempty(strfind(upper(signature),upper('expIF')))
   %s_prps_default = logspace(log10(4.9e-3), log10(4.7e-2), 30);
@@ -32,7 +32,8 @@ hist_div = 0:0.5:200;         % ISI
 T_segment = 1000;             % in ms
 stv0   = 0.5;               % fine sample rate
 
-s_neu_id = [1 2];
+s_neu_id = [1:100];
+p_select = length(s_neu_id);
 
 save('-v7', [signature, '_info.mat'], 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod', 'T_segment','stv0','s_neu_id');
 
@@ -40,14 +41,13 @@ data_path = ['data/', signature, '_'];
 
 for net_id = 1:length(s_net)
  netstr = s_net{net_id};
- matname = ['network/', netstr, '.txt'];
- neu_network = load('-ascii', matname);
+ neu_network = getnetwork(netstr);
  p = size(neu_network, 1);
 for simu_time = s_time
 for scee = s_scee
- prps_ps_stv_oGC = zeros(p, p, length(s_od), length(s_prps), length(s_ps), length(s_stv));
- prps_ps_stv_oDe = zeros(p, p, length(s_od), length(s_prps), length(s_ps), length(s_stv));
- prps_ps_stv_R   = zeros(p, p*(maxod+1), length(s_prps), length(s_ps), length(s_stv));
+ prps_ps_stv_oGC = zeros(p_select, p_select, length(s_od), length(s_prps), length(s_ps), length(s_stv));
+ prps_ps_stv_oDe = zeros(p_select, p_select, length(s_od), length(s_prps), length(s_ps), length(s_stv));
+ prps_ps_stv_R   = zeros(p_select, p_select*(maxod+1), length(s_prps), length(s_ps), length(s_stv));
  prps_ps_aveISI  = zeros(p, length(s_prps), length(s_ps));
  prps_ps_ISI_dis = zeros(p, length(hist_div), length(s_prps), length(s_ps));
 for id_prps = 1:length(s_prps)
@@ -62,7 +62,7 @@ for id_stv = 1:length(s_stv)
         fflush(stdout);
     end
     if id_stv == 1     % actuall calculation
-      extpara = '--RC-filter';
+      extpara = '--RC-filter -seed 2673514931';
       [oX, aveISI, ras] = gendata_neu(netstr, scee, pr, ps, simu_time, stv0, extpara);
       [p, len] = size(oX);
       mlen = T_segment/stv0;
@@ -78,7 +78,9 @@ for id_stv = 1:length(s_stv)
       end
     end
 
+    tic();
     [oGC, oDe, R] = AnalyseSeries(oX(s_neu_id, 1:(stv/stv0):end), s_od);
+    toc();
 
     prps_ps_stv_oGC(:,:,:, id_prps, id_ps, id_stv) = oGC;
     prps_ps_stv_oDe(:,:,:, id_prps, id_ps, id_stv) = oDe;
