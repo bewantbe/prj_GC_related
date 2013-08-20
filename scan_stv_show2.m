@@ -4,6 +4,9 @@
 tic();
 s_signature = {'data_scan_stv/IF_net_100_rs01_w1'};
 
+s_neu_show = [1:10];
+p_val = 1e-3;
+
 pic_prefix0 = 'pic_tmp/';
 od_mode = 1; % 1 is 'BIC', 2 is 'AIC', 3 is 'BICall'
 
@@ -49,6 +52,7 @@ for id_net = 1:length(s_net)
  netstr = s_net{id_net};
  neu_network = getnetwork(netstr);
  p = size(neu_network,1);
+ sub_network = neu_network(s_neu_show,s_neu_show);
 for id_time = s_id_time
  simu_time = s_time(id_time);
 for id_scee = s_id_scee
@@ -76,38 +80,52 @@ for id_ps = s_id_ps
     fprintf('net:%s, sc:%.3f, ps:%.4f, time:%.2e, stv:%.2f, len:%.2e\n',...
      netstr, scee, s_ps(s_id_ps(1)), simu_time, s_stv(1), round(simu_time/s_stv(1)));
 
-    p_select = length(s_neu_id);
+    %p_select = length(s_neu_id);
+    p_show = length(s_neu_show)
     s_aic_od = zeros(size(s_id_stv));
     s_bic_od = zeros(size(s_id_stv));
     s_all_od = zeros(size(s_id_stv));
-    s_GC       = zeros(p_select,p_select,length(s_id_stv));
-    s_upper_GC = zeros(p_select,p_select,length(s_id_stv));
-    s_lower_GC = zeros(p_select,p_select,length(s_id_stv));
+    s_GC       = zeros(p_show,p_show,length(s_id_stv));
+    s_upper_GC = zeros(p_show,p_show,length(s_id_stv));
+    s_lower_GC = zeros(p_show,p_show,length(s_id_stv));
+    s_GC_cut    = zeros(1,length(s_id_stv));
+    s_overguess = zeros(1,length(s_id_stv));
+    s_lackguess = zeros(1,length(s_id_stv));
 
-    ISI_a_b = prps_ps_aveISI(:, id_prps, id_ps);
-    ISI_dis = prps_ps_ISI_dis(:,:,id_prps, id_ps);
+    ISI_a_b = prps_ps_aveISI(s_neu_show, id_prps, id_ps);
+    ISI_dis = prps_ps_ISI_dis(s_neu_show,:,id_prps, id_ps);
 
     for id_stv = s_id_stv
-     stv = s_stv(id_stv);
-     len = round(simu_time/stv);                  % !! I don't know the exact expression
+      stv = s_stv(id_stv);
+      len = round(simu_time/stv);  % !! I don't know the exact expression
 
-        R   = prps_ps_stv_R  (:,:,   id_prps, id_ps, id_stv);
-        oGC = prps_ps_stv_oGC(:,:,:, id_prps, id_ps, id_stv);
-        oDe = prps_ps_stv_oDe(:,:,:, id_prps, id_ps, id_stv);
-        [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
-        [od_joint, od_vec] = chooseROrderFull(R, len, 'BIC');
-        bic_od_all = max([od_joint, od_vec]);
-        s_aic_od(id_stv) = aic_od;
-        s_bic_od(id_stv) = bic_od;
-        s_all_od(id_stv) = bic_od_all;
-        od = f_od_mode(bic_od, aic_od, bic_od_all);  % bic_od;
-        GC = oGC(:,:,od);                            % or zero_GC;  oGC(:,:,20);  oGC(:,:,bic_od);
-        [lGC, uGC] = gc_prob_intv(GC, od, len);
-        s_GC      (:,:,id_stv) = GC;
-        s_lower_GC(:,:,id_stv) = lGC;
-        s_upper_GC(:,:,id_stv) = uGC;
-    %    [al, de] = ARregression(R(1,1:2:end));
-    %    s_var_rate(id_id_ps, id_id_prps) = R(1,1) / de;
+      idshowR = false(p, maxod+1);
+      idshowR(s_neu_show,:) = true;
+      %idshowR = reshape(idshowR,1,[]);
+      idshowR = find(idshowR);
+      R   = prps_ps_stv_R  (s_neu_show,idshowR,   id_prps, id_ps, id_stv);
+      oGC = prps_ps_stv_oGC(s_neu_show,s_neu_show,:,id_prps, id_ps, id_stv);
+      oDe = prps_ps_stv_oDe(s_neu_show,s_neu_show,:,id_prps, id_ps, id_stv);
+      [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
+      [od_joint, od_vec] = chooseROrderFull(R, len, 'BIC');
+      bic_od_all = max([od_joint, od_vec]);
+      s_aic_od(id_stv) = aic_od;
+      s_bic_od(id_stv) = bic_od;
+      s_all_od(id_stv) = bic_od_all;
+      od = f_od_mode(bic_od, aic_od, bic_od_all);
+      GC = oGC(:,:,od);                           % or zero_GC
+      [lGC, uGC] = gc_prob_intv(GC, od, len);
+      s_GC      (:,:,id_stv) = GC;
+      s_lower_GC(:,:,id_stv) = lGC;
+      s_upper_GC(:,:,id_stv) = uGC;
+ %    [al, de] = ARregression(R(1,1:2:end));
+ %    s_var_rate(id_id_ps, id_id_prps) = R(1,1) / de;
+      gc_cut_line = chi2inv(1-p_val, od)/len;
+      s_GC_cut(id_stv) = gc_cut_line;
+      guess_network = GC >= gc_cut_line;
+      diff_guess_network = guess_network - sub_network;
+      s_overguess(id_stv) = sum(diff_guess_network(:)>0);
+      s_lackguess(id_stv) = sum(diff_guess_network(:)<0);
     end  % stv
 
     %%%%%%%%%%%%%%%%%%%
@@ -140,7 +158,7 @@ for id_ps = s_id_ps
     pic_output_color('BIC_AIC_maxBIC');
 
     %% fitting order v.s. stv
-    figure(8);  set(gca, 'fontsize',font_size);
+    figure(7);  set(gca, 'fontsize',font_size);
     hd=plot(s_stv, s_stv.*s_bic_od, '-o',...
             s_stv, s_stv.*s_all_od, '-x',...
             s_stv, s_stv.*s_aic_od, '-+');
@@ -154,57 +172,49 @@ for id_ps = s_id_ps
 
     %% GC v.s. stv
     % draw on single graph
-    figure(7);  clf;  set(gca, 'fontsize',font_size);
+    figure(8);  cla;  set(gca, 'fontsize',font_size);
     hold on
-    s_GC = permute(s_GC, [3,4,1,2]);
-    s_lower_GC = permute(s_lower_GC, [3,4,1,2]);
-    s_upper_GC = permute(s_upper_GC, [3,4,1,2]);
-    st_legend = cell(1,p_select*p_select-p_select);
+    s_GC = permute(s_GC, [3,1,2]);
+    s_lower_GC = permute(s_lower_GC, [3,1,2]);
+    s_upper_GC = permute(s_upper_GC, [3,1,2]);
+    st_legend = cell(1,p_show*p_show-p_show);
     s_axis_color = {'green','blue'};
     id_gc = 0;
-    for ii=1:p_select
-    for jj=1:p_select
+    for ii=1:p_show
+      for jj=1:p_show
+        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
         if ii==jj
             continue;
         end
         id_gc = id_gc + 1;
-        st_legend{id_gc} = ['GC "',num2str(neu_network(ii,jj)),'" (',num2str(jj),'->',num2str(ii),')'];
-        s_gc  = 1000*      s_GC(:,:,ii,jj);
-        s_lgc = 1000*s_lower_GC(:,:,ii,jj);
-        s_ugc = 1000*s_upper_GC(:,:,ii,jj);
-        hd=errorbar(s_stv, s_gc, s_gc-s_lgc, s_ugc-s_gc);
-        set(hd, 'linewidth', line_width);
-        set(hd, 'color', s_axis_color{id_gc});
-        xlabel('\Delta{}t/ms');
-        ylabel('GC/0.001');
+        st_legend{id_gc} = ['GC "',...
+          num2str(neu_network(s_neu_show(ii),s_neu_show(jj))),...
+          '" (',num2str(s_neu_show(jj)),'->',num2str(s_neu_show(ii)),')'];
+        s_gc  = 1000*      s_GC(:,ii,jj);
+        s_lgc = 1000*s_lower_GC(:,ii,jj);
+        s_ugc = 1000*s_upper_GC(:,ii,jj);
+        hd=plot(s_stv, s_gc);
+        %hd=errorbar(s_stv, s_gc, s_gc-s_lgc, s_ugc-s_gc);
+        %set(hd, 'linewidth', line_width);
+        %set(hd, 'color', s_axis_color{id_gc});
+        if (neu_network(s_neu_show(ii),s_neu_show(jj))~=0)
+          set(hd, 'color', 'red');
+        end
+      end
     end
-    end
-    hd=legend(st_legend);  set(hd, 'fontsize',font_size-2);
+    plot(s_stv, 1000*s_GC_cut, 'g');
+    xlabel('\Delta{}t/ms');
+    ylabel('GC/0.001');
+    %hd=legend(st_legend);  set(hd, 'fontsize',font_size-2);
     hold off
     pic_output_color('GC_errbar');
 
-%% draw on different graph
-%    fig_cnt = 6;
-%    s_GC = permute(s_GC, [3,4,1,2]);
-%    s_lower_GC = permute(s_lower_GC, [3,4,1,2]);
-%    s_upper_GC = permute(s_upper_GC, [3,4,1,2]);
-%    for ii=1:p_select
-%    for jj=1:p_select
-%        if ii==jj
-%            continue;
-%        end
-%        s_gc  = 1000*      s_GC(:,:,ii,jj);
-%        s_lgc = 1000*s_lower_GC(:,:,ii,jj);
-%        s_ugc = 1000*s_upper_GC(:,:,ii,jj);
-%        fig_cnt = fig_cnt + 1;
-%        figure(fig_cnt);  set(gca, 'fontsize',font_size);
-%        hd=errorbar(s_stv, s_gc, s_gc-s_lgc, s_ugc-s_gc);  set(hd, 'linewidth', line_width);
-%        title(['GC "',num2str(neu_network(ii,jj)),'" (',num2str(jj),'->',num2str(ii),')']);
-%        xlabel('\mu*F/0.001');
-%        ylabel('GC/0.001');
-%        pic_output(sprintf('GC_%d_to_%d', jj, ii));
-%    end
-%    end
+    figure(9);  set(gca, 'fontsize',font_size);
+    hd=plot(s_stv, s_overguess, s_stv, s_lackguess);
+    set(hd, 'linewidth',line_width);
+    hd=legend('over guess', 'lack guess');
+    set(hd, 'fontsize',font_size-2);
+    pic_output_color('GC_overlackguess');
 
 end  % ps
 end  % prps
