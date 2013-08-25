@@ -2,12 +2,15 @@
 
 %function scan_all_analysis
 tic();
-s_signature = {'data_scan_stv/IF_net_100_rs01_w1'};
+s_signature = {'data_scan_stv/IF_net_100_rs01_w2'};
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w3_p2'};
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w3_p2_[8,9]'};
+ext_suffix = '_w2';
 
-ext_suffix = '_w1';
-s_neu_show = [1:2];
-p_val = 1e-3;
+s_neu_show = [1:10];
+p_val = 1e-4;
 
+set(0, 'defaultfigurevisible', 'off');
 pic_prefix0 = 'pic_tmp/';
 od_mode = 1; % 1 is 'BIC', 2 is 'AIC', 3 is 'BICall'
 
@@ -189,10 +192,10 @@ for id_ps = s_id_ps
     id_gc = 0;
     for ii=1:p_show
       for jj=1:p_show
-        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
         if ii==jj
             continue;
         end
+        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
         id_gc = id_gc + 1;
         st_legend{id_gc} = ['GC "',...
           num2str(neu_network(s_neu_show(ii),s_neu_show(jj))),...
@@ -220,10 +223,10 @@ for id_ps = s_id_ps
     hold on
     for ii=1:p_show
       for jj=1:p_show
-        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
         if ii==jj
             continue;
         end
+        disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
         s_gc = 1000*squeeze(s_pairGC(ii,jj,:));
         hd=plot(s_stv, s_gc);
         if (neu_network(s_neu_show(ii),s_neu_show(jj))~=0)
@@ -243,8 +246,6 @@ for id_ps = s_id_ps
     hd=legend('over guess', 'lack guess');
     set(hd, 'fontsize',font_size-2);
     pic_output_color('GC_overlackguess');
-
-    figure(12);
 
 end  % ps
 end  % prps
