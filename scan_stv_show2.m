@@ -2,10 +2,17 @@
 
 %function scan_all_analysis
 tic();
-s_signature = {'data_scan_stv/IF_net_100_rs01_w2'};
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w2'};
+%ext_suffix = '_w2';
+
 %s_signature = {'data_scan_stv/IF_net_100_rs01_w3_p2'};
 %s_signature = {'data_scan_stv/IF_net_100_rs01_w3_p2_[8,9]'};
-ext_suffix = '_w2';
+
+s_signature = {'data_scan_stv/IF_net_100_rs01_w2_10neu'};
+ext_suffix = '_w2_10neu';
+
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w3_10neu'};
+%ext_suffix = '_w3_10neu';
 
 s_neu_show = [1:10];
 p_val = 1e-4;
@@ -13,9 +20,10 @@ p_val = 1e-4;
 set(0, 'defaultfigurevisible', 'off');
 pic_prefix0 = 'pic_tmp/';
 od_mode = 1; % 1 is 'BIC', 2 is 'AIC', 3 is 'BICall'
+scale_gc = 1e-4;
 
 if ~exist('font_size','var')
-  font_size = 20;
+  font_size = 24;
 end
 if ~exist('line_width','var')
   line_width = 2;
@@ -167,7 +175,7 @@ for id_ps = s_id_ps
     ylabel('fitting order');
     pic_output_color('BIC_AIC_maxBIC');
 
-    %% fitting order v.s. stv
+    %% fitting order time v.s. stv
     figure(7);  set(gca, 'fontsize',font_size);
     hd=plot(s_stv, s_stv.*s_bic_od, '-o',...
             s_stv, s_stv.*s_all_od, '-x',...
@@ -200,9 +208,9 @@ for id_ps = s_id_ps
         st_legend{id_gc} = ['GC "',...
           num2str(neu_network(s_neu_show(ii),s_neu_show(jj))),...
           '" (',num2str(s_neu_show(jj)),'->',num2str(s_neu_show(ii)),')'];
-        s_gc  = 1000*      s_GC(:,ii,jj);
-        s_lgc = 1000*s_lower_GC(:,ii,jj);
-        s_ugc = 1000*s_upper_GC(:,ii,jj);
+        s_gc  = 1/scale_gc*      s_GC(:,ii,jj);
+        s_lgc = 1/scale_gc*s_lower_GC(:,ii,jj);
+        s_ugc = 1/scale_gc*s_upper_GC(:,ii,jj);
         hd=plot(s_stv, s_gc);
         %hd=errorbar(s_stv, s_gc, s_gc-s_lgc, s_ugc-s_gc);
         %set(hd, 'linewidth', line_width);
@@ -212,13 +220,14 @@ for id_ps = s_id_ps
         end
       end
     end
-    plot(s_stv, 1000*s_GC_cut, 'g');
+    plot(s_stv, 1/scale_gc*s_GC_cut, 'g');
     xlabel('\Delta{}t/ms');
-    ylabel('GC/0.001');
+    ylabel(['GC/', num2str(scale_gc)]);
     %hd=legend(st_legend);  set(hd, 'fontsize',font_size-2);
     hold off
     pic_output_color('GC_errbar');
 
+    %% GC v.s. stv, pairwise GC
     figure(9);  cla();  set(gca, 'fontsize',font_size);
     hold on
     for ii=1:p_show
@@ -227,19 +236,20 @@ for id_ps = s_id_ps
             continue;
         end
         disp([num2str(s_neu_show(ii)), ' -> ', num2str(s_neu_show(jj))]);  fflush(stdout);
-        s_gc = 1000*squeeze(s_pairGC(ii,jj,:));
+        s_gc = 1/scale_gc*squeeze(s_pairGC(ii,jj,:));
         hd=plot(s_stv, s_gc);
         if (neu_network(s_neu_show(ii),s_neu_show(jj))~=0)
           set(hd, 'color', 'red');
         end
      end
     end
-    plot(s_stv, 1000*s_GC_cut, 'g');
+    plot(s_stv, 1/scale_gc*s_GC_cut, 'g');
     xlabel('\Delta{}t/ms');
-    ylabel('GC/0.001');
+    ylabel(['GC/', num2str(scale_gc)]);
     hold off
     pic_output_color('GC_pairwise');
  
+    %% GC recover rate
     figure(10);  set(gca, 'fontsize',font_size);
     hd=plot(s_stv, s_overguess, s_stv, s_lackguess);
     set(hd, 'linewidth',line_width);
