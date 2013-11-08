@@ -27,7 +27,16 @@
 \float_placement H
 \paperfontsize 12
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize default
 \use_geometry true
 \use_amsmath 1
@@ -83,11 +92,7 @@ Analysis
 \end_layout
 
 \begin_layout Standard
-Recall:
-\end_layout
-
-\begin_layout Standard
-Distribution of GC obey (say there are two random variables 
+Suppose there are two random variables 
 \begin_inset Formula $x$
 \end_inset
 
@@ -95,7 +100,11 @@ Distribution of GC obey (say there are two random variables
 \begin_inset Formula $y$
 \end_inset
 
-)
+.
+\end_layout
+
+\begin_layout Standard
+Recall: Distribution of GC obey 
 \begin_inset Formula 
 \[
 L\cdot\hat{F}_{x\rightarrow y}\overset{a}{\sim}\chi'^{\,2}(m,\ L\cdot F_{x\rightarrow y})
@@ -116,7 +125,7 @@ in the large
 \begin_inset Formula $L$
 \end_inset
 
- is data length, 
+ is number of data samples, 
 \begin_inset Formula $\hat{F}_{x\rightarrow y}$
 \end_inset
 
@@ -145,7 +154,7 @@ key "Noncentral chi-squared distribution"
 \end_layout
 
 \begin_layout Standard
-For convenience, we denote the probability density function of 
+For convenience, we denote the probability density function (pdf) of 
 \begin_inset Formula $\hat{F}$
 \end_inset
 
@@ -195,8 +204,15 @@ status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
-	filename pic/pdf_m=17_L=2e+05_F0_F1=1.57e-04.eps
+	filename pic/pdf_m=17_L=2e+05_F0_F1=1.59e-04.eps
 	scale 40
 
 \end_inset
@@ -208,11 +224,93 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-GC pdf under one set of typical parameter.
- The black line represent the GC thresholding value that we used to judge
- whether there is connection or not.
+theoretical asymptotic pdf of 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ (separately).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GC-pdf-typical"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
  
-\begin_inset Formula $\mu=\unit[1]{kHz}$
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/pdf_2d_stat_m=17_L=2e+05_F0_F1=1.59e-04.eps
+	scale 48
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+density of simultaneous distribution of 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ .
+ Obtained from 4000 experiment and counting by divide each axis into 40
+ uniform bins.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:density-of-simultaneous"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+GC pdf under one set of typical parameter: 
+\begin_inset Formula $\mu=\unit[1.0]{kHz}$
 \end_inset
 
 , 
@@ -224,7 +322,7 @@ GC pdf under one set of typical parameter.
 \end_inset
 
 , using 
-\begin_inset Formula $L=2\times10^{5}$
+\begin_inset Formula $L=2.0\times10^{5}$
 \end_inset
 
 (
@@ -236,11 +334,11 @@ GC pdf under one set of typical parameter.
 \end_inset
 
 , the true GC is 
-\begin_inset Formula $F_{x\rightarrow y}\approx1.57\times10^{-4}$
+\begin_inset Formula $F_{x\rightarrow y}\approx1.592\times10^{-4}$
 \end_inset
 
  and 
-\begin_inset Formula $F_{y\rightarrow x}\approx0.01\times10^{-4}$
+\begin_inset Formula $F_{y\rightarrow x}\approx0.006\times10^{-4}$
 \end_inset
 
  (obtained by 
@@ -248,6 +346,326 @@ GC pdf under one set of typical parameter.
 \end_inset
 
 ).
+ The black line represent the GC thresholding value (
+\begin_inset Formula $\textrm{GC}_{\textrm{thres}}$
+\end_inset
+
+) that we used to judge whether there is connection or not.
+ Here 
+\begin_inset Formula $\textrm{GC}_{\textrm{thres}}$
+\end_inset
+
+ satisfis 
+\begin_inset Formula $P\left(\hat{F}_{y\rightarrow x}<\textrm{GC}_{\textrm{thres}}\right)=0.01$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{y\rightarrow x}=0$
+\end_inset
+
+ (our null hypothesis), i.e.
+ false positive error rate is 
+\begin_inset Formula $1\%$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GC-pdf"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ are independent, then the expression for correct rate 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p_{correct}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ will be very simple:
+\begin_inset Formula 
+\begin{equation}
+p_{correct}=\int_{0}^{F_{thres}}\rho_{m,L,F0}(F)\,\mathrm{d}F\ \left(1-\int_{0}^{F_{thres}}\rho_{m,L,F1}(F)\,\mathrm{d}F\right),\label{eq:p_correct}
+\end{equation}
+
+\end_inset
+
+that is 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+the product of areas of green and blue region in
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:GC-pdf-typical"
+
+\end_inset
+
+.
+ Otherwise, we have to count the volumn of lower right part of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:density-of-simultaneous"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Is 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ are independent?
+\end_layout
+
+\begin_layout Standard
+Geweke said (Ref.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Geweke1982"
+
+\end_inset
+
+) 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ are asymptotically independent.
+ But how 
+\begin_inset Quotes eld
+\end_inset
+
+asymptotically
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+First, is the asymptotic pdf of 
+\begin_inset Formula $\rho_{m,L,F}(x)$
+\end_inset
+
+ accurate?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/pdf_stat_m=17_L=2e+05_F0_F1=1.59e-04.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Comparison of statistic data and asymptotic pdf of 
+\begin_inset Formula $\rho_{m,L,F}(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Second, by the 4000 GC data point mensioned in Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:density-of-simultaneous"
+
+\end_inset
+
+, we can calculate the correlation of 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+.
+ The result is 
+\begin_inset Formula $-0.012$
+\end_inset
+
+, which can be explaind by statistic error (
+\begin_inset Formula $1/\sqrt{4000}\approx0.016$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Further, we compare the joint distribution to product of marginal distribution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/pdf_2d_stat_fake_m=17_L=2e+05_F0_F1=1.59e-04.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+product of marginal distribution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/pdf_2d_stat_diff_m=17_L=2e+05_F0_F1=1.59e-04.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+pdf of 
+\begin_inset Formula $(\hat{F}_{x\rightarrow y},\,\hat{F}_{y\rightarrow x})$
+\end_inset
+
+ subtract product of marginal distribution, normalize to distribution peak
+ equals one.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -256,12 +674,90 @@ GC pdf under one set of typical parameter.
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this parameter (See description of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:GC-pdf"
+
+\end_inset
+
+), the 4000 experiements tell us the correct rate is about 
+\begin_inset Formula $87.1\%$
+\end_inset
+
+, while using asymptotic pdf and assume 
+\begin_inset Formula $\hat{F}_{x\rightarrow y}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{F}_{y\rightarrow x}$
+\end_inset
+
+ are independent, we get 
+\begin_inset Formula $88.9\%$
+\end_inset
+
+ from Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:p_correct"
+
+\end_inset
+
+ through 
+\begin_inset Formula $m,\ L,\ F_{x\rightarrow y},\ F_{y\rightarrow x}=0$
+\end_inset
+
+.
+ I think they're matched good enough.
+\end_layout
+
+\begin_layout Subsection
+minimum required data length
+\end_layout
+
+\begin_layout Standard
+From Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:p_correct"
+
+\end_inset
+
+ it's now possible to solve the minimum required data length 
+\begin_inset Formula $L_{min}$
+\end_inset
+
+(instead of doing a lot of numerical experiements), if 
+\begin_inset Formula $m,\ F_{x\rightarrow y}$
+\end_inset
+
+ is known.
+\end_layout
+
+\begin_layout Standard
+For fixed 
+\begin_inset Formula $m=20$
+\end_inset
+
+, .
 \end_layout
 
 \begin_layout Bibliography
@@ -273,6 +769,19 @@ key "Noncentral chi-squared distribution"
 \end_inset
 
  http://en.wikipedia.org/wiki/Non-central_chi-square_distribution
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "2"
+key "Geweke1982"
+
+\end_inset
+
+ Measurement of Linear Dependence and Feedback Between Multiple Time Series,
+ John Geweke, Journal of the American Statistical Association, Vol.77, No.378
+ (1982)
 \end_layout
 
 \end_body
