@@ -24,6 +24,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement H
 \paperfontsize 12
 \spacing single
 \use_hyperref false
@@ -187,7 +188,30 @@ Now we want to know: for a given
 \end_layout
 
 \begin_layout Standard
-A typical parameter is 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/pdf_m=17_L=2e+05_F0_F1=1.57e-04.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+GC pdf under one set of typical parameter.
+ The black line represent the GC thresholding value that we used to judge
+ whether there is connection or not.
+ 
 \begin_inset Formula $\mu=\unit[1]{kHz}$
 \end_inset
 
@@ -216,10 +240,28 @@ A typical parameter is
 \end_inset
 
  and 
-\begin_inset Formula $F_{y\rightarrow x}=0$
+\begin_inset Formula $F_{y\rightarrow x}\approx0.01\times10^{-4}$
 \end_inset
 
-.
+ (obtained by 
+\begin_inset Formula $L=1\times10^{8}$
+\end_inset
+
+).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
