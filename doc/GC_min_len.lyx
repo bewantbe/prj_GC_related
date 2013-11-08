@@ -854,7 +854,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename pic/gc_minT_ms_F1=1.00e-04_stv=0.50.eps
+	filename pic/gc_minT_ms_F1=1.00e-04_pv=1.0e-02_stv=0.50.eps
 	scale 40
 
 \end_inset
@@ -975,6 +975,40 @@ reference "eq:app Lmin"
 \end_inset
 
  larger.
+\end_layout
+
+\begin_layout Standard
+Bigger positive error rate will lead to smaller 
+\begin_inset Formula $T_{\textrm{min}}$
+\end_inset
+
+, but effect is limited.
+ e.g.
+ set positive error rate to 
+\begin_inset Formula $0.05$
+\end_inset
+
+ will decrease 
+\begin_inset Formula $T_{\textrm{min}}$
+\end_inset
+
+ about 
+\begin_inset Formula $12\%$
+\end_inset
+
+, while set positive error rate to 
+\begin_inset Formula $0.005$
+\end_inset
+
+ will increase 
+\begin_inset Formula $T_{\textrm{min}}$
+\end_inset
+
+ about 
+\begin_inset Formula $7\%$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

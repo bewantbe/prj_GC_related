@@ -4,6 +4,7 @@ pic_common_include;
 stv = 0.5;
 s_od = [5, 10, 20, 40];
 wantted_correct_rate = 0.9;
+p_val = 0.1e-2;
 
 s_gc = linspace(0.5e-4, 1e-3, 20);
 s_lmin = zeros(length(s_od), length(s_gc));
@@ -11,7 +12,7 @@ for k=1:length(s_gc)
   F1 = s_gc(k);
   for id_m=1:length(s_od)
     od = s_od(id_m);
-    s_lmin(id_m, k) = solve_gc_min_len(od, F1, wantted_correct_rate);
+    s_lmin(id_m, k) = solve_gc_min_len(od, F1, wantted_correct_rate, p_val);
   end
 end
 
@@ -25,21 +26,22 @@ xlabel(sprintf('GC / %.1e', gc_scale));
 ylabel('time / min');
 %legend('require time', '\~1/GC');
 %pic_output_color(sprintf('gc_minT_m=%d_stv=%.2f', od, stv));
-pic_output_color(sprintf('gc_minT_ms_stv=%.2f', stv));
+pic_output_color(sprintf('gc_minT_ms_pv=%.1e_stv=%.2f', p_val, stv));
 
 
 F1 = 1e-4;
+%p_val = 5e-4;
 s_od = 1:99;
-s_lmin = zeros(length(s_od), length(s_gc));
+s_lmin = zeros(length(s_od), 1);
 for id_m=1:length(s_od)
-  od=s_od(id_m);
-  s_lmin(id_m, 1) = solve_gc_min_len(od, F1, wantted_correct_rate);
+  od = s_od(id_m);
+  s_lmin(id_m, 1) = solve_gc_min_len(od, F1, wantted_correct_rate, p_val);
 end
 
 figure(2);
-plot(s_od, s_lmin(:,1)/1e5);
+plot(s_od, s_lmin*stv/60e3);
 yl = ylim();  yl(1)=0;  ylim(yl);
 xlabel('m');
 ylabel('time / min');
-pic_output_color(sprintf('gc_minT_ms_F1=%.2e_stv=%.2f', F1, stv));
+pic_output_color(sprintf('gc_minT_ms_F1=%.2e_pv=%.1e_stv=%.2f', F1, p_val, stv));
 
