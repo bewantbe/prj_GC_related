@@ -86,7 +86,7 @@ Recall:
 \end_layout
 
 \begin_layout Standard
-Distribution of GC obey (there are two random variables 
+Distribution of GC obey (say there are two random variables 
 \begin_inset Formula $x$
 \end_inset
 
@@ -144,6 +144,18 @@ key "Noncentral chi-squared distribution"
 \end_layout
 
 \begin_layout Standard
+For convenience, we denote the probability density function of 
+\begin_inset Formula $\hat{F}$
+\end_inset
+
+ as 
+\begin_inset Formula $\rho_{m,L,F}(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -151,21 +163,20 @@ key "Noncentral chi-squared distribution"
 \end_layout
 
 \begin_layout Standard
-Suppose 
-\begin_inset Formula $F_{x\rightarrow y}>0$
-\end_inset
-
- and 
-\begin_inset Formula $F_{y\rightarrow x}=0$
-\end_inset
-
-.
- Now we want to know: for a given 
+Now we want to know: for a given 
 \begin_inset Formula $L$
 \end_inset
 
- and 
+, 
 \begin_inset Formula $m$
+\end_inset
+
+ and true 
+\begin_inset Formula $F_{x\rightarrow y}$
+\end_inset
+
+, 
+\begin_inset Formula $F_{y\rightarrow x}$
 \end_inset
 
 , what's the expected correct rate? Obviously, 
@@ -176,7 +187,39 @@ Suppose
 \end_layout
 
 \begin_layout Standard
-d
+A typical parameter is 
+\begin_inset Formula $\mu=\unit[1]{kHz}$
+\end_inset
+
+, 
+\begin_inset Formula $f=0.012$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, using 
+\begin_inset Formula $L=2\times10^{5}$
+\end_inset
+
+(
+\begin_inset Formula $T=\unit[1\times10^{5}]{ms}$
+\end_inset
+
+), 
+\begin_inset Formula $m=17$
+\end_inset
+
+, the true GC is 
+\begin_inset Formula $F_{x\rightarrow y}\approx1.57\times10^{-4}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{y\rightarrow x}=0$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Bibliography
