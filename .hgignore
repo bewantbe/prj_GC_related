@@ -5,4 +5,5 @@ syntax:glob
 data
 tags
 tmp_*.m
-pic_tmp
+pic_tmp/
+extra_data/

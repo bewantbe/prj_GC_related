@@ -21,7 +21,7 @@
 
 \graphics default
 \default_output_format default
-\output_sync 0
+\output_sync 1
 \bibtex_command default
 \index_command default
 \float_placement H
@@ -410,7 +410,7 @@ If
 \noun off
 \color none
 
-\begin_inset Formula $p_{correct}$
+\begin_inset Formula $p_{\textrm{correct}}$
 \end_inset
 
 
@@ -428,7 +428,7 @@ If
  will be very simple:
 \begin_inset Formula 
 \begin{equation}
-p_{correct}=\int_{0}^{F_{thres}}\rho_{m,L,F0}(F)\,\mathrm{d}F\ \left(1-\int_{0}^{F_{thres}}\rho_{m,L,F1}(F)\,\mathrm{d}F\right),\label{eq:p_correct}
+p_{\textrm{correct}}=\int_{0}^{F_{thres}}\rho_{m,L,F0}(F)\,\mathrm{d}F\ \left(1-\int_{0}^{F_{thres}}\rho_{m,L,F1}(F)\,\mathrm{d}F\right),\label{eq:p_correct}
 \end{equation}
 
 \end_inset
@@ -659,7 +659,7 @@ pdf of
 \begin_inset Formula $(\hat{F}_{x\rightarrow y},\,\hat{F}_{y\rightarrow x})$
 \end_inset
 
- subtract product of marginal distribution, normalize to distribution peak
+ subtract product of marginal distribution, normalized to distribution peak
  equals one.
 \end_layout
 
@@ -730,7 +730,7 @@ reference "eq:p_correct"
 \end_layout
 
 \begin_layout Subsection
-minimum required data length
+Minimum required data length
 \end_layout
 
 \begin_layout Standard
@@ -742,22 +742,230 @@ reference "eq:p_correct"
 \end_inset
 
  it's now possible to solve the minimum required data length 
-\begin_inset Formula $L_{min}$
+\begin_inset Formula $L_{\min}$
 \end_inset
 
-(instead of doing a lot of numerical experiements), if 
-\begin_inset Formula $m,\ F_{x\rightarrow y}$
+ or data time length 
+\begin_inset Formula $T_{\min}$
 \end_inset
 
- is known.
+ (instead of doing a lot of numerical experiements), if 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{x\rightarrow y}$
+\end_inset
+
+ are known.
 \end_layout
 
 \begin_layout Standard
-For fixed 
-\begin_inset Formula $m=20$
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/gc_minT_ms_stv=0.50.eps
+	scale 40
+
 \end_inset
 
-, .
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length v.s.
+ GC value.
+ Four curves from up to down corresponding to 
+\begin_inset Formula $m=\{5,10,20,40\}$
+\end_inset
+
+, circle dot is obtained by solving Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:p_correct"
+
+\end_inset
+
+, dashed line is obtained from Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:app Lmin"
+
+\end_inset
+
+(see below).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/gc_minT_ms_F1=1.00e-04_stv=0.50.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length v.s.
+ fitting order.
+ Fix GC value to 
+\begin_inset Formula $F_{\textrm{true}}=1.0\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+False positive error rate set to 
+\begin_inset Formula $0.01$
+\end_inset
+
+, required correct ratio set to 
+\begin_inset Formula $90\%$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the case of false positive error rate set to 
+\begin_inset Formula $0.01$
+\end_inset
+
+, required correct ratio set to 
+\begin_inset Formula $90\%$
+\end_inset
+
+, there is a good approximation of minimum length (relative error of 
+\begin_inset Formula $L_{\min}$
+\end_inset
+
+ is about 
+\begin_inset Formula $0.1\%$
+\end_inset
+
+):
+\begin_inset Formula 
+\begin{equation}
+T_{\min}\approx\frac{10.00}{F_{\textrm{true}}}\,\left(1.153+\frac{\sqrt{m-0.513}}{1.917}\right)\Delta t,\ (m\in\{1,2,\ldots,100\})\label{eq:app Lmin}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $1/\Delta t$
+\end_inset
+
+ is sample rate, 
+\begin_inset Formula $\Delta t=\unit[0.5]{ms}$
+\end_inset
+
+ in all above cases.
+\end_layout
+
+\begin_layout Standard
+Recall that 
+\begin_inset Formula $F_{\textrm{true}}/\Delta t\rightarrow\textrm{const.}$
+\end_inset
+
+ in the limit 
+\begin_inset Formula $\Delta t\rightarrow0$
+\end_inset
+
+, so Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:app Lmin"
+
+\end_inset
+
+ tell us that there is no benefit to use small 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+, because in that case 
+\begin_inset Formula $m\propto1/\Delta t$
+\end_inset
+
+ which make 
+\begin_inset Formula $T_{\min}$
+\end_inset
+
+ larger.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now remaining problem is: what is the true GC and corresponding 
+\begin_inset Formula $m$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Bibliography
