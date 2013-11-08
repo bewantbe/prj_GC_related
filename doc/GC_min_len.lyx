@@ -896,7 +896,7 @@ In the case of false positive error rate set to
 \end_inset
 
 , there is a good approximation of minimum length (relative error of 
-\begin_inset Formula $L_{\min}$
+\begin_inset Formula $T_{\min}$
 \end_inset
 
  is about 
@@ -961,11 +961,878 @@ reference "eq:app Lmin"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Now remaining problem is: what is the true GC and corresponding 
 \begin_inset Formula $m$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+We once have done that:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_GC_1_to_2_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_ISI_Freq_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta t=\unit[0.5]{ms}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ps=0.01,S=0.01"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_GC_1_to_2_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_ISI_Freq_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta t=\unit[0.5]{ms}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ps=0.02,S=0.01"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Importing these data to Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:app Lmin"
+
+\end_inset
+
+ we get:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+.
+ (Case of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ps=0.01,S=0.01"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+.
+ (Case of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ps=0.02,S=0.01"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0200_ps=0.0100_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0200_ps=0.0200_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As what we expected, twice the 
+\begin_inset Formula $S$
+\end_inset
+
+, roughly quarter the required time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Case of using spike train:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0100_GC_1_to_2_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0100_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0100_ISI_Freq_stv=0.50_t=1.00e+07.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Using spike train.
+ Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta t=\unit[0.5]{ms}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ST_ps=0.02,S=0.01"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0100_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+ (Case of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ST_ps=0.02,S=0.01"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0200_Tmin_stv=0.50_t=1.00e+07.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length.
+ (Use spike train)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note: 
+\begin_inset Formula $EPSP\approx\unit[107\, S]{mV}$
+\end_inset
+
+ or 
+\begin_inset Formula $EPSP\approx7\, S$
+\end_inset
+
+ in the normalized unit.
 \end_layout
 
 \begin_layout Bibliography
