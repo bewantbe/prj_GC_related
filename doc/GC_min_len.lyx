@@ -193,7 +193,8 @@ Now we want to know: for a given
 \begin_inset Formula $25\%$
 \end_inset
 
- will be the lowest bound (random guess).
+ will be the lowest bound (random guess, without any other knowledge about
+ the two neuron network).
 \end_layout
 
 \begin_layout Standard
@@ -548,7 +549,15 @@ Comparison of statistic data and asymptotic pdf of
 \begin_inset Formula $\rho_{m,L,F}(x)$
 \end_inset
 
+.
+ Same parameter as Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:GC-pdf"
 
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -590,7 +599,8 @@ reference "fig:density-of-simultaneous"
 \end_layout
 
 \begin_layout Standard
-Further, we compare the joint distribution to product of marginal distribution.
+Further, we compare the joint distribution to the product of marginal distributi
+on.
 \end_layout
 
 \begin_layout Standard
@@ -620,7 +630,14 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-product of marginal distribution
+product of marginal distribution, looks similar to Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:density-of-simultaneous"
+
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -723,6 +740,13 @@ reference "eq:p_correct"
 
  through 
 \begin_inset Formula $m,\ L,\ F_{x\rightarrow y},\ F_{y\rightarrow x}=0$
+\end_inset
+
+ in Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:GC-pdf"
+
 \end_inset
 
 .
