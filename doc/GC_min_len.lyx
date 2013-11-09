@@ -2726,6 +2726,129 @@ Required time length.
 
 \end_layout
 
+\begin_layout Standard
+For 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0100_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+ (Case of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ST_ps=0.02,S=0.01-1"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0200_ps=0.0200_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length.
+ (Use spike train)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
