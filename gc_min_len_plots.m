@@ -4,14 +4,16 @@ pic_common_include;
 simu_time = 1e5;
 stv = 0.5;
 len = simu_time/stv;
-F1 = 1.592e-4;  % GC1: 1, 0.012, 0.01
+%F1 = 1.592e-4;  m=17;  % GC1: 1, 0.012, 0.01
+%F1 = 1.5588e-04;  m=17; % GC0=0.0094e-4, od=26(36), pr=1.0, ps=0.012, T=1e8
+%F1 = 3.112e-04;  m=21;  % GC0=0.013e-4, od=40(50), pr=2.0, ps=0.006, T=5e7
+F1 = 5.899e-04;  m=33;  % GC0=0.029e-4. od=54(81), pr=4.0, ps=0.003, T=5e7
 %F1 = 1.68e-4;  % GC1: 1, 0.012, 0.01, looks like from L=1e5
 %F1 = 1.36e-4;  % GC1: 0.24, 0.02, 0.01
 %F1 = 3.25e-4;  % GC1: 1, 0.006, 0.01
 F1 = F1*2*stv;
 gc_scale = 1e-4;  % plot GC in this scale
 
-m = 17;
 c = len*F1;
 ncc_mean = m+c
 ncc_var  = 2*m + 4*c
@@ -54,11 +56,15 @@ xlabel(sprintf('GC / %.1e', gc_scale));
 ylabel(sprintf('pdf_{%d, %.1e, F}(x)',m,len));
 %xlim([0, x_max]);
 ylim([0, y_max*1.1]);
+xl = xlim();
 pic_output_color(sprintf('pdf_m=%d_L=%2.e_F0_F1=%.2e', m, len, F1));
 
 
 figure(2);
-load('s_gc_stat_od=17_L=2.0e+05_pr=1.0e+00_ps=1.2e-02_sc=1.0e-02.mat');
+%load('s_gc_stat_od=17_L=2.0e+05_pr=1.0e+00_ps=1.2e-02_sc=1.0e-02.mat');
+%load('s_gc_stat=14000_od=17_L=2.0e+05_pr=1.0e+00_ps=1.2e-02_sc=1.0e-02.mat');
+%load('s_gc_stat=14000_od=21_L=2.0e+05_pr=2.0e+00_ps=6.0e-03_sc=1.0e-02.mat');
+load('s_gc_stat=14000_od=33_L=2.0e+05_pr=4.0e+00_ps=3.0e-03_sc=1.0e-02.mat');
 gc_scale = 1e-4;
 n_bin = 50;
 [nn1, xx1] = hist_pdf(s_gc_stat(:,1)/gc_scale, n_bin);
@@ -69,10 +75,12 @@ stairs([0, xx0], [0, nn0], 'color', [0 0.7 0]);
 plot(s_x, s_ncc1, s_x, s_ncc0);
 hold off
 ylim([0, y_max*1.1]);
+xlim(xl);
 pic_output_color(sprintf('pdf_stat_m=%d_L=%2.e_F0_F1=%.2e', m, len, F1));
 
 figure(3);
-g_max    = 5;
+%g_max    = round(1.4*(F1+m/len)/gc_scale);
+g_max = xl(2);
 nbins    = 40;
 nn = hist2dnn(s_gc_stat(:,2)/gc_scale, s_gc_stat(:,1)/gc_scale, [0 g_max], nbins);
 rg0 = g_max*(1:nbins+1)/nbins;

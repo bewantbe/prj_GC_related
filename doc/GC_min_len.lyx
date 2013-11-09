@@ -54,9 +54,9 @@
 \color #008000
 \end_index
 \leftmargin 1.5cm
-\topmargin 1.5cm
+\topmargin 1.3cm
 \rightmargin 1.5cm
-\bottommargin 1.5cm
+\bottommargin 1.3cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -390,6 +390,129 @@ name "fig:GC-pdf"
 \end_layout
 
 \begin_layout Standard
+In order to measure the correctness of GC analysis, here define the correct
+ rate 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p_{\textrm{correct}}$
+\end_inset
+
+ as following: in a two-variable GC test, the true GC 
+\begin_inset Formula $F_{x\rightarrow y}>0$
+\end_inset
+
+, 
+\begin_inset Formula $F_{y\rightarrow x}=0$
+\end_inset
+
+, the GC test use a fixed p-value (
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+false positive error rate
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, say 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $0.01$
+\end_inset
+
+) and fixed fitting order 
+\begin_inset Formula $m$
+\end_inset
+
+, sample number 
+\begin_inset Formula $L$
+\end_inset
+
+ to determine a GC threshold 
+\begin_inset Formula $GC_{\textrm{thres}}$
+\end_inset
+
+.
+ Then compare calculated GC 
+\begin_inset Formula $\hat{F}$
+\end_inset
+
+ to 
+\begin_inset Formula $GC_{\textrm{thres}}$
+\end_inset
+
+ to guess whether there is connection or not.
+ We denote the ratio between number of correct guesses (network is 
+\begin_inset Formula $x->y$
+\end_inset
+
+) and number of total guess as 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p_{\textrm{correct}}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+\end_layout
+
+\begin_layout Standard
 If 
 \begin_inset Formula $\hat{F}_{x\rightarrow y}$
 \end_inset
@@ -398,7 +521,7 @@ If
 \begin_inset Formula $\hat{F}_{y\rightarrow x}$
 \end_inset
 
- are independent, then the expression for correct rate 
+ are independent, then the expression for 
 \family roman
 \series medium
 \shape up
@@ -619,7 +742,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename pic/pdf_2d_stat_fake_m=17_L=2e+05_F0_F1=1.59e-04.eps
-	scale 40
+	scale 38
 
 \end_inset
 
@@ -750,7 +873,11 @@ reference "fig:GC-pdf"
 \end_inset
 
 .
- I think they're matched good enough.
+ Several more experiments are done, they're all matched good enough(
+\begin_inset Formula $<5\%$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Subsection
@@ -1891,6 +2018,712 @@ Note:
 \end_inset
 
  in the normalized unit.
+\end_layout
+
+\begin_layout Section
+Big ISI Case
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_GC_1_to_2_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_ISI_Freq_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, continue Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ps=0.01,S=0.01"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_GC_1_to_2_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_ISI_Freq_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, continue Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ps=0.02,S=0.01"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0100_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_net_2_2_sc=0.0100_ps=0.0200_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, case of using spike train, but this time 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+ instead of 
+\begin_inset Formula $S=0.02$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0100_ps=0.0100_GC_1_to_2_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0100_ps=0.0100_BIC_AIC_maxBIC_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0100_ps=0.0100_ISI_Freq_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 27
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Using spike train.
+ Scan 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $T=\unit[1.0\times10^{4}]{sec}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta t=\unit[0.5]{ms}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ST_ps=0.02,S=0.01-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0100_ps=0.0100_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.01$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+ (Case of Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:ST_ps=0.02,S=0.01-1"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/IF_ST_net_2_2_sc=0.0100_ps=0.0200_Tmin_stv=0.50_t=1.00e+07_bigISI.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu=0.02$
+\end_inset
+
+, 
+\begin_inset Formula $S=0.01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Required time length.
+ (Use spike train)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography

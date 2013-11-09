@@ -10,6 +10,11 @@ gc_scale = 1e-4;
 %s_signature = {'extra_data/data_scan_ps/w_21'};
 
 s_signature = {'extra_data/data_scan_ps/w_01_st'};
+s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
+               'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
+s_signature = {'extra_data/data_scan_ps/v2_w10_st_net_2_2_sc=0.01_t=1.0e+07',...
+               'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
+ext_pic_suf = '_bigISI';
 
 pic_prefix0 = 'pic_tmp/';
 od_mode = 1; % 1 is 'BIC', 2 is 'AIC', 3 is 'BICall'
@@ -26,7 +31,11 @@ end
 
 for id_signature = 1:length(s_signature)
 signature = s_signature{id_signature};
+clear('signature0');
 load([signature, '_info.mat']);
+if (exist('signature0', 'var'))
+  signature = signature0;
+end
 if isempty(strfind(signature,'expIF'))
   time_step = 1.0/32;
 else
@@ -41,7 +50,7 @@ s_id_scee = 1:length(s_scee);
 s_id_stv  = 1:length(s_stv);
 s_id_prps = 1:length(s_prps);
 %s_id_ps   = 1:length(s_ps);
-s_id_ps   = 2:3;
+s_id_ps   = 1;
 
 for id_net = 1:length(s_net)
  netstr = s_net{id_net};
@@ -53,7 +62,12 @@ for id_time = s_id_time
  simu_time = s_time(id_time);
 for id_scee = s_id_scee
  scee = s_scee(id_scee);
- datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+ if ~isempty(findstr(signature, 'v2_'))
+   spst = '%s_%s_sc=%g_t=%.1e.mat';
+ else
+   spst = '%s_%s_sc=%g_t=%.3e.mat';
+ end
+ datamatname = sprintf(spst, signature, netstr, scee, simu_time);
  load(datamatname);
 for id_stv = s_id_stv
  stv = s_stv(id_stv);
@@ -118,6 +132,7 @@ for id_stv = s_id_stv
     end
     pic_prefix = sprintf('%s_%s_sc=%.4f_ps=%.4f_', pic_prefix, netstr, scee, ps);
     pic_suffix = sprintf('_stv=%.2f_t=%.2e', stv, simu_time);
+    pic_suffix = [pic_suffix, ext_pic_suf];
     pic_output       = @(st)print('-deps'  ,[pic_prefix, st, pic_suffix, '.eps']);
     pic_output_color = @(st)print('-depsc2',[pic_prefix, st, pic_suffix, '.eps']);
 
@@ -176,6 +191,10 @@ for id_stv = s_id_stv
 
     figure(4);
     plot(xl, s_len_min*stv/1e3/60);
+    yl = ylim();
+    if yl(2)>15
+      ylim([0, 15]);
+    end
     xlabel('\mu*F/0.001');
     ylabel('time / min');
     set(gca,'xtick', x_tick);
