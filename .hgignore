@@ -1,0 +1,7 @@
+syntax:glob
+*~
+.*.swp
+*.o
+tags
+data
+prj_neuron_gc_workers/pic_tmp/
