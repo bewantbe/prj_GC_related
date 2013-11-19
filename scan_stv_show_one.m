@@ -1,9 +1,13 @@
 %
 %set(0, 'defaultfigurevisible', 'off');
 
-s_signature = {'data_scan_stv/IF_net_100_rs01_w2'};
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w2'};
+%ext_suffix = '_w2';
+
+s_signature = {'data_scan_stv/IF_net_100_rs01_w2_p80_20_10neu'};
+ext_suffix = '_w2_p80_20_10neu';
+
 pic_prefix0 = 'pic_tmp/';
-ext_suffix = '_w2';
 
 s_neu_show = [1:10];
 
@@ -20,13 +24,21 @@ s_neu_show = [1:10];
     id_time = 1;
         simu_time = s_time(id_time);
     id_scee = 1;
-        scee = s_scee(id_scee);
+        if iscell(s_scee)
+          scee = s_scee{id_scee};
+        else
+          scee = s_scee(id_scee);
+        end
     id_prps = 1;
         prps = s_prps(id_prps);
     id_ps   = 1;
         ps = s_ps(id_ps);
         pr = prps / ps;
-    datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+    if exist('pI','var') && pI~=0
+      datamatname = sprintf('%s_%s_p[%d,%d]_sc=[%g,%g,%g,%g]_t=%.3e.mat', signature, netstr, pE, pI, scee(1), scee(2), scee(3), scee(4), simu_time);
+    else
+      datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+    end
     load(datamatname);
 
     if isempty(strfind(lower(signature),lower('expIF')))
@@ -37,7 +49,13 @@ s_neu_show = [1:10];
     if ~isempty(strfind(lower(signature),lower('SpikeTrain')))
         pic_prefix = [pic_prefix, '_ST'];
     end
-    pic_prefix = sprintf('%s_%s_sc=%.4f_pr=%.4f_ps=%.4f_', pic_prefix, netstr, scee, pr, ps);
+    if exist('pI','var') && pI~=0
+        pic_prefix = sprintf('%s_%s_p[%d,%d]_sc=[%.4f,%.4f,%.4f,%.4f]_pr=%.4f_ps=%.4f_',...
+            pic_prefix, netstr, pE, pI, scee(1), scee(2), scee(3), scee(4), pr, ps);
+    else
+        pic_prefix = sprintf('%s_%s_sc=%.4f_pr=%.4f_ps=%.4f_',...
+            pic_prefix, netstr, scee, pr, ps);
+    end
     pic_suffix = sprintf('_t=%.2e%s', simu_time, ext_suffix);
     pic_output_color = @(st)print('-depsc2',[pic_prefix, st, pic_suffix, '.eps']);
 

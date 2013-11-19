@@ -20,7 +20,11 @@ for net_id = 1:length(s_net)
  p = size(neu_network, 1);
 for simu_time = s_time
 for id_scee = 1:length(s_scee)
- scee = s_scee{id_scee};
+ if iscell(s_scee)
+   scee = s_scee{id_scee};
+ else
+   scee = s_scee(id_scee);
+ end
  prps_ps_stv_oGC = zeros(p_select, p_select, length(s_od), length(s_prps), length(s_ps), length(s_stv));
  prps_ps_stv_oDe = zeros(p_select, p_select, length(s_od), length(s_prps), length(s_ps), length(s_stv));
  prps_ps_stv_R   = zeros(p_select, p_select*(maxod+1), length(s_prps), length(s_ps), length(s_stv));
@@ -77,7 +81,11 @@ end  % stv
     prps_ps_ISI_dis(:,:,id_prps, id_ps) = ISI_dis;
 end  % ps
 end  % prps
- datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+ if exist('pI','var') && pI>0
+   datamatname = sprintf('%s_%s_p[%d,%d]_sc=[%g,%g,%g,%g]_t=%.3e.mat', signature, netstr, pE, pI, scee(1), scee(2), scee(3), scee(4), simu_time);
+ else
+   datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+ end
  save('-v7', datamatname, 'prps_ps_stv_oGC', 'prps_ps_stv_oDe', 'prps_ps_stv_R', 'prps_ps_aveISI', 'prps_ps_ISI_dis');
  % save length ?
 end  % scee

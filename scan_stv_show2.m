@@ -11,6 +11,9 @@ tic();
 s_signature = {'data_scan_stv/IF_net_100_rs01_w2_10neu'};
 ext_suffix = '_w2_10neu';
 
+%s_signature = {'data_scan_stv/IF_net_100_rs01_w2_p80_20_10neu'};
+%ext_suffix = '_w2_p80_20_10neu';
+
 %s_signature = {'data_scan_stv/IF_net_100_rs01_w3_10neu'};
 %ext_suffix = '_w3_10neu';
 
@@ -43,6 +46,7 @@ end
 for id_signature = 1:length(s_signature);
 signature = s_signature{id_signature};     % to distinguish different parallel program instances (also dir)
 % load these variables: 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod'
+clear('pE','pI');
 load([signature, '_info.mat']);
 % get the true "save time interval"
 if isempty(strfind(signature,'expIF'))
@@ -68,7 +72,11 @@ for id_net = 1:length(s_net)
 for id_time = s_id_time
  simu_time = s_time(id_time);
 for id_scee = s_id_scee
- scee = s_scee(id_scee);
+ if iscell(s_scee)
+   scee = s_scee{id_scee};
+ else
+   scee = s_scee(id_scee);
+ end
  id_id_prps = 0;
 for id_prps = s_id_prps
  prps = s_prps(id_prps);
@@ -86,11 +94,20 @@ for id_ps = s_id_ps
 % prps_ps_ISI_dis = zeros(p, length(hist_div), length(s_prps), length(s_ps));
 
 % load these variables: 'prps_ps_stv_oGC', 'prps_ps_stvsignature_oDe', 'prps_ps_stv_R', 'prps_ps_aveISI', 'prps_ps_ISI_dis'
- datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+ if exist('pI','var') && pI~=0
+   datamatname = sprintf('%s_%s_p[%d,%d]_sc=[%g,%g,%g,%g]_t=%.3e.mat', signature, netstr, pE, pI, scee(1), scee(2), scee(3), scee(4), simu_time);
+   fprintf('net:%s, p[%d,%d], sc:%.3f,%.3f,%.3f,%.3f, ps:%.4f, time:%.2e, stv:%.2f, len:%.2e\n',...
+            netstr, pE, pI, scee(1), scee(2), scee(3), scee(4),...
+            s_ps(s_id_ps(1)), simu_time, s_stv(1),...
+            round(simu_time/s_stv(1)));
+ else
+   datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
+   fprintf('net:%s, sc:%.3f, ps:%.4f, time:%.2e, stv:%.2f, len:%.2e\n',...
+            netstr, scee, s_ps(s_id_ps(1)), simu_time, s_stv(1),...
+            round(simu_time/s_stv(1)));
+ end
  load(datamatname);
 
-    fprintf('net:%s, sc:%.3f, ps:%.4f, time:%.2e, stv:%.2f, len:%.2e\n',...
-     netstr, scee, s_ps(s_id_ps(1)), simu_time, s_stv(1), round(simu_time/s_stv(1)));
 
     p_select = length(s_neu_id);
     p_show = length(s_neu_show)
@@ -104,6 +121,8 @@ for id_ps = s_id_ps
     s_overguess = zeros(1,length(s_id_stv));
     s_lackguess = zeros(1,length(s_id_stv));
     s_pairGC    = zeros(p_show,p_show,length(s_id_stv));
+    s_overguess_pgc = zeros(1,length(s_id_stv));
+    s_lackguess_pgc = zeros(1,length(s_id_stv));
 
     ISI_a_b = prps_ps_aveISI(s_neu_show, id_prps, id_ps);
     ISI_dis = prps_ps_ISI_dis(s_neu_show,:,id_prps, id_ps);
@@ -144,6 +163,10 @@ for id_ps = s_id_ps
 
       % use pairwise GC
       s_pairGC(:,:,id_stv) = pairRGrangerT(R(:,1:(od+1)*p_show));
+      guess_network = s_pairGC(:,:,id_stv) >= gc_cut_line;
+      diff_guess_network = guess_network - sub_network;
+      s_overguess_pgc(id_stv) = sum(diff_guess_network(:)>0);
+      s_lackguess_pgc(id_stv) = sum(diff_guess_network(:)<0);
     end  % stv
 
     %%%%%%%%%%%%%%%%%%%
@@ -156,7 +179,13 @@ for id_ps = s_id_ps
     if ~isempty(strfind(lower(signature),lower('SpikeTrain')))
         pic_prefix = [pic_prefix, '_ST'];
     end
-    pic_prefix = sprintf('%s_%s_sc=%.4f_pr=%.4f_ps=%.4f_', pic_prefix, netstr, scee, pr, ps);
+    if exist('pI','var') && pI~=0
+      pic_prefix = sprintf('%s_%s_p[%d,%d]_sc=[%.4f,%.4f,%.4f,%.4f]_pr=%.4f_ps=%.4f_',...
+        pic_prefix, netstr, pE, pI, scee(1), scee(2), scee(3), scee(4), pr, ps);
+    else
+      pic_prefix = sprintf('%s_%s_sc=%.4f_pr=%.4f_ps=%.4f_',...
+        pic_prefix, netstr, scee, pr, ps);
+    end
     pic_suffix = sprintf('_t=%.2e%s', simu_time, ext_suffix);
     %pic_output = @(st)print('-dpng',[pic_prefix, st, pic_suffix, '.png'],'-r100');    % output function
     %pic_output_color = pic_output;                                        % for color output
@@ -256,6 +285,14 @@ for id_ps = s_id_ps
     hd=legend('over guess', 'lack guess');
     set(hd, 'fontsize',font_size-2);
     pic_output_color('GC_overlackguess');
+
+    %% GC recover rate, pairwise GC
+    figure(11);  set(gca, 'fontsize',font_size);
+    hd=plot(s_stv, s_overguess_pgc, s_stv, s_lackguess_pgc);
+    set(hd, 'linewidth',line_width);
+    hd=legend('over guess', 'lack guess');
+    set(hd, 'fontsize',font_size-2);
+    pic_output_color('PGC_overlackguess');
 
 end  % ps
 end  % prps
