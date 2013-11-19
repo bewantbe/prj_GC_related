@@ -1,0 +1,7 @@
+syntax:glob
+*~
+.*.swp
+pic_tmp
+data
+tags
+

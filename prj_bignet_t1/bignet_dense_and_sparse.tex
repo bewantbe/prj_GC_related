@@ -1,0 +1,355 @@
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,english]{article}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1.4cm,bmargin=1.4cm,lmargin=1.4cm,rmargin=1.4cm}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{units}
+\usepackage{amstext}
+\usepackage{graphicx}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\renewcommand*\arraystretch{1.5}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
+
+\begin{document}
+
+\title{GC Analysis of Big I\&F Neuron Network - Several Sparse and Dense
+Cases with Both Excitatory and Inhibitory Presented}
+
+\maketitle
+
+\section{Parameter Tables}
+
+\begin{table}[H]
+\caption{Parameters used in IF model. Other parameters (fixed): $f^{I}=0$.}
+
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Cases & network & $n^{E}$ & $n^{I}$ & $\mu$ & $f^{E}$ & $S^{E2E}$ & $S^{E2I}$ & $S^{I2E}$ & $S^{I2I}$ & aveISI$/\unit{ms}$ & $T/\unit{sec}$\tabularnewline
+\hline 
+C.1 & net\_100\_20 & 80 & 20 & 1.00 & 0.012 & 0.005 & 0.005 & 0.007 & 0.007 & 4.790 & $1.0\times10^{3}$\tabularnewline
+\hline 
+C.2 & net\_100\_21 & up & up & up & up & up & up & up & up & 16.01 & up\tabularnewline
+\hline 
+C.3 & net\_100\_01 & up & up & 0.24 & 0.020 & 0.006 & 0.006 & 0.006 & 0.006 & 71.25 & up\tabularnewline
+\hline 
+C.4 & net\_100\_20 & up & up & up & up & up & up & up & up & 4.306 & up\tabularnewline
+\hline 
+C.5 & net\_100\_21 & up & up & up & up & up & up & up & up & 116.53 & up\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+Case C.3 use the same parameters as GCNR.%
+\footnote{Granger Causality Network Reconstruction of Conductance-based Integrate-and-Fire
+Neuronal Systems (sent: 2013-10-17)%
+} Fig5.F.
+
+\begin{table}[H]
+\caption{Network details. Note: high serial number nodes are inhibitory type}
+
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+name & \#node & edges & \%edge & type\tabularnewline
+\hline 
+\hline 
+net\_100\_20 & 100 & 5954 & 60.1\% & random 0/1\tabularnewline
+\hline 
+net\_100\_21 & 100 & 531 & 5.4\% & random 0/1\tabularnewline
+\hline 
+net\_100\_01 & 100 & 1941 & 19.6\% & random 0/1\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[net\_100\_20]{\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gcadj_ans}
+
+} \subfloat[net\_100\_20]{\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gcadj_ans}
+
+} \subfloat[net\_100\_20]{\includegraphics[scale=0.3]{pic/IF_net_100_01_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gcadj_ans}
+
+}
+\par\end{centering}
+
+\caption{network}
+\end{figure}
+
+
+\begin{table}[H]
+\caption{GC result statistics\label{tab:GC-result-statistics}}
+
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+ & $\Delta t/\unit{ms}$ & BIC & $\overline{\textrm{GC1}}/10^{5}$ & $\overline{\textrm{GC0}}/10^{5}$ & $\textrm{p-val}$ & $\textrm{GC}^{\textrm{thres}}(\textrm{p-val})/10^{5}$ & OverGuess & LackGuess & best $\textrm{GC}^{\textrm{thres}}/10^{5}$\tabularnewline
+\hline 
+C.1a & 0.5 & 25 & 25.03 & 3.04 & $2\times10^{-4}$ & 2.90 & 1916 & 3 & 5.76\tabularnewline
+\hline 
+C.1b & 1.0 & 10 & 42.47 & 3.40 & up & 3.38 & 1756 & 5 & 8.14\tabularnewline
+\hline 
+C.2a & 0.5 & 14 & 4.85 & 0.70 & up & 2.03 & 1 & 1 & 2.04\tabularnewline
+\hline 
+C.2b & 1.0 & 8 & 8.31 & 0.81 & up & 3.01 & 0 & 1 & 2.89\tabularnewline
+\hline 
+C.3a & 0.5 & 4 & 2.75 & 0.22 & up & 1.10 & 5 & 355 & 0.80\tabularnewline
+\hline 
+C.4a & 0.5 & 29 & 41.45 & 11.39 & up & 3.19 & 3848 & 0 & 23.0\tabularnewline
+\hline 
+C.5a & 0.5 & 4 & 4.28 & 0.20 & up & 1.10 & 5 & 65 & 0.91\tabularnewline
+\hline 
+\hline 
+C.2c & 0.5 ST & 23 & 19.76 & 1.16 & up & 2.75 & 2 & 0 & 2.92\tabularnewline
+\hline 
+C.4c & 0.5 ST & 32 & 33.67 & 7.99 & up & 3.41 & 3499 & 16 & 18.0\tabularnewline
+\hline 
+C.5c & 0.5 ST & 1 & 0.64 & 0.05 & up & 0.69 & 2 & 321 & 0.44\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+
+\section{Plots}
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[GC sort]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_sort}
+\par\end{centering}
+
+} \subfloat[GC hist]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_hist}
+\par\end{centering}
+
+} \subfloat[GC cmp]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_adj_cmp}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{C.1a}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[GC sort]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_sort}
+\par\end{centering}
+
+} \subfloat[GC hist]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_hist}
+\par\end{centering}
+
+} \subfloat[GC cmp]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 005,0\lyxdot 005,0\lyxdot 007,0\lyxdot 007]_pr=1\lyxdot 00_ps=0\lyxdot 012_stv=0\lyxdot 50_t=1\lyxdot 00e+06_adj_cmp}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{C.2a}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[GC sort]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_01_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_sort}
+\par\end{centering}
+
+} \subfloat[GC hist]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_01_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_hist}
+\par\end{centering}
+
+} \subfloat[GC cmp]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_01_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_adj_cmp}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{C.3a. (Note this graph is different from GCNR. Fig5.F, because here
+$T=\unit[10^{3}]{sec}$, instead of $T=\unit[10^{4}]{sec}$)}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[GC sort]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_sort}
+\par\end{centering}
+
+} \subfloat[GC hist]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_hist}
+\par\end{centering}
+
+} \subfloat[GC cmp]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_20_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_adj_cmp}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{C.4a.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[GC sort]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_sort}
+\par\end{centering}
+
+} \subfloat[GC hist]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_gc_hist}
+\par\end{centering}
+
+} \subfloat[GC cmp]{\begin{centering}
+\includegraphics[scale=0.3]{pic/IF_net_100_21_p[80,20]_sc=[0\lyxdot 006,0\lyxdot 006,0\lyxdot 006,0\lyxdot 006]_pr=0\lyxdot 24_ps=0\lyxdot 020_stv=0\lyxdot 50_t=1\lyxdot 00e+06_adj_cmp}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{C.5a.}
+\end{figure}
+
+
+
+\section{Excitatory or Inhibitory}
+
+
+\subsection{C.2a}
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[$77\rightarrow82$ (excitatory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_srd(82)On77_STC}
+\par\end{centering}
+
+} \subfloat[$82\rightarrow77$ (no direct arc)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_srd(77)On82_STC}
+\par\end{centering}
+
+} \subfloat[Volt $77\rightarrow82$ (excitatory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_X(82)On77_STC}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{node(neuron) pair 77 and 82. ($\textrm{GC}(77\rightarrow82)=5.87\times10^{-5}$,
+$\textrm{GC}(82\rightarrow77)=0.43\times10^{-5}$)}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[$80\rightarrow82$(no direct arc)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_srd(82)On80_STC}
+\par\end{centering}
+
+} \subfloat[$82\rightarrow80$ (inhibitory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_srd(80)On82_STC}
+\par\end{centering}
+
+} \subfloat[Volt $82\rightarrow80$ (inhibitory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_X(80)On82_STC}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{node(neuron) pair 80 and 82. ($\textrm{GC}(80\rightarrow82)=0.32\times10^{-5}$,
+$\textrm{GC}(82\rightarrow80)=2.46\times10^{-5}$)}
+\end{figure}
+
+
+I thank it's may decrease or increase just after $t_{rel}=0$. Because
+an EPSP may cause the neuron spike or form a positive plump (depends
+on dynamic region). May be in case of spike train, this information
+can be captured easier.
+
+\bigskip{}
+
+
+Case of spike trains (see C.2c in Table \ref{tab:GC-result-statistics}):
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[$77\rightarrow82$ (excitatory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_srd(82)On77_STC}
+\par\end{centering}
+
+} \subfloat[$82\rightarrow77$ (no direct arc)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_srd(77)On82_STC}
+\par\end{centering}
+
+} \subfloat[Volt $77\rightarrow82$ (excitatory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_X(82)On77_STC}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{node(neuron) pair 77 and 82. ($\textrm{GC}(77\rightarrow82)=23.61\times10^{-5}$,
+$\textrm{GC}(82\rightarrow77)=0.66\times10^{-5}$)}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{centering}
+\subfloat[$80\rightarrow82$(no direct arc)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_srd(82)On80_STC}
+\par\end{centering}
+
+} \subfloat[$82\rightarrow80$ (inhibitory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_srd(80)On82_STC}
+\par\end{centering}
+
+} \subfloat[Volt $82\rightarrow80$ (inhibitory)]{\begin{centering}
+\includegraphics[scale=0.3]{pic/case=C\lyxdot 2a_ST_X(80)On82_STC}
+\par\end{centering}
+
+}
+\par\end{centering}
+
+\caption{node(neuron) pair 80 and 82. ($\textrm{GC}(80\rightarrow82)=0.70\times10^{-5}$,
+$\textrm{GC}(82\rightarrow80)=9.78\times10^{-5}$)}
+\end{figure}
+
+\end{document}
