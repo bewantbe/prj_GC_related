@@ -1,7 +1,9 @@
 syntax:glob
 *~
 .*.swp
-pic_tmp
-data
+\#*\#
 tags
-
+tmp_*.m
+data/
+pic_tmp/
+extra_data/
