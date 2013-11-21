@@ -1,20 +1,23 @@
 % parallel scan framework
 
-netstr = 'net_2_2';
-scee   = 0.01;
-pr     = 1;
-ps     = 0.012;
-simu_time = 1e5;
-stv = 0.5;
-extst = ' --RC-filter -q';
-mode_ST = 0;
-s_od = 1:50;
+if ~b_have_head
+  netstr = 'net_2_2';
+  scee   = 0.01;
+  pr     = 1;
+  ps     = 0.012;
+  simu_time = 1e5;
+  stv = 0.5;
+  extst = ' --RC-filter -q';
+  mode_ST = 0;
+  s_od = 1:50;
+  % job index set
+  s_jobs = 1:10000;
+end
 
-% job index set
-s_jobs = 1:10000;
 s_data = cell(size(s_jobs));
 
-data_file_name = sprintf('data.mat');
+data_file_name = sprintf('scan_correct_%s_sc=%.3f_pr=%.2f_ps=%.3f_T=%.1e_stv=%.2f_j%d.mat',...
+                            netstr, scee, pr, ps, simu_time, stv, numel(s_jobs));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 t0 = tic();
@@ -73,6 +76,7 @@ while ~isempty(id_jobs_head)
     [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
     da.oGC = oGC;  da.oDe = oDe;  da.R   = R;
     da.netstr=netstr; da.scee=scee; da.pr=pr; da.ps=ps; da.simu_time=simu_time; da.stv=stv; da.extst=extst;
+    da.ISI=ISI;
     s_data{id_jobs} = da;
 
     s_b_finished(id_jobs) = true;
@@ -86,6 +90,7 @@ while ~isempty(id_jobs_head)
   end  % for id_jobs
 end  % while parallel
 
-save('-v7', data_file_name, 's_data', 's_od', 's_jobs');
+save('-v7', data_file_name, 's_data', 's_od', 's_jobs','ext_T',...
+'netstr','scee','pr','ps','simu_time','stv','extst','mode_ST');
 
 fprintf('Elapsed time is %6.3f\n', (double(tic()) - double(t0))*1e-6 );
