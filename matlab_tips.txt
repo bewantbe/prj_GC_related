@@ -1,0 +1,54 @@
+fn='volt_net_100_20_p[80,20]_sc=[0.004,0.004,0.008,0.008]_pr=1_ps=0.012_t=1.00e+07_stv=0.5.dat';
+stat(fn).mtime
+inf=dir(fn);  inf.date
+inf=dir(fn);  inf.statinfo.atime
+
+fn='volt_net_100_20_p[80,20]_sc=[0.004,0.004,0.008,0.008]_pr=1_ps=0.012_t=1.00e+07_stv=0.5.dat';
+
+strptime()
+localtime
+gmtime
+mktime
+time
+strftime
+
+strptime(inf.date)
+mktime()
+
+
+
+datestr
+etime
+now
+
+datenum
+datestr
+datetick
+
+datevec
+
+http://stackoverflow.com/questions/15025271/matlab-convert-date-string-to-timestamps-using-datenum-problems
+
+inf=dir(fn);
+etime(clock, datevec(inf.date,'dd-mmm-yyyy HH:MM:ss'))
+
+etime(clock, [1970 01 01 00 00 00])
+
+etime(clock, datevec(inf.date,'dd-mmm-yyyy HH:MM:ss'))
+
+http://practicalmatlab.com/how-to-find-utc-time/
+  function utc_time=getUtcTime
+    % Gets UTC time using Java
+    epoch_time  =   java.lang.System.currentTimeMillis;
+    % Changes UTC time fro milliseconds into days. There are 8.64e7
+    % milliseconds in a day
+    epoch_time  =   epoch_time/8.64e7
+    % Changes epoch time in days into a Matlab serial date number
+    utc_time    =   epoch_time/8.64e7 + datenum(1970,1,1)
+  end
+  
+java.lang.System.currentTimeMillis
+
+% good
+inf=dir(fn);  etime(clock, datevec(inf.date))
+
