@@ -107,7 +107,7 @@ for id_stv=1:length(s_stv)
     end
   end
 
-  [oGC, oDe, R] = AnalyseSeries(X, s_od);
+  [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
 
   prps_ps_stv_oGC(:,:,:, id_prps, id_ps, id_stv) = oGC;
   prps_ps_stv_oDe(:,:,:, id_prps, id_ps, id_stv) = oDe;

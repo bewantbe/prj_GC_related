@@ -1,3 +1,5 @@
 % project startup file
 
 run('../../GC_clean/.octaverc');
+
+addpath('scan_worker');
