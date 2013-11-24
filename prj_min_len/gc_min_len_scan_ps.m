@@ -19,10 +19,19 @@ gc_scale = 1e-4;
                %'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
                %'extra_data/data_scan_ps/v2_w13_st_net_2_2_sc=0.02_t=1.0e+07'};
-s_signature = {'extra_data/data_scan_ps/v2_w14_st_net_2_2_sc=0.01_t=1.0e+07',...
-               'extra_data/data_scan_ps/v2_w15_st_net_2_2_sc=0.01_t=1.0e+07'};
+%s_signature = {'extra_data/data_scan_ps/v2_w14_st_net_2_2_sc=0.01_t=1.0e+07',...
+%               'extra_data/data_scan_ps/v2_w15_st_net_2_2_sc=0.01_t=1.0e+07'};
+
+%s_signature = {'extra_data/data_scan_ps/v2_w12_norc_net_2_2_sc=0.01_t=1.0e+07'};
+%s_signature = {'extra_data/data_scan_ps/v2_w16_net_2_2_sc=0.01_t=1.0e+07'};
+
+s_signature = {'extra_data/data_scan_ps/v2_w12s_st_net_2_2_sc=0.01_t=1.0e+07'};
+ext_pic_suf = '_bigISI';
+
+%s_signature = {'extra_data/data_scan_ps/v2_w16_st_net_2_2_sc=0.01_t=1.0e+07'};
+%ext_pic_suf = '';
+
 %ext_pic_suf = '_bigISI';
-ext_pic_suf = '';
 load_prefix = 'extra_data/';
 
 pic_prefix0 = 'pic_tmp/';

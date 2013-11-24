@@ -2,16 +2,22 @@
 
 fn_prefix = 'pic_data/';
 
+% use volt
 s_fn_save = {
+'IF_net_2_2_sc=0.0100_ps=0.0050_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
+'IF_net_2_2_sc=0.0100_ps=0.0050_stv=0.50_t=1.00e+07_scan_prps.mat',
 'IF_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
-'IF_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
 'IF_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_scan_prps.mat',
+'IF_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
 'IF_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_scan_prps.mat'};
 
+% use spike train
 s_fn_save = {
+'IF_ST_net_2_2_sc=0.0100_ps=0.0050_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
+'IF_ST_net_2_2_sc=0.0100_ps=0.0050_stv=0.50_t=1.00e+07_scan_prps.mat',
 'IF_ST_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
-'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
 'IF_ST_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_scan_prps.mat',
+'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
 'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_scan_prps.mat'};
 
 figure(1);
