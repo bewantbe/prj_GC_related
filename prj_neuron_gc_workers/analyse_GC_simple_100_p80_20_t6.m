@@ -19,7 +19,7 @@ tic;
 mode_IF = 'IF';
 mode_ST = 1;
 
-%netstr = 'net_100_20';
+% C.6
 netstr = 'net_100_21';
 scee = 0.005;  scii = 0.007;
 pr = 1;  ps = 0.012;

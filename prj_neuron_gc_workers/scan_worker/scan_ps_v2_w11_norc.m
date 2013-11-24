@@ -4,7 +4,7 @@
 % save some simple analyse results to .mat
 
 % to distinguish different parallel program instances (also dir)
-signature = 'data_scan_ps/v2_w11';
+signature = 'data_scan_ps/v2_w11_norc';
 
 % scan value sets
 s_net  = {'net_2_2'};
@@ -18,6 +18,6 @@ maxod  = 99;
 s_od   = 1:maxod;
 hist_div = 0:20:10000;          % ISI
 
-extst = '--RC-filter -q';
+extst = '-q';
 
 scan_ps_v2_loop;
