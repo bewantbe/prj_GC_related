@@ -56,8 +56,10 @@ for id_scee=1:length(s_scee)
 % prepare parallel
 s_b_finished = false(length(s_stv), length(s_ps), length(s_prps));
 s_b_launched = false(length(s_stv), length(s_ps), length(s_prps));
-[~, ncpu] = system('nproc');         % get number of cpus
-ncpu = max([str2num(ncpu), 1]);      % or leave one for other job?
+if ~exist('ncpu','var')
+  [~, ncpu] = system('nproc');         % get number of cpus
+  ncpu = max([str2num(ncpu), 1]);      % or leave one for other job?
+end
 while any(~s_b_finished(:))
  id_parallel = 0;
  goto_to_while_loop = false;
