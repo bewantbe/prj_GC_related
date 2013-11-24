@@ -60,7 +60,7 @@ while ~isempty(id_jobs_head)
         end
       end
     else
-      pause(0.1);     % save CPU time, and do not push too fast
+      pause(0.01);     % save CPU time, and do not push too fast
       % enough available cpu resources?
       if num_launched >= ncpu 
         break;        % restart the loop, wait for the launched ones

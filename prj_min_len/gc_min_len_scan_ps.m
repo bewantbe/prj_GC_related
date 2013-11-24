@@ -10,14 +10,15 @@ s_signature = {'extra_data/data_scan_ps/w_20'};
 %s_signature = {'extra_data/data_scan_ps/w_21'};
 
 %s_signature = {'extra_data/data_scan_ps/w_01_st'};
-s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07'};
+%s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
-%               'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
+               %'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_st_net_2_2_sc=0.01_t=1.0e+07',...
-%               'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
-%s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
-%               'extra_data/data_scan_ps/v2_w13_st_net_2_2_sc=0.02_t=1.0e+07'};
+               %'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
+s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
+               'extra_data/data_scan_ps/v2_w13_st_net_2_2_sc=0.02_t=1.0e+07'};
 ext_pic_suf = '_bigISI';
+load_prefix = 'extra_data/';
 
 pic_prefix0 = 'pic_tmp/';
 od_mode = 1; % 1 is 'BIC', 2 is 'AIC', 3 is 'BICall'
@@ -71,7 +72,7 @@ for id_scee = s_id_scee
    spst = '%s_%s_sc=%g_t=%.3e.mat';
  end
  datamatname = sprintf(spst, signature, netstr, scee, simu_time);
- load(datamatname);
+ load([load_prefix, datamatname]);
 for id_stv = s_id_stv
  stv = s_stv(id_stv);
  len = round(simu_time/stv);
@@ -203,6 +204,25 @@ for id_stv = s_id_stv
     set(gca,'xtick', x_tick);
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('Tmin');
+
+    % save data for repuducion these plots
+    fn_save = sprintf('%sstv=%.2f_t=%.2e%s_scan_prps.mat', pic_prefix, stv, simu_time, ext_pic_suf);
+    s_ISIs = reshape(ISI_a_b(:,id_id_ps,:), p, []);
+    s_flat_gc_od0 = reshape(s_zero_GC (:,:,id_id_ps,:), p*p, []);
+    s_flat_gc     = reshape(s_GC      (:,:,id_id_ps,:), p*p, []);
+    s_flat_lgc    = reshape(s_lower_GC(:,:,id_id_ps,:), p*p, []);
+    s_flat_ugc    = reshape(s_upper_GC(:,:,id_id_ps,:), p*p, []);
+    s_flat_gc_od0(eye(p)==1,:) = [];
+    s_flat_gc    (eye(p)==1,:) = [];
+    s_flat_lgc   (eye(p)==1,:) = [];
+    s_flat_ugc   (eye(p)==1,:) = [];
+    str_f_len_guess = ['f_len_guess = ', func2str(f_len_guess)];
+    save('-v7', fn_save,'signature',...
+         'p','netstr','neu_network','scee','ps','s_prps',...
+         'simu_time','stv','len','extst','mode_eif','mode_st',...
+         's_bic_od','s_aic_od','s_all_od','maxod',...
+         's_flat_gc_od0','od_mode','s_flat_gc','s_flat_lgc','s_flat_ugc',...
+         's_ISIs','s_len_min','str_f_len_guess');
 
     end  % ps
 
