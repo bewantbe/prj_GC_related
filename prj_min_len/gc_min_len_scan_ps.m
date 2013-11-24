@@ -7,12 +7,12 @@ f_len_guess = @(od, F1) (1.153+sqrt(od-0.513)/1.917) * (10.002 ./ F1);
 gc_scale = 1e-4;
 
 %s_signature = {'extra_data/data_scan_ps/w_20'};
-%s_signature = {'extra_data/data_scan_ps/w_21'};
+s_signature = {'extra_data/data_scan_ps/w_21'};
 
 %s_signature = {'extra_data/data_scan_ps/w_01_st'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07'};
-s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
-               'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
+%s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
+               %'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_st_net_2_2_sc=0.01_t=1.0e+07',...
                %'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
