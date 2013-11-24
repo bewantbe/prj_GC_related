@@ -6,18 +6,19 @@ addpath('extra_data');
 f_len_guess = @(od, F1) (1.153+sqrt(od-0.513)/1.917) * (10.002 ./ F1);
 gc_scale = 1e-4;
 
-s_signature = {'extra_data/data_scan_ps/w_20'};
+%s_signature = {'extra_data/data_scan_ps/w_20'};
 %s_signature = {'extra_data/data_scan_ps/w_21'};
 
 %s_signature = {'extra_data/data_scan_ps/w_01_st'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07'};
-%s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
-               %'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
+s_signature = {'extra_data/data_scan_ps/v2_w10_net_2_2_sc=0.01_t=1.0e+07',...
+               'extra_data/data_scan_ps/v2_w11_net_2_2_sc=0.01_t=1.0e+07'};
 %s_signature = {'extra_data/data_scan_ps/v2_w10_st_net_2_2_sc=0.01_t=1.0e+07',...
                %'extra_data/data_scan_ps/v2_w11_st_net_2_2_sc=0.01_t=1.0e+07'};
-s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
-               'extra_data/data_scan_ps/v2_w13_st_net_2_2_sc=0.02_t=1.0e+07'};
+%s_signature = {'extra_data/data_scan_ps/v2_w12_st_net_2_2_sc=0.02_t=1.0e+07',...
+               %'extra_data/data_scan_ps/v2_w13_st_net_2_2_sc=0.02_t=1.0e+07'};
 ext_pic_suf = '_bigISI';
+%ext_pic_suf = '';
 load_prefix = 'extra_data/';
 
 pic_prefix0 = 'pic_tmp/';
@@ -53,8 +54,8 @@ s_id_time = 1:length(s_time);
 s_id_scee = 1:length(s_scee);
 s_id_stv  = 1:length(s_stv);
 s_id_prps = 1:length(s_prps);
-%s_id_ps   = 1:length(s_ps);
-s_id_ps   = 1;
+s_id_ps   = 1:length(s_ps);
+%s_id_ps   = 1;
 
 for id_net = 1:length(s_net)
  netstr = s_net{id_net};
@@ -72,7 +73,8 @@ for id_scee = s_id_scee
    spst = '%s_%s_sc=%g_t=%.3e.mat';
  end
  datamatname = sprintf(spst, signature, netstr, scee, simu_time);
- load([load_prefix, datamatname]);
+ %load([load_prefix, datamatname]);
+ load(datamatname);
 for id_stv = s_id_stv
  stv = s_stv(id_stv);
  len = round(simu_time/stv);
@@ -206,6 +208,9 @@ for id_stv = s_id_stv
     pic_output_color('Tmin');
 
     % save data for repuducion these plots
+    if ~exist('extst','var')'
+      extst = '-q';
+    end
     fn_save = sprintf('%sstv=%.2f_t=%.2e%s_scan_prps.mat', pic_prefix, stv, simu_time, ext_pic_suf);
     s_ISIs = reshape(ISI_a_b(:,id_id_ps,:), p, []);
     s_flat_gc_od0 = reshape(s_zero_GC (:,:,id_id_ps,:), p*p, []);
