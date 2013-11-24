@@ -8,9 +8,11 @@ s_fn_save = {
 'IF_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_scan_prps.mat',
 'IF_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_scan_prps.mat'};
 
-%s_fn_save = {
-%'IF_ST_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
-%'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat'};
+s_fn_save = {
+'IF_ST_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
+'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_bigISI_scan_prps.mat',
+'IF_ST_net_2_2_sc=0.0100_ps=0.0100_stv=0.50_t=1.00e+07_scan_prps.mat',
+'IF_ST_net_2_2_sc=0.0100_ps=0.0200_stv=0.50_t=1.00e+07_scan_prps.mat'};
 
 figure(1);
 clf; cla;
@@ -27,6 +29,8 @@ for id_save = 1:length(s_fn_save)
   IFtype = [IFtype, myif(mode_st, ' (spike train)', ' (volt)')];
   fprintf('net="%s", scee=%.3f, ps=%.3f, freq=%.2f~%.2f Hz, %s.\n',...
           netstr, scee, ps, min(s_freq), max(s_freq), IFtype);
+
+  s_len_min(gc_prob_nonzero(s_flat_gc(1,:),s_bic_ods,len)<0.9) = Inf;   % exclude meaningless points
 
   figure(1);
   hd=plot(s_freq, s_len_min*stv/60e3);
@@ -61,7 +65,7 @@ ylabel('min length / min');
   ylabel('ave ISI of each neurons / ms');
 
   figure(13);
-  plot(s_freq, s_bic_od);
+  plot(s_freq, s_bic_ods);
   xlabel('freq/Hz');
   ylabel('BIC order');
   %}
