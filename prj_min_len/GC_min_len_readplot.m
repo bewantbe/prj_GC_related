@@ -33,8 +33,8 @@ for id_save = 1:length(s_fn_save)
 
   IFtype = myif(mode_eif, 'EIF', 'IF');
   IFtype = [IFtype, myif(mode_st, ' (spike train)', ' (volt)')];
-  fprintf('net="%s", scee=%.3f, ps=%.3f, freq=%.2f~%.2f Hz, %s.\n',...
-          netstr, scee, ps, min(s_freq), max(s_freq), IFtype);
+  fprintf('%s net="%s", scee=%.3f, ps=%.3f, freq=%6.2f ~ %6.2f Hz.\n',...
+          IFtype, netstr, scee, ps, min(s_freq), max(s_freq));
 
   s_len_min(gc_prob_nonzero(s_flat_gc(1,:),s_bic_ods,len)<0.9) = Inf;   % exclude meaningless points
 
