@@ -6,7 +6,7 @@ netstr = 'net_100_21';
 scee = 0.005;  scii = 0.007;
 pr = 1.0;
 ps = 0.012;
-simu_time = 1e4;
+simu_time = 1e6;
 extst = '--RC-filter -seed 131';
 
 pE = 80;

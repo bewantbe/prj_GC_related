@@ -1,15 +1,17 @@
 %
+pic_common_include;
 
 new_load = 1;
 if new_load
   % use case C.2c, see bignet_dense_and_sparse.pdf
   getdata_bigNet_C2c;
   network = getnetwork(netstr);
-  case_st = 'C.2c';
+  case_st = 'C2c';
+  p_EI_list = char(['E'*ones(1,pE), 'I'*ones(1,pI)]);
 
   %tic; od_max=50; GC_regression; toc; fflush(stdout);  % 280 sec
   tic;
-  od_max = 10;
+  od_max = 40;
   s_od = 1:od_max;
   [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
   [aic_od, bic_od, zero_GC] = AnalyseSeries2(s_od, oGC, oDe, len);
@@ -58,10 +60,11 @@ if new_load
   toc; fflush(stdout);
 
   sub_network = network(s_id_want, s_id_want);
+  p_EI_list = p_EI_list(s_id_want);
 end
 
-p_driving = 8;
-p_passive = 6;
+p_driving = 3;
+p_passive = 8;
 fprintf('In network: %d->%d (%d->%d) ', p_driving, p_passive, s_id_want(p_driving), s_id_want(p_passive));
 if sub_network(p_passive, p_driving)
   fprintf('true\n');
@@ -69,7 +72,7 @@ else
   fprintf('false\n');
 end
 
-ana_len = 200;
+ana_len = [0,5];
 
 pic_prefix = 'pic_tmp/';
 if mode_ST
