@@ -30,7 +30,13 @@ scee = 0.006;  scii = 0.006;
 pr = 0.24;  ps = 0.02;
 extst = '--RC-filter -seed 130';
 
-simu_time = 1e6;
+%netstr = 'net_100_20';
+%netstr = 'net_100_21';
+%scee = 0.005;  scii = 0.007;
+%pr = 1;  ps = 0.012;
+%extst = '--RC-filter -seed 126';
+
+simu_time = 1e7;
 pE = 80;
 pI = 20;
 
