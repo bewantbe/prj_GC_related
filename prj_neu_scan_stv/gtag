@@ -2,7 +2,3 @@
 
 ctags -R ./
 ctags -aR /home/xyy/matcode/GC_clean/
-ctags -a /home/xyy/matcode/libs/*
-ctags -a /home/xyy/matcode/libs/octave-3.6.2/NUFFT_code/*
-ctags -a /home/xyy/matcode/matlab_networks_routines/*
-
