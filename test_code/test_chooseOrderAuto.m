@@ -1,14 +1,14 @@
 %
 
 X=randn(10,1e5);
+max_od = 500;
 
 tic;
-det_de = chooseOrderAuto(X);
+det_de = chooseOrderAuto(X, [], max_od);
 t=toc
 
-m = 50;
 tic;
-R = getcovpd(X, m);
+R = getcovpd(X, max_od);
 [af, s_de] = BlockLevinson(R);
 t=toc
 ans_det_de = [];
@@ -18,6 +18,6 @@ end
 
 norm(det_de-ans_det_de)
 
-figure(2);
-plot(det_de-ans_det_de);
+%figure(2);
+%plot(det_de-ans_det_de);
 

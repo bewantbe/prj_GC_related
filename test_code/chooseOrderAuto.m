@@ -14,7 +14,7 @@ end
 X = bsxfun(@minus, X, mean(X,2));
 Rxy0 = (X(:, od_max+1:len) * X(:, od_max-0+1:len-0)') / (len-od_max);
 Rxy1 = (X(:, od_max+1:len) * X(:, od_max-1+1:len-1)') / (len-od_max);
-R = [Rxy0, Rxy1];
+R1 = Rxy1;
 b_R1 = Rxy1';
 
 af = - Rxy0 \ b_R1;
@@ -25,10 +25,10 @@ s_det_de = det(df);
 
 for k = 2:od_max
   Rxy = (X(:, od_max+1:len) * X(:, od_max-k+1:len-k)') / (len-od_max);
-  R = [R, Rxy];
+  ef = b_R1 * af + Rxy';
   b_R1 = [Rxy', b_R1];
-  ef = b_R1(:, p+1:end) * af + b_R1(:, 1:p);
-  eb = R(:, p+1:p*k) * ab + R(:, end-p+1:end);
+  eb = R1 * ab + Rxy;
+  R1 = [R1, Rxy];
   gf = db \ ef;
   gb = df \ eb;
   tmp_af = af;
