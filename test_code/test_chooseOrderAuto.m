@@ -3,9 +3,9 @@
 b_residual_test = false;
 b_correctness_test = true;
 
-test_type = 'linear';
-%test_type = 'neuron';
-test_no = 5;
+%test_type = 'linear';
+test_type = 'neuron';
+test_no = 1;
 
 if b_residual_test
   X=randn(10,1e5);
@@ -62,14 +62,14 @@ if b_correctness_test
           De = diag([0.6 0.5 0.3 0.3 0.6]);
         case 4
           s2 = sqrt(2);
-          A = zeros(5, 5*90);
+          A = zeros(5, 5*50);
           A(1,1) =-0.95*s2;  A(1,6) = 0.9025;
           A(2,6) =-0.5;
           A(3,11)= 0.4;
           A(4,6) = 0.5;      A(4,4) =-0.25*s2;  A(4,5) =-0.25*s2;
           A(5,4) = 0.25*s2;  A(5,5) =-0.25*s2;
           De = diag([0.6 0.5 0.3 0.3 0.6]);
-          A(5, 5*90) = 0.1;
+          A(5, 5*50) = 0.1;
         case 5
           A = [-0.9 ,  0.0, 0.5, 0.0;
                -0.16, -0.8, 0.2, 0.5];
@@ -134,7 +134,7 @@ if b_correctness_test
   %end
   %norm(det_de-ans_lndet_de)
 
-  %rg = 1:length(s_xic_val)-1;
+  rg = 1:length(s_xic_val)-1;
   %figure(1);
   %plot(rg, s_xic_val(rg));
   %figure(2);
