@@ -8,7 +8,7 @@ if exist('p','var') && size(R,1)==size(R,2)
   R = R(1:p, 1:end);
 else
   if exist('p','var')
-    warning('input parameter "p" ignored');
+    warning('ARregressionpd(R, p): input parameter "p" ignored');
   end
   [p, m] = size(R);
   m = round(m/p)-1;

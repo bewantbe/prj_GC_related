@@ -1,6 +1,8 @@
 % Choose Order by AIC/BIC
-% Stop when best order is found
-% Use levinson algorithm, so not suitable to big condition number problem
+% if od_full not provided, stop when best order is found.
+%   otherwise, calculate all BIC/AIC till the order "od_full".
+% Try levinson algorithm first. if the condition number seems very large,
+%   use positive-defined covz to obtain the order.
 
 function [xic_od, s_xic_val, s_lndet_de] = chooseOrderAuto(X, ic_mode, od_full)
 b_lack_accuracy = false;
