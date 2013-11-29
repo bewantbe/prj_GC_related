@@ -1,11 +1,12 @@
 %
+tocs = @(st) fprintf('t =%7.3fs : %s\n', toc(), st);
 
 b_residual_test = false;
 b_correctness_test = true;
 
-%test_type = 'linear';
-test_type = 'neuron';
-test_no = 1;
+test_type = 'linear';
+%test_type = 'neuron';
+test_no = 6;
 
 if b_residual_test
   X=randn(10,1e5);
@@ -34,7 +35,7 @@ end  % if b_residual_test
 
 
 if b_correctness_test
-  len = 1e6;
+  len = 1e3;
   max_od = 100;
 
   tic;
@@ -82,6 +83,18 @@ if b_correctness_test
           end
           B = reshape(permute(B, [2,3,1]), p, []);
           A = conv1mat(A, B);
+        case 6
+          A = [-0.9 ,  0.0, 0.5, 0.0;
+               -0.16, -0.8, 0.2, 0.5];
+          De = [1.0, 0.4; 0.4, 0.7];
+          p = size(A,1);
+          [G, de] = gen_hfreq_coef(0.9, 0.05, 6);
+          B = zeros(length(G),p,p);
+          for k=1:p
+            B(:,k,k) = G;
+          end
+          B = reshape(permute(B, [2,3,1]), p, []);
+          A = conv1mat(A, B);
         otherwise
           error('no this case.');
       end
@@ -90,6 +103,9 @@ if b_correctness_test
     case 'neuron'
       switch test_no
         case 1
+          stv = 0.5;
+          [X, ISI] = gendata_neu('net_2_2', 0.01, 1, 0.012, len*stv, stv, '-dt 0.25 --RC-filter -q');
+        case 2
           stv = 0.5;
           [X, ISI] = gendata_neu('net_2_2', 0.01, 16, 0.00125, len*stv, stv, '-dt 0.25 --RC-filter -q');
         otherwise
@@ -101,22 +117,23 @@ if b_correctness_test
       error('no this type of test');
 
   end
-  toc
+  p = size(X,1);
+  tocs('generate data');
 
   tic;
-  [bicod, s_xic_val, s_lndet_de] = chooseOrderAuto(X, 'BIC');
-  bicod
-  toc
+  [bicod_auto, s_xic_val_auto, s_lndet_de_auto] = chooseOrderAuto(X, 'BIC');
+  bicod_auto
+  tocs('chooseOrderAuto(X, ''BIC'')');
 
   tic;
   [bicod, s_xic_val, s_lndet_de] = chooseOrderAuto(X, 'BIC', max_od);
   bicod
-  toc
+  tocs('chooseOrderAuto(X, ''BIC'', max_od)');
 
   tic;
   [bicod_pd, s_xic_val_pd, s_lndet_de_pd] = chooseOrderAuto(X, 'BIC', -max_od);
   bicod_pd
-  toc
+  tocs('chooseOrderAuto(X, ''BIC'', -max_od)');
 
   %bicod_ans = chooseOrder(X,'BIC')
 
@@ -126,13 +143,7 @@ if b_correctness_test
   [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
   [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
   bic_od
-  toc
-
-  %ans_lndet_de = zeros(1,size(s_de,3));
-  %for k=1:size(s_de,3)
-    %ans_lndet_de(k) = det(oDe(:,:,k));
-  %end
-  %norm(det_de-ans_lndet_de)
+  tocs('AnalyseSeriesFast(s_od, oGC, oDe, len)');
 
   rg = 1:length(s_xic_val)-1;
   %figure(1);
@@ -143,9 +154,8 @@ if b_correctness_test
   %plot(s_xic_val_pd);
 
   figure(4);
-  %plot(1:length(s_lndet_de), s_lndet_de);
   plot(1:length(s_lndet_de), s_lndet_de, 1:length(s_lndet_de_pd), s_lndet_de_pd);
-
-  norm(s_xic_val(rg)-oBIC(rg))
+  fprintf('Ave order diff: %g\n', exp((s_lndet_de_pd(1)-s_lndet_de_pd(end))/p));
+  norm(s_xic_val(rg)-oBIC(bicod_pd))
 
 end  % if correctness test
