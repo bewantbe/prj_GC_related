@@ -26,26 +26,27 @@ for k = 0 : m
     RR(:, (m-k)*p+1 : (m+1-k)*p) = R_k';
 end
 % head and tail parts
-tic
 covz = zeros((m+1)*p,(m+1)*p);
+t_ed = t_ed+1;
+t_bg = t_bg-1;
+m1 = m+1;
 for i1=0:m
     for i2=0:m
         k=i2-i1;
         if (k>=0)
             covz(i1*p+1:(i1+1)*p, i2*p+1:(i2+1)*p) =...
-              X(:,m+1-i1:t_bg-1)*X(:,m+1-i2:t_bg-1-k)'...
-            + X(:,t_ed+1:len-i1)*X(:,t_ed+1-k:len-i2)';
+              X(:,m1-i1:t_bg)*X(:,m1-i2:t_bg-k)'...
+            + X(:,t_ed:len-i1)*X(:,t_ed-k:len-i2)';
         else
             covz(i1*p+1:(i1+1)*p, i2*p+1:(i2+1)*p) =...
-              X(:,m+1-i1:t_bg-1+k)*X(:,m+1-i2:t_bg-1)'...
-            + X(:,t_ed+1+k:len-i1)*X(:,t_ed+1:len-i2)';
+              X(:,m1-i1:t_bg+k)*X(:,m1-i2:t_bg)'...
+            + X(:,t_ed+k:len-i1)*X(:,t_ed:len-i2)';
         end
-        %covz(i1*p+1:(i1+1)*p, i2*p+1:(i2+1)*p) =...  % this one is slower
-          %X(:,m+1-i1:t_bg-1+k*(k<0))*X(:,m+1-i2:t_bg-1-k*(k>0))'...
-        %+ X(:,t_ed+1+k*(k<0):len-i1)*X(:,t_ed+1-k*(k>0):len-i2)';
+        %covz(i1*p+1:(i1+1)*p, i2*p+1:(i2+1)*p) =...  % this one is 10% slower
+          %X(:,m1-i1:t_bg+k*(k<0))*X(:,m1-i2:t_bg-k*(k>0))'...
+        %+ X(:,t_ed+k*(k<0):len-i1)*X(:,t_ed-k*(k>0):len-i2)';
     end
 end
-toc
 % combine them
 for k=0:m
     covz(k*p+1:(k+1)*p,:) = covz(k*p+1:(k+1)*p,:) + RR(:,(m-k)*p+1:(2*m+1-k)*p);
