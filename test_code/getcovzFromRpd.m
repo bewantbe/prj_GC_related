@@ -26,6 +26,7 @@ for k = 0 : m
     RR(:, (m-k)*p+1 : (m+1-k)*p) = R_k';
 end
 % head and tail parts
+%{
 covz = zeros((m+1)*p,(m+1)*p);
 t_ed = t_ed+1;
 t_bg = t_bg-1;
@@ -47,6 +48,8 @@ for i1=0:m
         %+ X(:,t_ed+k*(k<0):len-i1)*X(:,t_ed-k*(k>0):len-i2)';
     end
 end
+%}
+covz = getcovpdhded(X,t_bg,t_ed,m);  % about 10 times faster
 % combine them
 for k=0:m
     covz(k*p+1:(k+1)*p,:) = covz(k*p+1:(k+1)*p,:) + RR(:,(m-k)*p+1:(2*m+1-k)*p);

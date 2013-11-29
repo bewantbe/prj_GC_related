@@ -13,9 +13,9 @@ tic
 R = getcovpd(X, od+1);
 toc
 X_no_mean = bsxfun(@minus, X, mean(X,2));
-%tic
+tic
 covz2 = getcovzFromRpd(X_no_mean, R, od);
-%toc
+toc
 
 max(abs(covz-covz2)(:))
 mean(abs(covz-covz2)(:))

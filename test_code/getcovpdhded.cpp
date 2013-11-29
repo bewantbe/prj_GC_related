@@ -1,4 +1,6 @@
 // mex getcovpdhded.cpp
+//In octave
+// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovpdhded.cpp
 #include <mex.h>
 
 #define EIGEN_NO_DEBUG
@@ -43,19 +45,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
         X.block(0,m-i2, p,t_bg-k_pos-(m-i2)).transpose() +
         X.block(0,t_ed+k_neg, p,len-i1-(t_ed+k_neg)) *
         X.block(0,t_ed-k_pos, p,len-i2-(t_ed-k_pos)).transpose();
-      //covz.block(i1*p,i2*p,p,p).noalias() =
-        //X.block(0,m-i1, p,t_bg+k_neg-(m-i1)) * 
-        //X.block(0,m-i2, p,t_bg-k_pos-(m-i2)).transpose();
-      //covz.block(i1*p,i2*p,p,p).noalias() +=
-        //X.block(0,t_ed+k_neg, p,len-i1-(t_ed+k_neg)) *
-        //X.block(0,t_ed-k_pos, p,len-i2-(t_ed-k_pos)).transpose();
-      //tmpR.noalias() =
-        //X.block(0,m-i1, p,t_bg+k_neg-(m-i1)) * 
-        //X.block(0,m-i2, p,t_bg-k_pos-(m-i2)).transpose();
-      //tmpR.noalias() +=
-        //X.block(0,t_ed+k_neg, p,len-i1-(t_ed+k_neg)) *
-        //X.block(0,t_ed-k_pos, p,len-i2-(t_ed-k_pos)).transpose();
-      //covz.block(i1*p,i2*p,p,p).noalias() = tmpR;
     }
   }
 }
