@@ -1,1 +1,0 @@
-/home/xyy/matcode/prj_GC_clean/test_code/getcovpdhded_v2.cpp

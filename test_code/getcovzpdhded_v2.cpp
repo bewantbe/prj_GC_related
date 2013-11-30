@@ -1,6 +1,6 @@
 // mex getcovpdhded.cpp
 //In octave
-// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovpdhded_v2.cpp
+// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovzpdhded_v2.cpp
 #include <mex.h>
 
 #define EIGEN_NO_DEBUG

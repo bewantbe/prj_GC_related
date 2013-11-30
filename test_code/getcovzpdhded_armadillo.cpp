@@ -1,10 +1,9 @@
 // mex getcovpdhded.cpp
 //In octave
-// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovpdhded.cpp
+// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp -lblas' mkoctfile --mex getcovzpdhded_armadillo.cpp
 #include <mex.h>
 
-#define EIGEN_NO_DEBUG
-#include <eigen3/Eigen/Dense>
+#include <armadillo>
 // use Col Major
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
@@ -29,22 +28,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
   }
   t_bg = t_bg - 1;
 
-  const Eigen::Map<const Eigen::MatrixXd> X(mxGetPr(prhs[0]),p,len);
+  const arma::mat X(mxGetPr(prhs[0]),p,len, false, true);
 
   size_t m1   = m + 1;
   plhs[0] = mxCreateDoubleMatrix(m1*p, m1*p, mxREAL);
-  Eigen::Map<Eigen::MatrixXd> covz(mxGetPr(plhs[0]), m1*p, m1*p);
-  Eigen::MatrixXd tmpR(p,p);
+  arma::mat covz(mxGetPr(plhs[0]), m1*p, m1*p, false, true);
   for (int i1=0; i1<=m; i1++) {
     for (int i2=0; i2<=m; i2++) {
       int k=i2-i1;
       int k_pos = k*(k>0);
       int k_neg = k*(k<0);
-      covz.block(i1*p,i2*p,p,p) =
-        X.block(0,m-i1, p,t_bg+k_neg-(m-i1)) * 
-        X.block(0,m-i2, p,t_bg-k_pos-(m-i2)).transpose() +
-        X.block(0,t_ed+k_neg, p,len-i1-(t_ed+k_neg)) *
-        X.block(0,t_ed-k_pos, p,len-i2-(t_ed-k_pos)).transpose();
+      //mexPrintf("for: i1=%d, i2=%d\n", i1, i2);
+      //mexPrintf("p1=%d~%d", m-i1, t_bg+k_neg-1);
+      //mexPrintf("p2=%d~%d", t_ed+k_neg, len-i1-1);
+      //fflush(stdout);
+      covz.submat(i1*p,i2*p,(i1+1)*p-1,(i2+1)*p-1) =
+        X.submat(0,m-i1, p-1,t_bg+k_neg-1) * 
+        X.submat(0,m-i2, p-1,t_bg-k_pos-1).t() +
+        X.submat(0,t_ed+k_neg, p-1,len-i1-1) *
+        X.submat(0,t_ed-k_pos, p-1,len-i2-1).t();
     }
   }
 }

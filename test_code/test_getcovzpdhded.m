@@ -34,7 +34,7 @@ toc
 t_bg = m+1;     % time range in common
 t_ed = len-m;
 tic
-covz2 = getcovpdhded(X, t_bg, t_ed, m);
+covz2 = getcovzpdhded(X, t_bg, t_ed, m);
 toc
 
 fprintf('max abs err: %g\n', max(abs(covz2-covz)(:)));
