@@ -13,8 +13,8 @@ end
 % Here assume R is obtained by
 % R = getcovpd(X, m_R);
 
-t_bg = m+1;     % time range in common
-t_ed = len-m;
+t_bg = m+1 +1;     % time range in common
+t_ed = len-m -1;
 % middle part
 R  = (len-m_R) * R;
 RR = zeros(p, (2*m+1)*p);
@@ -49,7 +49,9 @@ for i1=0:m
     end
 end
 %}
-covz = getcovpdhded(X,t_bg,t_ed,m);  % about 10 times faster
+%covz = getcovpdhded(X,t_bg,t_ed,m);  % about 10 times faster
+covz = getcovpdhded_v2(X,t_bg,t_ed,m);  % about 10 times faster
+%covz = getcovpdhded_armadillo(X,t_bg,t_ed,m);  % 30% slower than eigen
 % combine them
 for k=0:m
     covz(k*p+1:(k+1)*p,:) = covz(k*p+1:(k+1)*p,:) + RR(:,(m-k)*p+1:(2*m+1-k)*p);
