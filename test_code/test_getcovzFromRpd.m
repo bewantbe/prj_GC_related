@@ -10,7 +10,7 @@ covz = getcovzpd(X, od);
 toc
 
 tic
-R = getcovpd(X, od+1);
+R = getcovpd(X, od);
 toc
 X_no_mean = bsxfun(@minus, X, mean(X,2));
 tic

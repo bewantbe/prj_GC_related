@@ -153,9 +153,12 @@ if b_correctness_test
   %figure(3);
   %plot(s_xic_val_pd);
 
-  figure(4);
-  plot(1:length(s_lndet_de), s_lndet_de, 1:length(s_lndet_de_pd), s_lndet_de_pd);
-  fprintf('Ave order diff: %g\n', exp((s_lndet_de_pd(1)-s_lndet_de_pd(end))/p));
+  %figure(4);
+  %plot(1:length(s_lndet_de), s_lndet_de, 1:length(s_lndet_de_pd), s_lndet_de_pd);
+  figure(5);
+  %plot(1:length(s_lndet_de_auto), s_lndet_de_auto, 1:length(s_lndet_de_pd), s_lndet_de_pd);
+  plot(1:length(s_lndet_de_auto), s_lndet_de_auto-s_lndet_de_pd(1:length(s_lndet_de_auto)));
+  fprintf('Ave order diff: %g\n', exp((s_lndet_de_pd(1)-s_lndet_de_pd(bicod_pd))/p));
   norm(s_xic_val(rg)-oBIC(bicod_pd))
 
 end  % if correctness test

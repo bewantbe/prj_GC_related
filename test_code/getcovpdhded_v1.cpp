@@ -1,6 +1,6 @@
 // mex getcovpdhded.cpp
 //In octave
-// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovpdhded_v2.cpp
+// CXXFLAGS='-O3 -march=native -fopenmp -std=c++11'  LDFLAGS='-march=native -fopenmp' mkoctfile --mex getcovpdhded.cpp
 #include <mex.h>
 
 #define EIGEN_NO_DEBUG
@@ -27,22 +27,24 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
   if (t_ed > len-m) {
     mexErrMsgTxt("t_ed too large!");
   }
+  t_bg = t_bg - 1;
+
+  const Eigen::Map<const Eigen::MatrixXd> X(mxGetPr(prhs[0]),p,len);
 
   size_t m1   = m + 1;
-  int len_ed = len-t_ed;
-  int t_bg_m = t_bg-1-m;
   plhs[0] = mxCreateDoubleMatrix(m1*p, m1*p, mxREAL);
   Eigen::Map<Eigen::MatrixXd> covz(mxGetPr(plhs[0]), m1*p, m1*p);
-  const Eigen::Map<const Eigen::MatrixXd> X(mxGetPr(prhs[0]),p,len);
+  Eigen::MatrixXd tmpR(p,p);
   for (int i1=0; i1<=m; i1++) {
-    for (int i2=i1; i2<=m; i2++) {
+    for (int i2=0; i2<=m; i2++) {
+      int k=i2-i1;
+      int k_pos = k*(k>0);
+      int k_neg = k*(k<0);
       covz.block(i1*p,i2*p,p,p) =
-        X.block(0,m-i1, p,t_bg_m+i1) * 
-        X.block(0,m-i2, p,t_bg_m+i1).transpose() +
-        X.block(0,t_ed      , p,len_ed-i1) *
-        X.block(0,t_ed-i2+i1, p,len_ed-i1).transpose();
-      if (i1!=i2)
-        covz.block(i2*p,i1*p,p,p) = covz.block(i1*p,i2*p,p,p).transpose();
+        X.block(0,m-i1, p,t_bg+k_neg-(m-i1)) * 
+        X.block(0,m-i2, p,t_bg-k_pos-(m-i2)).transpose() +
+        X.block(0,t_ed+k_neg, p,len-i1-(t_ed+k_neg)) *
+        X.block(0,t_ed-k_pos, p,len-i2-(t_ed-k_pos)).transpose();
     }
   }
 }
