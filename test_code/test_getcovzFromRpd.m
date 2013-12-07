@@ -17,8 +17,8 @@ tic
 covz2 = getcovzFromRpd(X_no_mean, R, od);
 toc
 
-max(abs(covz-covz2)(:))
-mean(abs(covz-covz2)(:))
-max(abs(covz)(:))
+max(abs(covz(:)-covz2(:)))
+mean(abs(covz(:)-covz2(:)))
+max(abs(covz(:)))
 %pcolor(abs(covz-covz2))
 %colorbar();

@@ -1,5 +1,6 @@
-p=2; fn='data/volt_net_2_2_sc=0.01_pr=1_ps=0.012_t=1.01e+06_stv=0.5.dat';
-p=100; fn='data/volt_net_100_21_p[80,20]_sc=[0.004,0.004,0.008,0.008]_pr=1_ps=0.012_t=1.00e+06_stv=0.5.dat';
+%p=2; fn='data/volt_net_2_2_sc=0.01_pr=1_ps=0.012_t=1.01e+06_stv=0.5.dat';
+%p=100; fn='data/volt_net_100_21_p[80,20]_sc=[0.004,0.004,0.008,0.008]_pr=1_ps=0.012_t=1.00e+06_stv=0.5.dat';
+p=100; fn='../data/volt_net_100_21_p[80,20]_sc=[0.005,0.005,0.007,0.007]_pr=1_ps=0.012_t=1.00e+06_stv=0.5.dat';
 
 tic; fid=fopen(fn,'r'); X=fread(fid,[p,inf],'double'); fclose(fid); toc
 size(X)
@@ -9,9 +10,10 @@ tic; Ro = getcovpd(X, m); toc
 
 tic; R = getcovpdFile(fn, p, m); toc
 
-R - Ro
+%R - Ro
 
-max(abs(R-Ro)(:))
+max(abs(R(:)-Ro(:)))
+max(abs(R(:)))
 
 %R = getcovpdFile(fn, 2, m, 20000);
 

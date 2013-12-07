@@ -60,8 +60,8 @@ gc6 = AnalyseSeriesFast(X,od);
 tocs('AnalyseSeriesFast');
 
 
-max(abs(gc1-gc2)(:))
-max(abs(gc3-gc2)(:))
-max(abs(gc4-gc2)(:))
-max(abs(gc5-gc2)(:))
-max(abs(gc6-gc2)(:))
+max(abs(gc1(:)-gc2(:)))
+max(abs(gc3(:)-gc2(:)))
+max(abs(gc4(:)-gc2(:)))
+max(abs(gc5(:)-gc2(:)))
+max(abs(gc6(:)-gc2(:)))

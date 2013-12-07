@@ -3,7 +3,7 @@ len = 1e5;
 
 p = 5;
 [q,r] = qr(randn(p));
-v = logspace(-8, 7, p);
+v = logspace(-7, 6, p);
 
 M = q*diag(sqrt(v));
 X = M*randn(p, len);

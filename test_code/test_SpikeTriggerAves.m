@@ -27,7 +27,8 @@ t=toc
 norm(v_sta1-v_sta2)
 norm(t_rel1-t_rel2)
 
-disp('\nmultiple test');
+disp(' ');
+disp('multi-var test');
 s = 1:2:p;
 tic
 [v_sta1, t_rel1] = spikeTriggerAves(1, s, ras, X, ana_len, stv);
@@ -43,4 +44,4 @@ for k=1:length(s)
 end
 t=toc
 
-norm((v_sta1-v_sta2)(:))
+norm((v_sta1(:)-v_sta2(:)))

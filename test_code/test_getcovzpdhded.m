@@ -37,4 +37,5 @@ tic
 covz2 = getcovzpdhded(X, t_bg, t_ed, m);
 toc
 
-fprintf('max abs err: %g\n', max(abs(covz2-covz)(:)));
+fprintf('max abs err: %g\n', max(abs(covz2(:)-covz(:))));
+fprintf('max abs covz: %g\n', max(abs(covz(:))));
