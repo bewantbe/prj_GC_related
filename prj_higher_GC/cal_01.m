@@ -37,5 +37,6 @@ else
 end
 
 ba = basic_analyse(X, s_od);
+disp(' ');  fflush(stdout);
 ba_st = basic_analyse(X_st, s_od);
 
