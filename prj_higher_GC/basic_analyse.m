@@ -3,7 +3,7 @@ function ba = basic_analyse(X, s_od)
 
 [p,len] = size(X);
 
-[oGC, oDe, R] = AnalyseSeries(X, s_od, 0);
+[oGC, oDe, R] = AnalyseSeriesFast(X, s_od, 0);
 [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
 
 ba.oGC     = oGC;
