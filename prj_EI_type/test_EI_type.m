@@ -64,6 +64,7 @@ if new_load
   p_EI_list = p_EI_list(s_id_want);
 end
 
+%{
 tic
 p_val = 2e-4;
 use_od = bic_od;
@@ -95,12 +96,23 @@ for p_driving = 1:length(s_id_want)
   end
 end
 toc
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % single analysis
-%{
-p_driving = 3;
-p_passive = 8;
+
+%p_driving = 8;
+%p_passive = 6;
+
+%p_driving = 8;
+%p_passive = 3;
+
+p_driving = 77;
+p_passive = 82;
+
+p_driving = 80;
+p_passive = 82;
+
 fprintf('In neu_network: %d->%d (%d->%d) ', p_driving, p_passive, s_id_want(p_driving), s_id_want(p_passive));
 if sub_neu_network(p_passive, p_driving)
   fprintf('true\n');
@@ -108,15 +120,18 @@ else
   fprintf('false\n');
 end
 
-ana_len = [0,5];
+%ana_len = [0,5];
+ana_len = 200;
 
 pic_prefix = 'pic_tmp/';
 if mode_ST
   st_mode = '_ST';
   st_volt = 'SpikeTrain';
+  st_X = 'ST';
 else
   st_mode = '';
   st_volt = 'Volt';
+  st_X = 'X';
 end
 
 [tg_rd, t_rel] = spikeTriggerAve(p_driving, p_passive, ras, srd, ana_len, stv);
@@ -127,12 +142,25 @@ ylabel(sprintf('\\epsilon^{A}_{%d|%d}(t_{rel})', s_id_want(p_passive), s_id_want
 print('-depsc2', sprintf('%scase=%s%s_srd(%d)On%d_STA.eps',...
                  pic_prefix, case_st, st_mode, s_id_want(p_passive), s_id_want(p_driving)));
 
+% save data
+pic_prefix_add = sprintf('%scase=%s%s_srd(%d)On%d_STA',...
+   pic_prefix, case_st, st_mode, s_id_want(p_passive), s_id_want(p_driving));
+pic_data_save = @(st, varargin)save('-v7', [pic_prefix_add, st, '.mat'], 'varargin');
+pic_data_save('', 0, tg_rd(t_rel==0), t_rel, tg_rd);
+
+
 [tg_rd, t_rel] = spikeTriggerAve(p_driving, p_passive, ras, X, ana_len, stv);
 figure(2);
 plot(0, tg_rd(t_rel==0),'rx', t_rel, tg_rd, '-+');
 xlabel('t_{rel}/ms');
 ylabel(sprintf('%s_{%d|%d}(t_{rel})', st_volt, s_id_want(p_passive), s_id_want(p_driving)));
-print('-depsc2', sprintf('%scase=%s%s_X(%d)On%d_STA.eps',...
-                 pic_prefix, case_st, st_mode, s_id_want(p_passive), s_id_want(p_driving)));
-%}
+print('-depsc2', sprintf('%scase=%s%s_%s(%d)On%d_STA.eps',...
+                 pic_prefix, case_st, st_mode, st_X, s_id_want(p_passive), s_id_want(p_driving)));
+
+% save data
+pic_prefix_add = sprintf('%scase=%s%s_%s(%d)On%d_STA',...
+   pic_prefix, case_st, st_mode, st_X, s_id_want(p_passive), s_id_want(p_driving));
+pic_data_save = @(st, varargin)save('-v7', [pic_prefix_add, st, '.mat'], 'varargin');
+pic_data_save('', 0, tg_rd(t_rel==0), t_rel, tg_rd);
+
 %%%%%%%%%%%%%%%%%%%%%%%%
