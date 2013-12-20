@@ -7,3 +7,5 @@ tmp_*.m
 data/
 pic_tmp/
 prj_nuft/pic/
+*.mex*
+*.o

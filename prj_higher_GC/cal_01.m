@@ -52,7 +52,7 @@ switch cs
   otherwise
     error('haha');
 end
-simu_time = 1e6;
+simu_time = 1e4;
 extst = 'new --RC-filter -q';
 
 if strcmpi(mode_IF,'ExpIF')
@@ -105,7 +105,8 @@ end
 kmix = 1.0;
 Xcom = X;
 s_kmix_set1 = [-9.0 -5.0 -2.5 -1.5 -1.0 -0.7 -0.5 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.4 2.0 5.0 9.0];
-s_kmix_short = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
+s_kmix_set2 = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
+s_kmix_short = [0.3 0.5 0.7 1.0];
 
 for kmix = s_kmix_short
   X = Xcom + kmix*Xs;
