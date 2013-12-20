@@ -52,19 +52,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
   double *p_v_out = mxGetPr(plhs[0]);
   double *arr_v_state = new double[p*c_state_length_filter_g];
   memset(arr_v_state, 0, sizeof(double)*p*c_state_length_filter_g);
+  int *ref_period = new int[p];
+  memset(ref_period, 0, sizeof(int)*p);
 
   for (size_t j=0; j<len; j++) {
-    while (j*stv > *p_ras) {   // if pass thresthold, reset filter state
-      //printf("reseting: %d  ", int(*(p_ras-1)));  fflush(stdout);
+    while (j*stv >= *p_ras) {   // if pass thresthold, reset filter state
+      ref_period[int(*(p_ras-1))-1] = 4;  // avoid the spike region
       memset(arr_v_state+(int(*(p_ras-1))-1)*c_state_length_filter_g, 0, sizeof(double)*c_state_length_filter_g);
       p_ras += 2;
       ras_id ++;
-      //printf("ras[%d] = %g, %g\n", ras_id, ras[2*ras_id+1], *p_ras);
     }
-    //printf("j=%lu\n", j);  fflush(stdout);
     for (size_t k=0; k<p; k++) {
-      *p_v_out++ = FilterG(*p_Xv++, arr_v_state+k*c_state_length_filter_g);
+      ref_period[k] -= ref_period[k]>0;
+      *p_v_out++ = (ref_period[k]==0)*FilterG(*p_Xv++, arr_v_state+k*c_state_length_filter_g);
+      //*p_v_out++ = FilterG(*p_Xv++, arr_v_state+k*c_state_length_filter_g);
     }
   }
   delete [] arr_v_state;
+  delete [] ref_period;
 }

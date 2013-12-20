@@ -17,6 +17,7 @@ p       = ba.p;
 gc_scale = 1e-4;
 st_gc_scale = sprintf('%.1e',gc_scale);
 fprintf('bo:%2d, ao:%2d\n', bic_od, aic_od);
+
 disp('var (\Sigma) at bic_od | var reduce ratio:');
 s1=num2str(oDe(:,:,bic_od),' %9.3g');
 s2=num2str(diag(diag(R)./diag(oDe(:,:,bic_od))),' %8.4g');
