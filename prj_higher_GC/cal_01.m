@@ -3,7 +3,7 @@ clear('stv','dt','extst');
 extst = '';
 stv = 1/2;
 
-for cs=7:7
+for cs=1:1
 
 mode_IF = 'IF';
 mode_ST = 0;
@@ -69,12 +69,15 @@ for neuron_id=1:size(Xs,1)
     Xs(neuron_id,:) = SpikeTrain(ras, size(Xv,2), neuron_id, [], [], 0);
 end
 
-X = neu_volt_composer(Xv, [ras; 0,1e300]');
+%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [-1 0]);
+X = [Xv(:,1),diff(Xv,1,2)];
 for k=1:size(X,1)
-  X(k,SpikeTrain(ras,size(X,2),k,[],[],1)>0) = 0;
+  mb = SpikeTrain(ras,size(X,2),k,[],[],1)>0;
+  X(k,mb) = 0;
+  X(k,shift(mb,1)) = 0;
+  X(k,shift(mb,2)) = 0;
 end
-
-[p, len] = size(Xv);
+[p, len] = size(Xs);
 
 if strcmpi(mode_IF,'IF')
     s_od = 1:99;  % for IF
@@ -88,25 +91,26 @@ disp(['ISI: ', num2str(ISI)]);
 str_b_brief = @(b) sprintf('%5.2f (%5.2f)\t%5.2f (%5.2f)',...
   b.zero_GC(2,1)/1e-4, b.oGC(2,1,b.bic_od)/(b.bic_od/b.len),...
   b.zero_GC(1,2)/1e-4, b.oGC(1,2,b.bic_od)/(b.bic_od/b.len)); 
-bv = basic_analyse(Xv, s_od);
-fprintf('Volt:\t%s\n', str_b_brief(bv));
-fflush(stdout);
-bs = basic_analyse(Xs, s_od);
-fprintf('ST:\t%s\n', str_b_brief(bs));
-fflush(stdout);
+%bv = basic_analyse(Xv, s_od);
+%fprintf('Volt:\t%s\n', str_b_brief(bv));
+%fflush(stdout);
+%bs = basic_analyse(Xs, s_od);
+%fprintf('ST:\t%s\n', str_b_brief(bs));
+%fflush(stdout);
 
 for k=1:p
   %X(k,shift(Xs(k,:)>0,-2)) = 0;
   %X(k,shift(Xs(k,:)>0,-1)) = 0;
+  %X(k,shift(Xs(k,:)>0,1)) = 0;
   %X(k,shift(Xs(k,:)>0,2)) = 0;
   %X(k,shift(Xs(k,:)>0,3)) = 0;
 end
 
-kmix = 1.0;
 Xcom = X;
 s_kmix_set1 = [-9.0 -5.0 -2.5 -1.5 -1.0 -0.7 -0.5 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.4 2.0 5.0 9.0];
 s_kmix_set2 = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
 s_kmix_short = [0.3 0.5 0.7 1.0];
+s_kmix_0 = [1.0];
 
 for kmix = s_kmix_set1
   X = Xcom + kmix*Xs;
@@ -119,7 +123,8 @@ end
 %rg0 = 1:100;
 %rg = bg+rg0;
 %figure(1);
-%hd=plot(rg0, Xv(:,rg), '-o', rg0, X(:, rg), '-o');
+%%hd=plot(rg0, Xv(:,rg), '-x', rg0, X(:, rg), '-o', rg0, Xd(:,rg), '-+');
+%hd=plot(rg0, Xv(:,rg), '-x', rg0, X(:, rg), '-o');
 %set(hd,'markersize',3);
 
 %figure(2);
