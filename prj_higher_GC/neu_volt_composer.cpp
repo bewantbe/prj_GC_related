@@ -1,6 +1,5 @@
-
 #include <mex.h>
-#include <stdio.h>   // for debug: printf
+#include <stdio.h>   // for debug: printf()
 #include <string.h>  // for memset()
 #include <math.h>    // for exp()
 

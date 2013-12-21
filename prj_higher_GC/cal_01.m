@@ -3,7 +3,7 @@ clear('stv','dt','extst');
 extst = '';
 stv = 1/2;
 
-for cs=9:12
+for cs=7:7
 
 mode_IF = 'IF';
 mode_ST = 0;
@@ -52,8 +52,8 @@ switch cs
   otherwise
     error('haha');
 end
-simu_time = 1e4;
-extst = 'new --RC-filter -q';
+simu_time = 1e6;
+extst = '--RC-filter -q';
 
 if strcmpi(mode_IF,'ExpIF')
     extst = ['ExpIF ',extst];
@@ -108,7 +108,7 @@ s_kmix_set1 = [-9.0 -5.0 -2.5 -1.5 -1.0 -0.7 -0.5 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3
 s_kmix_set2 = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
 s_kmix_short = [0.3 0.5 0.7 1.0];
 
-for kmix = s_kmix_short
+for kmix = s_kmix_set1
   X = Xcom + kmix*Xs;
   b = basic_analyse(X, s_od);
   fprintf('%5.2f\t%s\n', kmix,str_b_brief(b)); 
