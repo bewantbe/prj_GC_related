@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ctags -R ./
+ctags -aR ../GC_clean/
+
