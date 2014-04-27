@@ -1,31 +1,52 @@
 % Generate neuron data by calling external program
 % will use preserved data automatically
 
-% p the parameters
+% pm the parameters
 %{
-  p.net = 'net_2_2';
-  p.ps = 0.04;
-  p.pr = 1.6;
-  p.scee = 0.05;
-  p.t = 1e5;
-  p.dt = 1/32;
-  p.stv = 0.5;
-  [X, ISI, ras] = gen_HH(p);
+  pm.net  = 'net_2_2';
+  pm.ps   = 0.04;
+  pm.pr   = 1.6;
+  pm.scee = 0.05;
+  pm.t    = 1e4;
+  pm.dt   = 1/32;
+  pm.stv  = 0.5;
+  [X, ISI, ras] = gen_HH(pm);
 %}
 
-function [X, ISI, ras] = gen_HH(p)
+function [X, ISI, ras] = gen_HH(pm)
+return_X_name = false;
 
 output_name     = 'data/tmp_volt.dat';
 output_ISI_name = 'data/tmp_isi.txt';
 output_RAS_name = 'data/tmp_ras.txt';
-[network, mat_path] = getnetwork(p.net);
+[network, mat_path] = getnetwork(pm.net);
+p = size(network,1);
 
-st_neu_param = sprintf('-n %d -mat %s -pr %.16e -ps %.16e -scee %.16e',...
-                       size(network,1), mat_path, p.pr, p.ps, p.scee);
-st_sim_param = sprintf('-t %.16e -dt %.17e -stv %.17e',...
-                       p.t, p.dt, p.stv);
-st_paths = sprintf('-o %s --save-spike-interval %s --save-spike %s',...
-                   output_name, output_ISI_name, output_RAS_name);
+if ~isfield(pm, 'scee')
+    pm.scee = 0;
+end
+if ~isfield(pm, 'scei')
+    pm.scei = 0;
+end
+if ~isfield(pm, 'scie')
+    pm.scie = 0;
+end
+if ~isfield(pm, 'scii')
+    pm.scii = 0;
+end
+
+st_neu_s =...
+    sprintf('-scee %.16e -scei %.16e -scie %.16e -scii %.16e',...
+            pm.scee, pm.scei, pm.scie, pm.scii);
+st_neu_param =...
+    sprintf('-n %d -mat %s -pr %.16e -ps %.16e %s',...
+            p, mat_path, pm.pr, pm.ps, st_neu_s);
+st_sim_param =...
+    sprintf('-t %.16e -dt %.17e -stv %.17e',...
+            pm.t, pm.dt, pm.stv);
+st_paths =...
+    sprintf('--bin-save -o %s --save-spike-interval %s --save-spike %s',...
+            output_name, output_ISI_name, output_RAS_name);
 cmdst = sprintf('./raster_tuning_HH -ng -q -v %s %s %s',...
                 st_neu_param, st_sim_param, st_paths);
 disp(cmdst);
@@ -34,9 +55,13 @@ rt = system(cmdst);
 
 if rt==0
     if (nargout>0)
+        return_X_name
+        output_name
         if return_X_name
+            disp('yes!');
             X = output_name;
         else
+            disp('no!');
             fid = fopen(output_name, 'r');
             X = fread(fid, [p, Inf], 'double');
             fclose(fid);
@@ -56,4 +81,4 @@ else
 end
 
 end
-% vim: set ts=4 sw=4 ss=4
+% vim: et sw=4 sts=4
