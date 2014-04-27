@@ -34,6 +34,9 @@ end
 if ~isfield(pm, 'scii')
     pm.scii = 0;
 end
+if ~isfield(pm, 'extra_cmd')
+    pm.extra_cmd = '';
+end
 
 st_neu_s =...
     sprintf('-scee %.16e -scei %.16e -scie %.16e -scii %.16e',...
@@ -47,21 +50,18 @@ st_sim_param =...
 st_paths =...
     sprintf('--bin-save -o %s --save-spike-interval %s --save-spike %s',...
             output_name, output_ISI_name, output_RAS_name);
-cmdst = sprintf('./raster_tuning_HH -ng -q -v %s %s %s',...
-                st_neu_param, st_sim_param, st_paths);
-disp(cmdst);
+cmdst = sprintf('./raster_tuning_HH -ng -q -v %s %s %s %s',...
+                st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
+%disp(cmdst);
+disp('');
 
 rt = system(cmdst);
 
 if rt==0
     if (nargout>0)
-        return_X_name
-        output_name
         if return_X_name
-            disp('yes!');
             X = output_name;
         else
-            disp('no!');
             fid = fopen(output_name, 'r');
             X = fread(fid, [p, Inf], 'double');
             fclose(fid);
@@ -71,7 +71,19 @@ if rt==0
         ISI = load('-ascii', output_ISI_name);
     end
     if (nargout>2)
-        ras = load('-ascii', output_RAS_name);
+        tmp_fd = fopen(output_RAS_name);
+        rt1 = fseek(tmp_fd, 0, 'eof');
+        if rt1 ~= 0
+            fclose(tmp_fd);
+            error('fseek?');
+        end
+        pos = ftell(tmp_fd);
+        fclose(tmp_fd);
+        if pos > 1
+            ras = load('-ascii', output_RAS_name);
+        else
+            ras = [];
+        end
     end
 else
     X=[];
