@@ -7,10 +7,10 @@ net_ans = [1 0];
 p_val = 0.05;
 b_correct_net = @(g)~any((g.gc>chi2inv(1-p_val, g.od)/g.len)(eye(g.p)==0)-net_ans');
 
-s_kmix_short = [0.3 0.5 0.7 1.0];
+s_kmix_short = [0.3 0.5 0.7 1.0 2.0];
 
-cid = 12;
-n_trial = 100;
+cid = 4;
+n_trial = 300;
 correct_cnt_v   = zeros(n_trial, 1);
 correct_cnt_s   = zeros(n_trial, 1);
 correct_cnt_mix = zeros(n_trial, length(s_kmix_short));

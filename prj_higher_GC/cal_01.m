@@ -1,59 +1,68 @@
 %
+pic_common_include;
 clear('stv','dt','extst');
 extst = '';
 stv = 1/2;
 
-for cs=1:1
+for cs=12
+
+%mode_IF = 'IF';
+%mode_ST = 0;
+%netstr = 'net_2_2';
+%scee = 0.01;
+%%pr = 1.0;
+%%ps = 0.012;
+%switch cs
+  %case 1
+    %pr = 0.24;
+    %ps = 0.02;
+  %case 2
+    %pr = 0.38;
+    %ps = 0.02;
+  %case 3
+    %pr = 0.5;
+    %ps = 0.02;
+  %case 4
+    %pr = 1.7;
+    %ps = 0.02;
+  %case 5
+    %pr = 0.45;
+    %ps = 0.012;
+  %case 6
+    %pr = 0.6;
+    %ps = 0.012;
+  %case 7
+    %pr = 1.0;
+    %ps = 0.012;
+  %case 8
+    %pr = 2.0;
+    %ps = 0.012;
+  %case 9
+    %pr = 1.2;
+    %ps = 0.005;
+  %case 10
+    %pr = 1.5;
+    %ps = 0.005;
+  %case 11
+    %pr = 2.5;
+    %ps = 0.005;
+  %case 12
+    %pr = 5.0;
+    %ps = 0.005;
+  %otherwise
+    %error('haha');
+%end
+%simu_time = 1e6;
+%extst = '--RC-filter -q';
 
 mode_IF = 'IF';
 mode_ST = 0;
-netstr = 'net_2_2';
-scee = 0.01;
-
-%pr = 1.0;
-%ps = 0.012;
-switch cs
-  case 1
-    pr = 0.24;
-    ps = 0.02;
-  case 2
-    pr = 0.38;
-    ps = 0.02;
-  case 3
-    pr = 0.5;
-    ps = 0.02;
-  case 4
-    pr = 1.7;
-    ps = 0.02;
-  case 5
-    pr = 0.45;
-    ps = 0.012;
-  case 6
-    pr = 0.6;
-    ps = 0.012;
-  case 7
-    pr = 1.0;
-    ps = 0.012;
-  case 8
-    pr = 2.0;
-    ps = 0.012;
-  case 9
-    pr = 1.2;
-    ps = 0.005;
-  case 10
-    pr = 1.5;
-    ps = 0.005;
-  case 11
-    pr = 2.5;
-    ps = 0.005;
-  case 12
-    pr = 5.0;
-    ps = 0.005;
-  otherwise
-    error('haha');
-end
-simu_time = 1e6;
-extst = '--RC-filter -q';
+netstr = 'net_100_04';  % 02 03 04
+scee = 0.005;
+pr = 0.24;
+ps = 0.02;
+simu_time = 1e5;
+extst = 'new --RC-filter';
 
 if strcmpi(mode_IF,'ExpIF')
     extst = ['ExpIF ',extst];
@@ -69,8 +78,10 @@ for neuron_id=1:size(Xs,1)
     Xs(neuron_id,:) = SpikeTrain(ras, size(Xv,2), neuron_id, [], [], 0);
 end
 
-%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [-1 0]);
-X = [Xv(:,1),diff(Xv,1,2)];
+%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv);
+%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [0 0]);
+X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [-1.0774 0.3715]);
+%X = [Xv(:,1),diff(Xv,1,2)];
 for k=1:size(X,1)
   mb = SpikeTrain(ras,size(X,2),k,[],[],1)>0;
   X(k,mb) = 0;
@@ -109,14 +120,14 @@ end
 Xcom = X;
 s_kmix_set1 = [-9.0 -5.0 -2.5 -1.5 -1.0 -0.7 -0.5 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.4 2.0 5.0 9.0];
 s_kmix_set2 = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
-s_kmix_short = [0.3 0.5 0.7 1.0];
-s_kmix_0 = [1.0];
+s_kmix_short = [0.3 0.5 0.7 1.0 2.0];
+s_kmix_0 = [0.0];
 
-for kmix = s_kmix_set1
+for kmix = s_kmix_short
   X = Xcom + kmix*Xs;
-  b = basic_analyse(X, s_od);
-  fprintf('%5.2f\t%s\n', kmix,str_b_brief(b)); 
-  fflush(stdout);
+  %b = basic_analyse(X, s_od);
+  %fprintf('%5.2f\t%s\n', kmix,str_b_brief(b)); 
+  %fflush(stdout);
 end
 
 %bg = 1e5;
@@ -130,5 +141,19 @@ end
 %figure(2);
 %plainlize = @(A) [squeeze(b.oGC(2,1,:))'; squeeze(b.oGC(1,2,:))']; 
 %plot(b.s_od, [plainlize(b.oGC); b.s_od/len]);
+
+%mlen = 256;
+%slen = mlen;
+%[aveSs, fqs] = mX2S_ft(SampleNonUnif(Xs, mlen, slen, 'u'));
+%%[aveS, fqs] = mX2S_ft(SampleNonUnif(Xv, mlen, slen, 'u'));
+%[aveS, fqs] = mX2S_ft(SampleNonUnif(X, mlen, slen, 'u'));
+%fqs = fftshift(fqs);
+%aveS = fftshift(aveS);
+%aveSs = fftshift(aveSs);
+%figure(3);
+%plot(fqs, aveS);
+%plot(fqs, aveS(:,1,1), fqs, aveSs(:,1,1));
+%plot(fqs, imag(aveS(:,2,1)));
+%pic_output_color('sp');
 
 end

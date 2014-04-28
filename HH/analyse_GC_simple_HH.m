@@ -132,6 +132,8 @@ disp([num2str(R(1,1)/oDe(1,1,bic_od)), ' ', num2str(R(2,2)/oDe(2,2,bic_od))]);
 %              st_para0, netstr, scee, pr, ps, stv, simu_time);
 %save('-v7', ['result_',st_para,'.mat']);
 
+% plot GC(od)
+%{
 rg = 34:99;
 gc_scale = 1e-4;
 figure(1);
@@ -140,4 +142,5 @@ plot(s_od(rg), (squeeze(oGC(1,2,rg)) - s_od(rg)'/len)/gc_scale);
 figure(2);
 %plot(s_od(rg), squeeze(oGC(2,1,rg))/gc_scale)
 plot(s_od(rg), (squeeze(oGC(2,1,rg)) - s_od(rg)'/len)/gc_scale)
+%}
 

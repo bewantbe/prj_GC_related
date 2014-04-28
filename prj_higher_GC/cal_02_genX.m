@@ -27,7 +27,7 @@ s_prps = [
 pr = s_prps(cid,1);
 ps = s_prps(cid,2);
 
-simu_time = 1e5;
+simu_time = 1e4;
 extst = 'new --RC-filter -q';
 
 if strcmpi(mode_IF,'ExpIF')
@@ -44,9 +44,18 @@ for neuron_id=1:size(Xs,1)
     Xs(neuron_id,:) = SpikeTrain(ras, size(Xv,2), neuron_id, [], [], 0);
 end
 
-Xcom = neu_volt_composer(Xv, [ras; 0,1e300]', stv);
+%Xcom = neu_volt_composer(Xv, [ras; 0,1e300]', stv);
+%for k=1:size(Xcom,1)
+  %Xcom(k,SpikeTrain(ras,size(Xcom,2),k,[],[],1)>0) = 0;
+%end
+
+Xcom = [Xv(:,1),diff(Xv,1,2)];
 for k=1:size(Xcom,1)
-  Xcom(k,SpikeTrain(ras,size(Xcom,2),k,[],[],1)>0) = 0;
+  mb = SpikeTrain(ras,size(Xcom,2),k,[],[],1)>0;
+  Xcom(k,mb) = 0;
+  Xcom(k,shift(mb,-1)) = 0;
+  Xcom(k,shift(mb,1)) = 0;
+  Xcom(k,shift(mb,2)) = 0;
 end
 
 [p, len] = size(Xs);
