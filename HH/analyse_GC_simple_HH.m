@@ -16,7 +16,7 @@ pr        = 1.6;
 ps        = 0.04;
 simu_time = 1e6;
 stv       = 0.5;
-extst     = 'new --RC-filter';
+extst     = '';
 ext_T     = 1e4;
 
 pm.net  = netstr;
@@ -26,6 +26,7 @@ pm.scee = scee;
 pm.t    = simu_time + ext_T;
 pm.dt   = 1/32;
 pm.stv  = stv;
+%pm.extra_cmd = [extst, '--save-poisson-events spe.txt'];
 
 [X, ISI, ras] = gen_HH(pm);
 X = X(:, round(ext_T/stv)+1:end);
