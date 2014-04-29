@@ -1,9 +1,9 @@
 % test lowpass filter
 
-[A, B] = custom_filters(11, true);
+%[A, B] = custom_filters(1, true);
+[A, B] = custom_filters('butter_o=5_wc=0.25', true);
 
 x=randn(1,1e7);
-%y=filter(Hd.Numerator,1,x); %conventional filtering
 y=filter(B,A,x); %conventional filtering
 
 fftlen = 1024;
@@ -20,10 +20,11 @@ s_fq = (0:fftlen-1)/fftlen /stv*1000;  % Hz
 
 figure(2);
 plot(s_fq, sy, s_fq, s);
-axis([100 400 0 1.2]);
+axis([0 s_fq(fftlen/2) 0 1.2]);
 %axis([200 300 0 1.2]);
 
 figure(3);
 semilogy(s_fq, sy, s_fq, s);
-axis([0 s_fq(fftlen/2) 1e-4 2]);
+%axis([0 s_fq(fftlen/2) 1e-4 2]);
+xlim([0 s_fq(fftlen/2)]);
 

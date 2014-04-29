@@ -10,15 +10,14 @@ clear('stv','dt','extst');
 mode_IF = 'IF';
 mode_ST = 0;
 
-netstr = 'net_2_2';
-scee = 0.05;
-pr = 1.6;
-ps = 0.04;
-simu_time = 1e5;
-stv = 0.5;
-extst = 'new --RC-filter';
-
-ext_T = 1e4;
+netstr    = 'net_2_2';
+scee      = 0.05;
+pr        = 1.6;
+ps        = 0.04;
+simu_time = 1e6;
+stv       = 0.5;
+extst     = 'new --RC-filter';
+ext_T     = 1e4;
 
 pm.net  = netstr;
 pm.ps   = ps;
@@ -28,7 +27,6 @@ pm.t    = simu_time + ext_T;
 pm.dt   = 1/32;
 pm.stv  = stv;
 
-%[X, ISI, ras] = gendata_neu(netstr, scee, pr, ps, simu_time+ext_T, stv, extst);
 [X, ISI, ras] = gen_HH(pm);
 X = X(:, round(ext_T/stv)+1:end);
 if ~isempty(ras)
@@ -37,9 +35,6 @@ end
 for id_p = 1:size(X,1)
   ISI(id_p) = simu_time/(sum(ras(:,1)==id_p,1));
 end
-
-%fprintf('common   input rate: %.2f\n', sum(1./ISI(3:end)));
-%fprintf('external input rate: %.2f\n', pr_mul_first*pr);
 
 % only analyse first two neuron
 %X = X(1:2,:);
@@ -143,4 +138,7 @@ figure(2);
 %plot(s_od(rg), squeeze(oGC(2,1,rg))/gc_scale)
 plot(s_od(rg), (squeeze(oGC(2,1,rg)) - s_od(rg)'/len)/gc_scale)
 %}
+
+% show volt and srd samples
+test_filter_result;
 
