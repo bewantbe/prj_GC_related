@@ -1,0 +1,103 @@
+%
+pic_common_include;
+clear('stv','dt','extst');
+extst = '';
+stv = 1/2;
+
+mode_IF = 'IF';
+mode_ST = 0;
+netstr = 'net_100_04';  % 02 03 04
+scee = 0.005;
+pr = 0.24;
+ps = 0.02;
+simu_time = 1e5;
+extst = '--RC-filter';
+
+if strcmpi(mode_IF,'ExpIF')
+    extst = ['ExpIF ',extst];
+end
+if exist('dt','var')
+    extst = [extst, sprintf(' -dt %.16e',dt)];
+end
+
+[Xv, ISI, ras] = gendata_neu(netstr, scee, pr, ps, simu_time, stv, extst);
+
+Xs = zeros(size(Xv));
+for neuron_id=1:size(Xs,1)
+    Xs(neuron_id,:) = SpikeTrain(ras, size(Xv,2), neuron_id, [], [], 0);
+end
+
+X = neu_volt_composer(Xv, [ras; 0,1e300]', stv);
+%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [0 0]);
+%X = neu_volt_composer(Xv, [ras; 0,1e300]', stv, [-1.0774 0.3715]);
+%X = [Xv(:,1),diff(Xv,1,2)];
+for k=1:size(X,1)
+  mb = SpikeTrain(ras,size(X,2),k,[],[],1)>0;
+  X(k,mb) = 0;
+  %X(k,shift(mb,1)) = 0;
+  %X(k,shift(mb,2)) = 0;
+end
+[p, len] = size(Xs);
+
+s_od = 1:39;  % for IF
+
+fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...
+ netstr, scee, pr, ps, simu_time, stv, len);
+disp(['ISI: ', num2str(ISI)]);
+str_b_brief = @(b) sprintf('%5.2f (%5.2f)\t%5.2f (%5.2f)',...
+  b.zero_GC(2,1)/1e-4, b.oGC(2,1,b.bic_od)/(b.bic_od/b.len),...
+  b.zero_GC(1,2)/1e-4, b.oGC(1,2,b.bic_od)/(b.bic_od/b.len)); 
+%bv = basic_analyse(Xv, s_od);
+%fprintf('Volt:\t%s\n', str_b_brief(bv));
+%fflush(stdout);
+%bs = basic_analyse(Xs, s_od);
+%fprintf('ST:\t%s\n', str_b_brief(bs));
+%fflush(stdout);
+
+for k=1:p
+  %X(k,shift(Xs(k,:)>0,-2)) = 0;
+  %X(k,shift(Xs(k,:)>0,-1)) = 0;
+  %X(k,shift(Xs(k,:)>0,1)) = 0;
+  %X(k,shift(Xs(k,:)>0,2)) = 0;
+  %X(k,shift(Xs(k,:)>0,3)) = 0;
+end
+
+Xcom = X;
+s_kmix_set1 = [-9.0 -5.0 -2.5 -1.5 -1.0 -0.7 -0.5 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.4 2.0 5.0 9.0];
+s_kmix_set2 = [0.3 0.4 0.5 0.6 0.8 1.0 1.4 2.0 5.0];
+s_kmix_short = [0.3 0.5 0.7 1.0 2.0];
+s_kmix_0 = [0.0];
+
+for kmix = s_kmix_short
+  X = Xcom + kmix*Xs;
+  %b = basic_analyse(X, s_od);
+  %fprintf('%5.2f\t%s\n', kmix,str_b_brief(b)); 
+  %fflush(stdout);
+end
+
+%bg = 1e5;
+%rg0 = 1:100;
+%rg = bg+rg0;
+%figure(1);
+%%hd=plot(rg0, Xv(:,rg), '-x', rg0, X(:, rg), '-o', rg0, Xd(:,rg), '-+');
+%hd=plot(rg0, Xv(:,rg), '-x', rg0, X(:, rg), '-o');
+%set(hd,'markersize',3);
+
+%figure(2);
+%plainlize = @(A) [squeeze(b.oGC(2,1,:))'; squeeze(b.oGC(1,2,:))']; 
+%plot(b.s_od, [plainlize(b.oGC); b.s_od/len]);
+
+%mlen = 256;
+%slen = mlen;
+%[aveSs, fqs] = mX2S_ft(SampleNonUnif(Xs, mlen, slen, 'u'));
+%%[aveS, fqs] = mX2S_ft(SampleNonUnif(Xv, mlen, slen, 'u'));
+%[aveS, fqs] = mX2S_ft(SampleNonUnif(X, mlen, slen, 'u'));
+%fqs = fftshift(fqs);
+%aveS = fftshift(aveS);
+%aveSs = fftshift(aveSs);
+%figure(3);
+%plot(fqs, aveS);
+%plot(fqs, aveS(:,1,1), fqs, aveSs(:,1,1));
+%plot(fqs, imag(aveS(:,2,1)));
+%pic_output_color('sp');
+
