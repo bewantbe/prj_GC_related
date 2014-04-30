@@ -1,6 +1,7 @@
 %
 
 pm.net  = 'net_1_0';
+pm.net  = 'net_2_2';
 pm.ps   = 0.04;
 %pm.ps   = 0.00;
 pm.pr   = 1.6;
@@ -8,7 +9,7 @@ pm.scee = 0.05;
 pm.t    = 40;
 pm.dt   = 2^-9;
 pm.stv  = 0.5;
-pm.extra_cmd = ['--save-poisson-events spe.txt'];
+pm.extra_cmd = ['--save-poisson-events spe2.txt'];
 
 [X, ISI, ras] = gen_HH(pm);
 
@@ -19,7 +20,7 @@ rg_e = rg_b + rg_l - 1;
 %fscaling = @(x) x*10-65;
 fscaling = @(x) x*10;
 
-X_e = load('tb.txt')';
+X_e = load('tb2.txt')';
 
 figure(1);
 plot(1:rg_l, fscaling(X(:,rg_b:rg_e)), '-o', 'markersize', 2,...
