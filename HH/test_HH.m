@@ -8,7 +8,8 @@ pm.t    = 40;
 pm.dt   = 2^-9;
 pm.stv  = 0.5;
 
-id_case = 2;
+path_test = 'testdata';
+id_case = 0;
 switch id_case
   case 0
     % N=1, zeros input
@@ -27,10 +28,11 @@ switch id_case
     path_spe = 'spe2.txt';
     path_mathe = 'tb2.txt';
 end
+path_spe   = [path_test, filesep, path_spe];
+path_mathe = [path_test, filesep, path_mathe];
 
-%pm.extra_cmd = sprintf('--save-poisson-events %s',path_spe);
 pm.extra_cmd = sprintf('--RC-filter 0 1 --save-poisson-events %s',path_spe);
-[X, ISI, ras] = gen_HH(pm);
+[X, ISI, ras] = gen_HH(pm, 'new');
 
 rg_l = 80;
 rg_b = 1;
