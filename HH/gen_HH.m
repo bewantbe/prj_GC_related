@@ -1,6 +1,15 @@
 % Generate HH neuron data by calling external raster_tuning_HH
 % Will use preserved data automatically
 
+% gen_cmd   no data    have data   background(partial data)
+% ''        gen+read   read        gen+read(overwrite)
+% 'new'     gen+read   gen+read    gen+read(overwrite)
+% 'nameX'   gen+name   name        gen+read(overwrite)
+% 'read'    none       read        exit
+% 'rm'      none       rm          none
+% 'cmd'     print cmd for gen then exit
+% background  gen&     none        gen&
+
 % Usage example:
 %{
   pm.net  = 'net_2_2';
@@ -14,63 +23,72 @@
 %}
 
 function [X, ISI, ras] = gen_HH(pm, gen_cmd, data_dir_prefix)
+X=[];
+ISI=[];
+ras=[];
+
 % Default settings
 new_run    = false;
 return_X_name = false;
 mode_rm_only = false;
 mode_read_only = false;
 mode_run_in_background = false;
+mode_print_cmd = false;
+mode_show_cmd = false;
 if ~exist('gen_cmd','var')
     gen_cmd = '';
 end
-if (length(gen_cmd)>=2) && (1==strcmpi(gen_cmd(1:2), 'rm'))
-    mode_rm_only = true;         % remove the output files and exit
-end
-if (length(gen_cmd)>=4) && (1==strcmpi(gen_cmd(1:4), 'read'))
-    mode_read_only = true;
-end
-if (length(gen_cmd)>=3) && (1==strcmpi(gen_cmd(1:3),'new'))
-    new_run = true;
-    gen_cmd = gen_cmd(4:end);
-end
-if (length(gen_cmd)>=5) && (1==strcmpi(gen_cmd(1:5),'nameX'))
-    return_X_name = true;        % return name of X data
-    gen_cmd = gen_cmd(6:end);
+gen_cmd = strtrim(gen_cmd);
+while length(gen_cmd)>0
+    [tok, gen_cmd] = strtok(gen_cmd, ' ,');
+    switch tok
+    case 'rm'
+        mode_rm_only = true;         % remove the output files and exit
+    case 'read'
+        mode_read_only = true;
+    case 'new'
+        new_run = true;
+    case 'nameX'
+        return_X_name = true;        % return name of X data
+    case 'cmd'
+        mode_show_cmd = true;
+    otherwise
+        error(sprintf('no this option: "%s"', tok));
+    end
 end
 
-
-% Default values
-if ~isfield(pm, 'net')
+% Default parameter values
+if ~isfield(pm, 'net') || isempty(pm.net)
     pm.net = 'net_1_0'
 end
 [network, mat_path] = getnetwork(pm.net);
 p = size(network,1);
-if ~isfield(pm, 'nI')
+if ~isfield(pm, 'nI') || isempty(pm.nI)
     pm.nI = 0;  % number of inhibitory neurons
 end
-if isfield(pm, 'nE')
+if isfield(pm, 'nE') && ~isempty(pm.nE)
     if pm.nI + pm.nE ~= p
         error('gen_HH: Number of neurons inconsist with the network!');
     end
 else
     pm.nE = p - pm.nI;
 end
-if ~isfield(pm, 'stv')
+if ~isfield(pm, 'stv') || isempty(pm.stv)
     pm.stv = 0.5;
 end
-if ~isfield(pm, 'dt')
+if ~isfield(pm, 'dt') || isempty(pm.dt)
     pm.dt = 0.5;
 end
-if ~isfield(pm, 'scee')
+if ~isfield(pm, 'scee') || isempty(pm.scee)
     pm.scee = 0;
 end
-if ~isfield(pm, 'scei')
+if ~isfield(pm, 'scei') || isempty(pm.scei)
     pm.scei = 0;
 end
-if ~isfield(pm, 'scie')
+if ~isfield(pm, 'scie') || isempty(pm.scie)
     pm.scie = 0;
 end
-if ~isfield(pm, 'scii')
+if ~isfield(pm, 'scii') || isempty(pm.scii)
     pm.scii = 0;
 end
 if ~isfield(pm, 'extra_cmd')
@@ -82,6 +100,7 @@ if ~isempty(s_tmp) && strcmp(s_tmp(end), '&') == 1
     mode_run_in_background = true;  
 end
 
+% construct file paths
 st_sc = strrep(mat2str([pm.scee, pm.scei, pm.scie, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
@@ -90,30 +109,12 @@ file_inf_st =...
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['data', filesep];
 end
-file_prefix = data_dir_prefix;
+file_prefix = [data_dir_prefix, 'HH_'];
 output_name     = [file_prefix, 'volt_',file_inf_st,'.dat'];
 output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
 output_RAS_name = [file_prefix, 'RAS_', file_inf_st,'.txt'];
 
-if ispc()
-    rmcmd = 'del ';    % need to check this
-else
-    rmcmd = 'rm -f ';
-end
-if mode_rm_only
-    system([rmcmd, output_name]);
-    system([rmcmd, output_ISI_name]);
-    system([rmcmd, output_RAS_name]);
-    X = [];
-    ISI = [];
-    ras = [];
-    return
-end
-if new_run
-    system([rmcmd, output_ISI_name]);
-    system([rmcmd, output_RAS_name]);
-end
-
+% construct command string
 pathdir = fileparts(mfilename('fullpath'));
 st_neu_s =...
     sprintf('-scee %.16e -scei %.16e -scie %.16e -scii %.16e',...
@@ -129,19 +130,32 @@ st_paths =...
             output_name, output_ISI_name, output_RAS_name);
 cmdst = sprintf('%s%sraster_tuning_HH -ng -v %s %s %s %s',...
                 pathdir, filesep, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
-%disp(cmdst);
-
-if (~exist(output_RAS_name, 'file') || new_run) && ~mode_read_only
-    rt = system(cmdst);
-else
-    rt = 0;
+if mode_show_cmd
+    disp(cmdst);
+    return
 end
 
-if mode_run_in_background
-    X=[];
-    ISI=rt;
-    RAS=[];
-    return
+if ispc()
+    rmcmd = 'del ';    % need to check this
+else
+    rmcmd = 'rm -f ';
+end
+
+have_data = exist(output_RAS_name, 'file');
+if (~have_data || new_run)...
+   && ~mode_read_only...
+   && (~mode_rm_only || mode_rm_only && nargout>0)
+    % avoid data inconsistancy
+    system([rmcmd, output_ISI_name]);
+    system([rmcmd, output_RAS_name]);
+    % generate data
+    rt = system(cmdst);
+    if mode_run_in_background
+        ISI=rt;
+        return
+    end
+else
+    rt = 0;
 end
 
 if mode_read_only
@@ -150,15 +164,13 @@ if mode_read_only
     % Whether the file is exist and filled?
     f_info = stat(output_RAS_name);
     if ~isempty(f_info) && (time() - f_info.mtime > 1.0)
-        rt = 0;
+        rt = 0;      % we have data
     else
-        X=[];
-        ISI=[];
-        ras=[];
         return
     end
 end
 
+% read and return data, if required
 if rt==0
     if (nargout>0)
         if return_X_name
@@ -189,11 +201,54 @@ if rt==0
         end
     end
 else
-    X=[];
-    ISI=[];
-    ras=[];
     error('Fail to generate data!');
 end
 
+% delete data if asked
+if mode_rm_only
+    system([rmcmd, output_name]);
+    system([rmcmd, output_ISI_name]);
+    system([rmcmd, output_RAS_name]);
+    return
 end
+
+end
+
+%test
+%{
+  pm.net  = 'net_2_2';
+  pm.ps   = 0.04;
+  pm.pr   = 1.6;
+  pm.scee = 0.05;
+  pm.t    = 1e4;
+  pm.dt   = 1/32;
+  pm.stv  = 0.5;
+  [X, ISI, ras] = gen_HH(pm);
+  % no error
+
+  pm.nE = 1;
+  [X, ISI, ras] = gen_HH(pm);
+  % Number of neurons inconsist with the network!
+
+  pm.nI = 2;
+  [X, ISI, ras] = gen_HH(pm);
+
+  [X] = gen_HH(pm, '');
+  [X] = gen_HH(pm, '');
+  [X] = gen_HH(pm, 'new');
+  [X] = gen_HH(pm, 'rm');
+  [X] = gen_HH(pm, 'new,rm');
+  gen_HH(pm, '');
+  gen_HH(pm, 'rm');
+
+  gen_HH(pm,'');
+  gen_HH(pm,'read');
+  gen_HH(pm,'read,rm');
+
+  X=gen_HH(pm,'nameX');
+  X=gen_HH(pm,'nameX,rm');
+
+  X=gen_HH(pm,'cmd');
+}%
+
 % vim: et sw=4 sts=4
