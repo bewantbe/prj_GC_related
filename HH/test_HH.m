@@ -6,7 +6,7 @@ pm.ps   = 0.04;
 pm.pr   = 1.6;
 pm.scee = 0.05;
 pm.t    = 40;
-pm.dt   = 1/32;
+pm.dt   = 2^-9;
 pm.stv  = 0.5;
 pm.extra_cmd = ['--save-poisson-events spe.txt'];
 
