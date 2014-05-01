@@ -5,7 +5,8 @@ rg_l = 100;
 rg_b = 1e5;
 rg_e = rg_b + rg_l - 1;
 
-srd = WhiteningFilter(X, aic_od);
+od = 50;
+srd = WhiteningFilter(X, od);
 fscaling = @(x) x*10-65;
 %fscaling = @(x) x;
 
@@ -19,8 +20,9 @@ plot(1:rg_l, fscaling(srd(:,rg_b:rg_e)));
 %[A, B] = custom_filters(11, true);
 X_l = filter(B',A',X')'; %conventional filtering
 %od_l = chooseOrderAuto(X_l, 'BIC', 100);
-od_l = 100;
-srd_l = WhiteningFilter(X_l, od_l);
+od_l = 50;
+srd_l = WhiteningFilter(X_l, od_l, 'qr');
+%srd_l = WhiteningFilter(X_l, od_l);
 
 figure(3);
 plot(1:rg_l, fscaling(X_l(:,rg_b:rg_e)));
