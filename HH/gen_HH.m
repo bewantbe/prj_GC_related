@@ -148,10 +148,13 @@ st_neu_s =...
 st_neu_param =...
     sprintf('-n %d %d -mat %s -pr %.16e -ps %.16e %s',...
             pm.nE, pm.nI, mat_path, pm.pr, pm.ps, st_neu_s);
+st_neu_param = [st_neu_param, get_mul_st(pm, 'pr_mul')];
+st_neu_param = [st_neu_param, get_mul_st(pm, 'ps_mul')];
+st_neu_param = [st_neu_param, get_mul_st(pm, 'psi_mul')];
 st_sim_param =...
     sprintf('-t %.16e -dt %.17e -stv %.17e',...
             pm.t, pm.dt, pm.stv);
-if isfield(pm, 'seed') && (strcmpi(pm.seed, 'auto')==0 || isempty(pn.seed))
+if isfield(pm, 'seed') && ~isempty(pm.seed) && strcmpi(pm.seed, 'auto')==0
     st_sim_param = [st_sim_param, sprintf(' -seed %d', pm.seed)];
 else
     st_sim_param = [st_sim_param, ' --seed-auto-on'];
@@ -253,7 +256,29 @@ if mode_rm_only
     return
 end
 
-%end
+end  % end of function
+
+% Construct string for '--pr-mul', '--ps-mul', '--psi-mul'
+function st = get_mul_st(pm, field_name)
+    if isfield(pm, field_name)
+        f = getfield(pm, field_name);
+        if isnumeric(f)
+            st = mat2str(f(:)');
+            st = strrep(st,']','');
+            st = strrep(st,'[','');
+        elseif ischar(f)
+            st = f;
+        end
+    else
+        st = '';
+    end
+    st = strtrim(st);
+    if ~isempty(st)
+        st = [' --', strrep(field_name,'_','-'), ' ', st];
+    end
+end
+
+
 %test
 %{
   pm.net  = 'net_2_2';
