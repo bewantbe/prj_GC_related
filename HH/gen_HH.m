@@ -58,13 +58,12 @@ return_X_name = false;
 mode_rm_only = false;
 mode_read_only = false;
 mode_run_in_background = false;
-mode_print_cmd = false;
 mode_show_cmd = false;
 if ~exist('gen_cmd','var')
     gen_cmd = '';
 end
 gen_cmd = strtrim(gen_cmd);
-while length(gen_cmd)>0
+while ~isempty(gen_cmd)
     [tok, gen_cmd] = strtok(gen_cmd, ' ,');
     switch tok
     case 'rm'
@@ -78,13 +77,13 @@ while length(gen_cmd)>0
     case 'cmd'
         mode_show_cmd = true;   % Show the command to call, then exit
     otherwise
-        error(sprintf('no this option: "%s"', tok));
+        error('no this option: "%s"', tok);
     end
 end
 
 % Default parameter values
 if ~isfield(pm, 'net') || isempty(pm.net)
-    pm.net = 'net_1_0'
+    pm.net = 'net_1_0';
 end
 [network, mat_path] = getnetwork(pm.net);
 p = size(network,1);
@@ -228,12 +227,13 @@ if nargout > 0
     if (nargout>2)
         % Check if the file is non-empty (i.e. no any spike)
         % Otherwise load() may fail due to empty file.
+        % TODO: use dir() in this part
         tmp_fd = fopen(output_RAS_name);
         rt1 = fseek(tmp_fd, 0, 'eof');
         if rt1 ~= 0
             fclose(tmp_fd);
-            error(sprintf('fail to call fseek(), check the file "%s"',...
-                          output_RAS_name));
+            error('fail to call fseek(), check the file "%s"',...
+                  output_RAS_name);
         end
         pos = ftell(tmp_fd);
         fclose(tmp_fd);
