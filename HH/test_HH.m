@@ -1,12 +1,14 @@
 %
 
+clear('pm');  % make sure we are using a clean pm
 pm.net  = 'net_1_0';
+pm.scee = 0.05;
 pm.ps   = 0.04;
 pm.pr   = 1.6;
-pm.scee = 0.05;
 pm.t    = 40;
 pm.dt   = 2^-9;
 pm.stv  = 0.5;
+pm.seed = 123;
 
 path_test = 'testdata';
 id_case = 0;

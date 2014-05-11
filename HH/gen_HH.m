@@ -5,9 +5,9 @@
 %
 % Usage example 1: % default means optional
 %  pm.net  = 'net_2_2';
+%  pm.scee = 0.05;
 %  pm.ps   = 0.04;
 %  pm.pr   = 1.6;
-%  pm.scee = 0.05;
 %  pm.t    = 1e4;
 %  pm.In   = 0;          % default: 0. Number of Inhibitory neurons.
 %                        %             Indexes are later half
@@ -282,9 +282,9 @@ end
 %test
 %{
   pm.net  = 'net_2_2';
+  pm.scee = 0.05;
   pm.ps   = 0.04;
   pm.pr   = 1.6;
-  pm.scee = 0.05;
   pm.t    = 1e4;
   pm.dt   = 1/32;
   pm.stv  = 0.5;
