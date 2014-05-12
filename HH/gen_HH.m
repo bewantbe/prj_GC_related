@@ -116,8 +116,9 @@ if ~isfield(pm, 'scii') || isempty(pm.scii)
     pm.scii = 0;
 end
 if ~isfield(pm, 'extra_cmd')
-    pm.extra_cmd = '--RC-filter 0 1';  % default to no filter
+    pm.extra_cmd = '';
 end
+pm.extra_cmd = ['--RC-filter 0 1', pm.extra_cmd];  % default to no filter
 s_tmp = strtrim(pm.extra_cmd);
 if ~isempty(s_tmp) && strcmp(s_tmp(end), '&') == 1
     % start the data generation in background, then return immediately
@@ -128,7 +129,7 @@ end
 st_sc = strrep(mat2str([pm.scee, pm.scei, pm.scie, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
-    sprintf('%s_p%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
+    sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
             pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.t, pm.stv);
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['data', filesep];
