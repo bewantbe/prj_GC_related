@@ -11,7 +11,7 @@ pm.stv  = 0.5;
 pm.seed = 123;
 
 path_test = 'testdata';
-id_case = 0;
+id_case = 1;
 switch id_case
   case 0
     % N=1, zeros input
