@@ -118,7 +118,7 @@ end
 if ~isfield(pm, 'extra_cmd')
     pm.extra_cmd = '';
 end
-pm.extra_cmd = ['--RC-filter 0 1', pm.extra_cmd];  % default to no filter
+pm.extra_cmd = ['--RC-filter 0 1 ', pm.extra_cmd];  % default to no filter
 s_tmp = strtrim(pm.extra_cmd);
 if ~isempty(s_tmp) && strcmp(s_tmp(end), '&') == 1
     % start the data generation in background, then return immediately
