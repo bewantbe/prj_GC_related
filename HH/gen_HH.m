@@ -21,16 +21,16 @@
 %                                    % put all other parameters here.
 %  [X, ISI, ras] = gen_HH(pm);
 %
-% Usage example 3: Always re-generate data, then read it
+% Usage example 2: Always re-generate data, then read it
 %  X = gen_HH(pm, 'new');
 %
-% Usage example 2: Generate data if not exist, read it, then remove data files
+% Usage example 3: Generate data if not exist, read it, then remove data files
 %  X = gen_HH(pm, 'rm');
 %
 % Other possible values for "gen_cmd":
-%  'read'   Read data files if exist, do nothing and return [] otherwise;
+%  'read'   Read data files if exist, otherwise do nothing and return [];
 %  'nameX'  return path to the voltage data file, instead of read it;
-%  'cmd'    Show command call to raster_tuning_HH, then exit.
+%  'cmd'    Show command call to raster_tuning_HH, then exit. Useful for debug
 
 % Behaviour
 % gen_cmd   no data    have data   background(partial data)
@@ -53,12 +53,12 @@ ISI=[];
 ras=[];
 
 % Default settings
-new_run    = false;
-return_X_name = false;
-mode_rm_only = false;
+new_run        = false;
+return_X_name  = false;
+mode_rm_only   = false;
+mode_show_cmd  = false;
 mode_read_only = false;
 mode_run_in_background = false;
-mode_show_cmd = false;
 if ~exist('gen_cmd','var')
     gen_cmd = '';
 end
@@ -194,11 +194,11 @@ else
 end
 
 if mode_read_only
-    % fixme: is there a way to test whether the files are using by
-    % other program in Matlab? lsof is not portable to M$ Windows
-    %Note: dir().datenum only precise to seconds
-    %      stat().mtime can precise to nano seconds
-    % Whether the file is exist and filled?
+    % Test if the file is exist and filled (modified more than 1 sec ago)?
+    % Fixme: is there a way to test whether the files are using by
+    %        other program in Matlab? lsof is not portable to M$ Windows
+    % Note: dir().datenum only precise to seconds
+    %       stat().mtime can precise to nano seconds, bug not in Matlab.
     %f_info = stat(output_RAS_name);
     %if ~isempty(f_info) && (time() - f_info.mtime > 1.0)
     f_info = dir(output_RAS_name);
@@ -212,10 +212,10 @@ end
 if rt ~= 0
     error('Fail to generate data!');
 end
+% If required, read and return data
 % At this point, the files should be generated, and ready for read.
-% Read and return data, if required
 if nargout > 0
-    % fixme: The Octave function isargout() is not in Matlab.
+    % Fixme: The Octave function isargout() is not in Matlab.
     %        So seems no way to skip non-required data in Matlab
     %        in some condition.
     if return_X_name
