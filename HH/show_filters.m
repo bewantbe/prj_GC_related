@@ -2,7 +2,10 @@
 fS2dB = @(x) 10*log10(abs(x));
 
 %[A, B] = custom_filters(1, true);
-[A, B] = custom_filters('butter_o=5_wc=0.25', true);
+%filter_name = 'butter_o=4_wc=0.1';
+%filter_name = 'butter_o=3_wc=0.1';
+filter_name = 'butter_o=2_wc=0.1';
+[A, B] = custom_filters(filter_name, true);
 
 x=randn(1,1e7);
 y=filter(B,A,x); %conventional filtering

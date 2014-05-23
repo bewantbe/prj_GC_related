@@ -1,6 +1,6 @@
 % run after test_filter_result.m
 
-fftlen = 1024;
+fftlen = lowest_smooth_number_exact(sqrt(size(X,2)));
 %f_wnd = @(x) 1;
 %f_wnd = @(x) 1-2*abs(x);
 f_wnd = @(x) 0.5+0.5*cos(2*pi*x);  % seems the best choice
@@ -27,7 +27,7 @@ h = plot(
   s_fq, fS2dB(sX_l(:,2,2)),...
   s_fq, fS2dB(sX_l(:,1,2))...
 );
-xlim([0 1000]);
+xlim([0 0.5*1000/stv]);
 
 figure(6);
 sX_w = StdWhiteS(sX);
@@ -37,7 +37,7 @@ plot(
   s_fq, fS2dB(sX_w(:,1,2)),'color',get(h(3),'color'),...
   s_fq, fS2dB(sX_l_w(:,1,2)),'color',get(h(6),'color')...
 );
-xlim([0 1000]);
+xlim([0 0.5*1000/stv]);
 ylim([-40, 10]);
 legend('sX_w(1,2)', 'sX_l_w(1,2)');
 

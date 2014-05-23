@@ -4,6 +4,7 @@
 %  [X, ISI, ras] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])
 %
 % Usage example 1: % default means optional
+%  clear('pm');          % a new parameter set
 %  pm.net  = 'net_2_2';
 %  pm.scee = 0.05;
 %  pm.ps   = 0.04;

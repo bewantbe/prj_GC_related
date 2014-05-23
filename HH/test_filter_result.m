@@ -1,5 +1,3 @@
-%
-
 % run analyse_GC_simple_HH.m first
 
 % show volt and srd samples
@@ -18,13 +16,10 @@ plot(1:rg_l, fscaling(X(:,rg_b:rg_e)));
 figure(2);
 plot(1:rg_l, fscaling(srd(:,rg_b:rg_e)));
 
-[A, B] = custom_filters('butter_o=4_wc=0.1', true);
-%[A, B] = custom_filters(11, true);
-X_l = filter(B',A',X')'; %conventional filtering
 %od_l = chooseOrderAuto(X_l, 'BIC', 100);
 od_l = 50;
-srd_l = WhiteningFilter(X_l, od_l, 'qr'); % better result, but much slower
-%srd_l = WhiteningFilter(X_l, od_l);
+%srd_l = WhiteningFilter(X_l, od_l, 'qr'); % better result, but much slower
+srd_l = WhiteningFilter(X_l, od_l);
 
 figure(3);
 plot(1:rg_l, fscaling(X_l(:,rg_b:rg_e)));
@@ -37,5 +32,7 @@ gc_srd = pos_nGrangerT2(srd, bic_od)
 
 gc_X_l   = pos_nGrangerT2(X_l  , bic_od)
 gc_src_l = pos_nGrangerT2(srd_l, bic_od)
+
+fflush(stdout);
 
 test_filter_result_spectrum;
