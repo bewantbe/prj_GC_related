@@ -37,7 +37,7 @@ end
 oX = X;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % down sampling
-i_stv = 2;
+i_stv = 1;
 X = oX(:, 1:i_stv:end);
 stv = pm.stv * i_stv;
 
@@ -63,7 +63,7 @@ fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...
 disp('ISI:');
 disp(ISI);
 
-GC_basic_info(X, mode_IF);
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, mode_IF);
 
 % show volt and srd samples
 test_filter_result;
