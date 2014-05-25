@@ -1,4 +1,7 @@
-function show_spec(x1)
+% show spectrum of time series in dB scale
+
+function show_spectrum(x1)
+
 fftlen = lowest_smooth_number_exact(sqrt(length(x1)));
 [sx, fqs] = mX2S_wnd(x1, [fftlen, 0.5], @(x)0.5+0.5*cos(2*pi*x));
 fqs = fftshift(fqs);
