@@ -5,7 +5,6 @@ x = randn(1, len);
 %figure(1);
 %show_spec(x);
 
-%x1 = diff(x);
 %x1 = filter([1 1], 1, x);
 %x1 = filter([1 2 1], 1, x);
 x1 = filter([1 3 3 1], 1, x);
@@ -38,20 +37,17 @@ x2 = filter(1, [1 1-1e-5], x1);
 x2 = filter(1, [1 1-1e-5], x2);
 x2 = filter(1, [1 1-1e-5], x2);
 
-figure(2);
-bg = 1e5;
-rg = bg:bg+100-1;
-plot([x(rg); x2(rg)]');
-
-
-figure(3);
+figure(22);
 show_spectrum(x2);
 
 use_od = 100;
 [xw, axw] = WhiteningFilter(x1,use_od);
-%figure(11);
-%plot(-axw);
-
-figure(12);
+figure(32);
 show_spectrum(xw);
+
+figure(99);
+bg     = 1e5;
+rg_len = 100;
+rg     = bg:bg+rg_len-1;
+plot([x(rg); x2(rg); xw(rg)]');
 

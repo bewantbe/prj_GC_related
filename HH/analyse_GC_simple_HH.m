@@ -34,7 +34,8 @@ for id_p = 1:size(X,1)
   ISI(id_p) = simu_time/(sum(ras(:,1)==id_p,1));
 end
 
-oX = X;
+oX = bsxfun(@minus, X, mean(X,2));  % better accuracy
+%oX = X;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % down sampling
 i_stv = 1;
@@ -50,12 +51,6 @@ if mode_ST
     end
 end
 
-% generate lowpass data
-%[A, B] = custom_filters('butter_o=4_wc=0.1', true);
-[A, B] = custom_filters('butter_o=2_wc=0.1', true);
-%[A, B] = custom_filters(11, true);
-X_l = filter(B',A',oX')';
-X_l = X_l(:, 1:i_stv:end);
 
 [p, len] = size(X);
 fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...

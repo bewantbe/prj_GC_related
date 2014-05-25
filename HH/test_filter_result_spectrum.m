@@ -12,8 +12,8 @@ sX_l = mX2S_wnd( bsxfun(@minus, X_l, mean(X_l,2)), [fftlen, 0.5], f_wnd);
 s_fq = (0:fftlen-1)/fftlen /stv*1000;  % Hz
 
 use_od_sgcapp = 50;
-gc_x   = getGCSapp(sX  , use_od_sgcapp)
-gc_x_l = getGCSapp(sX_l, use_od_sgcapp)
+gc_sX   = getGCSapp(sX  , use_od_sgcapp)
+gc_sX_l = getGCSapp(sX_l, use_od_sgcapp)
 
 
 fS2dB = @(x) 10*log10(abs(x));
@@ -28,6 +28,7 @@ h = plot(
   s_fq, fS2dB(sX_l(:,1,2))...
 );
 xlim([0 0.5*1000/stv]);
+legend('s11','s22','s12','sl11','sl22','sl12');
 
 figure(6);
 sX_w = StdWhiteS(sX);
@@ -39,5 +40,5 @@ plot(
 );
 xlim([0 0.5*1000/stv]);
 ylim([-40, 10]);
-legend('sX_w(1,2)', 'sX_l_w(1,2)');
+legend('sX_w(1,1)', 'sX_w(1,2)', 'sX_l_w(1,2)');
 
