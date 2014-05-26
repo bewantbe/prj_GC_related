@@ -15,6 +15,11 @@ use_od_sgcapp = 50;
 gc_sX   = getGCSapp(sX  , use_od_sgcapp)
 gc_sX_l = getGCSapp(sX_l, use_od_sgcapp)
 
+% spectrum from AR regression (during whitening)
+v = var(srd_l,[],2);
+sa_X_l = zeros(2, fftlen);
+sa_X_l(1,:) = squeeze(A2S_new(a_X_l(1,:), v(1), fftlen));
+sa_X_l(2,:) = squeeze(A2S_new(a_X_l(2,:), v(2), fftlen));
 
 fS2dB = @(x) 10*log10(abs(x));
 
@@ -25,10 +30,13 @@ h = plot(
   s_fq, fS2dB(sX(:,1,2)),...
   s_fq, fS2dB(sX_l(:,1,1)),...
   s_fq, fS2dB(sX_l(:,2,2)),...
-  s_fq, fS2dB(sX_l(:,1,2))...
+  s_fq, fS2dB(sX_l(:,1,2)),...
+  s_fq, fS2dB(sa_X_l(1,:)),...
+  s_fq, fS2dB(sa_X_l(2,:))
 );
 xlim([0 0.5*1000/stv]);
-legend('s11','s22','s12','sl11','sl22','sl12');
+ylim([-150 20]);
+legend('s11','s22','s12','sl11','sl22','sl12', 'ARv1', 'ARv2');
 
 figure(6);
 sX_w = StdWhiteS(sX);
@@ -40,5 +48,5 @@ plot(
 );
 xlim([0 0.5*1000/stv]);
 ylim([-40, 10]);
-legend('sX_w(1,1)', 'sX_w(1,2)', 'sX_l_w(1,2)');
+legend('sX\_w(1,1)', 'sX\_w(1,2)', 'sX\_l\_w(1,2)');
 
