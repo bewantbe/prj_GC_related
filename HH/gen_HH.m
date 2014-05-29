@@ -60,6 +60,7 @@ mode_rm_only   = false;
 mode_show_cmd  = false;
 mode_read_only = false;
 mode_run_in_background = false;
+ext_T = 0;
 if ~exist('gen_cmd','var')
     gen_cmd = '';
 end
@@ -77,6 +78,8 @@ while ~isempty(gen_cmd)
         return_X_name = true;   % Return file path of voltage data file
     case 'cmd'
         mode_show_cmd = true;   % Show the command to call, then exit
+    case 'ext_T'
+        ext_T = 1e3;            % extra calculation time
     otherwise
         error('no this option: "%s"', tok);
     end
@@ -131,7 +134,7 @@ st_sc = strrep(mat2str([pm.scee, pm.scei, pm.scie, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
     sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
-            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.t, pm.stv);
+            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.t + ext_T, pm.stv);
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['data', filesep];
 end
@@ -155,7 +158,7 @@ st_neu_param = [st_neu_param, get_mul_st(pm, 'ps_mul')];
 st_neu_param = [st_neu_param, get_mul_st(pm, 'psi_mul')];
 st_sim_param =...
     sprintf('-t %.16e -dt %.17e -stv %.17e',...
-            pm.t, pm.dt, pm.stv);
+            pm.t + ext_T, pm.dt, pm.stv);
 if isfield(pm, 'seed') && ~isempty(pm.seed) && strcmpi(pm.seed, 'auto')==0
     st_sim_param = [st_sim_param, sprintf(' -seed %d', pm.seed)];
 else
@@ -225,6 +228,16 @@ if nargout > 0
         fid = fopen(output_name, 'r');
         X = fread(fid, [p, Inf], 'double');
         fclose(fid);
+        len = size(X,2);
+        if len ~= floor((pm.t+ext_T)/pm.stv)
+            warning('inconsistant data length!');
+            fprintf('size(X,2) = %d, floor((pm.t+ext_T)/pm.stv) = %d\n',...
+                    size(X,2), floor((pm.t+ext_T)/pm.stv));
+        end
+        len_cut = len - floor(pm.t/pm.stv);
+        if (len_cut>0)
+            X(:, 1:end-floor(pm.t/pm.stv)) = [];
+        end
     end
     if (nargout>1)
         ISI = load('-ascii', output_ISI_name);
@@ -246,6 +259,10 @@ if nargout > 0
             ras = load('-ascii', output_RAS_name);
         else
             ras = [];
+        end
+        if exist('len_cut','var') && len_cut>0 && ~isempty(ras)
+            ras(ras(:,2) <= len_cut*pm.stv, :) = [];
+            ras(:,2) = ras(:,2) - len_cut*pm.stv;
         end
     end
 end
