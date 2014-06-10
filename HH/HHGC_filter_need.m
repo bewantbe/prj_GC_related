@@ -29,9 +29,21 @@ sfq = (0:fftlen-1)/fftlen /pm.stv*1000;  % Hz
 use_od = 50;
 [A_o, De_o] = ARregressionpd(getcovzpd(X_o, use_od), size(X_o,1));
 sAX_o = A2S_new(A_o, De_o, fftlen);
-% TODO: Failed here, not well posed problem
+sAX_o = permute(sAX_o, [3 1 2]);
+% TODO: Failed here, not a well posed problem
 %[A_l, De_l] = ARregressionpd(getcovzpd(X_l, use_od), size(X_l,1));
 %sAX_l = A2S_new(A_l, De_l, fftlen);
+% single variable AR
+use_od = 26;   % determined by chooseOrderAuto(X_l(1,:),'AIC',30)
+a1s_l  = zeros(size(X_l,1), use_od);
+sa1s_l = zeros(size(X_l,1), fftlen);
+de1s_l = zeros(size(X_l,1), 1);
+for id_neu = 1:size(X_l,1)
+  [a, de] = ARregressionpd(getcovzpd(X_l(id_neu, :), use_od), 1);
+  a1s_l(id_neu, :) = a;
+  de1s_l(id_neu)   = de;
+  sa1s_l(id_neu, :) = A2S_new(a, de, fftlen);
+end
 
 % frequency domain GC comparison
 use_od_sgcapp = 50;
@@ -79,9 +91,13 @@ h = plot(
   sfq, fS2dB(sX_o(:,1,2)),...
   sfq, fS2dB(sX_l(:,1,1)),...
   sfq, fS2dB(sX_l(:,2,2)),...
-  sfq, fS2dB(sX_l(:,1,2))
+  sfq, fS2dB(sX_l(:,1,2)),...
+  sfq, fS2dB(sa1s_l(1,:))
+  %sfq, fS2dB(sAX_o(:,1,1))
 );
 xlim([0 0.5*1000/pm.stv]);
 ylim([-140 20]);
-legend('s11','s22','s12','sl11','sl22','sl12', 'ARv1', 'ARv2');
+xlabel('Freq. (Hz)');
+ylabel('dB');
+legend('s11','s22','s12','sl11','sl22','sl12', 'ARv1');
 
