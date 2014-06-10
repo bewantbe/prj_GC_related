@@ -110,11 +110,11 @@ end
 if ~isfield(pm, 'scee') || isempty(pm.scee)
     pm.scee = 0;
 end
-if ~isfield(pm, 'scei') || isempty(pm.scei)
-    pm.scei = 0;
-end
 if ~isfield(pm, 'scie') || isempty(pm.scie)
-    pm.scie = 0;
+    pm.scie = 0;  % Strength from Ex. to In.
+end
+if ~isfield(pm, 'scei') || isempty(pm.scei)
+    pm.scei = 0;  % Strength from In. to Ex.
 end
 if ~isfield(pm, 'scii') || isempty(pm.scii)
     pm.scii = 0;
@@ -130,7 +130,7 @@ if ~isempty(s_tmp) && strcmp(s_tmp(end), '&') == 1
 end
 
 % construct file paths
-st_sc = strrep(mat2str([pm.scee, pm.scei, pm.scie, pm.scii]),' ',',');
+st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
     sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
