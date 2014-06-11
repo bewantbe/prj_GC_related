@@ -58,7 +58,13 @@ fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...
 disp('ISI:');
 disp(ISI);
 
-[zero_GC, bic_od, aic_od] = GC_basic_info(X, mode_IF);
+if strcmpi(mode_IF,'IF')
+    max_od = 99;  % for IF
+else
+    max_od = 499;  % for EIF
+end
+
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od);
 
 % show volt and srd samples
 test_filter_result;
