@@ -68,6 +68,3 @@ end
 
 [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od);
 
-% show volt and srd samples
-test_filter_result;
-

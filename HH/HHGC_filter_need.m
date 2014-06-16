@@ -9,6 +9,7 @@ pm.stv  = 0.5;
 
 % Generate data
 [X, ISI, ras] = gen_HH(pm, 'ext_T');
+X = bsxfun(@minus, X, mean(X,2));
 
 % Lowpassed data
 [A, B] = custom_filters('butter_o=4_wc=0.1', true);
@@ -18,7 +19,7 @@ Y = filter(B',A',X')';
 lowpass_zero = 1-1.15e-3;
 Z = Y;
 for k=1:4
-  Z = filter(1, [1 lowpass_zero], Z')';
+  Z = filter(1+lowpass_zero, [1 lowpass_zero], Z')';
 end
 
 % Time domain whiten
@@ -26,6 +27,7 @@ disp('Time domain whiten');  fflush(stdout);
 use_od = 50;
 Xw = zscore(WhiteningFilter(X, use_od), 2);
 Yw = zscore(WhiteningFilter(Y, use_od, 'qr'), 2);  % cost a lots memory and time
+%Yw = zscore(WhiteningFilter(Y, use_od), 2);  % cost a lots memory and time
 Zw = zscore(WhiteningFilter(Z, use_od), 2);
 
 % Get spectrum (non-parametric)
@@ -73,13 +75,13 @@ gc_Z = pos_nGrangerT2(Z, use_od_gcT)
 
 % Frequency domain GC
 disp('Frequency domain GC');  fflush(stdout);
-use_od_sgcapp = 50;
-gc_sX = getGCSapp(sX, use_od_sgcapp)
-gc_sY = getGCSapp(sY, use_od_sgcapp)
-gc_sZ = getGCSapp(sZ, use_od_sgcapp)
-gc_sXw = getGCSapp(sXw, use_od_sgcapp)
-gc_sYw = getGCSapp(sYw, use_od_sgcapp)
-gc_sZw = getGCSapp(sZw, use_od_sgcapp)
+use_od_gcF = 50;
+gc_sX  = getGCSapp(sX, use_od_gcF)
+gc_sY  = getGCSapp(sY, use_od_gcF)
+gc_sZ  = getGCSapp(sZ, use_od_gcF)
+gc_sXw = getGCSapp(sXw, use_od_gcF)
+gc_sYw = getGCSapp(sYw, use_od_gcF)
+gc_sZw = getGCSapp(sZw, use_od_gcF)
 
 
 % show range in volt plot
@@ -101,53 +103,27 @@ fscaling = @(x) x;
 
 % show voltage trace
 figure(1);
-plot(rg_ts_rel, fscaling(X(:,rg_b:rg_e)));
+plot(rg_ts_rel, fscaling(X(:,rg_b:rg_e)),'-b',...
+     rg_ts_rel, fscaling(Y(:,rg_b:rg_e)),'-r',...
+     rg_ts_rel, fscaling(Z(:,(rg_b:rg_e)-2)),'-k');
 %line([ls_ras(:, 2), ls_ras(:,2)]', [ls_ras(:,1), 0.9+ls_ras(:,1)]');
 line([ls_ras(:, 2), ls_ras(:,2)]',...
      [zeros(size(ls_ras,1),1), ones(size(ls_ras,1),1)]');
 xlabel('t/ms');
 
+
+% show (autoregression) residual trace
 figure(2);
-plot(rg_ts_rel, fscaling(Xw(:,rg_b:rg_e)));
+plot(rg_ts_rel, fscaling(Xw(:,rg_b:rg_e)),'-b',...
+     rg_ts_rel, fscaling(Yw(:,rg_b:rg_e)),'-r',...
+     rg_ts_rel, fscaling(Zw(:,rg_b:rg_e)),'-k');
 line([ls_ras(:, 2), ls_ras(:,2)]',...
      [zeros(size(ls_ras,1),1), ones(size(ls_ras,1),1)]');
 xlabel('t/ms');
 
-% show spectrum
 fS2dB = @(x) 10*log10(abs(x));
 
-figure(3);
-h = plot(
-  sfq, fS2dB(sXw(:,1,1)),'-b',...
-  sfq, fS2dB(sXw(:,1,2)),'-b',...
-  sfq, fS2dB(sYw(:,1,1)),'-r',...
-  sfq, fS2dB(sYw(:,1,2)),'-r',...
-  sfq, fS2dB(sZw(:,1,1)),'-k',...
-  sfq, fS2dB(sZw(:,1,2)),'-k'...
-);
-xlim([0 0.5*1000/pm.stv]);
-ylim([-40 10]);
-xlabel('Freq. (Hz)');
-ylabel('dB');
-legend('sXw11','sXw12','sYw11','sYw12','sZw11','sZw12','location','southwest');
-
-wsX = StdWhiteS(sX);
-wsY = StdWhiteS(sY);
-wsZ = StdWhiteS(sZ);
-
-figure(4);
-h = plot(
-  sfq, fS2dB(wsX(:,1,1)),'-b',...
-  sfq, fS2dB(wsX(:,1,2)),'-b',...
-  sfq, fS2dB(wsY(:,1,2)),'-r',...
-  sfq, fS2dB(wsZ(:,1,2)),'-k'...
-);
-xlim([0 0.5*1000/pm.stv]);
-ylim([-40 10]);
-xlabel('Freq. (Hz)');
-ylabel('dB');
-legend('wsX11','wsX12','wsY12','wsZ12','location','southwest');
-
+% show spectrum
 figure(5);
 h = plot(
   sfq, fS2dB(sX(:,1,1)),'-b',...
@@ -167,4 +143,38 @@ ylim([-140 20]);
 xlabel('Freq. (Hz)');
 ylabel('dB');
 legend('sX11','sX22','sX12','sY11','sY22','sY12','sZ11','sZ22','sZ12', 'ARv1','location','southwest');
+
+% show timedomain whitened spectrum
+figure(6);
+h = plot(
+  sfq, fS2dB(sXw(:,1,1)),'-b',...
+  sfq, fS2dB(sXw(:,1,2)),'-b',...
+  sfq, fS2dB(sYw(:,1,1)),'-r',...
+  sfq, fS2dB(sYw(:,1,2)),'-r',...
+  sfq, fS2dB(sZw(:,1,1)),'-k',...
+  sfq, fS2dB(sZw(:,1,2)),'-k'...
+);
+xlim([0 0.5*1000/pm.stv]);
+ylim([-40 10]);
+xlabel('Freq. (Hz)');
+ylabel('dB');
+legend('sXw11','sXw12','sYw11','sYw12','sZw11','sZw12','location','southwest');
+
+% show frequency domain whitened spectrum
+wsX = StdWhiteS(sX);
+wsY = StdWhiteS(sY);
+wsZ = StdWhiteS(sZ);
+
+figure(7);
+h = plot(
+  sfq, fS2dB(wsX(:,1,1)),'-b',...
+  sfq, fS2dB(wsX(:,1,2)),'-b',...
+  sfq, fS2dB(wsY(:,1,2)),'-r',...
+  sfq, fS2dB(wsZ(:,1,2)),'-k'...
+);
+xlim([0 0.5*1000/pm.stv]);
+ylim([-40 10]);
+xlabel('Freq. (Hz)');
+ylabel('dB');
+legend('wsX11','wsX12','wsY12','wsZ12','location','southwest');
 
