@@ -5,7 +5,9 @@
 %function show_analyse_GC_big_p(s_case)
 s_case = {
 %'result_HH_net_100_01_p[80,20]_sc=[0.050,0.050,0.100,0.100]_pr=1.60_ps=0.040_stv=0.50_t=1.00e+06.mat'
-'result_HH_net_100_01_p[80,20]_sc=[0.050,0.050,0.100,0.100]_pr=1.60_ps=0.040_stv=0.50_t=1.00e+06_w.mat'
+%'result_HH_net_100_01_p[80,20]_sc=[0.050,0.050,0.100,0.100]_pr=1.60_ps=0.040_stv=0.50_t=1.00e+06_w.mat'
+%'result_HH_net_100_01_p[80,20]_sc=[0.050,0.050,0.100,0.100]_pr=1.60_ps=0.040_stv=0.50_t=1.00e+06_l_w.mat'
+'result_HH_net_100_01_p[80,20]_sc=[0.050,0.050,0.100,0.100]_pr=1.60_ps=0.040_stv=0.50_t=1.00e+06_cov_l_w.mat'
 };
 
 is_octave = exist('OCTAVE_VERSION','builtin') ~= 0;
@@ -27,7 +29,7 @@ b_output_pics    = true;
 b_cal_net        = false;
 b_use_pairGC     = false;
 
-p_val = 1e-4;
+p_val = 1e-5;
 
 n_case = length(s_case);
 
@@ -82,7 +84,7 @@ pic_data_save = @(st, varargin)save('-v7', [pic_prefix, st, '.mat'], 'varargin')
 disp(pic_prefix);
 
 %use_od = bic_od;
-use_od = 20;
+use_od = 29;
 gc_zero_line = chi2inv(1-p_val, use_od)/len;
 clear('gc_zero_cut','scale_gc','s_gc_tick','s_gc_tick_white','s_gc_hist_tick','s_ISI_tick','s_ISI_tick_white');
 

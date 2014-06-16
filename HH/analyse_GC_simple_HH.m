@@ -39,7 +39,9 @@ oX = bsxfun(@minus, X, mean(X,2));  % better accuracy
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % down sampling
 i_stv = 1;
-X = oX(:, 1:i_stv:end);
+if i_stv ~= 1
+  X = oX(:, 1:i_stv:end);
+end
 stv = pm.stv * i_stv;
 
 if mode_ST
