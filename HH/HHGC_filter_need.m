@@ -26,8 +26,8 @@ end
 disp('Time domain whiten');  fflush(stdout);
 use_od = 50;
 Xw = zscore(WhiteningFilter(X, use_od), 2);
-Yw = zscore(WhiteningFilter(Y, use_od, 'qr'), 2);  % cost a lots memory and time
-%Yw = zscore(WhiteningFilter(Y, use_od), 2);  % cost a lots memory and time
+%Yw = zscore(WhiteningFilter(Y, use_od, 'qr'), 2);  % cost a lots memory and time
+Yw = zscore(WhiteningFilter(Y, use_od), 2);  % cost a lots memory and time
 Zw = zscore(WhiteningFilter(Z, use_od), 2);
 
 % Get spectrum (non-parametric)
@@ -64,24 +64,35 @@ for id_neu = 1:size(Y,1)
   sa1s_l(id_neu, :) = A2S_new(a, de, fftlen);
 end
 
+show_GC_mat = @(gc) disp([' '+zeros(2,2) num2str(gc, '%.1e  ')]);  disp('');
+
 % Time domain GC
-disp('Time domain GC');  fflush(stdout);
-use_od_gcT = 48;  % from chooseOrderAuto(X)
-gc_X = nGrangerT(X, use_od_gcT)
-use_od_gcT = 27;  % from chooseOrderAuto(X)
-gc_Y = pos_nGrangerT2(Y, use_od_gcT)
-use_od_gcT = 43;  % from chooseOrderAuto(X)
-gc_Z = pos_nGrangerT2(Z, use_od_gcT)
+disp('Time domain GC of X');  fflush(stdout);
+use_od_gcT = 50;
+% from chooseOrderAuto(X) = 48
+gc_X = pos_nGrangerT2(X, use_od_gcT);  show_GC_mat(gc_X);  disp('');
+% from chooseOrderAuto(X) = 27
+gc_Y = pos_nGrangerT2(Y, use_od_gcT);  show_GC_mat(gc_Y);  disp('');
+% from chooseOrderAuto(X) = 43
+gc_Z = pos_nGrangerT2(Z, use_od_gcT);  show_GC_mat(gc_Z);  disp('');
+
+disp('Time domain GC of Xw');  fflush(stdout);
+gc_Xw = nGrangerT(Xw, use_od_gcT);  show_GC_mat(gc_Xw);  disp('');
+gc_Yw = nGrangerT(Yw, use_od_gcT);  show_GC_mat(gc_Yw);  disp('');
+gc_Zw = nGrangerT(Zw, use_od_gcT);  show_GC_mat(gc_Zw);  disp('');
+
 
 % Frequency domain GC
-disp('Frequency domain GC');  fflush(stdout);
+disp('Frequency domain GC of X');  fflush(stdout);
 use_od_gcF = 50;
-gc_sX  = getGCSapp(sX, use_od_gcF)
-gc_sY  = getGCSapp(sY, use_od_gcF)
-gc_sZ  = getGCSapp(sZ, use_od_gcF)
-gc_sXw = getGCSapp(sXw, use_od_gcF)
-gc_sYw = getGCSapp(sYw, use_od_gcF)
-gc_sZw = getGCSapp(sZw, use_od_gcF)
+gc_sX  = getGCSapp(sX, use_od_gcF);  show_GC_mat(gc_sX);  disp('');
+gc_sY  = getGCSapp(sY, use_od_gcF);  show_GC_mat(gc_sY);  disp('');
+gc_sZ  = getGCSapp(sZ, use_od_gcF);  show_GC_mat(gc_sZ);  disp('');
+
+disp('Frequency domain GC of Xw');  fflush(stdout);
+gc_sXw = getGCSapp(sXw, use_od_gcF);  show_GC_mat(gc_sXw);  disp('');
+gc_sYw = getGCSapp(sYw, use_od_gcF);  show_GC_mat(gc_sYw);  disp('');
+gc_sZw = getGCSapp(sZw, use_od_gcF);  show_GC_mat(gc_sZw);  disp('');
 
 
 % show range in volt plot
@@ -125,7 +136,7 @@ fS2dB = @(x) 10*log10(abs(x));
 
 % show spectrum
 figure(5);
-h = plot(
+plot(...
   sfq, fS2dB(sX(:,1,1)),'-b',...
   sfq, fS2dB(sX(:,2,2)),'-b',...
   sfq, fS2dB(sX(:,1,2)),'-b',...
@@ -135,8 +146,7 @@ h = plot(
   sfq, fS2dB(sZ(:,1,1)),'-k',...
   sfq, fS2dB(sZ(:,2,2)),'-k',...
   sfq, fS2dB(sZ(:,1,2)),'-k',...
-  sfq, fS2dB(sa1s_l(1,:)), '-g'
-  %sfq, fS2dB(sAX_o(:,1,1))
+  sfq, fS2dB(sa1s_l(1,:)), '-g'...
 );
 xlim([0 0.5*1000/pm.stv]);
 ylim([-140 20]);
@@ -146,7 +156,7 @@ legend('sX11','sX22','sX12','sY11','sY22','sY12','sZ11','sZ22','sZ12', 'ARv1','l
 
 % show timedomain whitened spectrum
 figure(6);
-h = plot(
+plot(...
   sfq, fS2dB(sXw(:,1,1)),'-b',...
   sfq, fS2dB(sXw(:,1,2)),'-b',...
   sfq, fS2dB(sYw(:,1,1)),'-r',...
@@ -166,7 +176,7 @@ wsY = StdWhiteS(sY);
 wsZ = StdWhiteS(sZ);
 
 figure(7);
-h = plot(
+plot(...
   sfq, fS2dB(wsX(:,1,1)),'-b',...
   sfq, fS2dB(wsX(:,1,2)),'-b',...
   sfq, fS2dB(wsY(:,1,2)),'-r',...

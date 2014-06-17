@@ -18,7 +18,7 @@
 %       idx, real(S(:,1,2)), idx,imag(S(:,1,2)));
 %
 
-function [S fqs] = filterAB2S(A, B, De, fftlen)
+function [S, fqs] = filterAB2S(A, B, De, fftlen)
 if nargin ~= 4
   error('filterAB2S: Expecting 4 input parameters. See help filterAB2S');
 end
@@ -32,7 +32,7 @@ if p==1
   S = abs(fft(B,fftlen) ./ fft(A,fftlen)).^2 * De;
   S = S';  % use column vector
 else
-  if ndims(A)==2
+  if ismatrix(A)
     %m = round(m/p);  % currently not used
     %A = cat(3,eye(p),reshape(A,p,p,[]));  % convert A to 3-dim array
     %B = cat(3,eye(p),reshape(B,p,p,[]));  % convert B to 3-dim array

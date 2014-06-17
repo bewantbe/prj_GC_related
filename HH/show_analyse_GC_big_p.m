@@ -161,7 +161,7 @@ fprintf('mean GC1/%.1e: %.2f  (stdv=%.2f theo: %.2f res stdv=%.2f)\n',...
         sqrt(var_theo_gc1)/scale_gc, sqrt(var_gc1-var_theo_gc1)/scale_gc);
 
 stdat{cid} = sprintf('%.2f  %.2f  %.2f  %.2f  %.2f  %.2f  %.2f\n',...
-        use_od/len/scale_gc, 
+        use_od/len/scale_gc,...
         mean_gc0/scale_gc, mean_gc1/scale_gc, sqrt(var_gc0)/scale_gc,...
         sqrt(var_theo_gc0)/scale_gc, sqrt(var_gc1)/scale_gc,...
         sqrt(var_theo_gc1)/scale_gc);
@@ -272,12 +272,12 @@ pic_output_color('_adj_cmp');
 figure(5);  set(gca,'fontsize',font_size);
 hd=plot([1,(p*p-p)]/10^3, [gc_zero_line, gc_zero_line]/scale_gc, 'b-',...
         [1,(p*p-p)]/10^3, [  min_err_gc,   min_err_gc]/scale_gc, 'r--',...
-        [1:(p*p-p)]/10^3, sort(plain_gc)/scale_gc, 'k.');
+        (1:(p*p-p))/10^3, sort(plain_gc)/scale_gc, 'k.');
 set(hd,'linewidth',line_width);
 xlabel('sorted index (10^3)');
 ylabel(['GC value (10^{',num2str(round(log10(scale_gc))),'})']);
 %set(gca,'ytick',s_gc_tick);
-if exist('s_gc_tick') && ~isempty('s_gc_tick')
+if exist('s_gc_tick','var') && ~isempty('s_gc_tick')
     set(gca,'ytick',[s_gc_tick; s_gc_tick_white],'yticklabel',[num2str(s_gc_tick); char(32*ones(length(s_gc_tick_white),1))]);
 end
 hd=legend(['GC0\neq0 P-value = ',num2str(p_val)], 'best 0 or 1 threshold',...
@@ -304,10 +304,10 @@ bar(xx,nn, 'facecolor',[0.5,0.5,0.5],'linestyle','-');
 xlabel(['GC value (10^{',num2str(round(log10(scale_gc))),'})']);
 ylabel('count/bin');
 %set(gca, 'xtick',s_gc_tick);
-if exist('s_gc_tick') && ~isempty('s_gc_tick')
+if exist('s_gc_tick','var') && ~isempty('s_gc_tick')
     set(gca,'xtick',[s_gc_tick; s_gc_tick_white],'xticklabel',[num2str(s_gc_tick); char(32*ones(length(s_gc_tick_white),1))]);
 end
-if exist('s_gc_hist_tick') && ~isempty('s_gc_hist_tick')
+if exist('s_gc_hist_tick','var') && ~isempty('s_gc_hist_tick')
     set(gca,'ytick',s_gc_hist_tick);
 end
 hold('on');
