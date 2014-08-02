@@ -24,7 +24,7 @@ uint32_t BKDRHash(char *str)
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
                  const mxArray *prhs[])
 {
-  if (nrhs != 1 || mxIsChar(prhs[0]) != 1 || mxGetM(prhs[0]) != 1) {
+  if (nrhs != 1 || mxIsChar(prhs[0]) != 1 || mxGetM(prhs[0]) > 1) {
     mexErrMsgTxt("Usage: BKDRHash(string)\n");
   }
   uint32_t n = BKDRHash(mxArrayToString(prhs[0]));
