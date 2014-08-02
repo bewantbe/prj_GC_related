@@ -4,7 +4,7 @@ pm.net  = 'net_2_2';
 pm.scee = 0.05;
 pm.pr   = 1.6;
 pm.ps   = 0.04;
-pm.t    = 1e6;
+pm.t    = 1e7;
 pm.stv  = 0.5;
 
 % Generate data

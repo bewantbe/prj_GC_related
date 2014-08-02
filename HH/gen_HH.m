@@ -3,14 +3,14 @@
 %
 %  [X, ISI, ras] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])
 %
-% Usage example 1: % default means optional
+% Usage example 1:       % the items with default value are optional
 %  clear('pm');          % a new parameter set
 %  pm.net  = 'net_2_2';
 %  pm.scee = 0.05;
 %  pm.ps   = 0.04;
 %  pm.pr   = 1.6;
 %  pm.t    = 1e4;
-%  pm.In   = 0;          % default: 0. Number of Inhibitory neurons.
+%  pm.nI   = 0;          % default: 0. Number of Inhibitory neurons.
 %                        %             Indexes are later half
 %  pm.dt   = 1.0/32;     % default: 1/32
 %  pm.stv  = 0.5;        % default: 0.5
@@ -61,6 +61,8 @@ mode_show_cmd  = false;
 mode_read_only = false;
 mode_run_in_background = false;
 ext_T = 0;
+
+% Read settings
 if ~exist('gen_cmd','var')
     gen_cmd = '';
 end
@@ -243,7 +245,7 @@ if nargout > 0
         ISI = load('-ascii', output_ISI_name);
     end
     if (nargout>2)
-        % Check if the file is non-empty (i.e. no any spike)
+        % We need to check if the file is non-empty (i.e. no any spike)
         % Otherwise load() may fail due to empty file.
         % TODO: use dir() in this part
         tmp_fd = fopen(output_RAS_name);
