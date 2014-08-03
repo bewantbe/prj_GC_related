@@ -5,7 +5,7 @@
 %
 % Usage example 1:       % the items with default value are optional
 %  clear('pm');          % a new parameter set
-%  pm.net  = 'net_2_2';
+%  pm.net  = 'net_2_2';  % can also be a connectivity matrix
 %  pm.scee = 0.05;
 %  pm.ps   = 0.04;
 %  pm.pr   = 1.6;
@@ -88,10 +88,19 @@ while ~isempty(gen_cmd)
 end
 
 % Default parameter values
+if ~exist('data_dir_prefix', 'var')
+    data_dir_prefix = ['data', filesep];
+end
 if ~isfield(pm, 'net') || isempty(pm.net)
     pm.net = 'net_1_0';
 end
-[network, mat_path] = getnetwork(pm.net);
+if ~ischar(pm.net)  % so pm.net is connectivity matrix?
+    % save this matrix, so that it can be read by `raster_tuning'
+    network = pm.net;
+    [mat_path, pm.net] = savenetwork(pm.net, data_dir_prefix);
+else
+    [network, mat_path] = getnetwork(pm.net);
+end
 p = size(network,1);
 if ~isfield(pm, 'nI') || isempty(pm.nI)
     pm.nI = 0;  % number of inhibitory neurons
@@ -137,9 +146,6 @@ st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
     sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
             pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.t + ext_T, pm.stv);
-if ~exist('data_dir_prefix', 'var')
-    data_dir_prefix = ['data', filesep];
-end
 file_prefix = [data_dir_prefix, 'HH_'];
 output_name     = [file_prefix, 'volt_',file_inf_st,'.dat'];
 output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
@@ -169,7 +175,7 @@ end
 st_paths =...
     sprintf('--bin-save -o %s --save-spike-interval %s --save-spike %s',...
             output_name, output_ISI_name, output_RAS_name);
-cmdst = sprintf('%s%sraster_tuning_HH -ng -v %s %s %s %s',...
+cmdst = sprintf('%s%sraster_tuning_HH -ng -v -inf - %s %s %s %s',...
                 pathdir, filesep, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
 if mode_show_cmd
     disp(cmdst);
@@ -302,6 +308,7 @@ end
 
 %test
 %{
+  clear('pm');
   pm.net  = 'net_2_2';
   pm.scee = 0.05;
   pm.ps   = 0.04;
