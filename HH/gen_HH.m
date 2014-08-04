@@ -5,7 +5,7 @@
 %
 % Usage example 1:       % the items with default value are optional
 %  clear('pm');          % a new parameter set
-%  pm.net  = 'net_2_2';  % can also be a connectivity matrix
+%  pm.net  = 'net_2_2';  % can also be a connectivity matrix of full file path
 %  pm.scee = 0.05;
 %  pm.ps   = 0.04;
 %  pm.pr   = 1.6;
@@ -94,12 +94,14 @@ end
 if ~isfield(pm, 'net') || isempty(pm.net)
     pm.net = 'net_1_0';
 end
-if ~ischar(pm.net)  % so pm.net is connectivity matrix?
+if ischar(pm.net)
+    [network, mat_path] = getnetwork(pm.net);
+    [~, pm.net] = fileparts(pm.net);          % Use the name without extension
+else
+    % so pm.net is connectivity matrix?
     % save this matrix, so that it can be read by `raster_tuning'
     network = pm.net;
     [mat_path, pm.net] = savenetwork(pm.net, data_dir_prefix);
-else
-    [network, mat_path] = getnetwork(pm.net);
 end
 p = size(network,1);
 if ~isfield(pm, 'nI') || isempty(pm.nI)

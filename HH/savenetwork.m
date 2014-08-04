@@ -9,7 +9,7 @@ function [matpath, matname] = savenetwork(A, pathdir)
 if ~exist('A','var') || isempty(A) || (~isnumeric(A) && ~islogical(A))
   error('Input a numeric matrix please!');
 end
-if size(A,1) ~= size(A,2) || ndims(A) ~= 2
+if ~ismatrix(A) || size(A,1) ~= size(A,2)
   error('Not a square matrix!');
 end
 A = double(A);  % int32,logical to double, so get consistent hash result
@@ -22,25 +22,32 @@ end
 if ~isempty(pathdir) && pathdir(end) ~= '/' && pathdir(end) ~= e
   pathdir = [pathdir e];
 end
+if ~exist(fileparts(pathdir), 'dir')
+  mkdir(pathdir);
+end
 
 % Give this matrix a name
 p = length(A);
 matname = ['net_', num2str(p), '_0X', BKDRHash(mat2str(A))];
 matpath = [pathdir, matname, '.txt'];
 
-% If there is a file with the same name
-if ~isempty(dir(matpath))
+% Solve file name collision by adding extra characters, if any
+matname0 = matname;
+k = 0;
+while exist(matpath, 'file')
   B = load('-ascii', matpath);
-  if norm(A(:)-B(:))>0
-    % TODO: solve it by re-hash?
-    error('hash collision! Currently need to solve by hand...');
+  if norm(A(:)-B(:)) == 0
+    return
   end
-  return
+  k = k + 1;
+  matname = sprintf('%s_%s', matname0, lower(dec2base(k,16)));
+  matpath = [pathdir, matname, '.txt'];
+  warning('savenetwork:hash', 'hash collision occured! File is renamed.');
 end
 
 % Save the matrix to the file
 if all(floor(A(:)) == A(:))
-  % all integers, so let's save it in a cleaner way
+  % Matrix is consist of integers, so let's save it in a cleaner way
   A = int2str(int32(A));
   fd = fopen(matpath, 'w');
   if fd == -1
@@ -51,6 +58,6 @@ if all(floor(A(:)) == A(:))
   end
   fclose(fd);
 else
-  % save the matrix in full precision ascii format
+  % Save the matrix in full precision ascii format
   save('-ascii', '-double', matpath, 'A');
 end
