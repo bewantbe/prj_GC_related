@@ -1,12 +1,13 @@
-function [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, mode_IF, mode_ST, ISI, file_suffix)
+function [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, neuron_model, b_use_spike_train, ISI, file_suffix, path_prefix)
+if ~exist('fflush','builtin')
+  fflush = @(s) 0;
+end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% input data
 [p,len] = size(X);
 
 tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% analysis
+% Basic GC analysis
 s_od = 1:max_od;
 [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
 [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
@@ -58,24 +59,28 @@ plot(s_od(rg), (squeeze(oGC(2,1,rg)) - s_od(rg)'/len)/gc_scale)
 %}
 
 if exist('pm','var')
-    clear('X', 'ras');
-    if strcmpi(mode_IF,'IF')
-        st_para0 = 'IF_';
-    else
-        st_para0 = [mode_IF '_'];
-    end
-    if mode_ST
-        st_para0 = [st_para0 'ST_'];
-    end
-    if ~isfield(pm, 'nI')
-        st_para = sprintf('%s%s_sc=%1.3f_pr=%1.2f_ps=%1.3f_stv=%1.2f_t=%1.2e',...
-              st_para0, pm.net, pm.scee, pm.pr, pm.ps, pm.stv, pm.t);
-    else
-        st_para = sprintf('%s%s_p[%d,%d]_sc=[%1.3f,%1.3f,%1.3f,%1.3f]_pr=%1.2f_ps=%1.3f_stv=%1.2f_t=%1.2e',...
-              st_para0, pm.net, pm.nE, pm.nI, pm.scee, pm.scie, pm.scei, pm.scii, pm.pr, pm.ps, pm.stv, pm.t);
-    end
-    if exist('file_suffix','var')
-        st_para = [st_para file_suffix];
-    end
-    save('-v7', ['result_',st_para,'.mat']);
+  clear('X', 'ras');
+  st_prefix = [neuron_model '_'];
+  if b_use_spike_train
+    st_prefix = [st_prefix 'ST_'];
+  end
+  if ~isfield(pm, 'nI')
+    st_para = sprintf('%s_sc=%g_pr=%g_ps=%g_stv=%g_t=%.2e',...
+        pm.net, pm.scee, pm.pr, pm.ps, pm.stv, pm.t);
+  else
+    st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
+    st_para = sprintf('%s_p=%d,%d_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
+        pm.net, pm.nE, pm.nI, st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t);
+  end
+  if exist('path_prefix','var')
+    path_prefix = [path_prefix, filesep];  % argly fix
+  else
+    path_prefix = './';
+  end
+  if ~exist('file_suffix','var')
+    file_suffix = '';
+  end
+  st_para = ['GCinfo_', st_prefix, st_para, file_suffix, '.mat'];
+  save('-v7', [path_prefix, st_para]);
+  % Later, use `show_analyse_GC_big_p.m' to load and analyse this file.
 end

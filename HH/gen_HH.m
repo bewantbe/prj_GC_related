@@ -1,7 +1,7 @@
 % Generate HH neuron data by calling raster_tuning_HH.exe
 % Will use preserved data automatically
 %
-%  [X, ISI, ras] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])
+%  [X, ISI, ras, pm] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])
 %
 % Usage example 1:       % the items with default value are optional
 %  clear('pm');          % a new parameter set
@@ -32,6 +32,8 @@
 %  'read'   Read data files if exist, otherwise do nothing and return [];
 %  'nameX'  return path to the voltage data file, instead of read it;
 %  'cmd'    Show command call to raster_tuning_HH, then exit. Useful for debug
+%
+% return value pm is a "normalized" input parameter set
 
 % Behaviour
 % gen_cmd   no data    have data   background(partial data)
@@ -43,7 +45,7 @@
 % 'cmd'     print cmd for gen then exit
 % background  gen&     none        gen&
 
-function [X, ISI, ras] = gen_HH(pm, gen_cmd, data_dir_prefix)
+function [X, ISI, ras, pm] = gen_HH(pm, gen_cmd, data_dir_prefix)
 if nargin()==0
     disp(' [X, ISI, ras] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])');
     disp(' Type "help gen_HH" for more help');
@@ -89,7 +91,7 @@ end
 
 % Default parameter values
 if ~exist('data_dir_prefix', 'var')
-    data_dir_prefix = ['data', filesep];
+    data_dir_prefix = ['.', filesep, 'data', filesep];
 end
 if ~isfield(pm, 'net') || isempty(pm.net)
     pm.net = 'net_1_0';
@@ -146,8 +148,8 @@ end
 st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
-    sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_t=%.2e_stv=%g',...
-            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.t + ext_T, pm.stv);
+    sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
+            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t + ext_T);
 file_prefix = [data_dir_prefix, 'HH_'];
 output_name     = [file_prefix, 'volt_',file_inf_st,'.dat'];
 output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
