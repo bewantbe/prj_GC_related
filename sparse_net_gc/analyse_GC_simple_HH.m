@@ -2,25 +2,35 @@
 
 disp('------------------ generating data ------------------');
 
-net = gen_sparse(3, 0.1, 123);
+net_param.generator  = 'gen_sparse';
+net_param.p          = 100;
+net_param.sparseness = 0.2;
+net_param.seed       = 123;
+net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
+gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
-neuron_model      = 'HH';
 b_use_spike_train = false;
 i_stv   = 1;  % Down sampling factor
 
 clear('pm');
-pm.net  = net;
-pm.nI   = 1;
+pm.neuron_model = 'HH';
+pm.net_param = net_param;
+pm.net  = gen_network(net_param);
+pm.nI   = 20;
 pm.scee = 0.05;
 pm.scie = 0.05;
-pm.scei = 0.06;
-pm.scii = 0.06;
-pm.pr   = 1.6;
-pm.ps   = 0.04;
-pm.t    = 1e5;
+pm.scei = 0.09;
+pm.scii = 0.09;
+pm.pr   = 1.0;
+pm.ps   = 0.03;
+pm.t    = 1e6;
 pm.stv  = 0.5;
 
 [X, ISI, ras, pm] = gen_HH(pm, 'ext_T');
+
+%[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, rm');
+%fprintf('mean ISI = %f\n', mean(ISI));
+%return;
 
 % Down sampling the voltage, in case we don't want to regenerate it
 if i_stv ~= 1
@@ -43,11 +53,13 @@ else
 end
 fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...
   netname, pm.scee, pm.pr, pm.ps, pm.t, pm.stv, len);
-disp('ISI:');
-disp(ISI);
+if p<20
+  disp('ISI:');
+  disp(ISI);
+end
 
-max_od = 30;  % for IF
+max_od = 30;
 
 %[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm);
-[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, neuron_model, b_use_spike_train, ISI, '_test', 'GCinfo');
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, '_test', 'GCinfo');
 

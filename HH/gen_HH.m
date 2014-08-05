@@ -90,6 +90,9 @@ while ~isempty(gen_cmd)
 end
 
 % Default parameter values
+if ~isfield(pm, 'neuron_model') || isempty(pm.neuron_model)
+    pm.neuron_model = 'HH';  % currently not used
+end
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['.', filesep, 'data', filesep];
 end
@@ -105,6 +108,8 @@ else
     network = pm.net;
     [mat_path, pm.net] = savenetwork(pm.net, data_dir_prefix);
 end
+pm.net_path = mat_path;
+pm.net_adj  = network;
 p = size(network,1);
 if ~isfield(pm, 'nI') || isempty(pm.nI)
     pm.nI = 0;  % number of inhibitory neurons

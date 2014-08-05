@@ -1,4 +1,4 @@
-function [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, neuron_model, b_use_spike_train, ISI, file_suffix, path_prefix)
+function [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, file_suffix, path_prefix)
 if ~exist('fflush','builtin')
   fflush = @(s) 0;
 end
@@ -60,7 +60,7 @@ plot(s_od(rg), (squeeze(oGC(2,1,rg)) - s_od(rg)'/len)/gc_scale)
 
 if exist('pm','var')
   clear('X', 'ras');
-  st_prefix = [neuron_model '_'];
+  st_prefix = [pm.neuron_model '_'];
   if b_use_spike_train
     st_prefix = [st_prefix 'ST_'];
   end
@@ -72,15 +72,17 @@ if exist('pm','var')
     st_para = sprintf('%s_p=%d,%d_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
         pm.net, pm.nE, pm.nI, st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t);
   end
+  if ~exist('file_suffix','var')
+    file_suffix = '';
+  end
+  st_para = [st_prefix, st_para, file_suffix];
   if exist('path_prefix','var')
     path_prefix = [path_prefix, filesep];  % argly fix
   else
     path_prefix = './';
   end
-  if ~exist('file_suffix','var')
-    file_suffix = '';
-  end
-  st_para = ['GCinfo_', st_prefix, st_para, file_suffix, '.mat'];
-  save('-v7', [path_prefix, st_para]);
+  info_file_path = [path_prefix, 'GCinfo_', st_para, '.mat'];
+  clear('st_sc', 'st_prefix', 'path_prefix');
+  save('-v7', info_file_path);
   % Later, use `show_analyse_GC_big_p.m' to load and analyse this file.
 end
