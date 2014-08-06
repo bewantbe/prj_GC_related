@@ -3,8 +3,8 @@
 is_octave = exist('OCTAVE_VERSION','builtin') ~= 0;
 if is_octave
 %    font_size = 28;
-  plot_settings.font_size = 24;
-  plot_settings.line_width = 5;
+  plot_settings.font_size = 22;
+  plot_settings.line_width = 3;
 else
   plot_settings.font_size = 24;
   plot_settings.line_width = 2;

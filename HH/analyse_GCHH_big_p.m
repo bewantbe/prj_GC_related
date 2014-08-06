@@ -64,13 +64,17 @@ for cid = 1:n_case
   load([gcdata_dir, gcdata_name, '.mat']);
 
   neu_network = pm.net_adj;
-  p = size(neu_network,1);
+  p = size(neu_network, 1);
+  if any(diag(neu_network))
+    error('neu_network: diagonal non-zero!');
+  end
 
   % Setup output path and format
   % Note that the `st_para' will be loaded
   pic_prefix = [pic_prefix0, st_para];
   pic_output       = @(st)print('-deps'  ,[pic_prefix, st, '.eps']);
   pic_output_color = @(st)print('-depsc2',[pic_prefix, st, '.eps']);
+  pic_output_svg   = @(st)print('-dsvg',[pic_prefix, st, '.svg']);
   %pic_output       = @(st)print('-dpng'  ,[pic_prefix, st, '.png']);
   %pic_output_color = @(st)print('-dpng',[pic_prefix, st, '.png']);
   %pic_output       = @(st) [];
@@ -282,8 +286,15 @@ for cid = 1:n_case
     pic_data_save('_gc_sort', p, use_od, len, plain_gc, plain_network);
 
     % show histogram of GC values
-    figure(6);  set(gca,'fontsize',font_size);
+    figure(6);
+    if exist('OCTAVE_VERSION', 'builtin')
+      old_gnuterm = getenv('GNUTERM');
+      setenv('GNUTERM','qt');
+    end
+    clf;  set(gca,'fontsize',font_size);
+    hold('on');
     [nn,xx] = hist(plain_gc/scale_gc,100);
+    % crop the bars which are too high
     peak_nn = max(nn(10:end));
     line_high = peak_nn;
     peak_scale = 10^floor(log10(1.3*peak_nn));
@@ -295,7 +306,14 @@ for cid = 1:n_case
       nn_id = nn_id + 1;
     end
 
-    bar(xx,nn, 'facecolor',[0.5,0.5,0.5],'linestyle','-');
+    nn_GC_E = hist(GC(neu_network(:,1:pm.nE)==1)/scale_gc, xx);
+    nn_GC_I = hist(GC(:,1+pm.nE:p)(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
+    nn_GC_0 = hist(GC(neu_network()==0 & eye(p)==0)/scale_gc, xx);
+    %bar(xx,nn, 'facecolor',[0.5,0.5,0.5],'linestyle','-');
+    bar(xx,nn_GC_0, 'facecolor',[0.5,0.5,0.5]);
+    bar(xx,nn_GC_I, 'facecolor',[0.0,0.0,0.9]);
+    bar(xx,nn_GC_E, 'facecolor',[0.9,0.0,0.0]);
+    set(findobj(gca,'Type','patch'), 'facealpha', 0.5);
     xlabel(['GC value (10^{',num2str(round(log10(scale_gc))),'})']);
     ylabel('count/bin');
     %set(gca, 'xtick',s_gc_tick);
@@ -305,17 +323,21 @@ for cid = 1:n_case
     if exist('s_gc_hist_tick','var') && ~isempty('s_gc_hist_tick')
       set(gca,'ytick',s_gc_hist_tick);
     end
-    hold('on');
     hd=plot([gc_zero_line,gc_zero_line]/scale_gc, [0,line_high],'g-',...
             [  min_err_gc,  min_err_gc]/scale_gc, [0,line_high],'r--');
+    set(hd,'linewidth',line_width);
     if line_high == peak_scale
       sa=axis();  sa(4)=line_high;  axis(sa);
     end
-    set(hd,'linewidth',line_width);
-    hd=legend('', ['GC0\neq0 P-value = ',num2str(p_val)], 'best 0 or 1 threshold');
-    set(hd,'fontsize',font_size-6);
+    hd=legend('','','',['H0 P-value = ',num2str(p_val)], 'best 0 or 1 threshold');
+    set(hd,'fontsize',font_size-4);
     hold('off');
-    pic_output_color('_gc_hist');
+    if exist('OCTAVE_VERSION', 'builtin')
+      pic_output_svg('_gc_hist');
+      setenv('GNUTERM', old_gnuterm);
+    else
+      pic_output_color('_gc_hist');
+    end
 
   end  %if b_output_pics
 
