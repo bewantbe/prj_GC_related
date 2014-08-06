@@ -4,7 +4,7 @@ disp('------------------ generating data ------------------');
 
 net_param.generator  = 'gen_sparse';
 net_param.p          = 100;
-net_param.sparseness = 0.05;  % 0.2 0.1 0.05
+net_param.sparseness = 0.15;  % 0.20 0.15 0.10 0.05
 net_param.seed       = 123;
 net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));

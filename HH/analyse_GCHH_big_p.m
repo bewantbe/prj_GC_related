@@ -185,7 +185,8 @@ for cid = 1:n_case
   n_conn = sum(neu_network(:));
   disp(['over guess: ', num2str(n_over)]);
   disp(['lack guess: ', num2str(n_lack)]);
-  disp(['total conn: ', num2str(n_conn), '  max: ',num2str(p*(p-1))]);
+  fprintf('connection: %d / %d = %.1f%%\n', n_conn, p*(p-1),...
+          100*n_conn/(p*(p-1)));
 
   if b_cal_net
     addpath('/home/xyy/matcode/octave-networks-toolbox');
