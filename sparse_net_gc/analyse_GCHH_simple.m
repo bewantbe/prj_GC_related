@@ -4,7 +4,7 @@ disp('------------------ generating data ------------------');
 
 net_param.generator  = 'gen_sparse';
 net_param.p          = 100;
-net_param.sparseness = 0.15;  % 0.20 0.15 0.10 0.05
+net_param.sparseness = 0.30;  % 0.30 0.20 0.15 0.10 0.05
 net_param.seed       = 123;
 net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
@@ -51,7 +51,7 @@ if p < 8
   disp('ISI:');
   disp(ISI);
 else
-  fprintf('mean ISI = %f (std=)\n', mean(ISI), std(ISI));
+  fprintf('mean ISI = %.2f (std=%.2f)\n', mean(ISI), std(ISI));
 end
 
 max_od = 30;

@@ -91,7 +91,7 @@ end
 
 % Default parameter values
 if ~isfield(pm, 'neuron_model') || isempty(pm.neuron_model)
-    pm.neuron_model = 'HH';  % currently not used
+    pm.neuron_model = 'HH2_icc';
 end
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['.', filesep, 'data', filesep];
@@ -184,8 +184,8 @@ end
 st_paths =...
     sprintf('--bin-save -o %s --save-spike-interval %s --save-spike %s',...
             output_name, output_ISI_name, output_RAS_name);
-cmdst = sprintf('%s%sraster_tuning_HH -ng -v -inf - %s %s %s %s',...
-                pathdir, filesep, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
+cmdst = sprintf('%s%sraster_tuning_%s -ng -v -inf - %s %s %s %s',...
+                pathdir, filesep, pm.neuron_model, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
 if mode_show_cmd
     disp(cmdst);
     return

@@ -1,6 +1,7 @@
 %
 
 clear('pm');  % make sure we are using a clean pm
+pm.neuron_model = 'HH2_icc';
 pm.net  = 'net_1_0';
 pm.scee = 0.05;
 pm.ps   = 0.04;
@@ -10,8 +11,9 @@ pm.dt   = 2^-9;
 pm.stv  = 0.5;
 pm.seed = 123;
 
-path_test = 'testdata';
-id_case = 1;
+pathdir0 = fileparts(mfilename('fullpath'));
+path_test = [pathdir0, filesep, 'testdata'];
+id_case = 2;
 switch id_case
   case 0
     % N=1, zeros input
