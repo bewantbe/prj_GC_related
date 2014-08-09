@@ -37,7 +37,7 @@ pm.seed = 1;
 pm.neuron_model = 'HH2_icc';
 [X1, ISI1, ras1] = gen_HH(pm, 'rm');
 
-pm.neuron_model = 'HH3_icc';
+pm.neuron_model = 'HH3_gcc';
 %pm.scie *= (1+2e-16);
 [X2, ISI2, ras2] = gen_HH(pm, 'rm');
 

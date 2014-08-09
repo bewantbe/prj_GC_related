@@ -90,9 +90,6 @@ while ~isempty(gen_cmd)
 end
 
 % Default parameter values
-if ~isfield(pm, 'neuron_model') || isempty(pm.neuron_model)
-    pm.neuron_model = 'HH2_icc';
-end
 if ~exist('data_dir_prefix', 'var')
     data_dir_prefix = ['.', filesep, 'data', filesep];
 end
@@ -147,6 +144,14 @@ s_tmp = strtrim(pm.extra_cmd);
 if ~isempty(s_tmp) && strcmp(s_tmp(end), '&') == 1
     % start the data generation in background, then return immediately
     mode_run_in_background = true;  
+end
+if ~isfield(pm, 'neuron_model') || isempty(pm.neuron_model)
+    % choose a faster simulator
+    if p >= 24
+        pm.neuron_model = 'HH3_gcc';
+    else
+        pm.neuron_model = 'HH2_icc';
+    end
 end
 
 % construct file paths
