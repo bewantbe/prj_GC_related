@@ -1,14 +1,13 @@
-% Developing faster HH simulator
+% Compare results and speed of two version of raster_tuning_HH program
+% For developing faster HH simulator
 
+% parameters to generate the network
 net_param.generator  = 'gen_sparse';
 net_param.p          = 100;
 net_param.sparseness = 0.15;  % 0.30 0.20 0.15 0.10 0.05
 net_param.seed       = 123;
 net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
-
-b_use_spike_train = false;
-i_stv   = 1;  % Down sampling factor
 
 clear('pm');
 pm.net_param = net_param;
@@ -34,7 +33,7 @@ pm.seed = 1;
 %pmif.ps   = 0.0060;
 %[X1, ISI1, ras1] = gen_HH(pmif, 'rm');
 
-pm.neuron_model = 'HH2_icc';
+pm.neuron_model = 'HH3_icc';
 [X1, ISI1, ras1] = gen_HH(pm, 'rm');
 
 pm.neuron_model = 'HH3_gcc';

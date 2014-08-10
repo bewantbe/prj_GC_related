@@ -9,6 +9,7 @@ if ~exist('pic_prefix0','var') || isempty(pic_prefix0)
   pic_prefix0 = 'pic_tmp/';
 end
 
+% Set font size and line width
 set(0, 'defaultfigurevisible', 'off');
 if ~exist('plot_settings','var') || isempty(plot_settings)
   font_size  = get(0, 'defaultaxesfontsize');
@@ -19,6 +20,7 @@ else
   set(0, 'defaultfigurevisible', plot_settings.visible);
 end
 
+% Set items to be calculate
 if exist('function_item','var') || isempty(function_item)
   auto_gc_zero_cut = function_item.auto_gc_zero_cut;
   b_output_pics    = function_item.b_output_pics;
@@ -42,19 +44,23 @@ else
   f_use_od         = @() eval('bic_od');
 end
 
-n_case = length(s_case);
-
 if b_cal_net
-  s_stv= zeros(1, n_case);
-  s_aic= zeros(1, n_case);
-  s_bic= zeros(1, n_case);
+  % Load function to do the network calculation
+  addpath('/home/xyy/matcode/octave-networks-toolbox');
+  addpath('/home/xyy/matcode/prj_neu_smallworld');
+  % Initialize the arrays to save statistics of network and dynamics
+  s_stv = zeros(1, n_case);
+  s_aic = zeros(1, n_case);
+  s_bic = zeros(1, n_case);
   s_over= zeros(1, n_case);
   s_lack= zeros(1, n_case);
-  s_CC = zeros(1, n_case);
-  s_Lu = zeros(1, n_case);
-  s_Ld = zeros(1, n_case);
+  s_CC  = zeros(1, n_case);
+  s_Lu  = zeros(1, n_case);
+  s_Ld  = zeros(1, n_case);
   stdat = cell(1, n_case);
 end
+
+n_case = length(s_case);
 
 % Super big for loop
 for cid = 1:n_case
@@ -72,6 +78,9 @@ for cid = 1:n_case
   % Setup output path and format
   % Note that the `st_para' will be loaded
   pic_prefix = [pic_prefix0, st_para];
+  if b_use_pairGC
+    pic_prefix = [pic_prefix, '_pairwise'];
+  end
   pic_output       = @(st)print('-deps'  ,[pic_prefix, st, '.eps']);
   pic_output_color = @(st)print('-depsc2',[pic_prefix, st, '.eps']);
   pic_output_svg   = @(st)print('-dsvg',[pic_prefix, st, '.svg']);
@@ -95,12 +104,13 @@ for cid = 1:n_case
     GC = oGC(:,:,use_od);
   end
 
-  % auto determine cutline
+  % flatten the GC and connection matrix
   plain_gc = GC;
   plain_gc = plain_gc(eye(p)==0);
   plain_network = neu_network;
   plain_network = plain_network(eye(p)==0);
 
+  % auto determine cutline
   [sorted_gc, sorted_gc_id] = sort(plain_gc);
   sorted_gc_zeroone = plain_network(sorted_gc_id);
   tmp_0 = cumsum(sorted_gc_zeroone==0);
@@ -151,7 +161,7 @@ for cid = 1:n_case
   var_theo_gc1 = 2*use_od/len^2 + 4/len*(mean_gc1-use_od/len);
 
   fprintf('data length: %.2e\n', len);
-  scale_gc = 1e-5;
+  scale_gc = 1e-4;
   if scale_gc~=0
   fprintf('mean GC0/%.1e: %.2f  (stdv=%.2f theo: %.2f res stdv=%.2f)\n',...
           scale_gc, mean_gc0/scale_gc, sqrt(var_gc0)/scale_gc,...
@@ -296,7 +306,7 @@ for cid = 1:n_case
     hold('on');
     [nn,xx] = hist(plain_gc/scale_gc,100);
     % crop the bars which are too high
-    peak_nn = max(nn(10:end));
+    peak_nn = max(nn(20:end));
     line_high = peak_nn;
     peak_scale = 10^floor(log10(1.3*peak_nn));
     peak_scale = ceil(4*1.3*peak_nn/peak_scale)/4*peak_scale;
@@ -311,9 +321,10 @@ for cid = 1:n_case
     nn_GC_I = hist(GC(:,1+pm.nE:p)(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
     nn_GC_0 = hist(GC(neu_network()==0 & eye(p)==0)/scale_gc, xx);
     %bar(xx,nn, 'facecolor',[0.5,0.5,0.5],'linestyle','-');
-    bar(xx,nn_GC_0, 'facecolor',[0.5,0.5,0.5]);
-    bar(xx,nn_GC_I, 'facecolor',[0.0,0.0,0.9]);
-    bar(xx,nn_GC_E, 'facecolor',[0.9,0.0,0.0]);
+    shading('flat');
+    bar(xx, nn_GC_0, 1.0, 'facecolor',[0.5,0.5,0.5]);
+    bar(xx, nn_GC_I, 1.0, 'facecolor',[0.0,0.0,0.9]);
+    bar(xx, nn_GC_E, 1.0, 'facecolor',[0.9,0.0,0.0]);
     set(findobj(gca,'Type','patch'), 'facealpha', 0.5);
     xlabel(['GC value (10^{',num2str(round(log10(scale_gc))),'})']);
     ylabel('count/bin');

@@ -1,3 +1,6 @@
+% Do a basic GC analysis, then save the result to a file
+% note: pm should in a full input form
+
 function [zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, file_suffix, path_prefix)
 if ~exist('fflush','builtin')
   fflush = @(s) 0;
@@ -64,14 +67,9 @@ if exist('pm','var')
   if b_use_spike_train
     st_prefix = [st_prefix 'ST_'];
   end
-  if ~isfield(pm, 'nI')
-    st_para = sprintf('%s_sc=%g_pr=%g_ps=%g_stv=%g_t=%.2e',...
-        pm.net, pm.scee, pm.pr, pm.ps, pm.stv, pm.t);
-  else
-    st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
-    st_para = sprintf('%s_p=%d,%d_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
-        pm.net, pm.nE, pm.nI, st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t);
-  end
+  st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
+  st_para = sprintf('%s_p=%d,%d_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
+      pm.net, pm.nE, pm.nI, st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t);
   if ~exist('file_suffix','var')
     file_suffix = '';
   end
