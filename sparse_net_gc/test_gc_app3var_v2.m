@@ -1,60 +1,83 @@
 %
 
-if exist('are_you_joking', 'var')
-clear('pmif');
-pmif.neuron_model = 'LIF';
-pmif.net  = 'net_3_06';
-pmif.scee = 0.01;
-pmif.pr   = 1.0;
-pmif.ps   = 0.012;
-pmif.t    = 1e7;
-pmif.stv  = 0.5;
-[X, ISI, ras] = gen_HH(pmif);
-[p, len] = size(X);
+if ~exist('are_you_joking', 'var')
+are_you_joking = true;
 
-b_use_spike_train = false;
-% Convert to spike train if requested
-if b_use_spike_train
-  clear('X');
-  X = SpikeTrains(ras, p, len, pm.stv);
-end
+  model_id = 2;
+  switch model_id
+  case 1
+    clear('pmif');
+    pmif.neuron_model = 'LIF';
+    pmif.net  = 'net_3_06';
+    pmif.scee = 0.01;
+    pmif.pr   = 1.0;
+    pmif.ps   = 0.012;
+    pmif.t    = 1e7;
+    pmif.stv  = 0.5;
+    [X, ISI, ras] = gen_HH(pmif);
+    [p, len] = size(X);
 
-aic_od = chooseOrderAuto(X,'AIC');
-bic_od = chooseOrderAuto(X,'BIC');
-srd = WhiteningFilter(X, aic_od);
+    b_use_spike_train = false;
+    % Convert to spike train if requested
+    if b_use_spike_train
+      clear('X');
+      X = SpikeTrains(ras, p, len, pm.stv);
+    end
 
-fprintf('X: aic od = %d, bic_od = %d\n', aic_od, bic_od);
+    aic_od = chooseOrderAuto(X,'AIC');
+    bic_od = chooseOrderAuto(X,'BIC');
+    srd = WhiteningFilter(X, aic_od);
 
-% the fitting order used to calculate GC
-use_od = aic_od;
-m = use_od;
+    fprintf('X: aic od = %d, bic_od = %d\n', aic_od, bic_od);
 
-%%%%%%%%%%%%%%%%%%%%%%%
-% Calculate GC
+    % the fitting order used to calculate GC
+    use_od = aic_od;
+    m = use_od;
 
-% by X
-GC_X   = pos_nGrangerT2(X, use_od)
-clear('X');
+    %%%%%%%%%%%%%%%%%%%%%%%
+    % Calculate GC
 
-% by srd
-GC_srd_whole = pos_nGrangerT2(srd, use_od)
-covz = getcovz(srd, use_od);
-clear('srd');
+    % by X
+    GC_X   = pos_nGrangerT2(X, use_od)
+    clear('X');
 
+    % by srd
+    GC_srd_whole = pos_nGrangerT2(srd, use_od)
+    covz = getcovz(srd, use_od);
+    clear('srd');
 
-% Make S^(xx) identical matrix
-% i.e. Assume `srd' is purely white for each variables
-id_p   = 1 : p : (p*(m+1));
-id_p_2 = 1 : p*p*(m+1)+p : p*p*(m+1)*(m+1);
-for k = 1 : p
-    covz(id_p,id_p) = diag(covz(id_p_2));
-    id_p = id_p + 1;
-    id_p_2 = id_p_2 + p*(m+1) + 1;
-end
-covz_orig = covz;
+  case 2
+    D = diag([0.9 1.0 0.8]);
+    A = [-0.8  0.0   0.0  0.5 -0.07   0.0;
+          0.1 -0.9   0.0  0.0  0.8    0.0;
+          0.0  0.04 -0.5  0.0  0.03   0.2];
+    fftlen = 1024;
+    S = A2S(A, D, fftlen);
+    S = permute(S, [3 1 2]);
+    S = StdWhiteS(S);
+    S = ipermute(S, [3 1 2]);
+    od = 50;
+    R = S2cov(S, od);
+    covz = R2covz(R);
+
+    use_od = od;
+    m = use_od;
+
+  endswitch
+
+  % Make S^(xx) identical matrix
+  % i.e. Assume `srd' is purely white for each variables
+  id_p   = 1 : p : (p*(m+1));
+  id_p_2 = 1 : p*p*(m+1)+p : p*p*(m+1)*(m+1);
+  for k = 1 : p
+      covz(id_p,id_p) = diag(covz(id_p_2));
+      id_p = id_p + 1;
+      id_p_2 = id_p_2 + p*(m+1) + 1;
+  end
+  covz_orig = covz;
 
 else
-covz = covz_orig;
+  covz = covz_orig;
 end
 
 [GC_srd_covz, Deps, AA] = pos_nGrangerT2RZ(covz, p);
@@ -149,26 +172,31 @@ coef_xx = coef_all( 1:m );
 coef_xy = coef_all((1:m)+m);
 coef_xz = coef_all(2*m+1:end);
 
-% Use covariance to calculate GC
-%erv2 = [r1O1 r1O3];
-%eR2 = [
-    %R11  R13
-    %R13' R33];
-%log( (R11(1,1) - erv2 / eR2 * erv2') /...
-     %(R11(1,1) - erv3 / eR3 * erv3') )
-
 % Check coef and correlation
 id_passive = permvec(1);
 id_driving = permvec(2);
 
 figure(1);
 plot(1:m, -AA(id_passive, id_driving:p:end), '-+',...
-    1:m, coef_xy, '-x',...
-    1:m, r1O2/R11(1), '-o'
-    );
+     1:m, coef_xy, '-x',...
+     1:m, r1O2/R11(1), '-o'
+     );
 legend('Correct', 'By parted matrix', 'By approx');
 title(['coef 12, from ',num2str(id_passive),' to ',num2str(id_driving)]);
 
-c_j       = coef_xy;
-cov_srdxy = r1O2/R11(1);
+figure(2);
+Q = B3^4;
+plot(Q(:,round(0.5*end)), '-b');
+hold on
+plot(Q(:,round(0.17*end)), '-r');
+plot(Q(:,round(0.83*end)), '-g');
+hold off
+max(Q(:))
 
+n = 5;
+s_m_Q = zeros(1, n);
+for k=1:n
+  s_m_Q(k) = max((B3^k)(:));
+end
+figure(3);
+plot(1:n, s_m_Q, '-o');
