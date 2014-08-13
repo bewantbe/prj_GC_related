@@ -3,7 +3,7 @@
 if ~exist('are_you_joking', 'var')
 are_you_joking = true;
 
-  model_id = 2;
+  model_id = 1;
   switch model_id
   case 1
     clear('pmif');
@@ -46,11 +46,13 @@ are_you_joking = true;
     covz = getcovz(srd, use_od);
     clear('srd');
 
+    R = covz(1:p, 1:end);
+
   case 2
     D = diag([0.9 1.0 0.8]);
-    A = [-0.8  0.0   0.0  0.5 -0.07   0.0;
-          0.1 -0.9   0.0  0.0  0.8    0.0;
-          0.0  0.04 -0.5  0.0  0.03   0.2];
+    A = [-0.8   0.0   0.0  0.5 -0.07   0.0;
+          0.05 -0.9   0.0  0.0  0.8    0.0;
+          0.0   0.04 -0.5  0.0  0.03   0.2];
     fftlen = 1024;
     S = A2S(A, D, fftlen);
     S = permute(S, [3 1 2]);
@@ -60,6 +62,7 @@ are_you_joking = true;
     R = S2cov(S, od);
     covz = R2covz(R);
 
+    len = 1e9;
     use_od = od;
     m = use_od;
 
@@ -83,12 +86,20 @@ end
 [GC_srd_covz, Deps, AA] = pos_nGrangerT2RZ(covz, p);
 GC_srd_covz
 
+GC_srd_pairs = pairRGrangerT(R)
+
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
 permvec = [3 1 2];              % variable index after permutation
+permvec = [1 3 2];              % variable index after permutation
 id_rearrange = bsxfun(@plus, permvec', p*(0:m));
 covz = covz_orig(id_rearrange, :)(:, id_rearrange);  % tremble matlab!
+
+id_passive = permvec(1);
+id_driving = permvec(2);
+
+fprintf('analyse GC %d -> %d\n', id_driving, id_passive);
 
 %
 % Get GC 2->1  (y->x)
@@ -146,16 +157,27 @@ B3 = eye(size(eS3)) - eS3;
 quotient_core =...
     1 - (1 - esv3 / eS3 * esv3') /...
         (1 - esv2 / eS2 * esv2')
-quotient_core_expension =...
+quotient_core_app =...
+    esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
+
+fprintf('norm of B2 = %f\n', norm(B2));
+fprintf('norm of B3 = %f\n', norm(B3));
+
+quotient_core_expension_od4_v1 =...
+    1 - (1 - esv3 * (B3^0 + B3^1 + B3^2 + B3^3 + B3^4) * esv3') /...
+        (1 - esv2 * (B2^0 + B2^1 + B2^2 + B2^3 + B2^4) * esv2')
+
+quotient_core_expension_od2_v1 =...
     1 - (1 - esv3 * (B3^0 + B3^1 + B3^2) * esv3') /...
         (1 - esv2 * (B2^0 + B2^1 + B2^2) * esv2')
-quotient_core_expension_low =...
+quotient_core_expension_od1_v1 =...
     1 - (1 - esv3 * (B3^0 + B3^1) * esv3') /...
         (1 - esv2 * B2^0 * esv2')
-quotient_core_expension_low_v2 =...
+quotient_core_expension_od1_v2 =...
     v1O2*v1O2' + esv3 * B3 * esv3'
 
 GC_approx_od2 = v1O2*v1O2' - 2*v1O2 * V23 * v1O3'
+GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3'
 
 GC_approx_od1 = v1O2*v1O2'
 
@@ -173,9 +195,6 @@ coef_xy = coef_all((1:m)+m);
 coef_xz = coef_all(2*m+1:end);
 
 % Check coef and correlation
-id_passive = permvec(1);
-id_driving = permvec(2);
-
 figure(1);
 plot(1:m, -AA(id_passive, id_driving:p:end), '-+',...
      1:m, coef_xy, '-x',...
@@ -191,12 +210,12 @@ hold on
 plot(Q(:,round(0.17*end)), '-r');
 plot(Q(:,round(0.83*end)), '-g');
 hold off
-max(Q(:))
 
 n = 5;
 s_m_Q = zeros(1, n);
 for k=1:n
-  s_m_Q(k) = max((B3^k)(:));
+  s_m_Q(k) = max(abs((B3^k)(:)));
 end
 figure(3);
 plot(1:n, s_m_Q, '-o');
+
