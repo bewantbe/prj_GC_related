@@ -1,4 +1,5 @@
 % Generate HH data
+% work with GCHH_analyse_core.m
 
 net_param.generator  = 'gen_sparse';
 net_param.p          = 100;
@@ -29,19 +30,19 @@ max_od = 30;
 %[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, new, rm');
 %return;
 
-analyse_GCHH_simple0
+GCHH_analyse_core
 
 net_param.sparseness = 0.10;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-analyse_GCHH_simple0
+GCHH_analyse_core
 
 net_param.sparseness = 0.15;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-analyse_GCHH_simple0
+GCHH_analyse_core
 
 net_param.sparseness = 0.20;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-analyse_GCHH_simple0
+GCHH_analyse_core
