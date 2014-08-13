@@ -1,6 +1,7 @@
 % Generate HH data
 
 disp('------------------ generating data ------------------');
+fflush(stdout);
 
 clear('X','ras','ISI');
 % cost 12 sec for 100neu * 2e6sample
@@ -20,7 +21,6 @@ if b_use_spike_train
   clear('X');
   X = SpikeTrains(ras, p, len, pm.stv);
 end
-return
 
 fprintf('net:%s, sc:%.3f, pr:%.2f, ps:%.4f, time:%.2e,stv:%.2f,len:%.2e\n',...
         pm.net, pm.scee, pm.pr, pm.ps, pm.t, pm.stv, len);
@@ -30,7 +30,8 @@ if p < 8
 else
   fprintf('mean ISI = %.2f (std=%.2f)\n', mean(ISI), std(ISI));
 end
+fflush(stdout);
 
 %[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm);
-[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, '_test', 'GCinfo');
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, '_od40', 'GCinfo');
 

@@ -1,17 +1,17 @@
 % Generate HH data
+% work with GCHH_analyse_core.m
 
 net_param.generator  = 'gen_sparse';
 net_param.p          = 100;
-net_param.sparseness = 0.05;  % 0.30 0.20 0.15 0.10 0.05
+net_param.sparseness = 0.05;  % 0.20 0.15 0.10 0.05
 net_param.seed       = 123;
 net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
-b_use_spike_train = true;
 i_stv   = 1;  % Down sampling factor
 
 clear('pm');
-pm.neuron_model = 'HH';
+pm.neuron_model = 'HH3_gcc';
 pm.net_param = net_param;
 pm.net  = gen_network(net_param);
 pm.nI   = 20;
@@ -24,9 +24,44 @@ pm.ps   = 0.03;
 pm.t    = 1e6;
 pm.stv  = 0.5;
 
-max_od = 30;
+max_od = 40;
 
-%[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, rm');
+%[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, new, rm');
 %return;
 
-analyse_GCHH_simple0.m
+b_use_spike_train = false;
+net_param.sparseness = 0.05;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core
+
+b_use_spike_train = true;
+GCHH_analyse_core
+
+b_use_spike_train = false;
+net_param.sparseness = 0.10;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core
+
+b_use_spike_train = true;
+GCHH_analyse_core
+
+b_use_spike_train = false;
+net_param.sparseness = 0.15;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core
+
+b_use_spike_train = true;
+GCHH_analyse_core
+
+b_use_spike_train = false;
+net_param.sparseness = 0.20;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core
+
+b_use_spike_train = true;
+GCHH_analyse_core
+

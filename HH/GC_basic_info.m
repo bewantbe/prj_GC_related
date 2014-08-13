@@ -82,5 +82,6 @@ if exist('pm','var')
   info_file_path = [path_prefix, 'GCinfo_', st_para, '.mat'];
   clear('st_sc', 'st_prefix', 'path_prefix');
   save('-v7', info_file_path);
+  fprintf('Data saved to "%s"\n', info_file_path);
   % Later, use `show_analyse_GC_big_p.m' to load and analyse this file.
 end

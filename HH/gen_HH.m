@@ -97,7 +97,7 @@ if ~isfield(pm, 'net') || isempty(pm.net)
     pm.net = 'net_1_0';
 end
 if ischar(pm.net)
-    [network, mat_path] = getnetwork(pm.net);
+    [network, mat_path] = getnetwork(pm.net, data_dir_prefix);
     [~, pm.net] = fileparts(pm.net);          % Use the name without extension
 else
     % so pm.net is connectivity matrix?
