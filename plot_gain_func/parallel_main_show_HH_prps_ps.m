@@ -42,6 +42,6 @@ for id_s_data = 1:length(s_data_file_name)
 end
 hold off
 ylabel('spike rate /Hz');
-xlabel('\mu\cdotf_{EPSP} /1e-3');
+xlabel('\mu\cdotf /1e-3');
 
 pic_output_color('HH_gain_func_prps_ps');
