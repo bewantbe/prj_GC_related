@@ -10,7 +10,7 @@ else
     % whether we are in Octave or Matlab
     is_octave = exist('OCTAVE_VERSION','builtin') ~= 0;
     if is_octave
-        fontsize = 22;
+        fontsize = 20;
         linewidth = 3;
     else
         fontsize = 16;

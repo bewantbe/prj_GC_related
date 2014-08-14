@@ -1,13 +1,13 @@
 %
 
-pm.net  = 'net_2_2';
-pm.ps   = 0.04;
-pm.pr   = 1.6;
-pm.scee = 0.05;
+clear('pm');
+pm.net  = 'net_1_0';
+pm.ps   = 1/31 * 1/1;
+pm.pr   = 0.1/pm.ps;
+pm.scee = 0.01;
 pm.t    = 1e4;
-pm.dt   = 1/32;
 pm.stv  = 0.5;
-[V, ISI, ras] = gen_HH(pm);
+[V, ISI, ras] = gen_HH(pm, 'rm');
 p = size(V,1);
 ST = SpikeTrains(ras, p, round(pm.t/pm.stv), pm.stv);
 
