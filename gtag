@@ -2,6 +2,6 @@
 
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 
-ctags -R ./
+ctags -R $DIR
 ctags -aR --exclude='*eigen3/*' "$DIR/../GC_clean/"
 
