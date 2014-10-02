@@ -7,7 +7,9 @@ addpath('/home/xyy/matcode/prj_GC_clean/sparse_net_gc');  % need gen_sparse.m
 
 
 data_dir_prefix = '/home/xyy/matcode/prj_GC_clean/data/';   % don't forget to include the tailing slash (since it's a prefix)
-T = 1e4;
+T = 1e6;
+
+if exist('id','var') && id == 1
 
 % most "studied" case, 20% connectivity, E
 pm = [];              % a new parameter set
@@ -59,6 +61,8 @@ pm.dt   = 1.0/32;
 pm.stv  = 0.5;
 gen_HH(pm, 'new,ext_T', data_dir_prefix);
 
+end
+if exist('id','var') && id == 2
 
 % small world, E
 pm = [];
@@ -89,6 +93,8 @@ pm.dt   = 1.0/32;
 pm.stv  = 0.5;
 gen_HH(pm, 'new,ext_T', data_dir_prefix);
 
+end
+
 %% Used for sparsity study
 % common parameters for network
 net_param.generator  = 'gen_sparse';
@@ -110,6 +116,8 @@ pm.pr   = 1.0;
 pm.ps   = 0.007;
 pm.t    = T;
 pm.stv  = 0.5;
+
+if exist('id','var') && id == 3
 
 % sub-case 1, 5% connectivity, EI
 net_param.sparseness = 0.05;
@@ -134,6 +142,9 @@ net_param.sparseness = 0.20;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
 gen_HH(pm, 'new,ext_T');
+
+end
+if exist('id','var') && id == 4
 
 pm.pr   = 2.0;
 
@@ -161,3 +172,4 @@ pm.net_param = net_param;
 pm.net = gen_network(net_param);
 gen_HH(pm, 'new,ext_T');
 
+end
