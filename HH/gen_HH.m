@@ -5,21 +5,22 @@
 %
 % Usage example 1:       % the items with default value are optional
 %  clear('pm');          % a new parameter set
+%  pm.neuron_model = 'HH2_gcc';  % program to run, with prefix raster_tuning_
 %  pm.net  = 'net_2_2';  % can also be a connectivity matrix of full file path
-%  pm.scee = 0.05;
-%  pm.ps   = 0.04;
-%  pm.pr   = 1.6;
-%  pm.t    = 1e4;
 %  pm.nI   = 0;          % default: 0. Number of Inhibitory neurons.
 %                        %             Indexes are later half
-%  pm.dt   = 1.0/32;     % default: 1/32
-%  pm.stv  = 0.5;        % default: 0.5
-%  pm.seed = 'auto';     % default: 'auto'(or []). Accept integers
+%  pm.scee = 0.05;
 %  pm.scie = 0.00;       % default: 0. Strength from Ex. to In.
 %  pm.scei = 0.00;       % default: 0. Strength from In. to Ex.
 %  pm.scii = 0.00;       % default: 0.
-%  pm.extra_cmd = '--RC-filter 0 1'  % default: '--RC-filter 0 1'
-%                                    % put all other parameters here.
+%  pm.pr   = 1.6;
+%  pm.ps   = 0.04;
+%  pm.t    = 1e4;
+%  pm.dt   = 1.0/32;     % default: 1/32
+%  pm.stv  = 0.5;        % default: 0.5
+%  pm.seed = 'auto';     % default: 'auto'(or []). Accept integers
+%  pm.extra_cmd = '';    % default: '--RC-filter 0 1'
+%                        % put all other parameters here.
 %  [X, ISI, ras] = gen_HH(pm);
 %
 % Usage example 2: Always re-generate data, then read it
@@ -55,7 +56,7 @@ X=[];
 ISI=[];
 ras=[];
 
-% Default settings
+% Default generator settings
 new_run        = false;
 return_X_name  = false;
 mode_rm_only   = false;
@@ -64,8 +65,8 @@ mode_read_only = false;
 mode_run_in_background = false;
 ext_T = 0;
 
-% Read settings
-if ~exist('gen_cmd','var')
+% Read generator parameters
+if ~exist('gen_cmd','var') || isempty(gen_cmd)
     gen_cmd = '';
 end
 gen_cmd = strtrim(gen_cmd);
@@ -166,6 +167,7 @@ output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
 output_RAS_name = [file_prefix, 'RAS_', file_inf_st,'.txt'];
 
 % construct command string
+%   consider use 'which raster_tuning_HH3_gcc.' to find path
 pathdir = fileparts(mfilename('fullpath'));
 % ! NOTE: pm.scie is strength from Ex. to In. type
 %         Seems biologist love this convention, I have no idea.
