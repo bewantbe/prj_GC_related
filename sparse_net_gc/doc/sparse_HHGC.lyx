@@ -554,8 +554,8 @@ Which cost much less if it's spare network.
 \end_layout
 
 \begin_layout Standard
-This elimination speed up 20%, which, with the above two elimination, the
- program run 1 times faster.
+This elimination get speed up 20%, which, with the above two elimination,
+ the program run 1 times faster.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -572,7 +572,7 @@ Thanks to the pipeline and Streaming SIMD (Single instruction, multiple
 \begin_layout Standard
 Use SSE/AVX instructions directly would need hand write Assembly code or
  equivalances (compiler intrinsics), or fine tune of compiler options, and
- in the end, with no big success.
+ probably in the end, no big success.
 \end_layout
 
 \begin_layout Standard
@@ -597,8 +597,8 @@ target "http://eigen.tuxfamily.org/"
 \end_layout
 
 \begin_layout Standard
-After analyse the hotspot and rewrite it in vector form (use Eigen), get
- 30%~40% faster.
+After analyse the hotspot of the program, and rewrite the hotspot in vector
+ form (use Eigen), get 30%~40% more faster.
 \end_layout
 
 \begin_layout Subsection
