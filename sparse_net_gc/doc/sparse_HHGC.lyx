@@ -1,0 +1,583 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sinc}{\,\textrm{sinc}\,}
+{\,\textrm{sinc}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathscr{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\la}{\leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ra}{\rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\lra}{\leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\La}{\Leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Ra}{\Rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Lra}{\Leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Llra}{\Longleftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sgn}{\mysgn}
+{\,\textrm{sgn}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+GC Analysis of Sparse Hodgkin Huxley Neural Network and Its Relatives
+\end_layout
+
+\begin_layout Section
+Simulator 
+\family typewriter
+raster_tuning_HH
+\end_layout
+
+\begin_layout Standard
+Compared current version (2014-08-10, changeset 45:836f718da9cf) to JYL
+ version (2014-05-01 just after branch created, changeset 27:9efee6777a85)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://bitbucket.org/bewantbe/ifsimu"
+
+\end_inset
+
+ branch HH_jyl
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+
+\family typewriter
+raster_tuning_HH
+\family default
+ - Speed improvement
+\end_layout
+
+\begin_layout Subsubsection*
+Eliminate Exponential calculationp
+\end_layout
+
+\begin_layout Standard
+Recall that there are 7 exponent calculation for each neuron at each time
+ step
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{n}(V_{i})=\frac{0.1-0.01V_{i}}{\exp(1-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \beta_{n}(V_{i})=0.125\exp(-V_{i}/80)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{m}(V_{i})=\frac{2.5-0.1V_{i}}{\exp(2.5-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{m}(V_{i})=4\exp\left(-V_{i}/18\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{h}(V_{i})=0.07\exp(-V_{i}/20)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{h}(V_{i})=\frac{1}{\exp(3-0.1V_{i})+1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+g(V_{j}^{\textrm{pre}})=1/\left(1+\exp(-(V_{j}^{\textrm{pre}}-\unit[85]{mV})/2)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reformulate the exponentials as following (
+\begin_inset Formula $g(V_{j}^{\textrm{pre}})$
+\end_inset
+
+ has no change)
+\begin_inset Formula 
+\[
+e_{1}=\exp(-0.1V_{i}),\quad e_{2}=\sqrt{e_{1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(1-0.1V_{i})=e_{1}\exp(1)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \exp(-V_{i}/80)=\sqrt{\sqrt{e_{2}}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(2.5-0.1V_{i})=e_{1}\exp(2.5)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp\left(-V_{i}/18\right)=\exp\left(-V_{i}/18\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-V_{i}/20)=e_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(3-0.1V_{i})=e_{1}\exp(3)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So we only need to compute 3 exponentials, instead of 7 (the contant numbers
+ like 
+\begin_inset Formula $\exp(1)$
+\end_inset
+
+ will be calculated at compile time, instead of runtime).
+\end_layout
+
+\begin_layout Standard
+Also note that there some expression like 
+\begin_inset Formula $\frac{\exp(x)}{\exp(x)+a}$
+\end_inset
+
+ in the origin code.
+ They have been changed to 
+\begin_inset Formula $\frac{1}{1+a\exp(-x)}$
+\end_inset
+
+, which is faster (if compiler failed to optimize it), simpler and lose
+ no precision.
+\end_layout
+
+\begin_layout Standard
+The exponential elimination make the program 30% faster for 100 neuron case.
+\end_layout
+
+\begin_layout Subsubsection*
+Eliminate unicessary synaptic calculation
+\end_layout
+
+\begin_layout Standard
+Neurons are not always firing.
+ So don't do it at all if not firing.
+ The orinal code contain this type of optimization, but only halfway to
+ that, like this
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for neuron_passive = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+  for neuron_driving = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (neuron_driving is firing)
+\end_layout
+
+\begin_layout Plain Layout
+
+      synaptic[neuron_passive] += v[neuron_driving]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 * matrix[neuron_passive][neuron_driving]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In whatever condition, there are 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ calculations there (also bad for CPU pipeline).
+ Instead, write it this way
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for neuron_driving = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (neuron_driving is firing)
+\end_layout
+
+\begin_layout Plain Layout
+
+    for neuron_passive = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+      synaptic[neuron_passive] += v[neuron_driving]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 * matrix[neuron_passive][neuron_driving]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Which cost much less if it's spare network.
+\end_layout
+
+\begin_layout Standard
+This elimination speed up 20%, which, with the above two elimination, the
+ program run 1 times faster.
+\end_layout
+
+\begin_layout Subsubsection*
+Utilize SSE/AVX instructions
+\end_layout
+
+\begin_layout Standard
+Thanks to the pipeline and Streaming SIMD (Single instruction, multiple
+ data) Extensions (SSE) and Advanced Vector Extensions (AVX), modern CPU
+ can calculate 2 or 4 (or even 8) multiplications (and potentially 2 or
+ 4 or more addtions at the same time) in ever clock cycle.
+\end_layout
+
+\begin_layout Subsection
+raster_tuning_HH - Correctness Verification
+\end_layout
+
+\begin_layout Standard
+Current known numerical results:
+\end_layout
+
+\end_body
+\end_document
