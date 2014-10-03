@@ -161,7 +161,7 @@ GC Analysis of Sparse Hodgkin Huxley Neural Network and Its Relatives
 \begin_layout Section
 Simulator 
 \family typewriter
-raster_tuning_HH
+raster_tuning_HH changes
 \end_layout
 
 \begin_layout Standard
@@ -186,11 +186,7 @@ target "https://bitbucket.org/bewantbe/ifsimu"
 \end_layout
 
 \begin_layout Subsection
-
-\family typewriter
-raster_tuning_HH
-\family default
- - Speed improvement
+Speed improvement
 \end_layout
 
 \begin_layout Subsubsection*
@@ -453,8 +449,8 @@ Also note that there some expression like
 \begin_inset Formula $\frac{1}{1+a\exp(-x)}$
 \end_inset
 
-, which is faster (if compiler failed to optimize it), simpler and lose
- no precision.
+, which is faster (if compiler failed to optimize it), simpler and no precision
+ lose.
 \end_layout
 
 \begin_layout Standard
@@ -474,6 +470,7 @@ Neurons are not always firing.
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "basicstyle={\ttfamily}"
 inline false
 status open
 
@@ -518,6 +515,7 @@ In whatever condition, there are
 
 \begin_layout Standard
 \begin_inset listings
+lstparams "basicstyle={\ttfamily}"
 inline false
 status open
 
@@ -571,8 +569,40 @@ Thanks to the pipeline and Streaming SIMD (Single instruction, multiple
  4 or more addtions at the same time) in ever clock cycle.
 \end_layout
 
+\begin_layout Standard
+Use SSE/AVX instructions directly would need hand write Assembly code or
+ equivalances (compiler intrinsics), or fine tune of compiler options, and
+ in the end, with no big success.
+\end_layout
+
+\begin_layout Standard
+So use SSE instructions through third party package is a good compromise.
+ I choose Eigen
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://eigen.tuxfamily.org/"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ here.
+\end_layout
+
+\begin_layout Standard
+After analyse the hotspot and rewrite it in vector form (use Eigen), get
+ 30%~40% faster.
+\end_layout
+
 \begin_layout Subsection
-raster_tuning_HH - Correctness Verification
+Correctness Verification
 \end_layout
 
 \begin_layout Standard
