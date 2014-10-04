@@ -150,6 +150,7 @@ for cid = 1:n_case
   neu_network_guess = GC >= gc_zero_cut;
   adj_cmp = neu_network_guess - neu_network;
 
+  fprintf('mean ISI = %.2f (std=%.2f)\n', mean(ISI), std(ISI));
   disp(['aic_od = ',num2str(aic_od)]);
   disp(['bic_od = ',num2str(bic_od)]);
   disp(['use_od = ',num2str(use_od)]);
