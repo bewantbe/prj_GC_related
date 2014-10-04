@@ -29,6 +29,9 @@ pm.seed = 'auto';     % default: 'auto'(or []). Accept integers
 pm.extra_cmd = '';    % default: '--RC-filter 0 1'
 gen_HH(pm, 'new,ext_T', data_dir_prefix);
 
+%read the data like
+%[X, ISI, ras] = gen_HH(pm, 'new,ext_T', data_dir_prefix);
+
 % 60% connectivity, EI, should be bad
 pm = [];
 pm.neuron_model = 'LIF_icc';

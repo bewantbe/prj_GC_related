@@ -33,7 +33,7 @@ pm.seed = 1;
 %pmif.ps   = 0.0060;
 %[X1, ISI1, ras1] = gen_HH(pmif, 'rm');
 
-pm.neuron_model = 'HH3_icc';
+pm.neuron_model = 'HH3_gcc_t1';
 [X1, ISI1, ras1] = gen_HH(pm, 'rm');
 
 pm.neuron_model = 'HH3_gcc';
@@ -53,9 +53,6 @@ end
 
 if size(ras1,1)==size(ras2,1) && 0==norm(ras1(:,1)-ras2(:,1))
   disp('RAS order is the same');
-  if norm(X1-X2,'fro')==0
-    disp('Data are exactly the same!');
-  end
 else
   disp('RAS not the same!!');
   disp('First disagree:');
@@ -64,6 +61,16 @@ else
   disp(ras1(id,:));
   disp('  v.s.');
   disp(ras2(id,:));
+  figure(3);
+  j_mid = round(ras1(id,2)/pm.stv);
+  rg = j_mid-50 : j_mid+400;
+  rg(rg<1) = [];
+  rg(rg>length(X1)) = [];
+  plot(pm.stv*(rg - j_mid), X1([1,88], rg)');
+end
+
+if norm(X1-X2,'fro')==0
+  disp('Data are exactly the same!');
 end
 
 %%%%%%%%

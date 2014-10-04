@@ -33,5 +33,5 @@ end
 fflush(stdout);
 
 %[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm);
-[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, '_od40', 'GCinfo');
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, ['_od', num2str(max_od)], 'GCinfo');
 
