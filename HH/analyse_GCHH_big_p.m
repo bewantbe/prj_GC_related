@@ -198,6 +198,10 @@ for cid = 1:n_case
   disp(['lack guess: ', num2str(n_lack)]);
   fprintf('connection: %d / %d = %.1f%%\n', n_conn, p*(p-1),...
           100*n_conn/(p*(p-1)));
+  disp(['overall correctness: ', num2str(100*(1-(n_over+n_lack)/(p*(p-1))))]);
+  
+  fprintf('==== %d / %d, %.2f / %.2f, %.1f\n', bic_od, aic_od, mean_gc0/scale_gc,...
+          use_od/len/scale_gc, 100*(1-(n_over+n_lack)/(p*(p-1))));
 
   if b_cal_net
     addpath('/home/xyy/matcode/octave-networks-toolbox');

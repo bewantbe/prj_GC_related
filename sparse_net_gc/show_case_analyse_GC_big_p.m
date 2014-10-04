@@ -24,7 +24,7 @@ s_case = {
 %'GCinfo_HH3_gcc_net_50_0X4BBD9C65_p=30,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 15%
 %'GCinfo_HH3_gcc_net_50_0X1A1C5C28_p=30,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40' %  20%
 
-%n = 50, pr = 1
+%n = 50, pr = 1, ST
 %'GCinfo_HH3_gcc_ST_net_50_0X7F4447F6_p=30,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  %  5%
 %'GCinfo_HH3_gcc_ST_net_50_0X626EDD5D_p=30,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 10%
 %'GCinfo_HH3_gcc_ST_net_50_0X4BBD9C65_p=30,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 15%
