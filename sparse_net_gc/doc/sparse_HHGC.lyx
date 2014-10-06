@@ -5906,9 +5906,9 @@ reference "eq: GC y->x approx"
 
 )
 \begin_inset Formula 
-\[
-F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}S^{(yz)}\vec{s}^{(x|z)T}.
-\]
+\begin{equation}
+F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}S^{(yz)}\vec{s}^{(x|z)T}.\label{eq:GCapp-od2}
+\end{equation}
 
 \end_inset
 
@@ -5940,6 +5940,40 @@ reference "sub:Derivation-Detail-of"
 \[
 F_{y\rightarrow x}\approx\frac{\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}R^{(yz)}\left(\Lambda^{(z)}\right)^{2}\vec{v}^{(x|z)T}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}.
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For vector 
+\begin_inset Formula $z$
+\end_inset
+
+, Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GCapp-od2"
+
+\end_inset
+
+ can be writen in component form
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}\sum_{k=1}^{n_{z}}S^{(yz[k])}\vec{s}^{(x|z[k])T}.\label{eq:GCapp-od2-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}\approx\frac{1}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\left(\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}\sum_{k=1}^{n_{z}}\frac{R^{(yz[k])}\vec{v}^{(x|z[k])T}}{\mathrm{var}(z[k]_{t})}\right).\label{eq:GCapp-od2-1-cov}
+\end{equation}
 
 \end_inset
 
