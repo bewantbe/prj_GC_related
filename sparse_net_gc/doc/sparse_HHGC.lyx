@@ -161,7 +161,8 @@ Granger Causality Analysis of Sparse Hodgkin Huxley Neural Network and Its
 \end_layout
 
 \begin_layout Section
-Numerical results
+Pairwise Regression v.s.
+ Joint Regression: Numerical Results
 \end_layout
 
 \begin_layout Standard
@@ -359,11 +360,6 @@ SR
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-Pairwise Regression v.s.
- Joint Regression
 \end_layout
 
 \begin_layout Standard
@@ -3570,7 +3566,7 @@ ST
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 n=30E+20I, volt
 \end_layout
 
@@ -3974,7 +3970,7 @@ n=30E+20I, sparseness: 20%, volt
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 n=80E+20I, volt
 \end_layout
 
@@ -4378,7 +4374,7 @@ n=80E+20I, sparseness: 20%, volt
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 n=180E+20I, volt
 \end_layout
 
@@ -4782,7 +4778,7 @@ n=180E+20I, sparseness: 20%, volt
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 n=380E+20I, volt
 \end_layout
 
@@ -5180,6 +5176,581 @@ n=380E+20I, sparseness: 20%, volt
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Pairwise Regression v.s.
+ Joint Regression: Formula Results
+\end_layout
+
+\begin_layout Standard
+Put gain function somewhere
+\end_layout
+
+\begin_layout Section
+The Problem
+\end_layout
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $\mathrm{E}(x_{t})=\mathrm{E}(y_{t})=\mathrm{E}(y_{t})=0$
+\end_inset
+
+, as usual, let's do a 3-var AR of order 
+\begin_inset Formula $m$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}a_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(12)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1)} & \quad\mathrm{(a)}\\
+y_{t}=\sum_{j=1}^{m}a_{j}^{(21)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(22)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(23)}z_{t-j}+\epsilon_{t}^{(2)} & \quad\mathrm{(b)}\\
+z_{t}=\sum_{j=1}^{m}a_{j}^{(31)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(32)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(33)}z_{t-j}+\epsilon_{t}^{(3)} & \quad\mathrm{(c)}
+\end{aligned}
+\right.\label{eq: Eq 3-var}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where variables 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ might be vectors, coefficient 
+\begin_inset Formula $a^{(ij)}$
+\end_inset
+
+ might be matrix.
+\end_layout
+
+\begin_layout Standard
+In order to solve it, left multiply 
+\begin_inset Formula $x_{t-k}^{T}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t-k}^{T}$
+\end_inset
+
+, 
+\begin_inset Formula $z_{t-k}^{T}$
+\end_inset
+
+ to each of them, then take expectation.
+ e.g.
+ left multiply 
+\begin_inset Formula $x_{t-k}^{T}$
+\end_inset
+
+ to (a) of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var"
+
+\end_inset
+
+, then take expectation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{E}(x_{t}x_{t-k}^{T})=\sum_{j=1}^{m}a_{j}^{(11)}\mathrm{E}(x_{t-j}x_{t-k}^{T})+\sum_{j=1}^{m}a_{j}^{(12)}\mathrm{E}(y_{t-j}x_{t-k}^{T})+\sum_{j=1}^{m}a_{j}^{(13)}\mathrm{E}(z_{t-j}x_{t-k}^{T})+\mathrm{E}(\epsilon_{t}^{(1)}x_{t-k}^{T})\label{eq: Eq 3-var eq11}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For convenience, define 
+\begin_inset Formula $x^{(1)}=x$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(2)}=y$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(3)}=z$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+R^{(uv)}=\left(b_{jk}\right)=\left(\mathrm{E}(x_{t-j}^{(u)}x_{t-k}^{(v)T})\right),\ (j,k=1\ldots m).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For example, 
+\begin_inset Formula $R^{(xy)}=\left(b_{jk}\right)=\left(\mathrm{E}(x_{t-j}y_{t-k}^{T})\right)$
+\end_inset
+
+, its 
+\begin_inset Formula $j$
+\end_inset
+
+-row, 
+\begin_inset Formula $k$
+\end_inset
+
+-column element is 
+\begin_inset Formula $\mathrm{E}(x_{t-j}y_{t-k}^{T})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $b$
+\end_inset
+
+ is only a dummpy variable to indicate row and column index.
+ 
+\begin_inset Formula $R^{(uv)T}=R^{(vu)}$
+\end_inset
+
+.
+ Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{a}^{(uv)}=\left(b_{j}\right)=\left(a_{j}^{(uv)}\right),\ (j=1\ldots m).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For example, 
+\begin_inset Formula $\vec{a}^{(12)}=\left(b_{j}\right)^{T}=\left(a_{j}^{(12)}\right)^{T},\ (j=1\ldots m)$
+\end_inset
+
+, it's a row vector (also might be partitioned matrix).
+ Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{v}^{(u|v)}=\left(b_{k}\right)^{T}=\left(\mathrm{E}(x_{t}^{(u)}x_{t-k}^{(v)T})\right)^{T},\ (k=1\ldots m).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For example, 
+\begin_inset Formula $\vec{v}^{(x|y)}=\left(b_{k}\right)^{T}=\left(\mathrm{E}(x_{t}y_{t-k}^{T})\right)^{T},\ (k=1\ldots m)$
+\end_inset
+
+.
+ It's row vector.
+\end_layout
+
+\begin_layout Standard
+Now, (a) of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var"
+
+\end_inset
+
+ satisfies
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{gathered}\vec{v}^{(x|x)}=\vec{a}^{(11)}R^{(xx)}+\vec{a}^{(12)}R^{(yx)}+\vec{a}^{(13)}R^{(zx)}\\
+\vec{v}^{(x|y)}=\vec{a}^{(11)}R^{(xy)}+\vec{a}^{(12)}R^{(yy)}+\vec{a}^{(13)}R^{(zy)}\\
+\vec{v}^{(x|z)}=\vec{a}^{(11)}R^{(xz)}+\vec{a}^{(12)}R^{(yz)}+\vec{a}^{(13)}R^{(zz)}
+\end{gathered}
+\right.\label{eq: Eq 3-var clear}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+note 
+\begin_inset Formula $\mathrm{E}(\epsilon_{t}^{(u)}x_{t-k}^{(v)T})=0,\ \forall k=1\ldots m$
+\end_inset
+
+, also 
+\begin_inset Formula $\vec{v}^{(x|x)}=0$
+\end_inset
+
+.
+ And similarly for (b), (c) of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We need to solve 
+\begin_inset Formula $\vec{a}^{(uv)}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathrm{var}(\epsilon_{t}^{(u)})\left(=\mathrm{E}(\epsilon_{t}^{(u)}x_{t}^{(u)T})\right)$
+\end_inset
+
+, then 2-var AR, and finally GC.
+\end_layout
+
+\begin_layout Section
+Explicit Expression of Three Variable GC
+\end_layout
+
+\begin_layout Standard
+Rewrite Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var clear"
+
+\end_inset
+
+ as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]=\left[\begin{array}{ccc}
+0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right].\label{eq: Eq 3-var more clear}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note here we further assume 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ are white noise each, hence 
+\begin_inset Formula $R^{(uu)}=v^{(u)}I,\, v^{(u)}\triangleq\mathrm{var}(x_{t}^{(u)})$
+\end_inset
+
+, (
+\begin_inset Formula $I$
+\end_inset
+
+ denote the identical matrix).
+\end_layout
+
+\begin_layout Standard
+In order to solve the variance of residual, in Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var eq11"
+
+\end_inset
+
+, let 
+\begin_inset Formula $k=0$
+\end_inset
+
+, get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(x_{t}^{(1)})=\vec{a}^{(12)}\vec{v}^{(x|y)T}+\vec{a}^{(13)}\vec{v}^{(x|z)T}+\mathrm{var}(\epsilon_{t}^{(1)}).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Due to Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var more clear"
+
+\end_inset
+
+, it's
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1)})=\mathrm{var}(x_{t}^{(1)})-\left[\begin{array}{ccc}
+0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|y)T}\\
+\vec{v}^{(x|z)T}
+\end{array}\right].
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Or in correlation form, 
+\begin_inset Formula $S^{(xy)}\triangleq R^{(uv)}/\sqrt{v^{(u)}v^{(v)}}$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{s}^{(u|v)}\triangleq\vec{v}^{(u|v)}/\sqrt{v^{(u)}v^{(v)}}$
+\end_inset
+
+ (row vector)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Here the definition of 
+\begin_inset Formula $S^{(xy)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{s}^{(u|v)}$
+\end_inset
+
+ are for scalar 
+\begin_inset Formula $v^{(u)}$
+\end_inset
+
+.
+ See Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Derivation-Detail-of"
+
+\end_inset
+
+ for vector form.
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1)})=\mathrm{var}(x_{t}^{(1)})\left(I-\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]\right).\label{eq: var(eps)<-S}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Through similiar process, get 2-var AR solution without variable 
+\begin_inset Formula $y$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{A(1)})=\mathrm{var}(x_{t}^{(1)})\left(I-\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|z)T}
+\end{array}\right]\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For simplicity, assume 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ are scalars below.
+\end_layout
+
+\begin_layout Standard
+Therefore
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|z)T}
+\end{array}\right]}{1-\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]}\Biggr).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $\vec{s}^{(u|v)}$
+\end_inset
+
+ and 
+\begin_inset Formula $S^{(uv)}$
+\end_inset
+
+ (
+\begin_inset Formula $u\neq v$
+\end_inset
+
+) small, get approximation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}\approx\sum_{k=1}^{m}\vec{s}_{k}^{(x|y)}\vec{s}_{k}^{(x|y)}=\sum_{k=1}^{m}\frac{\mathrm{E}(x_{t}y_{t-k})^{2}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\label{eq: GC y->x approx}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ in Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var"
+
+\end_inset
+
+ might be a vector, Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: GC y->x approx"
+
+\end_inset
+
+ is also the n-var approximate GC expression.
+\end_layout
+
+\begin_layout Standard
+And through Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var more clear"
+
+\end_inset
+
+, get coefficients
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{aligned}\vec{a}^{(11)}\approx & 0\\
+\vec{a}^{(12)}\approx & \vec{v}^{(x|y)}/v^{(y)}=(b_{k})=\left(\mathrm{E}(x_{t}y_{t-k})/\mathrm{var}(y_{t})\right)\quad k=1,\ldots,m\\
+\vec{a}^{(13)}\approx & \vec{v}^{(x|z)}/v^{(z)}=(b_{k})=\left(\mathrm{E}(x_{t}z_{t-k})/\mathrm{var}(z_{t})\right)
+\end{aligned}
+\right.
+\end{equation}
 
 \end_inset
 
@@ -6535,12 +7106,12 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/xyy/Documents/xyy-workdir/p1/pic/EPSP_Snet_2_2EPSP.eps
-	scale 35
+	filename pic/EPSP_Snet_2_2EPSP.eps
+	scale 40
 
 \end_inset
 
@@ -6565,11 +7136,11 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /home/xyy/Documents/xyy-workdir/p1/pic/POISSON_EPSP.eps
+	filename pic/POISSON_EPSP.eps
 	scale 35
 
 \end_inset
@@ -6646,6 +7217,106 @@ reference "fig:S-EPSP-relation"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_ps.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input rate 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_pr.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input strength 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Some curves terminate because EPSP exceed 
+\begin_inset Formula $\unit[2]{mV}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Gain function under Poisson pulse drive.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
