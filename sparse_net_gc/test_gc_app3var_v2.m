@@ -201,7 +201,7 @@ plot(1:m, -AA(id_passive, id_driving:p:end), '-+',...
      1:m, r1O2/R11(1), '-o'
      );
 legend('Correct', 'By parted matrix', 'By approx');
-title(['coef 12, from ',num2str(id_passive),' to ',num2str(id_driving)]);
+title(['coef 12 (from ',num2str(id_passive),' to ',num2str(id_driving), ')']);
 
 figure(2);
 Q = B3^4;
@@ -209,6 +209,7 @@ plot(Q(:,round(0.5*end)), '-b');
 hold on
 plot(Q(:,round(0.17*end)), '-r');
 plot(Q(:,round(0.83*end)), '-g');
+title('B3^4 coef');
 hold off
 
 n = 5;
