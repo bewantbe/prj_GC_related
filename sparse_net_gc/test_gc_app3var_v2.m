@@ -94,7 +94,7 @@ GC_srd_pairs = pairRGrangerT(R)
 permvec = [3 1 2];              % variable index after permutation
 permvec = [1 3 2];              % variable index after permutation
 id_rearrange = bsxfun(@plus, permvec', p*(0:m));
-covz = covz_orig(id_rearrange, :)(:, id_rearrange);  % tremble matlab!
+covz = covz_orig(id_rearrange, id_rearrange);
 
 id_passive = permvec(1);
 id_driving = permvec(2);

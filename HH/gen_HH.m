@@ -154,6 +154,11 @@ if ~isfield(pm, 'neuron_model') || isempty(pm.neuron_model)
         pm.neuron_model = 'HH2_icc';
     end
 end
+if all(pm.neuron_model(1:2) == 'HH')
+  neuron_model_name = 'HH';
+else
+  neuron_model_name = 'LIF';
+end
 
 % construct file paths
 st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
@@ -161,7 +166,7 @@ st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
 file_inf_st =...
     sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
             pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t + ext_T);
-file_prefix = [data_dir_prefix, pm.neuron_model];
+file_prefix = [data_dir_prefix, neuron_model_name];
 output_name     = [file_prefix, 'volt_',file_inf_st,'.dat'];
 output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
 output_RAS_name = [file_prefix, 'RAS_', file_inf_st,'.txt'];
