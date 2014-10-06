@@ -267,7 +267,7 @@ Common Parameters
 \begin_inset Text
 
 \begin_layout Plain Layout
-SR
+Sample Rate
 \end_layout
 
 \end_inset
@@ -5608,7 +5608,7 @@ S^{(zx)} & S^{(zy)} & I
 \end_layout
 
 \begin_layout Standard
-Through similiar process, get 2-var AR solution without variable 
+Through similar process, get 2-var AR solution without variable 
 \begin_inset Formula $y$
 \end_inset
 
@@ -5697,7 +5697,7 @@ reference "eq:GC3"
  as identity matrix, get approximation
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}\approx\sum_{k=1}^{m}\vec{s}_{k}^{(x|y)}\vec{s}_{k}^{(x|y)}=\sum_{k=1}^{m}\frac{\mathrm{E}(x_{t}y_{t-k})^{2}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\label{eq: GC y->x approx}
+F_{y\rightarrow x}=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}\approx\sum_{k=1}^{m}\vec{s}_{k}^{(x|y)}\vec{s}_{k}^{(x|y)}=\sum_{k=1}^{m}\frac{\mathrm{E}(x_{t}y_{t-k})^{2}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\label{eq: GC y->x approx}
 \end{equation}
 
 \end_inset
@@ -5739,8 +5739,8 @@ reference "eq: Eq 3-var more clear"
 \begin_inset Formula 
 \begin{equation}
 \left\{ \begin{aligned}\vec{a}^{(11)}\approx & 0\\
-\vec{a}^{(12)}\approx & \vec{v}^{(x|y)}/v^{(y)}=(b_{k})=\left(\mathrm{E}(x_{t}y_{t-k})/\mathrm{var}(y_{t})\right)\quad k=1,\ldots,m\\
-\vec{a}^{(13)}\approx & \vec{v}^{(x|z)}/v^{(z)}=(b_{k})=\left(\mathrm{E}(x_{t}z_{t-k}^{T})/\mathrm{var}(z_{t})\right)
+\vec{a}^{(12)}\approx & \vec{v}^{(x|y)}\left(v^{(y)}\right)^{-1}=(b_{k})=\left(\mathrm{E}(x_{t}y_{t-k})/\mathrm{var}(y_{t})\right)\quad k=1,\ldots,m\\
+\vec{a}^{(13)}\approx & \vec{v}^{(x|z)}\left(v^{(z)}\right)^{-1}=(b_{k})=\left(\mathrm{E}(x_{t}z_{t-k}^{T})/\mathrm{var}(z_{t})\right)
 \end{aligned}
 \right.
 \end{equation}
@@ -5765,7 +5765,7 @@ reference "eq: GC y->x approx"
 
 \end_inset
 
- is actually the same as the approximation for bivariant GC.
+ is actually the same as the approximation for bivariate GC.
  So we need to correct it to reflect effect from other variables.
 \end_layout
 
@@ -5773,7 +5773,15 @@ reference "eq: GC y->x approx"
 We have
 \begin_inset Formula 
 \[
-(I+A)^{-1}\approx I-A,\quad\textrm{for }\left\Vert A\right\Vert \ll1.
+1-\frac{1-d}{1-c}\approx d-c,\quad\textrm{for }d,c\ll1,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ln(\frac{1}{1-b})\approx b,\quad\textrm{for }b\ll1.
 \]
 
 \end_inset
@@ -5782,24 +5790,40 @@ We have
 \end_layout
 
 \begin_layout Standard
-So under the small 
-\begin_inset Formula $S^{(uv)}$
+So Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC3"
+
 \end_inset
 
- assumtion,
-\end_layout
-
-\begin_layout Standard
+ become
 \begin_inset Formula 
 \[
-\frac{1-\left[\begin{array}{cc}
+F_{y\rightarrow x}=\ln\Biggl(\frac{1-c}{1-d}\Biggr)\approx d-c
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+c=\left[\begin{array}{cc}
 0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
 I & S^{(xz)}\\
 S^{(zx)} & I
 \end{array}\right]^{-1}\left[\begin{array}{c}
 0\\
 \vec{s}^{(x|z)T}
-\end{array}\right]}{1-\left[\begin{array}{ccc}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d=\left[\begin{array}{ccc}
 0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
 I & S^{(xy)} & S^{(xz)}\\
 S^{(yx)} & I & S^{(yz)}\\
@@ -5808,162 +5832,6 @@ S^{(zx)} & S^{(zy)} & I
 0\\
 \vec{s}^{(x|y)T}\\
 \vec{s}^{(x|z)T}
-\end{array}\right]}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Derivation Details of Eq.
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq: var(eps)<-S"
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Derivation-Detail-of"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Define
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-S^{(uv)}=\left(b_{jk}\right)=\left(D_{t-j}^{(u)}\mathrm{E}(x_{t-j}^{(u)}x_{t-k}^{(v)T})D_{t-k}^{(v)}\right),
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\vec{s}^{(u|v)}=\left(b_{k}\right)^{T}=\left(D_{t}^{(u)}\mathrm{E}(x_{t}^{(u)}x_{t-k}^{(v)T})D_{t-k}^{(v)}\right),
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-D_{t}^{(u)}=\left[\begin{array}{cccc}
-1/\sqrt{\mathrm{var}(x_{t}^{(u[1])})}\\
- & 1/\sqrt{\mathrm{var}(x_{t}^{(u[2])})}\\
- &  & \ddots\\
- &  &  & 1/\sqrt{\mathrm{var}(x_{t}^{(u[n_{u}])})}
-\end{array}\right],
-\end{equation}
-
-\end_inset
-
-where 
-\begin_inset Formula $x_{t}^{(u[j])}$
-\end_inset
-
- means the 
-\begin_inset Formula $j$
-\end_inset
-
--th component of 
-\begin_inset Formula $x_{t}^{(u)}$
-\end_inset
-
-, 
-\begin_inset Formula $n_{u}$
-\end_inset
-
- is the dimension of 
-\begin_inset Formula $x_{t}^{(u)}$
-\end_inset
-
-.
- This definition is consist with the 
-\begin_inset Formula $R^{(uv)}$
-\end_inset
-
- after normalize all components of 
-\begin_inset Formula $x_{t}^{(u)}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Define
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\Lambda^{(u)}=\left[\begin{array}{cccc}
-D_{t}^{(u)}\\
- & D_{t-1}^{(u)}\\
- &  & \ddots\\
- &  &  & D_{t-m}^{(u)}
-\end{array}\right],
-\end{equation}
-
-\end_inset
-
-so
-\begin_inset Formula 
-\begin{equation}
-S^{(uv)}=\Lambda^{(u)}R^{(uv)}\Lambda^{(v)},
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\vec{s}^{(u|v)}=D_{t}^{(u)}\vec{v}^{(u|v)}\Lambda^{(v)}.
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Accordingly
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-v^{(x)}I & R^{(xy)} & R^{(xz)}\\
-R^{(yx)} & v^{(y)}I & R^{(yz)}\\
-R^{(zx)} & R^{(zy)} & v^{(z)}I
-\end{array}\right]^{-1}=\left[\begin{array}{ccc}
-\Lambda^{(x)}\\
- & \Lambda^{(y)}\\
- &  & \Lambda^{(z)}
-\end{array}\right]\left[\begin{array}{ccc}
-S^{(xx)} & S^{(xy)} & S^{(xz)}\\
-S^{(yx)} & S^{(yy)} & S^{(yz)}\\
-S^{(zx)} & S^{(zy)} & S^{(zz)}
-\end{array}\right]^{-1}\left[\begin{array}{ccc}
-\Lambda^{(x)}\\
- & \Lambda^{(y)}\\
- &  & \Lambda^{(z)}
 \end{array}\right]
 \]
 
@@ -5973,42 +5841,55 @@ S^{(zx)} & S^{(zy)} & S^{(zz)}
 \end_layout
 
 \begin_layout Standard
+Under the small 
+\begin_inset Formula $S^{(uv)}$
+\end_inset
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+ assumption,
 \begin_inset Formula 
-\begin{eqnarray}
- &  & \mathrm{var}(x_{t}^{(1)})-\mathrm{var}(\epsilon_{t}^{(1)})\nonumber \\
- & = & \left[\begin{array}{ccc}
-0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
-v^{(x)}I & R^{(xy)} & R^{(xz)}\\
-R^{(yx)} & v^{(y)}I & R^{(yz)}\\
-R^{(zx)} & R^{(zy)} & v^{(z)}I
-\end{array}\right]^{-1}\left[\begin{array}{c}
+\[
+(I-B)^{-1}\approx I+B,\quad\textrm{for }\left\Vert B\right\Vert \ll1,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B_{2}=-\left[\begin{array}{cc}
+O & S^{(xz)}\\
+S^{(zx)} & O
+\end{array}\right],\quad B_{3}=-\left[\begin{array}{ccc}
+O & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & O & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & O
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c\approx\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left(I+B_{2}\right)\left[\begin{array}{c}
 0\\
-\vec{v}^{(x|y)T}\\
-\vec{v}^{(x|z)T}
-\end{array}\right]\nonumber \\
- & = & \left(D_{t}^{(x)}\right)^{-1}\left(\left[\begin{array}{ccc}
-0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
-S^{(xx)} & S^{(xy)} & S^{(xz)}\\
-S^{(yx)} & S^{(yy)} & S^{(yz)}\\
-S^{(zx)} & S^{(zy)} & S^{(zz)}
-\end{array}\right]^{-1}\left[\begin{array}{c}
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d\approx\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left(I+B_{3}\right)\left[\begin{array}{c}
 0\\
 \vec{s}^{(x|y)T}\\
 \vec{s}^{(x|z)T}
-\end{array}\right]\right)\left(D_{t}^{(x)}\right)^{-1}.\label{eq: e1}
-\end{eqnarray}
+\end{array}\right].
+\]
 
 \end_inset
 
@@ -6016,7 +5897,26 @@ S^{(zx)} & S^{(zy)} & S^{(zz)}
 \end_layout
 
 \begin_layout Standard
-If 
+Get the corrected GC (compared with Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: GC y->x approx"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}S^{(yz)}\vec{s}^{(x|z)T}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In covariance form (Still assume 
 \begin_inset Formula $x_{t}$
 \end_inset
 
@@ -6024,53 +5924,26 @@ If
 \begin_inset Formula $y_{t}$
 \end_inset
 
- are scalar, then 
-\begin_inset Formula $S^{(xx)}=S^{(yy)}=I_{m\times m}$
-\end_inset
-
-.
- And the middle (parenthesized, note as 
-\begin_inset Formula $\blacklozenge$
-\end_inset
-
- below) part of Eq.
+ are scalars) (See section 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq: e1"
+reference "sub:Derivation-Detail-of"
 
 \end_inset
 
- is also scalar, hence
-\end_layout
+ for definition of 
+\begin_inset Formula $\Lambda^{(z)}$
+\end_inset
 
-\begin_layout Standard
+)
 \begin_inset Formula 
-\begin{equation}
-\mathrm{var}(x_{t}^{(1)})-\mathrm{var}(\epsilon_{t}^{(1)})=\left(D_{t}^{(x)}\right)^{-2}\blacklozenge=\mathrm{var}(x_{t}^{(1)})\blacklozenge
-\end{equation}
+\[
+F_{y\rightarrow x}\approx\frac{\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}R^{(yz)}\left(\Lambda^{(z)}\right)^{2}\vec{v}^{(x|z)T}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}.
+\]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Further, If 
-\begin_inset Formula $\mathrm{E}(x_{t}^{(z[j])}x_{t}^{(z[k])})=0,\ \forall j\neq k$
-\end_inset
-
-, then 
-\begin_inset Formula $S^{(zz)}=I_{(p-2)m\times(p-2)m}$
-\end_inset
-
-, which lead to Eq.
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq: var(eps)<-S"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Section
@@ -6541,7 +6414,7 @@ See matcode/prj_GC_clean/HH/test_HH.m for parameter details.
 \end_layout
 
 \begin_layout Standard
-See matcode/prj_GC_clean/HH/HH_cal.nb for code to generate accuracte results.
+See matcode/prj_GC_clean/HH/HH_cal.nb for code to generate accurate results.
 \end_layout
 
 \begin_layout Standard
@@ -6670,6 +6543,10 @@ We can see that the error is below
 \end_inset
 
  (relatively) in short time.
+\end_layout
+
+\begin_layout Section
+Appendix
 \end_layout
 
 \begin_layout Subsection
@@ -6829,7 +6706,7 @@ The HH model Used
 \end_layout
 
 \begin_layout Standard
-It is the classical Hudgekin-Huxley (HH) neuron model.
+It is the classical Hodgkin-Huxley (HH) neuron model.
  For neuron 
 \begin_inset Formula $i$
 \end_inset
@@ -7338,7 +7215,7 @@ homogeneous coupling
 \uwave default
 \noun default
 \color inherit
-synaptics and input to neurons.
+synaptic and input to neurons.
  For all neurons 
 \begin_inset Formula $F_{i}^{\textrm{E}}=F$
 \end_inset
@@ -7515,7 +7392,7 @@ name "fig:S-EPSP-relation"
 \end_layout
 
 \begin_layout Standard
-For inhibitory input and poisson input, the curves are roughly the same
+For inhibitory input and Poisson input, the curves are roughly the same
  (up to scalings) as Fig.
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -7635,7 +7512,264 @@ Gain function under Poisson pulse drive.
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
+Derivation Details of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: var(eps)<-S"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Derivation-Detail-of"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+S^{(uv)}=\left(b_{jk}\right)=\left(D_{t-j}^{(u)}\mathrm{E}(x_{t-j}^{(u)}x_{t-k}^{(v)T})D_{t-k}^{(v)}\right),
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\vec{s}^{(u|v)}=\left(b_{k}\right)^{T}=\left(D_{t}^{(u)}\mathrm{E}(x_{t}^{(u)}x_{t-k}^{(v)T})D_{t-k}^{(v)}\right),
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+D_{t}^{(u)}=\left[\begin{array}{cccc}
+1/\sqrt{\mathrm{var}(x_{t}^{(u[1])})}\\
+ & 1/\sqrt{\mathrm{var}(x_{t}^{(u[2])})}\\
+ &  & \ddots\\
+ &  &  & 1/\sqrt{\mathrm{var}(x_{t}^{(u[n_{u}])})}
+\end{array}\right],
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $x_{t}^{(u[j])}$
+\end_inset
+
+ means the 
+\begin_inset Formula $j$
+\end_inset
+
+-th component of 
+\begin_inset Formula $x_{t}^{(u)}$
+\end_inset
+
+, 
+\begin_inset Formula $n_{u}$
+\end_inset
+
+ is the dimension of 
+\begin_inset Formula $x_{t}^{(u)}$
+\end_inset
+
+.
+ This definition is consist with the 
+\begin_inset Formula $R^{(uv)}$
+\end_inset
+
+ after normalize all components of 
+\begin_inset Formula $x_{t}^{(u)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Lambda^{(u)}=\left[\begin{array}{cccc}
+D_{t}^{(u)}\\
+ & D_{t-1}^{(u)}\\
+ &  & \ddots\\
+ &  &  & D_{t-m}^{(u)}
+\end{array}\right],
+\end{equation}
+
+\end_inset
+
+so
+\begin_inset Formula 
+\begin{equation}
+S^{(uv)}=\Lambda^{(u)}R^{(uv)}\Lambda^{(v)},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\vec{s}^{(u|v)}=D_{t}^{(u)}\vec{v}^{(u|v)}\Lambda^{(v)}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accordingly
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}=\left[\begin{array}{ccc}
+\Lambda^{(x)}\\
+ & \Lambda^{(y)}\\
+ &  & \Lambda^{(z)}
+\end{array}\right]\left[\begin{array}{ccc}
+S^{(xx)} & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & S^{(yy)} & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & S^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{ccc}
+\Lambda^{(x)}\\
+ & \Lambda^{(y)}\\
+ &  & \Lambda^{(z)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\begin{eqnarray}
+ &  & \mathrm{var}(x_{t}^{(1)})-\mathrm{var}(\epsilon_{t}^{(1)})\nonumber \\
+ & = & \left[\begin{array}{ccc}
+0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|y)T}\\
+\vec{v}^{(x|z)T}
+\end{array}\right]\nonumber \\
+ & = & \left(D_{t}^{(x)}\right)^{-1}\left(\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+S^{(xx)} & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & S^{(yy)} & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & S^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]\right)\left(D_{t}^{(x)}\right)^{-1}.\label{eq: e1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ are scalar, then 
+\begin_inset Formula $S^{(xx)}=S^{(yy)}=I_{m\times m}$
+\end_inset
+
+.
+ And the middle (parenthesized, note as 
+\begin_inset Formula $\blacklozenge$
+\end_inset
+
+ below) part of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: e1"
+
+\end_inset
+
+ is also scalar, hence
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(x_{t}^{(1)})-\mathrm{var}(\epsilon_{t}^{(1)})=\left(D_{t}^{(x)}\right)^{-2}\blacklozenge=\mathrm{var}(x_{t}^{(1)})\blacklozenge
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Further, If 
+\begin_inset Formula $\mathrm{E}(x_{t}^{(z[j])}x_{t}^{(z[k])})=0,\ \forall j\neq k$
+\end_inset
+
+, then 
+\begin_inset Formula $S^{(zz)}=I_{(p-2)m\times(p-2)m}$
+\end_inset
+
+, which lead to Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: var(eps)<-S"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
 Time Cost in Computation
 \end_layout
 
