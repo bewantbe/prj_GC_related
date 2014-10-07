@@ -1,5 +1,6 @@
 
-function gc = GC3var(id_passive, id_driving, covz_orig, p)
+function [GC_fomula, quotient_core, quotient_core_app, quotient_core_expension_od2_v1, quotient_core_expension_od1_v1, quotient_core_expension_od1_v2, GC_approx_od2, GC_approx_od2_wrong, GC_approx_od1, quotient_core_expension_od4_v1]...
+= GC3var(id_passive, id_driving, covz_orig, p)
 m = round(size(covz_orig,1) / p) - 1;
 if ((m+1)*p ~= size(covz_orig,1))
   error('inconsistent input');
@@ -51,53 +52,62 @@ v1O1= invsqrt_var1 * r1O1 * invsqrt_var1n; % s^(1|1), should close to zero
 v1O2= invsqrt_var1 * r1O2 * invsqrt_var2n;
 v1O3= invsqrt_var1 * r1O3 * invsqrt_var3n;
 
-%esv2 = [v1O1 v1O3];
-%eS2 = [
-    %V11  V13
-    %V13' V33];
-%esv3 = [v1O1 v1O2 v1O3];
-%eS3 = [
-    %V11  V12  V13
-    %V12' V22  V23
-    %V13' V23' V33];
+esv2 = [v1O1 v1O3];
+eS2 = [
+    V11  V13
+    V13' V33];
+esv3 = [v1O1 v1O2 v1O3];
+eS3 = [
+    V11  V12  V13
+    V12' V22  V23
+    V13' V23' V33];
 
-%GC_fomula = log(...
-    %(1 - esv2 / eS2 * esv2')/...
-    %(1 - esv3 / eS3 * esv3'));
+numerator   = esv2 / eS2 * esv2';
+denominator = esv3 / eS3 * esv3';
+
+GC_fomula = log(...
+    (1 - numerator)/...
+    (1 - denominator));
+
+quotient_core =...
+    1 - (1 - denominator) /...
+        (1 - numerator);
+quotient_core_app =...
+    denominator - numerator;
 
 % iterative
-%B2 = eye(size(eS2)) - eS2;
-%B3 = eye(size(eS3)) - eS3;
-
-%quotient_core =...
-    %1 - (1 - esv3 / eS3 * esv3') /...
-        %(1 - esv2 / eS2 * esv2')
-%quotient_core_app =...
-    %esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
+B2 = eye(size(eS2)) - eS2;
+B3 = eye(size(eS3)) - eS3;
 
 %fprintf('norm of B2 = %f\n', norm(B2));
 %fprintf('norm of B3 = %f\n', norm(B3));
 
-%quotient_core_expension_od4_v1 =...
-    %1 - (1 - esv3 * (B3^0 + B3^1 + B3^2 + B3^3 + B3^4) * esv3') /...
-        %(1 - esv2 * (B2^0 + B2^1 + B2^2 + B2^3 + B2^4) * esv2');
+numeratorO1 = eye(size(B2)) + B2;
+numeratorO2 = eye(size(B2)) + B2 * numeratorO1;
 
-%quotient_core_expension_od2_v1 =...
-    %1 - (1 - esv3 * (B3^0 + B3^1 + B3^2) * esv3') /...
-        %(1 - esv2 * (B2^0 + B2^1 + B2^2) * esv2');
-%quotient_core_expension_od1_v1 =...
-    %1 - (1 - esv3 * (B3^0 + B3^1) * esv3') /...
-        %(1 - esv2 * B2^0 * esv2');
-%quotient_core_expension_od1_v2 =...
-    %v1O2*v1O2' + esv3 * B3 * esv3';
+denominatorO1 = eye(size(B3)) + B3;
+denominatorO2 = eye(size(B3)) + B3 * denominatorO1;
+
+numeratorO4 = eye(size(B2)) + B2 * (eye(size(B2)) + B2 * numeratorO2);
+denominatorO4 = eye(size(B3)) + B3 * (eye(size(B3)) + B3 * denominatorO2);
+quotient_core_expension_od4_v1 =...
+    1 - (1 - esv3 * denominatorO4 * esv3') /...
+        (1 - esv2 * numeratorO4 * esv2');
+
+quotient_core_expension_od2_v1 =...
+    1 - (1 - esv3 * denominatorO2 * esv3') /...
+        (1 - esv2 * numeratorO2 * esv2');
+quotient_core_expension_od1_v1 =...
+    1 - (1 - esv3 * denominatorO1 * esv3') /...
+        (1 - esv2 * numeratorO1 * esv2');
+quotient_core_expension_od1_v2 =...
+    v1O2*v1O2' + esv3 * B3 * esv3';
 
 GC_approx_od2 = v1O2*v1O2' - 2*v1O2 * V23 * v1O3';
-%GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3';
-%GC_approx_od1 = v1O2*v1O2';
+GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3';
+GC_approx_od1 = v1O2*v1O2';
 
 %GC_zero_ave = use_od / len;
-
-gc = GC_approx_od2;
 
 %% solve coefficients
 %erv3 = [r1O1 r1O2 r1O3];

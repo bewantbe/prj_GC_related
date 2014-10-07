@@ -6,15 +6,38 @@ are_you_joking = true;
   model_id = 1;
   switch model_id
   case 1
-    clear('pmif');
-    pmif.neuron_model = 'LIF';
-    pmif.net  = 'net_3_06';
-    pmif.scee = 0.01;
-    pmif.pr   = 1.0;
-    pmif.ps   = 0.012;
-    pmif.t    = 1e7;
-    pmif.stv  = 0.5;
-    [X, ISI, ras] = gen_HH(pmif);
+%    clear('pm');
+%    pm.neuron_model = 'LIF';
+%    pm.net  = 'net_3_06';
+%    pm.scee = 0.01;
+%    pm.pr   = 1.0;
+%    pm.ps   = 0.012;
+%    pm.t    = 1e7;
+%    pm.stv  = 0.5;
+%    [X, ISI, ras] = gen_HH(pm);
+
+net_param.generator  = 'gen_sparse';
+net_param.p          = 100;
+net_param.sparseness = 0.20;  % 0.20 0.15 0.10 0.05
+net_param.seed       = 123;
+net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
+gen_network = @(np) eval(sprintf('%s(np);', np.generator));
+
+clear('pm');
+pm.neuron_model = 'HH3_gcc';
+pm.net_param = net_param;
+pm.net  = gen_network(net_param);
+pm.nI   = 20;
+pm.scee = 0.05;
+pm.scie = 0.05;
+pm.scei = 0.09;
+pm.scii = 0.09;
+pm.pr   = 1.0;
+pm.ps   = 0.03;
+pm.t    = 1e6;
+clear('X');
+    [X, ISI, ras] = gen_HH(pm, 'ext_T');
+
     [p, len] = size(X);
 
     b_use_spike_train = false;
@@ -84,9 +107,14 @@ else
 end
 
 [GC_srd_covz, Deps, AA] = pos_nGrangerT2RZ(covz, p);
-GC_srd_covz
+if (p < 6)
+	GC_srd_covz
+end
 
-GC_srd_pairs = pairRGrangerT(R)
+GC_srd_pairs = pairRGrangerT(R);
+if (p < 6)
+	GC_srd_pairs
+end
 
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
