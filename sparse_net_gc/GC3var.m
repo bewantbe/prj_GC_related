@@ -82,24 +82,24 @@ B3 = eye(size(eS3)) - eS3;
 %fprintf('norm of B2 = %f\n', norm(B2));
 %fprintf('norm of B3 = %f\n', norm(B3));
 
-numeratorO1 = eye(size(B2)) + B2;
-numeratorO2 = eye(size(B2)) + B2 * numeratorO1;
+invB2O1 = eye(size(B2)) + B2;
+invB2O2 = eye(size(B2)) + B2 * invB2O1;
 
-denominatorO1 = eye(size(B3)) + B3;
-denominatorO2 = eye(size(B3)) + B3 * denominatorO1;
+invB3O1 = eye(size(B3)) + B3;
+invB3O2 = eye(size(B3)) + B3 * invB3O1;
 
-numeratorO4 = eye(size(B2)) + B2 * (eye(size(B2)) + B2 * numeratorO2);
-denominatorO4 = eye(size(B3)) + B3 * (eye(size(B3)) + B3 * denominatorO2);
+invB2O4 = eye(size(B2)) + B2 * (eye(size(B2)) + B2 * invB2O2);
+invB3O4 = eye(size(B3)) + B3 * (eye(size(B3)) + B3 * invB3O2);
 quotient_core_expension_od4_v1 =...
-    1 - (1 - esv3 * denominatorO4 * esv3') /...
-        (1 - esv2 * numeratorO4 * esv2');
+    1 - (1 - esv3 * invB3O4 * esv3') /...
+        (1 - esv2 * invB2O4 * esv2');
 
 quotient_core_expension_od2_v1 =...
-    1 - (1 - esv3 * denominatorO2 * esv3') /...
-        (1 - esv2 * numeratorO2 * esv2');
+    1 - (1 - esv3 * invB3O2 * esv3') /...
+        (1 - esv2 * invB2O2 * esv2');
 quotient_core_expension_od1_v1 =...
-    1 - (1 - esv3 * denominatorO1 * esv3') /...
-        (1 - esv2 * numeratorO1 * esv2');
+    1 - (1 - esv3 * invB3O1 * esv3') /...
+        (1 - esv2 * invB2O1 * esv2');
 quotient_core_expension_od1_v2 =...
     v1O2*v1O2' + esv3 * B3 * esv3';
 

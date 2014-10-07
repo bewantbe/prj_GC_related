@@ -86,7 +86,7 @@ for ii=1:size(O,1)
     if (ii == jj)
       continue;
     end
-    [GC_fomula, quotient_core, quotient_core_app, quotient_core_expension_od2_v1, quotient_core_expension_od1_v1, quotient_core_expension_od1_v2, GC_approx_od2, GC_approx_od2_wrong, GC_approx_od1] = GC3var(ii, jj, covz, p);
+    [GC_fomula, quotient_core, quotient_core_app, quotient_core_expension_od2_v1, quotient_core_expension_od1_v1, quotient_core_expension_od1_v2, GC_approx_od2, GC_approx_od2_wrong, GC_approx_od1, quotient_core_expension_od4_v1] = GC3var(ii, jj, covz, p);
     s_GC_fomula(ii,jj) = GC_fomula;
     s_quotient_core(ii,jj) = quotient_core;
     s_quotient_core_app(ii,jj) = quotient_core_app;
