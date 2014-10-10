@@ -6,37 +6,15 @@ are_you_joking = true;
   model_id = 1;
   switch model_id
   case 1
-%    clear('pm');
-%    pm.neuron_model = 'LIF';
-%    pm.net  = 'net_3_06';
-%    pm.scee = 0.01;
-%    pm.pr   = 1.0;
-%    pm.ps   = 0.012;
-%    pm.t    = 1e7;
-%    pm.stv  = 0.5;
-%    [X, ISI, ras] = gen_HH(pm);
-
-net_param.generator  = 'gen_sparse';
-net_param.p          = 100;
-net_param.sparseness = 0.20;  % 0.20 0.15 0.10 0.05
-net_param.seed       = 123;
-net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
-gen_network = @(np) eval(sprintf('%s(np);', np.generator));
-
-clear('pm');
-pm.neuron_model = 'HH3_gcc';
-pm.net_param = net_param;
-pm.net  = gen_network(net_param);
-pm.nI   = 20;
-pm.scee = 0.05;
-pm.scie = 0.05;
-pm.scei = 0.09;
-pm.scii = 0.09;
-pm.pr   = 1.0;
-pm.ps   = 0.03;
-pm.t    = 1e6;
-clear('X');
-    [X, ISI, ras] = gen_HH(pm, 'ext_T');
+    clear('pm');
+    pm.neuron_model = 'LIF';
+    pm.net  = 'net_3_06';
+    pm.scee = 0.01;
+    pm.pr   = 1.0;
+    pm.ps   = 0.012;
+    pm.t    = 1e7;
+    pm.stv  = 0.5;
+    [X, ISI, ras] = gen_HH(pm);
 
     [p, len] = size(X);
 

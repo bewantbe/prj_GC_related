@@ -1,0 +1,790 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sinc}{\,\textrm{sinc}\,}
+{\,\textrm{sinc}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathscr{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\la}{\leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ra}{\rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\lra}{\leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\La}{\Leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Ra}{\Rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Lra}{\Leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Llra}{\Longleftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sgn}{\mysgn}
+{\,\textrm{sgn}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\var}{\,\textrm{var}\,}
+{\,\textrm{var}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cov}{\,\textrm{cov}\,}
+{\,\textrm{cov}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\F\left[\begin{array}{c}
+x_{t}\\
+y_{t}
+\end{array}\right]=\left[\begin{array}{cc}
+\hat{a}(w) & \hat{b}(w)\\
+\hat{c}(w) & \hat{d}(w)
+\end{array}\right]\F\left[\begin{array}{c}
+\epsilon_{t}\\
+\eta_{t}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\cov(\epsilon_{t},\eta_{t})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+S_{yy}(w) & = & \left(\hat{c}(w)\F[\epsilon_{t}]+\hat{d}(w)\F[\eta_{t}]\right)\left(\hat{c}^{*}(w)\F^{*}[\epsilon_{t}]+\hat{d}^{*}(w)\F^{*}[\eta_{t}]\right)\\
+ & = & \hat{c}(w)\hat{c}^{*}(w)\var(\epsilon_{t})+\hat{d}(w)\hat{d}^{*}(w)\var(\eta_{t})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\hat{c}(w)\hat{c}^{*}(w)\var(\epsilon_{t})+\hat{d}(w)\hat{d}^{*}(w)\var(\eta_{t})}{\hat{d}(w)\hat{d}^{*}(w)\var(\eta_{t})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3-var, 
+\begin_inset Formula $\mathrm{var}(\epsilon_{1t}^{*})=S_{\epsilon_{1}^{*}}(\omega)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{Y\rightarrow X|Z-}(\omega)=\ln\frac{\left|\mathrm{var}(\epsilon_{1t}^{*})\right|}{\left|\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'\right|}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $\mathrm{var}(\epsilon_{1t}^{*})$
+\end_inset
+
+ is scalar
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\ln\frac{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'+\hat{F}_{12}(\omega)\mathrm{var}(\epsilon_{2t})\hat{F}_{12}(\omega)'+\hat{F}_{13}(\omega)\mathrm{var}(\epsilon_{3t})\hat{F}_{13}(\omega)'}{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\ln\left(1+\frac{\hat{F}_{12}(\omega)\mathrm{var}(\epsilon_{2t})\hat{F}_{12}(\omega)'+\hat{F}_{13}(\omega)\mathrm{var}(\epsilon_{3t})\hat{F}_{13}(\omega)'}{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{F}_{11}(\omega)=\hat{D}_{11}(\omega)\hat{A}_{11}(\omega)+\hat{D}_{12}(\omega)\hat{A}_{31}(\omega)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{F}_{12}(\omega)=\hat{D}_{11}(\omega)\hat{A}_{12}(\omega)+\hat{D}_{12}(\omega)\hat{A}_{32}(\omega)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{F}_{13}(\omega)=\hat{D}_{11}(\omega)\hat{A}_{13}(\omega)+\hat{D}_{12}(\omega)\hat{A}_{33}(\omega)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+f_{Y\rightarrow X|Z-}(\omega) & \approx & \frac{\hat{F}_{12}(\omega)\mathrm{var}(\epsilon_{2t})\hat{F}_{12}(\omega)'}{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'}+\frac{\hat{F}_{13}(\omega)\mathrm{var}(\epsilon_{3t})\hat{F}_{13}(\omega)'}{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'}\\
+ & \approx & f_{Y\rightarrow X}(\omega)?+\frac{\hat{F}_{13}(\omega)\mathrm{var}(\epsilon_{3t})\hat{F}_{13}(\omega)'}{\hat{F}_{11}(\omega)\mathrm{var}(\epsilon_{1t})\hat{F}_{11}(\omega)'}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+crude approximate (assume 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $y$
+\end_inset
+
+, 
+\begin_inset Formula $z$
+\end_inset
+
+ have been whitened)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{F}_{13}(\omega)\approx\hat{A}_{13}(\omega)+\hat{D}_{12}(\omega)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{Y\rightarrow X|Z-}(\omega)\approx f_{Y\rightarrow X}(\omega)+\frac{\hat{F}_{13}(\omega)\mathrm{var}(\epsilon_{3t})\hat{F}_{13}(\omega)'}{\mathrm{var}(\epsilon_{1t})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And 
+\begin_inset Formula $\mathrm{var}(\epsilon_{3t})$
+\end_inset
+
+ is diagonal matrix.
+\end_layout
+
+\begin_layout Standard
+=============
+\end_layout
+
+\begin_layout Standard
+only 3-varable case
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{A}=\left[\begin{array}{ccc}
+\hat{B}_{11} & \hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{21} & \hat{B}_{22} & \hat{B}_{23}\\
+\hat{B}_{31} & \hat{B}_{32} & \hat{B}_{33}
+\end{array}\right]^{-1}=\left|\left[\begin{array}{ccc}
+\hat{B}_{11} & \hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{21} & \hat{B}_{22} & \hat{B}_{23}\\
+\hat{B}_{31} & \hat{B}_{32} & \hat{B}_{33}
+\end{array}\right]\right|^{-1}\left[\begin{array}{ccc}
+\left|\begin{array}{cc}
+\hat{B}_{22} & \hat{B}_{23}\\
+\hat{B}_{32} & \hat{B}_{33}
+\end{array}\right| & -\left|\begin{array}{cc}
+\hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{32} & \hat{B}_{33}
+\end{array}\right| & \left|\begin{array}{cc}
+\hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{22} & \hat{B}_{23}
+\end{array}\right|\\
+. & \left|\begin{array}{cc}
+\hat{B}_{11} & \hat{B}_{13}\\
+\hat{B}_{31} & \hat{B}_{33}
+\end{array}\right| & .\\
+. & -\left|\begin{array}{cc}
+\hat{B}_{11} & \hat{B}_{12}\\
+\hat{B}_{31} & \hat{B}_{32}
+\end{array}\right| & .
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{F}_{12}(\omega)=\left|\left[\begin{array}{ccc}
+\hat{B}_{11} & \hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{21} & \hat{B}_{22} & \hat{B}_{23}\\
+\hat{B}_{31} & \hat{B}_{32} & \hat{B}_{33}
+\end{array}\right]\right|^{-1}(\hat{D}_{11}(\omega)(-\left|\begin{array}{cc}
+\hat{B}_{12} & \hat{B}_{13}\\
+\hat{B}_{32} & \hat{B}_{33}
+\end{array}\right|)+\hat{D}_{12}(\omega)(-\left|\begin{array}{cc}
+\hat{B}_{11} & \hat{B}_{12}\\
+\hat{B}_{31} & \hat{B}_{32}
+\end{array}\right|))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{F}_{13}(\omega)=\hat{D}_{11}(\omega)\hat{A}_{13}(\omega)+\hat{D}_{12}(\omega)\hat{A}_{33}(\omega)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+===========
+\end_layout
+
+\begin_layout Standard
+inverse of 
+\begin_inset Formula $\left(1+1+(n-2)\right)\times\left(1+1+(n-2)\right)$
+\end_inset
+
+ maxtrix
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & 0 & O\\
+-a_{21}/a_{11} & 1 & O\\
+-a_{31}/a_{11} & O & I
+\end{array}\right]\left[\begin{array}{ccc}
+a_{11} & a_{12} & a_{13}\\
+a_{21} & a_{22} & a_{23}\\
+a_{31} & a_{32} & a_{33}
+\end{array}\right]=\left[\begin{array}{ccc}
+a_{11} & a_{12} & a_{13}\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & a_{32}-a_{31}a_{12}/a_{11} & a_{33}-a_{31}a_{13}/a_{11}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+a_{11} & a_{12} & a_{13}\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & a_{32}-a_{31}a_{12}/a_{11} & a_{33}-a_{31}a_{13}/a_{11}
+\end{array}\right]\left[\begin{array}{ccc}
+1 & -a_{12}/a_{11} & -a_{13}/a_{11}\\
+0 & 1 & O\\
+O & O & I
+\end{array}\right]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+a_{11} & 0 & O\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & a_{32}-a_{31}a_{12}/a_{11} & a_{33}-a_{31}a_{13}/a_{11}
+\end{array}\right],\textrm{ verified}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & 0 & O\\
+0 & 1 & O\\
+O & -\frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
+\end{array}\right]\left[\begin{array}{ccc}
+a_{11} & 0 & O\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & a_{32}-a_{31}a_{12}/a_{11} & a_{33}-a_{31}a_{13}/a_{11}
+\end{array}\right]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+a_{11} & 0 & O\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & O & a_{33}-a_{31}a_{13}/a_{11}-\frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\left(a_{23}-a_{21}a_{13}/a_{11}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+a_{11} & 0 & O\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & a_{23}-a_{21}a_{13}/a_{11}\\
+O & O & a_{33}-a_{31}a_{13}/a_{11}-\frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\left(a_{23}-a_{21}a_{13}/a_{11}\right)
+\end{array}\right]\left[\begin{array}{ccc}
+1 & 0 & O\\
+0 & 1 & -\frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+O & O & I
+\end{array}\right]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+a_{11} & 0 & O\\
+0 & a_{22}-a_{21}a_{12}/a_{11} & O\\
+O & O & a_{33}-a_{31}a_{13}/a_{11}-\frac{\left(a_{32}-a_{31}a_{12}/a_{11}\right)\left(a_{23}-a_{21}a_{13}/a_{11}\right)}{a_{22}-a_{21}a_{12}/a_{11}}
+\end{array}\right],\textrm{ verified}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A^{-1}=Q2^{-1}Q1^{-1}B^{-1}P1^{-1}P2^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & 0 & O\\
+0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+O & O & I
+\end{array}\right]\left[\begin{array}{ccc}
+1 & a_{12}/a_{11} & a_{13}/a_{11}\\
+0 & 1 & O\\
+O & O & I
+\end{array}\right]=\left[\begin{array}{ccc}
+1 & a_{12}/a_{11} & a_{13}/a_{11}\\
+0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+O & O & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & 0 & O\\
+a_{21}/a_{11} & 1 & O\\
+a_{31}/a_{11} & O & I
+\end{array}\right]\left[\begin{array}{ccc}
+1 & 0 & O\\
+0 & 1 & O\\
+O & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
+\end{array}\right]=\left[\begin{array}{ccc}
+1 & 0 & O\\
+a_{21}/a_{11} & 1 & O\\
+a_{31}/a_{11} & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\[
+A^{-1}=\left[\begin{array}{ccc}
+1 & a_{12}/a_{11} & a_{13}/a_{11}\\
+0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+O & O & I
+\end{array}\right]B^{-1}\left[\begin{array}{ccc}
+1 & 0 & O\\
+a_{21}/a_{11} & 1 & O\\
+a_{31}/a_{11} & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
+\end{array}\right],\ \textrm{verified}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+===========
+\end_layout
+
+\begin_layout Standard
+use above result
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{B}\hat{X}=\hat{E},\quad\hat{X}=H\hat{E},\quad H=\hat{B}^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S_{11}=H_{11}d_{1}H_{11}+H_{12}d_{2}H_{21}+H_{13}d_{3}H_{31}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+H_{11}=b_{1}+c_{12}b_{2}c_{21}+c_{13}b_{3}c_{31}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+H_{12}=c_{12}b_{2}+c_{13}b_{3}c_{32}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+H_{13}=c_{13}b_{3}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{1}=\hat{B}_{11},\quad b_{2}=\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12}/\hat{B}_{11},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{3}=\hat{B}_{33}-\hat{B}_{31}\hat{B}_{13}/\hat{B}_{11}-\frac{\left(\hat{B}_{32}-\hat{B}_{31}\hat{B}_{12}/\hat{B}_{11}\right)\left(\hat{B}_{23}-\hat{B}_{21}\hat{B}_{13}/\hat{B}_{11}\right)}{\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12}/\hat{B}_{11}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S_{12}=H_{11}d_{1}H_{12}+H_{12}d_{2}H_{22}+H_{13}d_{3}H_{32}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+-- approx
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b_{1}=\hat{B}_{11},\quad b_{2}\approx\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{3}\approx\hat{B}_{33}-\hat{B}_{31}\hat{B}_{13}-\left(\hat{B}_{32}-\hat{B}_{31}\hat{B}_{12}\right)\left(\hat{B}_{23}-\hat{B}_{21}\hat{B}_{13}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\end_body
+\end_document

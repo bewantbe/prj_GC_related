@@ -38,7 +38,7 @@
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
-\suppress_date false
+\suppress_date true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -5646,7 +5646,7 @@ For simplicity, assume
 Finally get GC
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
 0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
 I & S^{(xz)}\\
 S^{(zx)} & I
@@ -5697,7 +5697,7 @@ reference "eq:GC3"
  as identity matrix, get approximation
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}\approx\sum_{k=1}^{m}\vec{s}_{k}^{(x|y)}\vec{s}_{k}^{(x|y)}=\sum_{k=1}^{m}\frac{\mathrm{E}(x_{t}y_{t-k})^{2}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\label{eq: GC y->x approx}
+F_{y\rightarrow x|z}=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}\approx\sum_{k=1}^{m}\vec{s}_{k}^{(x|y)}\vec{s}_{k}^{(x|y)}=\sum_{k=1}^{m}\frac{\mathrm{E}(x_{t}y_{t-k})^{2}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\label{eq: GC y->x approx}
 \end{equation}
 
 \end_inset
@@ -5800,7 +5800,7 @@ reference "eq:GC3"
  become
 \begin_inset Formula 
 \[
-F_{y\rightarrow x}=\ln\Biggl(\frac{1-c}{1-d}\Biggr)\approx d-c
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-c}{1-d}\Biggr)\approx d-c
 \]
 
 \end_inset
@@ -5847,9 +5847,9 @@ Under the small
 
  assumption,
 \begin_inset Formula 
-\[
-(I-B)^{-1}\approx I+B,\quad\textrm{for }\left\Vert B\right\Vert \ll1,
-\]
+\begin{equation}
+(I-B)^{-1}\approx I+B,\quad\textrm{for }\left\Vert B\right\Vert \ll1,\label{eq:linear operator app}
+\end{equation}
 
 \end_inset
 
@@ -5907,7 +5907,7 @@ reference "eq: GC y->x approx"
 )
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}S^{(yz)}\vec{s}^{(x|z)T}.\label{eq:GCapp-od2}
+F_{y\rightarrow x|z}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}S^{(yz)}\vec{s}^{(x|z)T}.\label{eq:GCapp-od2}
 \end{equation}
 
 \end_inset
@@ -5938,7 +5938,7 @@ reference "sub:Derivation-Detail-of"
 )
 \begin_inset Formula 
 \[
-F_{y\rightarrow x}\approx\frac{\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}R^{(yz)}\left(\Lambda^{(z)}\right)^{2}\vec{v}^{(x|z)T}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}.
+F_{y\rightarrow x|z}\approx\frac{\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}R^{(yz)}\left(\Lambda^{(z)}\right)^{2}\vec{v}^{(x|z)T}}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}.
 \]
 
 \end_inset
@@ -5961,7 +5961,7 @@ reference "eq:GCapp-od2"
  can be writen in component form
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}\sum_{k=1}^{n_{z}}S^{(yz[k])}\vec{s}^{(x|z[k])T}.\label{eq:GCapp-od2-1}
+F_{y\rightarrow x|z}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}\sum_{k=1}^{n_{z}}S^{(yz[k])}\vec{s}^{(x|z[k])T}.\label{eq:GCapp-od2-1}
 \end{equation}
 
 \end_inset
@@ -5972,12 +5972,79 @@ F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}-2\vec{s}^{(x|y)}\sum_{k
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}\approx\frac{1}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\left(\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}\sum_{k=1}^{n_{z}}\frac{R^{(yz[k])}\vec{v}^{(x|z[k])T}}{\mathrm{var}(z[k]_{t})}\right).\label{eq:GCapp-od2-1-cov}
+F_{y\rightarrow x|z}\approx\frac{1}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\left(\vec{v}^{(x|y)}\vec{v}^{(x|y)T}-2\vec{v}^{(x|y)}\sum_{k=1}^{n_{z}}\frac{R^{(yz[k])}\vec{v}^{(x|z[k])T}}{\mathrm{var}(z[k]_{t})}\right).\label{eq:GCapp-od2-1-cov}
 \end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+But Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GCapp-od2-1"
+
+\end_inset
+
+ is not suitable for large 
+\begin_inset Formula $n$
+\end_inset
+
+ (say 
+\begin_inset Formula $n>10$
+\end_inset
+
+), due to 
+\begin_inset Formula $\left\Vert B_{2}\right\Vert \ll1$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\Vert B_{3}\right\Vert \ll1$
+\end_inset
+
+ not satisfies any more (hence the approximation Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:linear operator app"
+
+\end_inset
+
+ not valid).
+\end_layout
+
+\begin_layout Standard
+For large 
+\begin_inset Formula $n$
+\end_inset
+
+, we may use
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx d-c=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}+\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left(\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}-\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}\right)\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $F_{y\rightarrow x}\approx\vec{s}^{(x|y)}\vec{s}^{(x|y)T}$
+\end_inset
+
+, so we get the relationship between conditional GC and pairwise GC.
 \end_layout
 
 \begin_layout Section
@@ -6264,7 +6331,7 @@ So we only need to compute 3 exponentials, instead of 7 (the constant numbers
 \end_layout
 
 \begin_layout Standard
-Also note that there some expression like 
+Also note that there some expressions like 
 \begin_inset Formula $\frac{\exp(x)}{\exp(x)+a}$
 \end_inset
 
@@ -6273,8 +6340,8 @@ Also note that there some expression like
 \begin_inset Formula $\frac{1}{1+a\exp(-x)}$
 \end_inset
 
-, which is faster (if compiler failed to optimize it), simpler and no precision
- lose.
+, which is faster (if the compiler failed to optimize it), simpler and no
+ precision lose.
 \end_layout
 
 \begin_layout Standard
@@ -6378,7 +6445,8 @@ Which cost much less if it's spare network.
 \end_layout
 
 \begin_layout Standard
-With the above two eliminations, the program runs 1 time faster.
+With the above two eliminations, the program runs 1 times faster.
+ (And synaptic calculation no more a hot spot for 100 neuron case)
 \end_layout
 
 \begin_layout Subsubsection*

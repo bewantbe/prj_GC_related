@@ -1,0 +1,2172 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\family typewriter
+raster_tuning_HH
+\end_layout
+
+\begin_layout Author
+xyy
+\end_layout
+
+\begin_layout Section
+The HH model Used
+\end_layout
+
+\begin_layout Standard
+It is the classical Hodgkin-Huxley (HH) neuron model.
+ For neuron 
+\begin_inset Formula $i$
+\end_inset
+
+, its membrane potential 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+ obey
+\begin_inset Formula 
+\[
+\left\{ \begin{aligned}C\frac{\mathrm{d}V_{i}}{\mathrm{d}t} & =-(V_{i}-V_{\textrm{Na}})G_{\textrm{Na}}h_{i}m_{i}^{3}-(V_{i}-V_{\textrm{K}})G_{\textrm{K}}n_{i}^{4}-(V_{i}-V_{\textrm{L}})G_{\textrm{L}}+I_{i}^{\textrm{input}}\\
+\frac{\mathrm{d}m_{i}}{\mathrm{d}t} & =(1-m_{i})\alpha_{m}(V_{i})-m_{i}\beta_{m}(V_{i})\\
+\frac{\mathrm{d}h_{i}}{\mathrm{d}t} & =(1-h_{i})\alpha_{h}(V_{i})-h_{i}\beta_{h}(V_{i})\\
+\frac{\mathrm{d}n_{i}}{\mathrm{d}t} & =(1-n_{i})\alpha_{n}(V_{i})-n_{i}\beta_{n}(V_{i})
+\end{aligned}
+\right.
+\]
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{n}(V_{i})=\frac{0.1-0.01V_{i}}{\exp(1-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \beta_{n}(V_{i})=0.125\exp(-V_{i}/80)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{m}(V_{i})=\frac{2.5-0.1V_{i}}{\exp(2.5-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{m}(V_{i})=4\exp\left(-V_{i}/18\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{h}(V_{i})=0.07\exp(-V_{i}/20)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{h}(V_{i})=\frac{1}{\exp(3-0.1V_{i})+1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $V_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $h_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{i}^{\textrm{input}}$
+\end_inset
+
+ are functions of 
+\begin_inset Formula $t$
+\end_inset
+
+, and others are constants: 
+\begin_inset Formula $V_{\textrm{Na}}=\unit[115]{mV}$
+\end_inset
+
+, 
+\begin_inset Formula $V_{\textrm{K}}=\unit[-12]{mV}$
+\end_inset
+
+, 
+\begin_inset Formula $V_{\textrm{L}}=\unit[10.6]{mV}$
+\end_inset
+
+ (resting potential set to 
+\begin_inset Formula $\unit[0]{mV}$
+\end_inset
+
+), 
+\begin_inset Formula $G_{\textrm{Na}}=\unit[120]{mS\cdot cm^{-2}}$
+\end_inset
+
+, 
+\begin_inset Formula $G_{\textrm{K}}=\unit[36]{mS\cdot cm^{-2}}$
+\end_inset
+
+, 
+\begin_inset Formula $G_{\textrm{L}}=\unit[0.3]{mS\cdot cm^{-2}}$
+\end_inset
+
+ and membrane capacity 
+\begin_inset Formula $C=\unit[1]{\mu F\cdot cm^{-2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The interaction between neurons and external inputs come from 
+\begin_inset Formula $I_{i}^{\textrm{input}}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+I_{i}^{\textrm{input}}=I_{i}^{\textrm{E}}+I_{i}^{\textrm{I}},\quad I_{i}^{\textrm{E}}=-(V_{i}-V_{G}^{\textrm{E}})G_{i}^{\textrm{E}},\quad I_{i}^{\textrm{I}}=-(V_{i}-V_{G}^{\textrm{I}})G_{i}^{\textrm{I}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $I_{i}^{\textrm{E}}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{i}^{\textrm{I}}$
+\end_inset
+
+ are excitatory and inhibitory input respectively, and 
+\begin_inset Formula $V_{G}^{\textrm{E}}$
+\end_inset
+
+, 
+\begin_inset Formula $V_{G}^{\textrm{I}}$
+\end_inset
+
+ is their reversal potential.
+ The conductances 
+\begin_inset Formula $G_{i}^{Q}$
+\end_inset
+
+ (
+\begin_inset Formula $Q\in\{\textrm{E},\textrm{I}\}$
+\end_inset
+
+) evolves according to
+\begin_inset Formula 
+\[
+\frac{\mathrm{d}G_{i}^{Q}}{\mathrm{d}t}=-\frac{G_{i}^{Q}}{\sigma_{d}^{Q}}+H_{i}^{Q},\quad\frac{\mathrm{d}H_{i}^{Q}}{\mathrm{d}t}=-\frac{H_{i}^{Q}}{\sigma_{r}^{Q}}+\sum_{k}F_{i}^{Q}\delta(t-T_{i,k}^{F})+\sum_{j\neq i}S_{ij}g(V_{j}^{\textrm{pre}})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+g(V_{j}^{\textrm{pre}})=1/\left(1+\exp(-(V_{j}^{\textrm{pre}}-\unit[85]{mV})/2)\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $F_{i}^{Q}$
+\end_inset
+
+ is the strength of external input to neuron 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $T_{i,k}^{F}$
+\end_inset
+
+ is its time of 
+\begin_inset Formula $k$
+\end_inset
+
+-th input event, which is a Poisson process with rate 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+.
+ We call this term the Poisson input.
+ 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ is the coupling strength from 
+\begin_inset Formula $j$
+\end_inset
+
+-th neuron to 
+\begin_inset Formula $i$
+\end_inset
+
+-th neuron.
+ 
+\begin_inset Formula $V_{j}^{\textrm{pre}}$
+\end_inset
+
+ is the (presynaptic) membrane potential of 
+\begin_inset Formula $j$
+\end_inset
+
+-th neuron.
+ 
+\begin_inset Formula $\sigma_{r}^{Q}$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sigma_{d}^{Q}$
+\end_inset
+
+ are the fast rising and slow decaying timescales in the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ function.
+ 
+\begin_inset Formula $V_{G}^{\textrm{E}}=\unit[65]{mV}$
+\end_inset
+
+, 
+\begin_inset Formula $V_{G}^{\textrm{I}}=\unit[-15]{mV}$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{d}^{E}=0.5$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{r}^{E}=3.0$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{d}^{I}=0.5$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{r}^{I}=7.0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We use adjacency matrix 
+\begin_inset Formula $A=(A_{ij})$
+\end_inset
+
+ to denote the neural network structure, i.e.
+ 
+\begin_inset Formula $S_{ij}=A_{ij}S^{Q_{i}Q{}_{j}}$
+\end_inset
+
+, and 
+\begin_inset Formula $S^{Q_{i}Q{}_{j}}$
+\end_inset
+
+ is one of 
+\begin_inset Formula $S^{\textrm{EE}}$
+\end_inset
+
+, 
+\begin_inset Formula $S^{\textrm{EI}}$
+\end_inset
+
+, 
+\begin_inset Formula $S^{\textrm{IE}}$
+\end_inset
+
+, 
+\begin_inset Formula $S^{\textrm{II}}$
+\end_inset
+
+, depends on the type of corresponding neuron pair (
+\begin_inset Formula $\textrm{E}$
+\end_inset
+
+ for excitatory, 
+\begin_inset Formula $\textrm{I}$
+\end_inset
+
+ for inhibitory).
+ 
+\begin_inset Formula $A_{ij}\neq0$
+\end_inset
+
+ means there is a direct affection to 
+\begin_inset Formula $i$
+\end_inset
+
+-th neuron from 
+\begin_inset Formula $j$
+\end_inset
+
+-th neuron.
+ When we talk about 
+\begin_inset Quotes eld
+\end_inset
+
+homogeneous coupling
+\begin_inset Quotes erd
+\end_inset
+
+, we mean 
+\begin_inset Formula $A_{ij}$
+\end_inset
+
+ equals either 
+\begin_inset Formula $1$
+\end_inset
+
+ or 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $F$
+\end_inset
+
+, 
+\begin_inset Formula $\mu$
+\end_inset
+
+, 
+\begin_inset Formula $A$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $S^{Q_{i}Q{}_{j}}$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{r}^{Q}$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sigma_{d}^{Q}$
+\end_inset
+
+ are
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ parameters relate to
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+synaptic and input to neurons.
+ For all neurons 
+\begin_inset Formula $F_{i}^{\textrm{E}}=F$
+\end_inset
+
+, 
+\begin_inset Formula $F_{i}^{\textrm{I}}=0$
+\end_inset
+
+, 
+\begin_inset Formula $\mu_{i}=\mu$
+\end_inset
+
+.
+ During one simulation, these parameters are 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+all constant.
+\end_layout
+
+\begin_layout Standard
+The time delay due to long dendrite or axion are ignored.
+\end_layout
+
+\begin_layout Standard
+In numerical simulation, we use explicit fourth-order Runge-Kutta method
+ with time step 
+\begin_inset Formula $\unit[1/32]{ms}$
+\end_inset
+
+.
+ The data samples (i.e.
+ 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+) we used are voltages obtained in sampling rate 
+\begin_inset Formula $\unit[2]{kHz}$
+\end_inset
+
+.
+ When we talk about spike train data, we mean 
+\begin_inset Formula $x_{t}=1$
+\end_inset
+
+ if 
+\begin_inset Formula $V_{i}(t)$
+\end_inset
+
+ just pass through the threshold (
+\begin_inset Formula $\unit[10]{mV}$
+\end_inset
+
+ in our case) from low to high, otherwise 
+\begin_inset Formula $x_{t}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Few Basic Properties of the HH
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/EPSP_Snet_2_2EPSP.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/POISSON_EPSP.eps
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+(a) Excitatory postsynaptic potential (EPSP) - 
+\begin_inset Formula $S^{E}$
+\end_inset
+
+ relation.
+ 
+\begin_inset Formula $V_{\textrm{EPSP}}\approx17\, S^{\textrm{EE}}\;\unit{mV}$
+\end_inset
+
+ (b) typical EPSP voltage trace in this model.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:S-EPSP-relation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For inhibitory input and Poisson input, the curves are roughly the same
+ (up to scalings) as Fig.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:S-EPSP-relation"
+
+\end_inset
+
+.
+ The relation between peak respond and model parameter is 
+\begin_inset Formula $V_{\textrm{IPSP}}\approx-5.0\, S^{\textrm{II}}\;\unit{mV}$
+\end_inset
+
+, 
+\begin_inset Formula $V_{\textrm{EPSP-Poisson}}\approx31\, F^{\textrm{E}}\;\unit{mV}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_ps.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input rate 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_pr.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input strength 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Some curves terminate because EPSP exceed 
+\begin_inset Formula $\unit[2]{mV}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Gain function under Poisson pulse drive.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For current input.
+\end_layout
+
+\begin_layout Standard
+Slowest firing, ISI: 
+\begin_inset Formula $\unit[19.547]{ms}$
+\end_inset
+
+, rate: 
+\begin_inset Formula $\unit[51.159]{Hz}$
+\end_inset
+
+.
+ (input current: 
+\begin_inset Formula $6.27$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Fast firing, ISI=
+\begin_inset Formula $\unit[8.544]{ms}$
+\end_inset
+
+, rate 
+\begin_inset Formula $\unit[117.03]{Hz}$
+\end_inset
+
+.
+ (input current: 
+\begin_inset Formula $50$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Critical input current that firing will automatically disappeared: 
+\begin_inset Formula $6.264$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/epsp1.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+EPSP (
+\begin_inset Formula $s^{EE}=0.05$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/ipsp1.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+IPSP (
+\begin_inset Formula $s^{II}=0.1$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The blue curve indicate the synaptic input.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that in this model, EPSP and IPSP will be affect by pre-synaptic neuron
+ dynamics.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Simulator 
+\family typewriter
+raster_tuning_HH
+\family default
+ changes
+\end_layout
+
+\begin_layout Standard
+Compared current version (2014-08-10, changeset 45:836f718da9cf) to JYL
+ version (2014-05-01 just after branch created, changeset 27:9efee6777a85)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://bitbucket.org/bewantbe/ifsimu"
+
+\end_inset
+
+ branch HH_jyl
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Speed improvement
+\end_layout
+
+\begin_layout Subsubsection*
+Eliminate Exponential calculation
+\end_layout
+
+\begin_layout Standard
+Recall that there are 7 exponent calculation for each neuron at each time
+ step
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{n}(V_{i})=\frac{0.1-0.01V_{i}}{\exp(1-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \beta_{n}(V_{i})=0.125\exp(-V_{i}/80)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{m}(V_{i})=\frac{2.5-0.1V_{i}}{\exp(2.5-0.1V_{i})-1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{m}(V_{i})=4\exp\left(-V_{i}/18\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \alpha_{h}(V_{i})=0.07\exp(-V_{i}/20)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \beta_{h}(V_{i})=\frac{1}{\exp(3-0.1V_{i})+1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+g(V_{j}^{\textrm{pre}})=1/\left(1+\exp(-(V_{j}^{\textrm{pre}}-\unit[85]{mV})/2)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reformulate the exponentials as following (
+\begin_inset Formula $g(V_{j}^{\textrm{pre}})$
+\end_inset
+
+ has no change)
+\begin_inset Formula 
+\[
+e_{1}=\exp(-0.1V_{i}),\quad e_{2}=\sqrt{e_{1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(1-0.1V_{i})=e_{1}\exp(1)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \exp(-V_{i}/80)=\sqrt{\sqrt{e_{2}}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(2.5-0.1V_{i})=e_{1}\exp(2.5)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp\left(-V_{i}/18\right)=\exp\left(-V_{i}/18\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-V_{i}/20)=e_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \exp(3-0.1V_{i})=e_{1}\exp(3)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So we only need to compute 3 exponentials, instead of 7 (the constant numbers
+ like 
+\begin_inset Formula $\exp(1)$
+\end_inset
+
+ will be calculated at compile time, instead of runtime).
+\end_layout
+
+\begin_layout Standard
+Also note that there some expressions like 
+\begin_inset Formula $\frac{\exp(x)}{\exp(x)+a}$
+\end_inset
+
+ in the origin code.
+ They have been changed to 
+\begin_inset Formula $\frac{1}{1+a\exp(-x)}$
+\end_inset
+
+, which is faster (if the compiler failed to optimize it), simpler and no
+ precision lose.
+\end_layout
+
+\begin_layout Standard
+The exponential elimination make the program 30% faster for 100 neuron case.
+\end_layout
+
+\begin_layout Subsubsection*
+Eliminate unnecessary synaptic calculation
+\end_layout
+
+\begin_layout Standard
+Neurons are not always firing.
+ So don't do synaptic calculation at all if there is not firing.
+ The original code contain this type of optimization, but only at halfway,
+ like this
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for neuron_passive = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+  for neuron_driving = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (neuron_driving is firing)
+\end_layout
+
+\begin_layout Plain Layout
+
+      synaptic[neuron_passive] += v[neuron_driving]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 * matrix[neuron_passive][neuron_driving]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In whatever condition, there are 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ calculations there (also bad for CPU pipeline).
+ Instead, write it this way
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for neuron_driving = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (neuron_driving is firing)
+\end_layout
+
+\begin_layout Plain Layout
+
+    for neuron_passive = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+      synaptic[neuron_passive] += v[neuron_driving]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 * matrix[neuron_passive][neuron_driving]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Which cost much less if it's spare network.
+\end_layout
+
+\begin_layout Standard
+With the above two eliminations, the program runs 1 times faster.
+ (And synaptic calculation no more a hot spot for 100 neuron case)
+\end_layout
+
+\begin_layout Subsubsection*
+Utilize SSE/AVX instructions
+\end_layout
+
+\begin_layout Standard
+Thanks to the pipeline and Streaming SIMD (Single instruction, multiple
+ data) Extensions (SSE) and Advanced Vector Extensions (AVX), modern CPU
+ can calculate 2 or 4 (or even 8) multiplications (and potentially 2 or
+ 4 or more additions at the same time) in ever clock cycle.
+\end_layout
+
+\begin_layout Standard
+Use SSE/AVX instructions directly would need hand write Assembly code or
+ equivalences (compiler intrinsics), or fine tune of compiler options, and
+ probably in the end, no big success.
+\end_layout
+
+\begin_layout Standard
+So use SSE instructions through third party package is a good compromise.
+ I choose Eigen
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://eigen.tuxfamily.org/"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ here.
+ Eigen performs automatic parallel also.
+\end_layout
+
+\begin_layout Standard
+After analyze the hot spot of the program, and rewrite the hot spot in vector
+ form (use Eigen), get 30%~40% more faster.
+\end_layout
+
+\begin_layout Subsubsection*
+Further possible speed optimization
+\end_layout
+
+\begin_layout Itemize
+Use highly optimized math function library for exp() calculation.
+ (e.g.
+ mkl, acml) The related code is still a hot spot.
+\end_layout
+
+\begin_layout Itemize
+Use sparse representation for the adjacency matrix.
+\end_layout
+
+\begin_layout Subsection
+Program Correctness Verification
+\end_layout
+
+\begin_layout Standard
+See matcode/prj_GC_clean/HH/test_HH.m for parameter details.
+\end_layout
+
+\begin_layout Standard
+See matcode/prj_GC_clean/HH/HH_cal.nb for code to generate accurate results.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/spe2_volt.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+voltage trace
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/spe2_diff.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+voltage trace differences
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Accuracy verification.
+ x-axis is time in millisecond, y-axis is voltage in millivolt(
+\begin_inset Formula $\unit[-65]{mV}$
+\end_inset
+
+ shifted).
+ 
+\begin_inset Quotes eld
+\end_inset
+
+rt
+\begin_inset Quotes erd
+\end_inset
+
+ curves is generated by 
+\family typewriter
+raster_tuning_HH
+\family default
+, 
+\begin_inset Quotes eld
+\end_inset
+
+ma
+\begin_inset Quotes erd
+\end_inset
+
+ curve is generated by Mathematica using implicit Runge-Kutta with max time
+ step 
+\begin_inset Formula $\unit[1/16]{ms}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that the error is below 
+\begin_inset Formula $10^{-9}$
+\end_inset
+
+ (relatively) in short time.
+\end_layout
+
+\begin_layout Section
+Time Cost in Computation
+\end_layout
+
+\begin_layout Standard
+Only for reference.
+ They are computed on different computers.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+HHGC analysis time cost.
+ There are ranges because there are different networks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+len/ms
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fr Rate(Hz)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HH simu
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mathrm{od}_{max}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GC (sec)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.838 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+74.2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.509 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+81.6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.200 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+117.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.203 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120.3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+36.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.97 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1391~1608
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.51 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1562
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+400
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35.4~37.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.36 h~30.52 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7256~8063
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

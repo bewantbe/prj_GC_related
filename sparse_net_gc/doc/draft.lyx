@@ -1,0 +1,389 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1)})=\mathrm{var}(x_{t}^{(1)})-\left[\begin{array}{ccc}
+0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|y)T}\\
+\vec{v}^{(x|z)T}
+\end{array}\right].
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1)})=\mathrm{var}(x_{t}^{(1)})\left(I-\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]\right).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{A(1)})=\mathrm{var}(x_{t}^{(1)})-\left[\begin{array}{cc}
+0 & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+v^{(x)}I & R^{(xz)}\\
+R^{(zx)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|z)T}
+\end{array}\right].
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{A(1)})=\mathrm{var}(x_{t}^{(1)})\left(I-\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|z)T}
+\end{array}\right]\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}=\ln\Biggl(\frac{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{cc}
+0 & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+v^{(x)}I & R^{(xz)}\\
+R^{(zx)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|z)T}
+\end{array}\right]}{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{ccc}
+0 & \vec{v}^{(x|y)} & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|y)T}\\
+\vec{v}^{(x|z)T}
+\end{array}\right]}\Biggr).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|z)T}
+\end{array}\right]}{1-\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]}\Biggr).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(D-A)^{-1}=D^{-1}(I-AD^{-1})^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+==================================
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c=\left[\begin{array}{cc}
+0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c=\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d=\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d-c=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}+\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left(\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}-\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}\right)\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E=\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right],\ F=\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right],\ G=\left[\begin{array}{ccc}
+0 & S^{(xy)} & 0\\
+S^{(yx)} & 0 & S^{(yz)}\\
+0 & S^{(zy)} & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(F+G)^{-1}-F^{-1}=(F(I+F^{-1}G))^{-1}-F^{-1}=((I+F^{-1}G)^{-1}-I)F^{-1},\textrm{not good}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E^{-1}-F^{-1}=(I-F^{-1}E)E^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E^{-1}-F^{-1}=E^{-1}FF^{-1}-E^{-1}EF^{-1}=E^{-1}(F-E)F^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+......
+\end_layout
+
+\begin_layout Standard
+Way 2:
+\end_layout
+
+\begin_layout Standard
+to verify
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+I & 0 & 0\\
+0 & I & 0\\
+-C' & 0 & I
+\end{array}\right]\left[\begin{array}{ccc}
+I & 0 & C\\
+0 & I & 0\\
+C' & 0 & I
+\end{array}\right]\left[\begin{array}{ccc}
+I & 0 & -C\\
+0 & I & 0\\
+0 & 0 & I
+\end{array}\right]=\left[\begin{array}{ccc}
+I & 0 & 0\\
+0 & I & 0\\
+0 & 0 & I-C'C
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left\Vert S^{(zx)}S^{(xz)}\right\Vert $
+\end_inset
+
+ can be small.
+\end_layout
+
+\end_body
+\end_document
