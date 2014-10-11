@@ -138,7 +138,7 @@ S^{(zx)} & I
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}=\ln\Biggl(\frac{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{cc}
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{cc}
 0 & \vec{v}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
 v^{(x)}I & R^{(xz)}\\
 R^{(zx)} & v^{(z)}I
@@ -165,7 +165,7 @@ R^{(zx)} & R^{(zy)} & v^{(z)}I
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-F_{y\rightarrow x}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
 0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
 I & S^{(xz)}\\
 S^{(zx)} & I
@@ -183,6 +183,109 @@ S^{(zx)} & S^{(zy)} & I
 \vec{s}^{(x|z)T}
 \end{array}\right]}\Biggr).
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--------------
+\end_layout
+
+\begin_layout Standard
+note that 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+v^{(x)}I & R^{(xz)}\\
+R^{(zx)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|z)T}
+\end{array}\right]=\left[\begin{array}{c}
+\vec{d}^{(11)}\\
+\vec{d}^{(12)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]^{-1}\left[\begin{array}{c}
+0\\
+\vec{v}^{(x|y)T}\\
+\vec{v}^{(x|z)T}
+\end{array}\right]=\left[\begin{array}{c}
+\vec{a}^{(11)}\\
+\vec{a}^{(12)}\\
+\vec{a}^{(13)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{cc}
+\vec{d}^{(11)} & \vec{d}^{(12)}\end{array}\right]\left[\begin{array}{cc}
+v^{(x)}I & R^{(xz)}\\
+R^{(zx)} & v^{(z)}I
+\end{array}\right]\left[\begin{array}{c}
+\vec{d}^{(11)}\\
+\vec{d}^{(12)}
+\end{array}\right]}{1-\frac{1}{\mathrm{var}(x_{t}^{(1)})}\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+v^{(x)}I & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & v^{(y)}I & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & v^{(z)}I
+\end{array}\right]\left[\begin{array}{c}
+\vec{a}^{(11)}\\
+\vec{a}^{(12)}\\
+\vec{a}^{(13)}
+\end{array}\right]}\Biggr).
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For standard whitened data
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
+\vec{d}^{(11)} & \vec{d}^{(12)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]\left[\begin{array}{c}
+\vec{d}^{(11)}\\
+\vec{d}^{(12)}
+\end{array}\right]}{1-\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]\left[\begin{array}{c}
+\vec{a}^{(11)}\\
+\vec{a}^{(12)}\\
+\vec{a}^{(13)}
+\end{array}\right]}\Biggr).
+\]
 
 \end_inset
 
@@ -332,6 +435,38 @@ E^{-1}-F^{-1}=(I-F^{-1}E)E^{-1}
 \begin_inset Formula 
 \[
 E^{-1}-F^{-1}=E^{-1}FF^{-1}-E^{-1}EF^{-1}=E^{-1}(F-E)F^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+----------
+\end_layout
+
+\begin_layout Standard
+For standard whitened data
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]\left[\begin{array}{c}
+\vec{a}^{(11)}\\
+\vec{a}^{(12)}\\
+\vec{a}^{(13)}
+\end{array}\right]-\left[\begin{array}{cc}
+\vec{d}^{(11)} & \vec{d}^{(12)}\end{array}\right]\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]\left[\begin{array}{c}
+\vec{d}^{(11)}\\
+\vec{d}^{(12)}
+\end{array}\right].
 \]
 
 \end_inset

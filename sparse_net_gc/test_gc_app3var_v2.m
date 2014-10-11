@@ -3,7 +3,7 @@
 if ~exist('are_you_joking', 'var')
 are_you_joking = true;
 
-  model_id = 1;
+  model_id = 2;
   switch model_id
   case 1
     clear('pm');
@@ -63,6 +63,7 @@ are_you_joking = true;
     R = S2cov(S, od);
     covz = R2covz(R);
 
+    p = size(S, 1);
     len = 1e9;
     use_od = od;
     m = use_od;
@@ -84,7 +85,15 @@ else
   covz = covz_orig;
 end
 
-[GC_srd_covz, Deps, AA] = pos_nGrangerT2RZ(covz, p);
+% Name for coefficients
+%     [Xt Yt Zt]' = A * eps[x,y,z]t
+% B * [Xt Yt Zt]' =     eps[x,y,z]t
+%     [Xt    Zt]' = C * eps[x,  z]t
+% D * [Xt    Zt]' =     eps[x,  z]t
+%     [Xt Yt   ]' = E * eps[x,y  ]t
+% F * [Xt Yt   ]' =     eps[x,y  ]t
+
+[GC_srd_covz, Deps, B] = pos_nGrangerT2RZ(covz, p);
 if (p < 6)
 	GC_srd_covz
 end
@@ -93,6 +102,9 @@ GC_srd_pairs = pairRGrangerT(R);
 if (p < 6)
 	GC_srd_pairs
 end
+l = size(R, 2);
+idx = [id_passive:p:l; id_driving:p:l];
+[~, ~, F] = RGrangerT([R(id_passive,idx); R(id_driving,idx)]);
 
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
@@ -187,6 +199,19 @@ GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3'
 
 GC_approx_od1 = v1O2*v1O2'
 
+b = B(id_passive, id_driving:p:end);  % assume X is standard whitened
+GC_from_coef_app_od1 = sum(b.*b)
+
+b = F(1, 2:2:end);  % assume X is standard whitened
+GC_from_coef_app_pair= sum(b.*b)
+
+%rF = [F(1, 1:2:end), F(1, 2:2:end)];
+%eR2xy = [
+    %R11  R12
+    %R12' R22]; 
+%rF * eR2xy * rF'
+%log(1/(1-rF * eR2xy * rF'));  % should be the same as pariwise result
+
 GC_zero_ave = use_od / len
 
 % solve coefficients
@@ -202,7 +227,7 @@ coef_xz = coef_all(2*m+1:end);
 
 % Check coef and correlation
 figure(1);
-plot(1:m, -AA(id_passive, id_driving:p:end), '-+',...
+plot(1:m, -B(id_passive, id_driving:p:end), '-+',...
      1:m, coef_xy, '-x',...
      1:m, r1O2/R11(1), '-o'
      );
