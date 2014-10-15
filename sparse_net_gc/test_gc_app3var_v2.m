@@ -102,20 +102,20 @@ GC_srd_pairs = pairRGrangerT(R);
 if (p < 6)
 	GC_srd_pairs
 end
-l = size(R, 2);
-idx = [id_passive:p:l; id_driving:p:l];
-[~, ~, F] = RGrangerT([R(id_passive,idx); R(id_driving,idx)]);
-
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
 permvec = [3 1 2];              % variable index after permutation
-permvec = [1 3 2];              % variable index after permutation
+permvec = [1 2 3];              % variable index after permutation
 id_rearrange = bsxfun(@plus, permvec', p*(0:m));
 covz = covz_orig(id_rearrange, id_rearrange);
 
 id_passive = permvec(1);
 id_driving = permvec(2);
+
+l = size(R, 2);
+idx = [id_passive:p:l; id_driving:p:l];
+[~, ~, F] = RGrangerT([R(id_passive,idx); R(id_driving,idx)]);
 
 fprintf('analyse GC %d -> %d\n', id_driving, id_passive);
 

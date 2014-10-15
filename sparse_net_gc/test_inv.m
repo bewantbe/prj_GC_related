@@ -1,6 +1,6 @@
 % verify inverse formula
 
-randn('state',3);
+randn('state',2);
 n = 5;
 a11 = randn();
 a12 = randn();
@@ -57,16 +57,35 @@ zeros(n-2,1)  zeros(n-2,1)  a33-a31*a13/a11-(a32-a31*a12/a11)*(a23-a21*a13/a11)/
 
 max(abs((P2 * P1 * A * Q1 * Q2 - A2)(:)))
 
+%iQ = [
+%1                 a12/a11   a13/a11
+%0                        1   (a23-a21*a13/a11)/(a22-a21*a12/a11)
+%zeros(n-2,1)  zeros(n-2,1)   eye(n-2,n-2)
+%];
+
+%iP = [
+%1                       0                      zeros(1,n-2)
+%a21/a11                 1                      zeros(1,n-2)
+%a31/a11   (a32-a31*a12/a11)/(a22-a21*a12/a11)  eye(n-2,n-2)
+%];
+
+%max(abs(( inv(P2 * P1) - iP )(:)))
+
+n1=1;
+n2=1;
+n3=n-2;
 iQ = [
-1                 a12/a11   a13/a11
-0                        1   (a23-a21*a13/a11)/(a22-a21*a12/a11)
-zeros(n-2,1)  zeros(n-2,1)   eye(n-2,n-2)
+  eye(n1,n1)      -a11\a12     a11\a12*((a22-a21/a11*a12)\(a23-a21/a11*a13))-a11\a13
+zeros(n2,n1)    eye(n2,n2)  -(a22-a21/a11*a12)\(a23-a21/a11*a13)
+zeros(n3,n1)  zeros(n3,n2)    eye(n3,n3)
 ];
 
 iP = [
-1                       0                      zeros(1,n-2)
-a21/a11                 1                      zeros(1,n-2)
-a31/a11   (a32-a31*a12/a11)/(a22-a21*a12/a11)  eye(n-2,n-2)
+  eye(n1,n1)  zeros(n1,n2)  zeros(n1,n3)
+    -a21/a11    eye(n2,n2)  zeros(n2,n3)
+    (a32-a31/a11*a12)/(a22-a21/a11*a12)*a21/a11-a31/a11  -(a32-a31/a11*a12)/(a22-a21/a11*a12)    eye(n3,n3)
 ];
 
+
+max(abs(( inv(A) - iQ*inv(A2)*iP )(:)))
 

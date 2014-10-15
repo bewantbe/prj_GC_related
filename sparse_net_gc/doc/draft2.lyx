@@ -25,9 +25,10 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \use_mhchem 1
@@ -42,6 +43,10 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -165,6 +170,10 @@
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Freq domain formula
 \end_layout
 
 \begin_layout Standard
@@ -355,12 +364,8 @@ And
  is diagonal matrix.
 \end_layout
 
-\begin_layout Standard
-=============
-\end_layout
-
-\begin_layout Standard
-only 3-varable case
+\begin_layout Subsection
+Only 3-varable case
 \end_layout
 
 \begin_layout Standard
@@ -385,14 +390,26 @@ only 3-varable case
 \hat{B}_{12} & \hat{B}_{13}\\
 \hat{B}_{22} & \hat{B}_{23}
 \end{array}\right|\\
-. & \left|\begin{array}{cc}
+-\left|\begin{array}{cc}
+\hat{B}_{21} & \hat{B}_{23}\\
+\hat{B}_{31} & \hat{B}_{33}
+\end{array}\right| & \left|\begin{array}{cc}
 \hat{B}_{11} & \hat{B}_{13}\\
 \hat{B}_{31} & \hat{B}_{33}
-\end{array}\right| & .\\
-. & -\left|\begin{array}{cc}
+\end{array}\right| & -\left|\begin{array}{cc}
+\hat{B}_{11} & \hat{B}_{13}\\
+\hat{B}_{21} & \hat{B}_{23}
+\end{array}\right|\\
+\left|\begin{array}{cc}
+\hat{B}_{21} & \hat{B}_{22}\\
+\hat{B}_{31} & \hat{B}_{32}
+\end{array}\right| & -\left|\begin{array}{cc}
 \hat{B}_{11} & \hat{B}_{12}\\
 \hat{B}_{31} & \hat{B}_{32}
-\end{array}\right| & .
+\end{array}\right| & \left|\begin{array}{cc}
+\hat{B}_{11} & \hat{B}_{12}\\
+\hat{B}_{21} & \hat{B}_{22}
+\end{array}\right|
 \end{array}\right]
 \]
 
@@ -433,11 +450,7 @@ only 3-varable case
 
 \end_layout
 
-\begin_layout Standard
-===========
-\end_layout
-
-\begin_layout Standard
+\begin_layout Section
 inverse of 
 \begin_inset Formula $\left(1+1+(n-2)\right)\times\left(1+1+(n-2)\right)$
 \end_inset
@@ -559,9 +572,12 @@ O & O & a_{33}-a_{31}a_{13}/a_{11}-\frac{\left(a_{32}-a_{31}a_{12}/a_{11}\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-A^{-1}=Q2^{-1}Q1^{-1}B^{-1}P1^{-1}P2^{-1}
+A^{-1}=Q_{1}Q_{2}B^{-1}P_{2}P_{1}
 \]
 
 \end_inset
@@ -572,17 +588,25 @@ A^{-1}=Q2^{-1}Q1^{-1}B^{-1}P1^{-1}P2^{-1}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
-1 & 0 & O\\
-0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
-O & O & I
-\end{array}\right]\left[\begin{array}{ccc}
-1 & a_{12}/a_{11} & a_{13}/a_{11}\\
+Q_{1}Q_{2}=\left[\begin{array}{ccc}
+1 & -a_{12}/a_{11} & -a_{13}/a_{11}\\
 0 & 1 & O\\
 O & O & I
-\end{array}\right]=\left[\begin{array}{ccc}
-1 & a_{12}/a_{11} & a_{13}/a_{11}\\
-0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+\end{array}\right]\left[\begin{array}{ccc}
+1 & 0 & O\\
+0 & 1 & -\frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
+O & O & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left[\begin{array}{ccc}
+I & -a_{12}/a_{11} & \frac{\left(a_{23}-a_{21}a_{13}/a_{11}\right)a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}-a_{13}/a_{11}\\
+O & I & -\frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
 O & O & I
 \end{array}\right]
 \]
@@ -607,60 +631,36 @@ O & O & I
 \color none
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
-1 & 0 & O\\
-a_{21}/a_{11} & 1 & O\\
-a_{31}/a_{11} & O & I
-\end{array}\right]\left[\begin{array}{ccc}
+P_{2}P_{1}=\left[\begin{array}{ccc}
 1 & 0 & O\\
 0 & 1 & O\\
 O & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
-\end{array}\right]=\left[\begin{array}{ccc}
+\end{array}\right]\left[\begin{array}{ccc}
 1 & 0 & O\\
 a_{21}/a_{11} & 1 & O\\
-a_{31}/a_{11} & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
+a_{31}/a_{11} & O & I
+\end{array}\right]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left[\begin{array}{ccc}
+I & O & O\\
+-a_{21}/a_{11} & I & O\\
+\frac{\left(a_{32}-a_{31}a_{12}/a_{11}\right)a_{21}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}-a_{31}/a_{11} & -\frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
 \end{array}\right]
 \]
 
 \end_inset
 
 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
-\begin_inset Formula 
-\[
-A^{-1}=\left[\begin{array}{ccc}
-1 & a_{12}/a_{11} & a_{13}/a_{11}\\
-0 & 1 & \frac{a_{23}-a_{21}a_{13}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}}\\
-O & O & I
-\end{array}\right]B^{-1}\left[\begin{array}{ccc}
-1 & 0 & O\\
-a_{21}/a_{11} & 1 & O\\
-a_{31}/a_{11} & \frac{a_{32}-a_{31}a_{12}/a_{11}}{a_{22}-a_{21}a_{12}/a_{11}} & I
-\end{array}\right],\ \textrm{verified}
-\]
-
-\end_inset
-
-
 \end_layout
 
-\begin_layout Standard
-===========
-\end_layout
-
-\begin_layout Standard
-inverse of 
+\begin_layout Section
+Inverse of 
 \begin_inset Formula $\left(n_{1}+n_{2}+n_{3}\right)\times\left(n_{1}+n_{2}+n_{3}\right)$
 \end_inset
 
@@ -771,7 +771,7 @@ O & O & I
 a_{11} & O & O\\
 O & a_{22}-a_{21}a_{11}^{-1}a_{12} & O\\
 O & O & a_{33}-a_{31}a_{11}^{-1}a_{13}-\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)
-\end{array}\right],
+\end{array}\right]=B,
 \]
 
 \end_inset
@@ -779,7 +779,7 @@ O & O & a_{33}-a_{31}a_{11}^{-1}a_{13}-\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\righ
 
 \begin_inset Formula 
 \[
-A^{-1}=Q2^{-1}Q1^{-1}B^{-1}P1^{-1}P2^{-1}
+A^{-1}=Q_{1}Q_{2}B^{-1}P_{2}P_{1}
 \]
 
 \end_inset
@@ -790,15 +790,15 @@ A^{-1}=Q2^{-1}Q1^{-1}B^{-1}P1^{-1}P2^{-1}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
-I & O & O\\
-O & I & \left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)\\
-O & O & I
-\end{array}\right]\left[\begin{array}{ccc}
-I & a_{11}^{-1}a_{12} & a_{11}^{-1}a_{13}\\
+Q_{1}Q_{2}=\left[\begin{array}{ccc}
+I & -a_{11}^{-1}a_{12} & -a_{11}^{-1}a_{13}\\
 O & I & O\\
 O & O & I
-\end{array}\right]=
+\end{array}\right]\left[\begin{array}{ccc}
+I & O & O\\
+O & I & -\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)\\
+O & O & I
+\end{array}\right]
 \]
 
 \end_inset
@@ -806,9 +806,9 @@ O & O & I
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
-I & a_{11}^{-1}a_{12} & a_{11}^{-1}a_{13}\\
-O & I & \left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)\\
+=\left[\begin{array}{ccc}
+I & -a_{11}^{-1}a_{12} & a_{11}^{-1}a_{12}\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)-a_{11}^{-1}a_{13}\\
+O & I & -\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)\\
 O & O & I
 \end{array}\right]
 \]
@@ -833,15 +833,15 @@ O & O & I
 \color none
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
-I & O & O\\
-a_{21}a_{11}^{-1} & I & O\\
-a_{31}a_{11}^{-1} & O & I
-\end{array}\right]\left[\begin{array}{ccc}
+P_{2}P_{1}=\left[\begin{array}{ccc}
 I & O & O\\
 O & I & O\\
-O & \left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1} & I
-\end{array}\right]=
+O & -\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1} & I
+\end{array}\right]\left[\begin{array}{ccc}
+I & O & O\\
+-a_{21}a_{11}^{-1} & I & O\\
+-a_{31}a_{11}^{-1} & O & I
+\end{array}\right]
 \]
 
 \end_inset
@@ -849,10 +849,10 @@ O & \left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{
 
 \begin_inset Formula 
 \[
-\left[\begin{array}{ccc}
+=\left[\begin{array}{ccc}
 I & O & O\\
-a_{21}a_{11}^{-1} & I & O\\
-a_{31}a_{11}^{-1} & \left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1} & I
+-a_{21}a_{11}^{-1} & I & O\\
+\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}a_{21}a_{11}^{-1}-a_{31}a_{11}^{-1} & -\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1} & I
 \end{array}\right]
 \]
 
@@ -862,11 +862,92 @@ a_{31}a_{11}^{-1} & \left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{2
 \end_layout
 
 \begin_layout Standard
-===========
+verified.
 \end_layout
 
 \begin_layout Standard
-use above result
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+1 & a_{12} & a_{13}\\
+0 & 1 & a_{23}\\
+0 & 0 & 1
+\end{array}\right]\left[\begin{array}{ccc}
+b_{1} & 0 & 0\\
+0 & b_{2} & 0\\
+0 & 0 & b_{3}
+\end{array}\right]\left[\begin{array}{ccc}
+1 & 0 & 0\\
+c_{21} & 1 & 0\\
+c_{31} & c_{32} & 1
+\end{array}\right]=\left[\begin{array}{ccc}
+b_{1}+a_{12}b_{2}c_{21}+a_{13}b_{3}c_{31} & a_{12}b_{2}+a_{13}b_{3}c_{32} & a_{13}b_{3}\\
+b_{2}c_{21}+a_{23}b_{3}c_{31} & b_{2}+a_{23}b_{3}c_{32} & a_{23}b_{3}\\
+b_{3}c_{31} & b_{3}c_{32} & b_{3}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+If a[i,i]==I
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B=\left[\begin{array}{ccc}
+I & O & O\\
+O & I-a_{21}a_{12} & O\\
+O & O & I-a_{31}a_{13}-\left(a_{32}-a_{31}a_{12}\right)\left(I-a_{21}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{13}\right)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+A^{-1}=\left[\begin{array}{ccc}
+I & -a_{12} & a_{12}\left(I-a_{21}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{13}\right)-a_{13}\\
+O & I & -\left(I-a_{21}a_{12}\right)^{-1}\left(a_{23}-a_{21}a_{13}\right)\\
+O & O & I
+\end{array}\right]B^{-1}*x\label{eq:inv(A)-aii=I}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x=\left[\begin{array}{ccc}
+I & O & O\\
+-a_{21} & I & O\\
+\left(a_{32}-a_{31}a_{12}\right)\left(I-a_{21}a_{12}\right)^{-1}a_{21}-a_{31} & -\left(a_{32}-a_{31}a_{12}\right)\left(I-a_{21}a_{12}\right)^{-1} & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cal 
+\begin_inset Formula $v_{12}$
+\end_inset
+
+ from 
+\begin_inset Formula $B$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -878,12 +959,9 @@ use above result
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
-S_{11}=H_{11}d_{1}H_{11}+H_{12}d_{2}H_{21}+H_{13}d_{3}H_{31}
+S=H\Omega H^{*T}
 \]
 
 \end_inset
@@ -894,39 +972,7 @@ S_{11}=H_{11}d_{1}H_{11}+H_{12}d_{2}H_{21}+H_{13}d_{3}H_{31}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-H_{11}=b_{1}+c_{12}b_{2}c_{21}+c_{13}b_{3}c_{31}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-H_{12}=c_{12}b_{2}+c_{13}b_{3}c_{32}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-H_{13}=c_{13}b_{3}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{1}=\hat{B}_{11},\quad b_{2}=\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12}/\hat{B}_{11},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{3}=\hat{B}_{33}-\hat{B}_{31}\hat{B}_{13}/\hat{B}_{11}-\frac{\left(\hat{B}_{32}-\hat{B}_{31}\hat{B}_{12}/\hat{B}_{11}\right)\left(\hat{B}_{23}-\hat{B}_{21}\hat{B}_{13}/\hat{B}_{11}\right)}{\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12}/\hat{B}_{11}}
+S_{11}=H_{11}\Omega_{1}H_{11}+H_{12}\Omega_{2}H_{12}^{*}+H_{13}\Omega_{3}H_{13}^{*}
 \]
 
 \end_inset
@@ -937,7 +983,149 @@ b_{3}=\hat{B}_{33}-\hat{B}_{31}\hat{B}_{13}/\hat{B}_{11}-\frac{\left(\hat{B}_{32
 \begin_layout Standard
 \begin_inset Formula 
 \[
-S_{12}=H_{11}d_{1}H_{12}+H_{12}d_{2}H_{22}+H_{13}d_{3}H_{32}
+S_{12}=H_{11}\Omega_{1}H_{21}^{*}+H_{12}\Omega_{2}H_{22}^{*}+H_{13}\Omega_{3}H_{23}^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F_{y\ra x}\approx\sum_{j=1}\left(\F^{-1}\left[S_{12},\omega\right](j)\right)^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\sum_{j=1}\left(\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(\omega)e^{\mathrm{i}\omega j}\,\mathrm{d}\omega\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\times\frac{1}{2\pi}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}\sum_{j=1}S_{12}(\omega)S_{12}^{*}(w)e^{\mathrm{i}\omega j}e^{-\mathrm{i}wj}\,\mathrm{d}\omega\,\mathrm{d}w
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\times\frac{1}{2\pi}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}S_{12}(\omega)S_{12}^{*}(w)\sum_{j=1}e^{\mathrm{i}(\omega-w)j}\,\mathrm{d}\omega\,\mathrm{d}w
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\times\frac{1}{2\pi}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}S_{12}(u+w)S_{12}^{*}(w)\sum_{j=1}e^{\mathrm{i}uj}\,\mathrm{d}u\,\mathrm{d}w
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\int_{-\pi}^{\pi}\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(u+w)S_{12}^{*}(w)\,\mathrm{d}w\ \sum_{j=1}e^{\mathrm{i}uj}\,\mathrm{d}u
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\int_{-\pi}^{\pi}U(u)\left(\frac{\mathrm{i}}{2}\cot\frac{u}{2}+\pi\delta(u)-\frac{1}{2}\right)\,\mathrm{d}u
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left(\frac{1}{2\pi}\int_{-\pi}^{\pi}U(u)\frac{\mathrm{i}}{2}\cot\frac{u}{2}\,\mathrm{d}u+\frac{1}{2}U(0)-\frac{1}{4\pi}\int_{-\pi}^{\pi}U(u)\,\mathrm{d}u\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left(\frac{1}{2\pi}\int_{-\pi}^{\pi}U(u)\frac{\mathrm{i}}{2}\cot\frac{u}{2}\,\mathrm{d}u+\frac{1}{2}U(0)-\frac{1}{2}\left|\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(w)\,\mathrm{d}w\right|^{2}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{2\pi}\int_{-\pi}^{\pi}U(u)\frac{\mathrm{i}}{2}\cot\frac{u}{2}\,\mathrm{d}u+\frac{1}{2}\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(w)S_{12}^{*}(w)\,\mathrm{d}w-\frac{1}{2}\left|\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(w)\,\mathrm{d}w\right|^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+??\approx\frac{1}{2\pi}\int_{-\pi}^{\pi}U(u)\frac{\mathrm{i}}{2}\cot\frac{u}{2}\,\mathrm{d}u+\frac{F_{y\ra x}+F_{x\ra y}}{2}-\frac{1}{2}\left|v_{00}^{(xy)}\right|^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U(u)=\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}(u+w)S_{12}^{*}(w)\,\mathrm{d}w
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+U(-u)=\frac{1}{2\pi}\int_{-\pi}^{\pi}S_{12}^{*}(u-w)S_{12}^{*}(w)\,\mathrm{d}w
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\sum_{k}\left(v_{k}^{(12)}\right)^{2}e^{-\mathrm{i}ku}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{j=1}e^{\mathrm{i}uj}\ra\frac{\mathrm{i}}{2}\cot\frac{u}{2}+\pi\delta(u)-\frac{1}{2},\ \textrm{(week)}
 \]
 
 \end_inset
@@ -961,6 +1149,197 @@ b_{1}=\hat{B}_{11},\quad b_{2}\approx\hat{B}_{22}-\hat{B}_{21}\hat{B}_{12},
 \begin_inset Formula 
 \[
 b_{3}\approx\hat{B}_{33}-\hat{B}_{31}\hat{B}_{13}-\left(\hat{B}_{32}-\hat{B}_{31}\hat{B}_{12}\right)\left(\hat{B}_{23}-\hat{B}_{21}\hat{B}_{13}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Solve 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $F_{y\rightarrow x|z}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Use Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:inv(A)-aii=I"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B\approx\left[\begin{array}{ccc}
+I & O & O\\
+O & I-a_{21}a_{12} & O\\
+O & O & I-a_{31}a_{13}-a_{32}a_{23}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A^{-1}\approx\left[\begin{array}{ccc}
+I & a_{12} & a_{13}\\
+O & I & \left(I+a_{21}a_{12}\right)\left(a_{23}-a_{21}a_{13}\right)\\
+O & O & I
+\end{array}\right]B^{-1}\left[\begin{array}{ccc}
+I & O & O\\
+a_{21} & I & O\\
+a_{31} & \left(a_{32}-a_{31}a_{12}\right)\left(I+a_{21}a_{12}\right) & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\left(I+a_{21}a_{12}\right)\left(a_{23}-a_{21}a_{13}\right)=a_{23}-a_{21}a_{13}+a_{21}a_{12}a_{23}-a_{21}a_{12}a_{21}a_{13}
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\[
+\left(a_{32}-a_{31}a_{12}\right)\left(I+a_{21}a_{12}\right)=a_{32}-a_{31}a_{12}+a_{32}a_{21}a_{12}-a_{31}a_{12}a_{21}a_{12}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A^{-1}\approx\left[\begin{array}{ccc}
+I & a_{12} & a_{13}\\
+O & I & a_{23}-a_{21}a_{13}\\
+O & O & I
+\end{array}\right]\left[\begin{array}{ccc}
+I & O & O\\
+O & I+a_{21}a_{12} & O\\
+O & O & I+a_{31}a_{13}+a_{32}a_{23}
+\end{array}\right]\left[\begin{array}{ccc}
+I & O & O\\
+a_{21} & I & O\\
+a_{31} & a_{32}-a_{31}a_{12} & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left[\begin{array}{ccc}
+I & a_{12}+a_{12}a_{21}a_{12} & a_{13}+a_{13}a_{31}a_{13}+a_{13}a_{32}a_{23}\\
+O & I+a_{21}a_{12} & a_{23}+a_{23}a_{31}a_{13}+a_{23}a_{32}a_{23}-a_{21}a_{13}-a_{21}a_{13}a_{31}a_{13}-a_{21}a_{13}a_{32}a_{23}\\
+O & O & I+a_{31}a_{13}+a_{32}a_{23}
+\end{array}\right]*x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\approx\left[\begin{array}{ccc}
+I & a_{12}+a_{12}a_{21}a_{12} & a_{13}+a_{13}a_{31}a_{13}+a_{13}a_{32}a_{23}\\
+O & I+a_{21}a_{12} & a_{23}-a_{21}a_{13}\\
+O & O & I+a_{31}a_{13}+a_{32}a_{23}
+\end{array}\right]\left[\begin{array}{ccc}
+I & O & O\\
+a_{21} & I & O\\
+a_{31} & a_{32}-a_{31}a_{12} & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\approx\left[\begin{array}{ccc}
+I+a_{12}a_{21}+a_{13}a_{31} & a_{12}+a_{13}a_{32} & a_{13}\\
+a_{21}+a_{23}a_{31} & I+a_{21}a_{12}+a_{23}a_{32} & a_{23}-a_{21}a_{13}\\
+a_{31} & a_{32}-a_{31}a_{12} & I+a_{31}a_{13}+a_{32}a_{23}
+\end{array}\right]???
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A=\left[\begin{array}{ccc}
+ & a_{12} & a_{13}\\
+a_{21} &  & a_{23}\\
+a_{31} & a_{32}
+\end{array}\right]\left[\begin{array}{ccc}
+ & a_{12} & a_{13}\\
+a_{21} &  & a_{23}\\
+a_{31} & a_{32}
+\end{array}\right],\quad A^{2}=\left[\begin{array}{ccc}
+a_{12}a_{21}+a_{13}a_{31} & a_{13}a_{32} & a_{12}a_{23}\\
+a_{23}a_{31} & a_{21}a_{12}+a_{23}a_{32} & a_{21}a_{13}\\
+a_{32}a_{21} & a_{31}a_{12} & a_{31}a_{13}+a_{32}a_{23}
+\end{array}\right]
 \]
 
 \end_inset

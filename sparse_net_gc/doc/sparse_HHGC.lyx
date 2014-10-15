@@ -5608,6 +5608,14 @@ S^{(zx)} & S^{(zy)} & I
 \end_layout
 
 \begin_layout Standard
+Note that in this expression, 
+\begin_inset Formula $Z$
+\end_inset
+
+ need a full regression.
+\end_layout
+
+\begin_layout Standard
 Through similar process, get 2-var AR solution without variable 
 \begin_inset Formula $y$
 \end_inset
