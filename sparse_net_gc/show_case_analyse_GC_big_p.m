@@ -61,12 +61,16 @@ s_case = {
 %'GCinfo_HH3_gcc_net_400_0X5EF21B69_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 20%
 
 %n = 400; pr = 1, ST
-'GCinfo_HH3_gcc_ST_net_400_0X74F86E08_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  %  5%
-'GCinfo_HH3_gcc_ST_net_400_0X6CB02912_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 10%
-'GCinfo_HH3_gcc_ST_net_400_0X168642DB_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 15%
-'GCinfo_HH3_gcc_ST_net_400_0X5EF21B69_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 20%
-};
+%'GCinfo_HH3_gcc_ST_net_400_0X74F86E08_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  %  5%
+%'GCinfo_HH3_gcc_ST_net_400_0X6CB02912_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 10%
+%'GCinfo_HH3_gcc_ST_net_400_0X168642DB_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 15%
+%'GCinfo_HH3_gcc_ST_net_400_0X5EF21B69_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % 20%
 
+% not good example
+%'GCinfo_LIF_icc_ST_net_100_0X1BD7844F_p=100,0_sc=0.0055,0,0,0_pr=1_ps=0.003_stv=0.5_t=1.00e+06_od30'
+'GCinfo_LIF_icc_ST_net_100_0X238CDEA7_p=100,0_sc=0.0055,0,0,0_pr=1_ps=0.003_stv=0.5_t=1.00e+06_od30'
+};
+ 
 fi.p_val            = 1e-5;
 fi.use_od           = 'aic';
 fi.auto_gc_zero_cut = false;
