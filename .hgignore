@@ -9,3 +9,4 @@ pic_tmp/
 prj_nuft/pic/
 *.mex*
 *.o
+sparse_net_gc/GCinfo
