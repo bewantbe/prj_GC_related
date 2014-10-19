@@ -33,7 +33,8 @@ pm.seed = 1;
 %pmif.ps   = 0.0060;
 %[X1, ISI1, ras1] = gen_HH(pmif, 'rm');
 
-pm.neuron_model = 'HH3_gcc_t1';
+%pm.neuron_model = 'HH3_gcc_t1';
+pm.neuron_model = 'HH3_gcc49_s';
 [X1, ISI1, ras1] = gen_HH(pm, 'rm');
 
 pm.neuron_model = 'HH3_gcc';

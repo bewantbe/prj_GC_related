@@ -10,16 +10,17 @@ clear('pm');
 pm.neuron_model = 'HH3_gcc';
 pm.net_param = net_param;
 pm.net  = gen_network(net_param);
-pm.nI   = net_param.p * 0.4;
-pm.scee = 0.05;
-pm.scie = 0.05;
-pm.scei = 0.09;
-pm.scii = 0.09;
-pm.pr   = 1.0;
+pm.nI   = net_param.p * 0.25;
+pm.scee = 0.04;
+pm.scie = 0.04;
+pm.scei = 0.07;
+pm.scii = 0.07;
+pm.pr   = 0.5;
 pm.ps   = 0.03;
 pm.t    = 1e3;
 pm.stv  = 0.5;
 
 [X2, ISI2, ras2] = gen_HH(pm, 'rm');  % ,ext_T
+mean(ISI2)
 var(ISI2)
 
