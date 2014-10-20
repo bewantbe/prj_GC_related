@@ -801,7 +801,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -835,7 +835,46 @@ Scan input rate
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_ps_local.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input rate 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ Local
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -861,6 +900,41 @@ Scan input strength
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pic/HH_gain_func_prps_pr_local.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scan input strength 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Local
 \end_layout
 
 \end_inset
@@ -1079,7 +1153,7 @@ Speed improvement
 \end_layout
 
 \begin_layout Subsubsection*
-Eliminate Exponential calculation
+Eliminate exponential calculation
 \end_layout
 
 \begin_layout Standard
@@ -1352,7 +1426,7 @@ Eliminate unnecessary synaptic calculation
 
 \begin_layout Standard
 Neurons are not always firing.
- So don't do synaptic calculation at all if there is not firing.
+ So don't do synaptic calculation at all if there is no spike.
  The original code contain this type of optimization, but only at halfway,
  like this
 \end_layout
@@ -1439,7 +1513,7 @@ for neuron_driving = 1 to n
 \end_layout
 
 \begin_layout Standard
-Which cost much less if it's spare network.
+Which cost much less if the network not spike too much.
 \end_layout
 
 \begin_layout Standard
@@ -1484,11 +1558,63 @@ target "http://eigen.tuxfamily.org/"
 
  here.
  Eigen performs automatic parallel also.
+ Also note that, Eigen v3.2 is remarkably faster than Eigen v3.1.
+\end_layout
+
+\begin_layout Standard
+Compile with -O3 (instead of -O2) and use a new compiler (GCC 4.9 here) can
+ have few percentages of speed increment.
 \end_layout
 
 \begin_layout Standard
 After analyze the hot spot of the program, and rewrite the hot spot in vector
  form (use Eigen), get 30%~40% more faster.
+\end_layout
+
+\begin_layout Subsubsection*
+Use sparse representation for the adjacency matrix
+\end_layout
+
+\begin_layout Standard
+Like before, now the synaptic loop become
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for neuron_driving = 1 to n
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (neuron_driving is firing)
+\end_layout
+
+\begin_layout Plain Layout
+
+    for edge = out_edge_list_of(neuron_driving)
+\end_layout
+
+\begin_layout Plain Layout
+
+      synaptic[edge.to_index()] += v[neuron_driving]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 * edge.value()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This make the 1000 neuron (sparse network) simulation 2~3 times faster.
+ 100 neuron simulation 10% faster.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1502,7 +1628,7 @@ Use highly optimized math function library for exp() calculation.
 \end_layout
 
 \begin_layout Itemize
-Use sparse representation for the adjacency matrix.
+Review the hot spot and make it cache line friendly and pipeline friendly.
 \end_layout
 
 \begin_layout Subsection
@@ -1676,7 +1802,7 @@ HHGC analysis time cost.
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="6">
+<lyxtabular version="3" rows="9" columns="6">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -2098,11 +2224,70 @@ GC (sec)
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 400
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35.4~37.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.36 h~30.52 h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7256~8063
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1000
 \end_layout
 
 \end_inset
@@ -2123,7 +2308,7 @@ GC (sec)
 \begin_inset Text
 
 \begin_layout Plain Layout
-35.4~37.1
+?
 \end_layout
 
 \end_inset
@@ -2132,7 +2317,7 @@ GC (sec)
 \begin_inset Text
 
 \begin_layout Plain Layout
-25.36 h~30.52 h
+3 d ~ 4 d
 \end_layout
 
 \end_inset
@@ -2150,7 +2335,7 @@ GC (sec)
 \begin_inset Text
 
 \begin_layout Plain Layout
-7256~8063
+>12 h
 \end_layout
 
 \end_inset

@@ -45,3 +45,7 @@ ylabel('spike rate /Hz');
 xlabel('\mu\cdotf /1e-3');
 
 pic_output_color('HH_gain_func_prps_ps');
+
+legend('location', 'northwest');
+axis([0,100,0,30]);
+pic_output_color('HH_gain_func_prps_ps_local');
