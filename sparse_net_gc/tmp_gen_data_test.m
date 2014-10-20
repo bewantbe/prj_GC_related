@@ -2,12 +2,12 @@
 net_param.generator  = 'gen_sparse';
 net_param.p          = 1000;
 net_param.sparseness = 0.025;  % 0.30 0.20 0.15 0.10 0.05
-net_param.seed       = 123;
+net_param.seed       = 124;
 net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
 clear('pm');
-pm.neuron_model = 'HH3_gcc49_s';
+pm.neuron_model = 'HH3_gcc49_sparse';
 pm.net_param = net_param;
 pm.net  = gen_network(net_param);
 pm.nI   = floor(net_param.p * 0.25);
