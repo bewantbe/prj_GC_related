@@ -11,7 +11,7 @@ gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 i_stv   = 1;  % Down sampling factor
 
 clear('pm');
-pm.neuron_model = 'HH3_gcc49_s';
+pm.neuron_model = 'HH3_gcc49_sparse';
 pm.net_param = net_param;
 pm.net  = gen_network(net_param);
 pm.nI   = floor(net_param.p * 0.25);
