@@ -1,0 +1,8 @@
+
+
+Partial Directed Coherence
+http://www.lcs.poli.usp.br/~baccala/pdc/
+
+
+BioSig is an open source software library for biomedical signal processing
+http://biosig.sourceforge.net/
