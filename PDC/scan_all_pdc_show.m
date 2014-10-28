@@ -4,7 +4,7 @@ set(0, 'defaultfigurevisible', 'off');
 tic();
 
 % for final thesis
-s_signature = {'data_scan_IF/w_net_2_2'};
+s_signature = {'data_scan_IF/w2_net_2_2'};
 
 pic_prefix0 = 'pic_tmp/';
 gc_od_mode = 'BIC';         % the order used for final GC value, 'BIC','AIC','maxBIC','zero'

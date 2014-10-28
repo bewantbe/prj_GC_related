@@ -9,7 +9,8 @@ signature = 'data_scan_IF/w2_net_2_2';     % to distinguish different parallel p
 s_net  = {'net_2_2'};
 s_time = [1e6];
 s_scee = [0.01];
-s_prps = logspace(log10(0.005), log10(0.04), 21);  % use 21 or 11 points
+prps_base = 0.004;
+s_prps = prps_base + logspace(log10(0.005-prps_base), log10(0.04-prps_base), 21);  % use 21 or 11 points
 s_ps   = logspace(log10(0.001), log10(0.02), 21);
 s_stv  = [0.5];  s_dt   = 1.0/32;
 maxod  = 99;
