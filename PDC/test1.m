@@ -3,15 +3,9 @@ f_mean_sqr = @(c) real(mean( c.*conj(c), 3 ));
 
 %{
 S = A2S(A2d, D, fftlen);
-
-S = permute(S, [3,1,2]);
 S = StdWhiteS(S);
-S = ipermute(S, [3,1,2]);
-
 real(mean(S,3))
-
 inv(real(mean(S,3)))
-
 invS=zeros(size(S)); for k=1:size(S,3) invS(:,:,k)=inv(S(:,:,k)); end
 real(mean(invS,3))
 %}
@@ -44,12 +38,9 @@ D = diag(ones(1, p));
 
 S = A2S(A2d, D, fftlen);
 
-S = permute(S, [3,1,2]);
 S = StdWhiteS(S);
-S = ipermute(S, [3,1,2]);
 
-
-m = 30;
+m = 90;
 R = S2cov(S, m);
 
 pdc = PDC_R(R, fftlen);
@@ -57,7 +48,7 @@ pdc = PDC_R(R, fftlen);
 fqn = 1:fftlen/2;
 fqs = fqn / fftlen;
 
-figure_id = 0;
+figure_id = 2;
 figure(figure_id + 1);
 for j = 1 : p
   for k = 1 : p
@@ -71,9 +62,9 @@ for j = 1 : p
   end
 end
 
-figure(figure_id + 3);
-imagesc( f_mean_sqr(pdc) );
-colorbar();
+%figure(figure_id + 3);
+%imagesc( f_mean_sqr(pdc) );
+%colorbar();
 
 % 
 dtf = DTF_R(R, fftlen);
@@ -91,9 +82,9 @@ for j = 1 : p
   end
 end
 
-figure(figure_id + 4);
-imagesc( f_mean_sqr(dtf) );
-colorbar();
+%figure(figure_id + 4);
+%imagesc( f_mean_sqr(dtf) );
+%colorbar();
 
 %X = gendata_linear(A2d, D, 1e5);
 %PDCAnalyzer(X, 3);
