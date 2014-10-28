@@ -7,12 +7,12 @@ signature = 'data_scan_IF/w_net_2_2';     % to distinguish different parallel pr
 
 % scan value sets
 s_net  = {'net_2_2'};
-s_time = [1e4];
+s_time = [1e6];
 s_scee = [0.01];
-%s_prps = [0.005:0.0001:0.00725, 0.0075:0.0005:0.0095, 0.01:0.002:0.019, 0.02:0.005:0.04];  % 38
-%s_ps   = [0.001:0.0005:0.0055, 0.006:0.001:0.029, 0.03:0.002:0.04];  %40
-s_prps = [0.005:0.0001:0.00725];
-s_ps   = [0.001:0.0005:0.0055];
+s_prps = [0.005:0.0001:0.00725, 0.0075:0.0005:0.0095, 0.01:0.002:0.019, 0.02:0.005:0.04];  % 38
+s_prps = s_prps(1:2:end);
+s_ps   = [0.001:0.0005:0.0055, 0.006:0.001:0.029, 0.03:0.002:0.04];  %40
+s_ps   = s_ps(1:2:end);
 s_stv  = [0.5];  s_dt   = 1.0/32;
 maxod  = 99;
 s_od   = 1:maxod;
@@ -23,6 +23,7 @@ save('-v7', [signature, '_info.mat'], 's_net', 's_time', 's_scee', 's_prps', 's_
 
 pm = [];
 pm.neuron_model = 'LIF';
+pm.extra_cmd = '-q';
 
 data_path_prefix = ['data/', signature, '_'];
 
