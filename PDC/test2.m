@@ -1,4 +1,4 @@
-%
+% test PDCAnalyzer.m
 
 A2d = zeros(5,10);
 A2d(1,1) =  0.95 * sqrt(2);

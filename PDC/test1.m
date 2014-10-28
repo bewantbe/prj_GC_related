@@ -1,4 +1,6 @@
-% partial coherence function
+% Verify our partial coherence coefficent code
+% Ref: L.A.Baccala, K. Sameshima(2001) Partial directed coherence: a new concept in neural structure determination
+
 f_mean_sqr = @(c) real(mean( c.*conj(c), 3 ));
 
 %{
@@ -13,13 +15,13 @@ real(mean(invS,3))
 fftlen = 1024;
 
 %A2d=[
-% 0.5  0.3  0.4
-%-0.5  0.3  0.1
-% 0.0 -0.3  0.2];
+ %0.5  0.3 -0.4
+%-0.5  0.3 -0.1
+ %0.0 -0.3  0.2];  % same graph as the paper (Fig.1)
 %A2d=[
 % 0.5  0.3  0.4
 %-0.5  0.3  1.0
-% 0.0 -0.3 -0.2];
+% 0.0 -0.3 -0.2]; % same coefficients as the paper (Eq.(23))
 
 A2d = zeros(5,10);
 A2d(1,1) =  0.95 * sqrt(2);
@@ -35,10 +37,9 @@ A2d(5,5) =  0.25 * sqrt(2);
 A2d = -A2d;
 p = size(A2d,1);
 D = diag(ones(1, p));
-
 S = A2S(A2d, D, fftlen);
 
-S = StdWhiteS(S);
+%S = StdWhiteS(S);
 
 m = 90;
 R = S2cov(S, m);
@@ -48,12 +49,12 @@ pdc = PDC_R(R, fftlen);
 fqn = 1:fftlen/2;
 fqs = fqn / fftlen;
 
-figure_id = 2;
+figure_id = 0;
 figure(figure_id + 1);
 for j = 1 : p
   for k = 1 : p
     subplot(p,p,(j-1)*p+k);
-    plot(fqs, abs(squeeze(pdc(j,k,fqn))));
+    area(fqs, abs(squeeze(pdc(j,k,fqn))));
     axis([0, 0.5, 0, 1]);
     set(gca, 'XTickLabel','');
     set(gca, 'XTick', []);
@@ -73,7 +74,7 @@ figure(figure_id + 2);
 for j = 1 : p
   for k = 1 : p
     subplot(p,p,(j-1)*p+k);
-    plot(fqs, abs(squeeze(dtf(j,k,fqn))));
+    area(fqs, abs(squeeze(dtf(j,k,fqn))));
     axis([0, 0.5, 0, 1]);
     set(gca, 'XTickLabel','');
     set(gca, 'XTick', []);
