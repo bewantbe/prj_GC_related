@@ -18,8 +18,9 @@ maxod  = 99;
 s_od   = 1:maxod;
 hist_div = 0:0.5:200;          % ISI
 b_use_spike_train = false;
+fftlen = 1024;
 
-save('-v7', [signature, '_info.mat'], 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod', 'b_use_spike_train');
+save('-v7', [signature, '_info.mat'], 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod', 'b_use_spike_train', 'fftlen');
 
 pm = [];
 pm.neuron_model = 'LIF';
@@ -33,6 +34,7 @@ for net_id = 1:length(s_net)
  p = size(neu_network, 1);
 for simu_time = s_time
 for scee = s_scee
+ prps_ps_stv_PDC = zeros(p, p, fftlen, length(s_prps), length(s_ps), length(s_stv));
  prps_ps_stv_oGC = zeros(p, p, length(s_od), length(s_prps), length(s_ps), length(s_stv));
  prps_ps_stv_oDe = zeros(p, p, length(s_od), length(s_prps), length(s_ps), length(s_stv));
  prps_ps_stv_R   = zeros(p, p*(maxod+1), length(s_prps), length(s_ps), length(s_stv));
@@ -58,15 +60,19 @@ for stv = s_stv
 	id_stv = id_stv + 1;
         pm.stv = stv;
         [X, ISI, ras, pm] = gen_HH(pm, [], data_path_prefix);
+        len = length(X);
         if b_use_spike_train
           X = SpikeTrains(ras, p, len, stv);
         end
 
-	[oGC, oDe, R] = AnalyseSeries(X, s_od);
+        [oGC, oDe, R] = AnalyseSeries(X, s_od);
 
-	prps_ps_stv_oGC(:,:,:, id_prps, id_ps, id_stv) = oGC;
-	prps_ps_stv_oDe(:,:,:, id_prps, id_ps, id_stv) = oDe;
-	prps_ps_stv_R  (:,:, id_prps, id_ps, id_stv) = R;
+        prps_ps_stv_oGC(:,:,:, id_prps, id_ps, id_stv) = oGC;
+        prps_ps_stv_oDe(:,:,:, id_prps, id_ps, id_stv) = oDe;
+        prps_ps_stv_R  (:,:, id_prps, id_ps, id_stv) = R;
+
+        [~, bic_od] = AnalyseSeries2(s_od, oGC, oDe, len);
+        prps_ps_stv_PDC(:,:,:, id_prps, id_ps, id_stv) = PDC(X, bic_od);
 end  % stv
 	prps_ps_aveISI(:, id_prps, id_ps) = ISI;
 	ISI_dis = zeros(p,length(hist_div));
@@ -80,7 +86,7 @@ end  % stv
 end  % ps
 end  % prps
  datamatname = sprintf('%s_%s_sc=%g_t=%.3e.mat', signature, netstr, scee, simu_time);
- save('-v7', datamatname, 'prps_ps_stv_oGC', 'prps_ps_stv_oDe', 'prps_ps_stv_R', 'prps_ps_aveISI', 'prps_ps_ISI_dis');
+ save('-v7', datamatname, 'prps_ps_stv_oGC', 'prps_ps_stv_oDe', 'prps_ps_stv_R', 'prps_ps_aveISI', 'prps_ps_ISI_dis', 'prps_ps_stv_PDC');
  % save length ?
 end  % scee
 end  % simu_time

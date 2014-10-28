@@ -1,9 +1,10 @@
-% copy from Chap 3. Several Examples
-% pic ratio of minimum causality
+% show pdc scan results
+
+set(0, 'defaultfigurevisible', 'off');
 tic();
 
 % for final thesis
-s_signature = {'data_scan_IF/w_net_2_2_sc0.01_t1e6'};
+s_signature = {'data_scan_IF/w_net_2_2'};
 
 pic_prefix0 = 'pic_tmp/';
 gc_od_mode = 'BIC';         % the order used for final GC value, 'BIC','AIC','maxBIC','zero'
@@ -62,7 +63,7 @@ s_id_prps = 1:length(s_prps);
 s_id_ps   = 1:length(s_ps);
 
 for id_net = s_id_net
- netstr = s_net{net_id};
+ netstr = s_net{id_net};
  neu_network = getnetwork(netstr);
  p = size(neu_network, 1);
 for id_time = s_id_time
@@ -83,6 +84,10 @@ for id_stv = s_id_stv
     s_zero_GC = zeros(p,p,length(s_id_ps), length(s_id_prps));
     ISI_a_b  = zeros(length(s_id_ps), length(s_id_prps));
     wrong_num = zeros(p,p);
+    s_pdc1_SM = zeros(length(s_id_ps), length(s_id_prps));
+    s_pdc0_SM = zeros(length(s_id_ps), length(s_id_prps));
+    s_pdc1_max = zeros(length(s_id_ps), length(s_id_prps));
+    s_pdc0_max = zeros(length(s_id_ps), length(s_id_prps));
 
     id_id_prps = 0;
     for id_prps = s_id_prps
@@ -108,6 +113,14 @@ for id_stv = s_id_stv
         ISI_a_b(id_id_ps, id_id_prps) = mean(aveISI);
         net_diff = (gc_prob_nonzero(oGC(:,:,bic_od), bic_od, len)>1-p_value) - neu_network;
         wrong_num(id_id_ps, id_id_prps) = sum(abs(net_diff(:)));
+
+        pdc = prps_ps_stv_PDC(:,:,:, id_prps, id_ps, id_stv);
+        pdc_SM = real(mean( pdc.*conj(pdc), 3 ));
+        s_pdc1_SM(id_ps, id_prps) = max(pdc_SM(neu_network~=0));
+        s_pdc0_SM(id_ps, id_prps) = max(pdc_SM(neu_network==0&eye(p)==0));
+        pdc_plain = reshape(abs(pdc), p*p, []);
+        s_pdc1_max(id_ps, id_prps) = max(pdc_plain(neu_network~=0, :)(:));
+        s_pdc0_max(id_ps, id_prps) = max(pdc_plain(neu_network==0&eye(p)==0, :)(:));
     end  % ps
     end  % prps
 
@@ -311,6 +324,34 @@ for id_stv = s_id_stv
     set(gca,'xtick', x_tick);
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('wrongNum');
+
+    figure(10);
+    pcolor(xx2, yy2, s_pdc1_SM);
+    colorbar();
+    ylabel('F/0.001');
+    xlabel('\mu*F/0.001');
+    pic_output_color('PDC1_SM');
+
+    figure(11);
+    pcolor(xx2, yy2, s_pdc0_SM);
+    colorbar();
+    ylabel('F/0.001');
+    xlabel('\mu*F/0.001');
+    pic_output_color('PDC0_SM');
+
+    figure(12);
+    pcolor(xx2, yy2, s_pdc1_max);
+    colorbar();
+    ylabel('F/0.001');
+    xlabel('\mu*F/0.001');
+    pic_output_color('PDC1_max');
+
+    figure(13);
+    pcolor(xx2, yy2, s_pdc0_max);
+    colorbar();
+    ylabel('F/0.001');
+    xlabel('\mu*F/0.001');
+    pic_output_color('PDC0_max');
 
 end  % stv
 end  % scee
