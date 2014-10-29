@@ -3,7 +3,7 @@
 % constant data length
 tic();
 
-signature = 'data_scan_IF/w2_net_2_2';     % to distinguish different parallel program instances (also dir)
+signature = 'data_scan_IF/pdc_w3';     % to distinguish different parallel program instances (also dir)
 
 % scan value sets
 s_net  = {'net_2_2'};

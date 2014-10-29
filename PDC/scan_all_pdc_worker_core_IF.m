@@ -6,7 +6,7 @@ pm.extra_cmd = '-q';
 signature = [signature, '_', pm.neuron_model, myif(b_use_spike_train,'_ST','')];
 save('-v7', [signature, '_info.mat'], 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod', 'b_use_spike_train', 'fftlen');
 
-data_path_prefix = ['data/', signature, '_'];
+data_path_prefix = ['data/'];
 
 for net_id = 1:length(s_net)
  netstr = s_net{net_id};
