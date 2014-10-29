@@ -120,8 +120,8 @@ for id_stv = s_id_stv
         s_pdc1_SM(id_ps, id_prps) = max(pdc_SM(neu_network~=0));
         s_pdc0_SM(id_ps, id_prps) = max(pdc_SM(neu_network==0&eye(p)==0));
         pdc_plain = reshape(abs(pdc), p*p, []);
-        s_pdc1_max(id_ps, id_prps) = max(pdc_plain(neu_network~=0, :)(:));
-        s_pdc0_max(id_ps, id_prps) = max(pdc_plain(neu_network==0&eye(p)==0, :)(:));
+        s_pdc1_max(id_ps, id_prps) = max(squeeze(pdc_plain(neu_network~=0, :)));
+        s_pdc0_max(id_ps, id_prps) = max(squeeze(pdc_plain(neu_network==0&eye(p)==0, :)));
     end  % ps
     end  % prps
 
