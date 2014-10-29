@@ -59,6 +59,13 @@ s_id_stv  = 1:length(s_stv);
 s_id_prps = 1:length(s_prps);
 s_id_ps   = 1:length(s_ps);
 
+% use Nan to mark the value you don't want to show
+if exist('OCTAVE_VERSION','builtin')
+  Nan = @(a,b) Inf(a,b);
+else
+  Nan = @(a,b) NaN(a,b);
+end
+
 for id_net = s_id_net
  netstr = s_net{id_net};
  neu_network = getnetwork(netstr);
@@ -76,15 +83,15 @@ for id_stv = s_id_stv
  len = round(simu_time/stv);                  % !! I don't know the exact expression
 
     s_zero_GC  = Inf(p,p,length(s_id_ps), length(s_id_prps));
-    s_aic_od   = Inf(length(s_id_ps), length(s_id_prps));
-    s_bic_od   = Inf(length(s_id_ps), length(s_id_prps));
-    s_all_od   = Inf(length(s_id_ps), length(s_id_prps));
-    ISI_a_b    = Inf(length(s_id_ps), length(s_id_prps));
-    wrong_num  = Inf(length(s_id_ps), length(s_id_prps));
-    s_pdc1_SM  = Inf(length(s_id_ps), length(s_id_prps));
-    s_pdc0_SM  = Inf(length(s_id_ps), length(s_id_prps));
-    s_pdc1_max = Inf(length(s_id_ps), length(s_id_prps));
-    s_pdc0_max = Inf(length(s_id_ps), length(s_id_prps));
+    s_aic_od   = Nan(length(s_id_ps), length(s_id_prps));
+    s_bic_od   = Nan(length(s_id_ps), length(s_id_prps));
+    s_all_od   = Nan(length(s_id_ps), length(s_id_prps));
+    ISI_a_b    = Nan(length(s_id_ps), length(s_id_prps));
+    wrong_num  = Nan(length(s_id_ps), length(s_id_prps));
+    s_pdc1_SM  = Nan(length(s_id_ps), length(s_id_prps));
+    s_pdc0_SM  = Nan(length(s_id_ps), length(s_id_prps));
+    s_pdc1_max = Nan(length(s_id_ps), length(s_id_prps));
+    s_pdc0_max = Nan(length(s_id_ps), length(s_id_prps));
 
     id_id_prps = 0;
     for id_prps = s_id_prps
@@ -104,14 +111,14 @@ for id_stv = s_id_stv
 %        [od_joint, od_vec] = chooseROrderFull(R, len, 'BIC');
 %        bic_od_all = max([od_joint, od_vec]);
         %f_eff = @(x) myif(min(aveISI)<1e3, x, Inf);
-        if min(aveISI)>1e4
+        ISI_a_b(id_id_ps, id_id_prps) = mean(aveISI);
+        if min(aveISI)>1e3
           continue;
         end
         bic_od_all = 0;
         s_aic_od(id_id_ps, id_id_prps) = aic_od;
         s_bic_od(id_id_ps, id_id_prps) = bic_od;
         s_zero_GC(:,:,id_id_ps, id_id_prps) = f_gc_od(oGC, zero_GC, bic_od, aic_od, bic_od_all);
-        ISI_a_b(id_id_ps, id_id_prps) = mean(aveISI);
         net_diff = (gc_prob_nonzero(oGC(:,:,bic_od), bic_od, len)>1-p_value) - neu_network;
         wrong_num(id_id_ps, id_id_prps) = sum(abs(net_diff(:)));
 
@@ -130,9 +137,9 @@ for id_stv = s_id_stv
 
     s_zero_GC = permute(s_zero_GC, [3,4,1,2]);
 
-    k1 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
-    k2 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
-    k3 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
+    k1 = Nan(size(s_zero_GC,1), size(s_zero_GC,2));
+    k2 = Nan(size(s_zero_GC,1), size(s_zero_GC,2));
+    k3 = Nan(size(s_zero_GC,1), size(s_zero_GC,2));
     for j1=1:size(s_zero_GC,1)
     for j2=1:size(s_zero_GC,2)
       G1 = s_zero_GC(j1,j2,:,:);
@@ -154,15 +161,15 @@ for id_stv = s_id_stv
     end
     end
     if a(1)~=a(1) || b(1)~=b(1)
-      k1=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
-      k2=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
-      k3=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
+      k1=Nan(size(s_zero_GC,1),size(s_zero_GC,2));
+      k2=Nan(size(s_zero_GC,1),size(s_zero_GC,2));
+      k3=Nan(size(s_zero_GC,1),size(s_zero_GC,2));
     end
 
-    k1(imag(k1)~=0) = NaN;
-    k1(isnan(k1)) = Inf;
-    k2(isnan(k2)) = Inf;
-    k3(isnan(k3)) = Inf;
+    k1(imag(k1)~=0) = Nan(1,1);
+    k1(isnan(k1)) = Nan(1,1);
+    k2(isnan(k2)) = Nan(1,1);
+    k3(isnan(k3)) = Nan(1,1);
 
     mode_eif= ~isempty(strfind(lower(signature),lower('expIF')));
     if mode_eif
@@ -214,13 +221,13 @@ for id_stv = s_id_stv
     [xx2,yy2] = meshgrid(xl, s_ps(s_id_ps)/0.001);
 
     xx2 = 1000 ./ ISI_a_b;
-    function setCoorScaleAll(xl, s_ps, x_tick, x_tick_val)
-      axis([1, 200, 0, s_ps(end)/0.001*1.001]);
-      %shading('flat');
-      shading('interp');
-      ylabel('F / 0.001');
-      xlabel('Firing Rate / Hz');
-    end
+%    function setCoorScaleAll(xl, s_ps, x_tick, x_tick_val)
+%      axis([1, 200, 0, s_ps(end)/0.001*1.001]);
+%      %shading('flat');
+%      shading('interp');
+%      ylabel('F / 0.001');
+%      xlabel('Firing Rate / Hz');
+%    end
     %function setCoorScaleAll(xl, s_ps, x_tick, x_tick_val)
       %axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
       %%shading('flat');
@@ -230,7 +237,10 @@ for id_stv = s_id_stv
       %set(gca,'xtick', x_tick);
       %set(gca,'xticklabel',x_tick_val);
     %end
-    setCoorScale = @() setCoorScaleAll(xl, s_ps, x_tick, x_tick_val);
+    %setCoorScale = @() setCoorScaleAll(xl, s_ps, x_tick, x_tick_val);
+
+    % damn MATLAB^(TM)
+    setCoorScale = @() eval(sprintf('axis([1, 200, 0, %.16e*1.001]); ylabel(''F / 0.001''); xlabel(''Firing Rate / Hz'');shading(''interp'');', s_ps(end)/0.001));
 
     % plot ISI
     figure(3);
