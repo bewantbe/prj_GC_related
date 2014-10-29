@@ -213,6 +213,25 @@ for id_stv = s_id_stv
     x_tick_val = f_str_cell(x_tick_val);  % workaround for Octave bug
     [xx2,yy2] = meshgrid(xl, s_ps(s_id_ps)/0.001);
 
+    xx2 = 1000 ./ ISI_a_b;
+    function setCoorScaleAll(xl, s_ps, x_tick, x_tick_val)
+      axis([1, 200, 0, s_ps(end)/0.001*1.001]);
+      %shading('flat');
+      shading('interp');
+      ylabel('F / 0.001');
+      xlabel('Firing Rate / Hz');
+    end
+    %function setCoorScaleAll(xl, s_ps, x_tick, x_tick_val)
+      %axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
+      %%shading('flat');
+      %shading('interp');
+      %ylabel('F / 0.001');
+      %xlabel('\mu*F/0.001');
+      %set(gca,'xtick', x_tick);
+      %set(gca,'xticklabel',x_tick_val);
+    %end
+    setCoorScale = @() setCoorScaleAll(xl, s_ps, x_tick, x_tick_val);
+
     % plot ISI
     figure(3);
     hd = plot(xl, ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),':', xl, 1000./ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),'-+');
@@ -236,7 +255,7 @@ for id_stv = s_id_stv
     set(gca,'xticklabel', x_tick_val);
     pic_output_color('aveISI_Freq_xlog');
 
-    % plot GC ratio
+    % plot GC ratio ( minGC1/maxGC0 map )
     figure(5);
     pcolor(xx2,yy2,k1);
     axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
@@ -245,16 +264,8 @@ for id_stv = s_id_stv
     else
         caxis([0,15]);
     end
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
-    shading('flat');
-    %shading('interp');
-    hd = colorbar();
-    %set(hd, 'fontsize',font_size);
-%    title('minGC1/maxGC0 map');
-    ylabel('F / 0.001');
-    xlabel('\mu*F/0.001');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
+    colorbar();
+    setCoorScale();
     pic_output_color('k1_map_xlog');
     pic_data_save('k1_map_xlog',xx2,yy2,k1);
 
@@ -266,15 +277,9 @@ for id_stv = s_id_stv
     else
         caxis([0,100]);
     end
-    shading('flat');
-    %shading('interp');
     colorbar();
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
 %    title('bic map');
-    ylabel('F / 0.001');
-    xlabel('\mu*F/0.001');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
+    setCoorScale();
     pic_output_color('bic_map_xlog');
 
     % plot GC map of all possible edges
@@ -293,20 +298,14 @@ for id_stv = s_id_stv
         end
         figure(7);
         pcolor(xx2, yy2, s_zero_GC(:,:,ii,jj)/gc_scale);
-        axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
         if neu_network(ii,jj)==0
             caxis([0, caxis_gc_low]);
         else
             caxis([0, caxis_gc_high]);
         end
-        shading('flat');
-        %shading('interp');
         colorbar();
 %        title(sprintf('GC%d map %d->%d', neu_network(ii,jj), jj, ii));
-        ylabel('F/0.001');
-        xlabel('\mu*F/0.001');
-        set(gca,'xtick', x_tick);
-        set(gca,'xticklabel',x_tick_val);
+        setCoorScale();
         pic_name = sprintf('GC%d_map_%d_to_%d_xlog', neu_network(ii,jj), jj, ii);
         pic_output_color(pic_name);
     end
@@ -315,64 +314,39 @@ for id_stv = s_id_stv
     % plot network detection correctness map
     figure(8);%  set(gca, 'fontsize',font_size);
     pcolor(xx2,yy2,wrong_num);
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
-    shading('flat');
     colorbar();
     title(['wrong number (p-value=',num2str(p_value),')']);
-    ylabel('F / 0.001');
-    xlabel('\mu*F/0.001');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
+    setCoorScale();
     pic_output_color('wrongNum');
 
     % PDC square mean of "1"
     figure(10);
     pcolor(xx2, yy2, s_pdc1_SM/gc_scale);
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     caxis([0, 0.1]);
-    shading('flat');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
     colorbar();
-    ylabel('F/0.001');
-    xlabel('\mu*F/0.001');
+    setCoorScale();
     pic_output_color('PDC1_SM');
 
     % PDC square mean of "0"
     figure(11);
     pcolor(xx2, yy2, s_pdc0_SM/gc_scale);
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     caxis([0, 0.1]);
-    shading('flat');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
     colorbar();
-    ylabel('F/0.001');
-    xlabel('\mu*F/0.001');
+    setCoorScale();
     pic_output_color('PDC0_SM');
 
     % PDC max of "1"
     figure(12);
     pcolor(xx2, yy2, s_pdc1_max);
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
-    shading('flat');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
     colorbar();
-    ylabel('F/0.001');
-    xlabel('\mu*F/0.001');
+    setCoorScale();
     pic_output_color('PDC1_max');
 
     % PDC max of "0"
     figure(13);
     pcolor(xx2, yy2, s_pdc0_max);
-    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
-    shading('flat');
-    set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
     colorbar();
-    ylabel('F/0.001');
-    xlabel('\mu*F/0.001');
+    setCoorScale();
     pic_output_color('PDC0_max');
 
 end  % stv
