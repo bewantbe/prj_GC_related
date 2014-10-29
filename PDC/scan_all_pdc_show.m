@@ -1,13 +1,16 @@
 % show pdc scan results
-
 set(0, 'defaultfigurevisible', 'off');
+line_width = 2;
+set(0, 'defaultlinelinewidth', line_width);
+font_size = 16;
+set(0, 'defaultaxesfontsize', font_size);
 tic();
 
 % for final thesis
 s_signature = {'data_scan_IF/w2_net_2_2'};
 
 pic_prefix0 = 'pic_tmp/';
-gc_od_mode = 'BIC';         % the order used for final GC value, 'BIC','AIC','maxBIC','zero'
+gc_od_mode = 'BIC';         % Order used for GC value: 'BIC','AIC','maxBIC','zero' or number
 
 if isnumeric(gc_od_mode)
   if gc_od_mode==-1
@@ -33,15 +36,9 @@ else
       error('invalid GC od mode');
   end
 end
-if ~exist('font_size','var')
-  font_size = 28;
-end
-if ~exist('line_width','var')
-  line_width = 3;
-end
 
 for id_signature = 1:length(s_signature)
-signature = s_signature{id_signature};     % to distinguish different parallel program instances (also dir)
+signature = s_signature{id_signature};     % to distinguish different program instances (also dir)
 % load these variables: 's_net', 's_time', 's_scee', 's_prps', 's_ps', 's_stv', 's_od', 'hist_div', 'maxod'
 load([signature, '_info.mat']);
 % get the true "save time interval"
@@ -78,12 +75,12 @@ for id_stv = s_id_stv
  stv = s_stv(id_stv);
  len = round(simu_time/stv);                  % !! I don't know the exact expression
 
+    s_zero_GC = zeros(p,p,length(s_id_ps), length(s_id_prps));
     s_aic_od = zeros(length(s_id_ps), length(s_id_prps));
     s_bic_od = zeros(length(s_id_ps), length(s_id_prps));
     s_all_od = zeros(length(s_id_ps), length(s_id_prps));
-    s_zero_GC = zeros(p,p,length(s_id_ps), length(s_id_prps));
     ISI_a_b  = zeros(length(s_id_ps), length(s_id_prps));
-    wrong_num = zeros(p,p);
+    wrong_num = zeros(length(s_id_ps), length(s_id_prps));
     s_pdc1_SM = zeros(length(s_id_ps), length(s_id_prps));
     s_pdc0_SM = zeros(length(s_id_ps), length(s_id_prps));
     s_pdc1_max = zeros(length(s_id_ps), length(s_id_prps));
@@ -106,6 +103,7 @@ for id_stv = s_id_stv
 %        R = prps_ps_stv_R(:,:, id_prps, id_ps, id_stv);
 %        [od_joint, od_vec] = chooseROrderFull(R, len, 'BIC');
 %        bic_od_all = max([od_joint, od_vec]);
+        f_eff = @(x) myif(min(aveISI)<1e3, x, Inf);
         bic_od_all = 0;
         s_aic_od(id_id_ps, id_id_prps) = aic_od;
         s_bic_od(id_id_ps, id_id_prps) = bic_od;
@@ -180,7 +178,6 @@ for id_stv = s_id_stv
     pic_data_save = @(st, varargin)save('-v7', [pic_prefix, st, '.mat'], 'varargin');
 
 %    figure(1);
-%    set(gca, 'fontsize',font_size);
 %    pcolor(xx,yy,k1);
 %    caxis([0,5]);
 %    shading('flat');
@@ -190,22 +187,28 @@ for id_stv = s_id_stv
 %    pic_output_color('k1_map');
 
 %    figure(2);
-%    set(gca, 'fontsize',font_size);
 %    plot(s_prps/0.001, 1000./ISI_a_b(ceil(end/2),:),'-+','linewidth',line_width);
 %    xlabel('\mu*F/0.001');
 %    ylabel('firing frequency /Hz');
 %    pic_output('aveISI');
 
-    fxs = @log;
-    inv_fxs = @exp;
+    %fxs = @log;
+    %inv_fxs = @exp;
+    fxs = @(x) log10(x-4)+4;
+    inv_fxs = @(x) 10.^(x-4)+4;
     %fxs = inv_tanpatan(s_prps(s_id_prps(1))/0.001, s_prps(s_id_prps(end))/0.001);
     %inv_fxs = tanpatan(s_prps(s_id_prps(1))/0.001, s_prps(s_id_prps(end))/0.001);
+
+    % get labels and ticks for non-linear scaled plot
     label_num = 6;
     [xl, x_tick, x_tick_val] = xscale_plot(...
         s_prps(s_id_prps)/0.001, [], fxs, inv_fxs, label_num);
+    f_str_cell = @(xtv) cellfun(@(n)sprintf('%.2g', n), num2cell(xtv), 'UniformOutput', false);
+    x_tick_val = f_str_cell(x_tick_val);  % workaround for Octave bug
+    [xx2,yy2] = meshgrid(xl, s_ps(s_id_ps)/0.001);
 
     % plot ISI
-    figure(3);  set(gca, 'fontsize',font_size);
+    figure(3);
     hd = plot(xl, ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),':', xl, 1000./ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),'-+');
     set(hd, 'linewidth',line_width);
     hd=legend(['F=',num2str(s_ps(1)),' ISI'],...
@@ -215,36 +218,32 @@ for id_stv = s_id_stv
               ['F=',num2str(s_ps(ceil(size(s_ps,2)/2))),' freq'],...
               ['F=',num2str(s_ps(end)),' freq'],...
               'location','northwest');
-    set(hd, 'fontsize',font_size-3);
+    %set(hd, 'fontsize',font_size-3);
     if isempty(strfind(signature,'expIF'))
-        axis([1.6 3.7 0 200]);
+        axis([min(xl) max(xl) 0 200]);
     else
         sa=axis();  sa([3,4])=[0,200];  axis(sa);
     end
     ylabel('ave ISI/ms | Freq/Hz');
     xlabel('\mu*F/0.001');
     set(gca,'xtick', x_tick);
-    set(gca,'xticklabel',x_tick_val);
+    set(gca,'xticklabel', x_tick_val);
     pic_output_color('aveISI_Freq_xlog');
 
     % plot GC ratio
-    figure(5);  set(gca, 'fontsize',font_size);
-    [xx2,yy2] = meshgrid(xl, s_ps(s_id_ps)/0.001);
+    figure(5);
     pcolor(xx2,yy2,k1);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     if mode_st
         caxis([0,100]);
     else
         caxis([0,15]);
     end
-    if mode_eif
-        ;
-    else
-        axis([1.6 3.7 0 s_ps(end)/0.001]);
-    end
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     %shading('flat');
     shading('interp');
     hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    %set(hd, 'fontsize',font_size);
 %    title('minGC1/maxGC0 map');
     ylabel('F / 0.001');
     xlabel('\mu*F/0.001');
@@ -254,22 +253,17 @@ for id_stv = s_id_stv
     pic_data_save('k1_map_xlog',xx2,yy2,k1);
 
     % plot BIC map
-    figure(6);  set(gca, 'fontsize',font_size);
+    figure(6);%  set(gca, 'fontsize',font_size);
     pcolor(xx2,yy2,s_bic_od);
     if mode_st
         caxis([0,100]);
     else
         caxis([0,100]);
     end
-    %shading('flat');
-    shading('interp');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
-    if mode_eif
-        ;
-    else
-        axis([1.6 3.7 0 s_ps(end)/0.001]);
-    end
+    shading('flat');
+    %shading('interp');
+    colorbar();
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
 %    title('bic map');
     ylabel('F / 0.001');
     xlabel('\mu*F/0.001');
@@ -278,6 +272,7 @@ for id_stv = s_id_stv
     pic_output_color('bic_map_xlog');
 
     % plot GC map of all possible edges
+    figure(7);%  set(gca, 'fontsize',font_size);
     if mode_st
         caxis_gc_low = 0.1;
         caxis_gc_high= 5.0;
@@ -290,8 +285,9 @@ for id_stv = s_id_stv
         if ii==jj
         continue;
         end
-        figure(7);  set(gca, 'fontsize',font_size);
+        figure(7);
         pcolor(xx2, yy2, s_zero_GC(:,:,ii,jj)/gc_scale);
+        axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
         if neu_network(ii,jj)==0
             caxis([0, caxis_gc_low]);
         else
@@ -299,8 +295,7 @@ for id_stv = s_id_stv
         end
         %shading('flat');
         shading('interp');
-        hd = colorbar();
-        set(hd, 'fontsize',font_size);
+        colorbar();
 %        title(sprintf('GC%d map %d->%d', neu_network(ii,jj), jj, ii));
         ylabel('F/0.001');
         xlabel('\mu*F/0.001');
@@ -311,11 +306,12 @@ for id_stv = s_id_stv
     end
     end
 
-    figure(8);  set(gca, 'fontsize',font_size);
+    % plot network detection correctness map
+    figure(8);%  set(gca, 'fontsize',font_size);
     pcolor(xx2,yy2,wrong_num);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     shading('flat');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    colorbar();
     title(['wrong number (p-value=',num2str(p_value),')']);
     ylabel('F / 0.001');
     xlabel('\mu*F/0.001');
@@ -323,41 +319,52 @@ for id_stv = s_id_stv
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('wrongNum');
 
-    % PDC plots
+    % PDC square mean of "1"
     figure(10);
-    pcolor(xx, yy, s_pdc1_SM/gc_scale);
+    pcolor(xx2, yy2, s_pdc1_SM/gc_scale);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     caxis([0, 0.1]);
     shading('flat');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    set(gca,'xtick', x_tick);
+    set(gca,'xticklabel',x_tick_val);
+    colorbar();
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC1_SM');
 
+    % PDC square mean of "0"
     figure(11);
-    pcolor(xx, yy, s_pdc0_SM/gc_scale);
+    pcolor(xx2, yy2, s_pdc0_SM/gc_scale);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     caxis([0, 0.1]);
     shading('flat');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    set(gca,'xtick', x_tick);
+    set(gca,'xticklabel',x_tick_val);
+    colorbar();
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC0_SM');
 
+    % PDC max of "1"
     figure(12);
-    pcolor(xx, yy, s_pdc1_max);
+    pcolor(xx2, yy2, s_pdc1_max);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     shading('flat');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    set(gca,'xtick', x_tick);
+    set(gca,'xticklabel',x_tick_val);
+    colorbar();
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC1_max');
 
+    % PDC max of "0"
     figure(13);
-    pcolor(xx, yy, s_pdc0_max);
+    pcolor(xx2, yy2, s_pdc0_max);
+    axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
     shading('flat');
-    hd = colorbar();
-    set(hd, 'fontsize',font_size);
+    set(gca,'xtick', x_tick);
+    set(gca,'xticklabel',x_tick_val);
+    colorbar();
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC0_max');
