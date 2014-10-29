@@ -124,6 +124,7 @@ for id_stv = s_id_stv
     end  % ps
     end  % prps
 
+    gc_scale = 0.001;
     [xx,yy] = meshgrid(s_prps(s_id_prps)/0.001, s_ps(s_id_ps)/0.001);
 
     s_zero_GC = permute(s_zero_GC, [3,4,1,2]);
@@ -173,8 +174,6 @@ for id_stv = s_id_stv
     pic_suffix = sprintf('_stv=%.2f_t=%.2e', stv, simu_time);
     %pic_output = @(st)print('-dpng',[pic_prefix, st, pic_suffix, '.png'],'-r100');    % output function
     %pic_output_color = pic_output;                                        % for color output
-%    pic_output       = @(st)print('-deps'  ,[pic_prefix, st, pic_suffix, '.eps'], ['-Fontsize:',num2str(font_size)]);
-%    pic_output_color = @(st)print('-depsc2',[pic_prefix, st, pic_suffix, '.eps'], ['-Fontsize:',num2str(font_size)]);
     pic_output       = @(st)print('-deps'  ,[pic_prefix, st, pic_suffix, '.eps']);
     pic_output_color = @(st)print('-depsc2',[pic_prefix, st, pic_suffix, '.eps']);
 
@@ -205,6 +204,7 @@ for id_stv = s_id_stv
     [xl, x_tick, x_tick_val] = xscale_plot(...
         s_prps(s_id_prps)/0.001, [], fxs, inv_fxs, label_num);
 
+    % plot ISI
     figure(3);  set(gca, 'fontsize',font_size);
     hd = plot(xl, ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),':', xl, 1000./ISI_a_b([1,ceil(size(ISI_a_b,1)/2),end],:),'-+');
     set(hd, 'linewidth',line_width);
@@ -227,6 +227,7 @@ for id_stv = s_id_stv
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('aveISI_Freq_xlog');
 
+    % plot GC ratio
     figure(5);  set(gca, 'fontsize',font_size);
     [xx2,yy2] = meshgrid(xl, s_ps(s_id_ps)/0.001);
     pcolor(xx2,yy2,k1);
@@ -252,6 +253,7 @@ for id_stv = s_id_stv
     pic_output_color('k1_map_xlog');
     pic_data_save('k1_map_xlog',xx2,yy2,k1);
 
+    % plot BIC map
     figure(6);  set(gca, 'fontsize',font_size);
     pcolor(xx2,yy2,s_bic_od);
     if mode_st
@@ -275,6 +277,7 @@ for id_stv = s_id_stv
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('bic_map_xlog');
 
+    % plot GC map of all possible edges
     if mode_st
         caxis_gc_low = 0.1;
         caxis_gc_high= 5.0;
@@ -288,7 +291,7 @@ for id_stv = s_id_stv
         continue;
         end
         figure(7);  set(gca, 'fontsize',font_size);
-        pcolor(xx2, yy2, s_zero_GC(:,:,ii,jj)/0.001);
+        pcolor(xx2, yy2, s_zero_GC(:,:,ii,jj)/gc_scale);
         if neu_network(ii,jj)==0
             caxis([0, caxis_gc_low]);
         else
@@ -313,11 +316,6 @@ for id_stv = s_id_stv
     shading('flat');
     hd = colorbar();
     set(hd, 'fontsize',font_size);
-%    if isempty(strfind(signature,'expIF'))
-%        axis([1.6 3.7 0 s_ps(end)/0.001]);
-%    else
-%        ;
-%    end
     title(['wrong number (p-value=',num2str(p_value),')']);
     ylabel('F / 0.001');
     xlabel('\mu*F/0.001');
@@ -325,30 +323,41 @@ for id_stv = s_id_stv
     set(gca,'xticklabel',x_tick_val);
     pic_output_color('wrongNum');
 
+    % PDC plots
     figure(10);
-    pcolor(xx2, yy2, s_pdc1_SM);
-    colorbar();
+    pcolor(xx, yy, s_pdc1_SM/gc_scale);
+    caxis([0, 0.1]);
+    shading('flat');
+    hd = colorbar();
+    set(hd, 'fontsize',font_size);
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC1_SM');
 
     figure(11);
-    pcolor(xx2, yy2, s_pdc0_SM);
-    colorbar();
+    pcolor(xx, yy, s_pdc0_SM/gc_scale);
+    caxis([0, 0.1]);
+    shading('flat');
+    hd = colorbar();
+    set(hd, 'fontsize',font_size);
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC0_SM');
 
     figure(12);
-    pcolor(xx2, yy2, s_pdc1_max);
-    colorbar();
+    pcolor(xx, yy, s_pdc1_max);
+    shading('flat');
+    hd = colorbar();
+    set(hd, 'fontsize',font_size);
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC1_max');
 
     figure(13);
-    pcolor(xx2, yy2, s_pdc0_max);
-    colorbar();
+    pcolor(xx, yy, s_pdc0_max);
+    shading('flat');
+    hd = colorbar();
+    set(hd, 'fontsize',font_size);
     ylabel('F/0.001');
     xlabel('\mu*F/0.001');
     pic_output_color('PDC0_max');
