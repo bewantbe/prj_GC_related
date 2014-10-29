@@ -75,16 +75,16 @@ for id_stv = s_id_stv
  stv = s_stv(id_stv);
  len = round(simu_time/stv);                  % !! I don't know the exact expression
 
-    s_zero_GC = zeros(p,p,length(s_id_ps), length(s_id_prps));
-    s_aic_od = zeros(length(s_id_ps), length(s_id_prps));
-    s_bic_od = zeros(length(s_id_ps), length(s_id_prps));
-    s_all_od = zeros(length(s_id_ps), length(s_id_prps));
-    ISI_a_b  = zeros(length(s_id_ps), length(s_id_prps));
-    wrong_num = zeros(length(s_id_ps), length(s_id_prps));
-    s_pdc1_SM = zeros(length(s_id_ps), length(s_id_prps));
-    s_pdc0_SM = zeros(length(s_id_ps), length(s_id_prps));
-    s_pdc1_max = zeros(length(s_id_ps), length(s_id_prps));
-    s_pdc0_max = zeros(length(s_id_ps), length(s_id_prps));
+    s_zero_GC  = Inf(p,p,length(s_id_ps), length(s_id_prps));
+    s_aic_od   = Inf(length(s_id_ps), length(s_id_prps));
+    s_bic_od   = Inf(length(s_id_ps), length(s_id_prps));
+    s_all_od   = Inf(length(s_id_ps), length(s_id_prps));
+    ISI_a_b    = Inf(length(s_id_ps), length(s_id_prps));
+    wrong_num  = Inf(length(s_id_ps), length(s_id_prps));
+    s_pdc1_SM  = Inf(length(s_id_ps), length(s_id_prps));
+    s_pdc0_SM  = Inf(length(s_id_ps), length(s_id_prps));
+    s_pdc1_max = Inf(length(s_id_ps), length(s_id_prps));
+    s_pdc0_max = Inf(length(s_id_ps), length(s_id_prps));
 
     id_id_prps = 0;
     for id_prps = s_id_prps
@@ -103,7 +103,10 @@ for id_stv = s_id_stv
 %        R = prps_ps_stv_R(:,:, id_prps, id_ps, id_stv);
 %        [od_joint, od_vec] = chooseROrderFull(R, len, 'BIC');
 %        bic_od_all = max([od_joint, od_vec]);
-        f_eff = @(x) myif(min(aveISI)<1e3, x, Inf);
+        %f_eff = @(x) myif(min(aveISI)<1e3, x, Inf);
+        if min(aveISI)>1e4
+          continue;
+        end
         bic_od_all = 0;
         s_aic_od(id_id_ps, id_id_prps) = aic_od;
         s_bic_od(id_id_ps, id_id_prps) = bic_od;
@@ -127,9 +130,9 @@ for id_stv = s_id_stv
 
     s_zero_GC = permute(s_zero_GC, [3,4,1,2]);
 
-    k1 = zeros(size(s_zero_GC,1), size(s_zero_GC,2));
-    k2 = zeros(size(s_zero_GC,1), size(s_zero_GC,2));
-    k3 = zeros(size(s_zero_GC,1), size(s_zero_GC,2));
+    k1 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
+    k2 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
+    k3 = Inf(size(s_zero_GC,1), size(s_zero_GC,2));
     for j1=1:size(s_zero_GC,1)
     for j2=1:size(s_zero_GC,2)
       G1 = s_zero_GC(j1,j2,:,:);
@@ -151,12 +154,15 @@ for id_stv = s_id_stv
     end
     end
     if a(1)~=a(1) || b(1)~=b(1)
-      k1=zeros(size(s_zero_GC,1),size(s_zero_GC,2));
-      k2=zeros(size(s_zero_GC,1),size(s_zero_GC,2));
-      k3=zeros(size(s_zero_GC,1),size(s_zero_GC,2));
+      k1=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
+      k2=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
+      k3=Inf(size(s_zero_GC,1),size(s_zero_GC,2));
     end
 
     k1(imag(k1)~=0) = NaN;
+    k1(isnan(k1)) = Inf;
+    k2(isnan(k2)) = Inf;
+    k3(isnan(k3)) = Inf;
 
     mode_eif= ~isempty(strfind(lower(signature),lower('expIF')));
     if mode_eif
@@ -240,8 +246,8 @@ for id_stv = s_id_stv
         caxis([0,15]);
     end
     axis([min(xl), max(xl), 0, s_ps(end)/0.001]);
-    %shading('flat');
-    shading('interp');
+    shading('flat');
+    %shading('interp');
     hd = colorbar();
     %set(hd, 'fontsize',font_size);
 %    title('minGC1/maxGC0 map');
@@ -293,8 +299,8 @@ for id_stv = s_id_stv
         else
             caxis([0, caxis_gc_high]);
         end
-        %shading('flat');
-        shading('interp');
+        shading('flat');
+        %shading('interp');
         colorbar();
 %        title(sprintf('GC%d map %d->%d', neu_network(ii,jj), jj, ii));
         ylabel('F/0.001');
