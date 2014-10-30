@@ -1,6 +1,5 @@
 %
 
-
 T = 1e6;
 pm = [];              % a new parameter set
 pm.neuron_model = 'LIF_icc';  % program to run, with prefix raster_tuning_
