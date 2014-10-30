@@ -18,7 +18,7 @@ pm.stv  = 0.5;        % default: 0.5
 pm.seed = 'auto';     % default: 'auto'(or []). Accept integers
 pm.extra_cmd = '';    % default: '--RC-filter 0 1'
 
-X = gen_HH(pm, 'new,ext_T', data_dir_prefix);
+X = gen_HH(pm, 'new,ext_T');
 
 [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
 [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
