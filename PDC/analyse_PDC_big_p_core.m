@@ -16,4 +16,4 @@ f_sm = @(x) real(mean(x.*x,3));
 pdc_sm = f_sm(pdc);
 pdc_max = max(abs(pdc), [], 3);
 
-save('-v7', 'ex_PDC_net_100.mat', pm, 'oGC', 'oDe', 'R', 'pdc');
+save('-v7', 'ex_PDC_net_100.mat', 'pm', 'oGC', 'oDe', 'R', 'pdc');
