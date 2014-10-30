@@ -41,6 +41,14 @@ for k = 1 : n_trials
 end
 
 save('-v7', 'test_shuffle_no.mat', 'pm', 's_PDC_SM', 's_PDC_max', 's_PDC_plain_abs', 's_GC_plain');
+figure(1);
+hist(s_PDC_max(1,:),n_div);
+pic_output_color('s_GC_plain_1');
+
+figure(2);
+hist(s_PDC_max(2,:),n_div);
+pic_output_color('s_GC_plain_2');
+
 
 figure(1);
 hist(s_GC_plain(1,:),n_div);
@@ -95,6 +103,14 @@ for k = 1 : n_trials
 end
 
 save('-v7', 'test_shuffle_shm.mat', 'pm', 's_shm_PDC_SM', 's_shm_PDC_max', 's_shm_PDC_plain_abs', 's_shm_GC_plain');
+figure(5);
+hist(s_shm_GC_plain(1,:),n_div);
+pic_output_color('s_shm_GC_plain_1');
+figure(6);
+hist(s_shm_GC_plain(2,:),n_div);
+pic_output_color('s_shm_GC_plain_2');
+
+
 figure(5);
 hist(s_shm_GC_plain(1,:),n_div);
 pic_output_color('s_shm_GC_plain_1');
