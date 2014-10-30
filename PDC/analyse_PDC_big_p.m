@@ -19,15 +19,17 @@ pm.seed = 'auto';     % default: 'auto'(or []). Accept integers
 pm.extra_cmd = '';    % default: '--RC-filter 0 1'
 
 X = gen_HH(pm, 'new,ext_T');
+[p, len] = size(X);
 
+% GC
+s_od = 1:30;
 [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
 [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
 
+% PDC
 od = bic_od;
 fftlen = 1024;
-
 pdc = PDC(X, od, fftlen);
-
 f_sm = @(x) real(mean(x.*x,3));
 pdc_sm = f_sm(pdc);
 pdc_max = max(abs(pdc), [], 3);
