@@ -1,6 +1,6 @@
 % for analyse_PDC_big_p.m
 
-[X, ~, ~, pm] = gen_HH(pm, 'new,ext_T');
+[X, ~, ~, pm] = gen_HH(pm, 'ext_T');
 [p, len] = size(X);
 
 % GC
