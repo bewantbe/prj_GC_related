@@ -939,6 +939,207 @@ I & O & O\\
 \end_layout
 
 \begin_layout Section
+Inverse of 
+\begin_inset Formula $n_{1}\times n_{2}$
+\end_inset
+
+ matrix
+\end_layout
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $a_{11}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{22}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{11}-a_{12}a_{22}^{-1}a_{21}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{22}-a_{21}a_{11}^{-1}a_{12}$
+\end_inset
+
+ are invertable.
+\end_layout
+
+\begin_layout Standard
+Use row elimination, get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{array}\right]^{-1}=\left[\begin{array}{cc}
+\left(a_{11}-a_{12}a_{22}^{-1}a_{21}\right)^{-1} & -\left(a_{11}-a_{12}a_{22}^{-1}a_{21}\right)^{-1}a_{12}a_{22}^{-1}\\
+-\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}a_{21}a_{11}^{-1} & \left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(verified)
+\end_layout
+
+\begin_layout Subsection
+Know inverse of 
+\begin_inset Formula $n_{1}\times n_{2}$
+\end_inset
+
+ matrix, get inverse of 
+\begin_inset Formula $n_{2}\times n_{2}$
+\end_inset
+
+ matrix
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+b_{11} & b_{12}\\
+b_{21} & b_{22}
+\end{array}\right]\left[\begin{array}{cc}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{array}\right]=\left[\begin{array}{cc}
+I & O\\
+O & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Ra\quad b_{21}a_{12}+b_{22}a_{22}=I
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Ra\quad\left(I-b_{21}a_{12}\right)^{-1}b_{22}a_{22}=I
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+a_{22}^{-1}=\left(I-b_{21}a_{12}\right)^{-1}b_{22}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(verified)
+\end_layout
+
+\begin_layout Standard
+Note 1 (when 
+\begin_inset Formula $n_{1}=1$
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+target "http://math.stackexchange.com/questions/55165/eigenvalues-for-the-rank-one-matrix-uvt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The eigen values of 
+\begin_inset Formula $b_{21}a_{12}$
+\end_inset
+
+ are 
+\begin_inset Formula $n-1$
+\end_inset
+
+ 0s and 
+\begin_inset Formula $a_{12}b_{21}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+?? if 
+\begin_inset Formula $n_{1}=2$
+\end_inset
+
+ ?
+\end_layout
+
+\begin_layout Standard
+Note 2 (when 
+\begin_inset Formula $n_{1}=1$
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+Due to Sherman-Morrison formula,
+\begin_inset Formula 
+\[
+\left(I-b_{21}a_{12}\right)^{-1}=I+\frac{b_{21}a_{12}}{1-a_{12}b_{21}}
+\]
+
+\end_inset
+
+as long as 
+\begin_inset Formula $a_{12}b_{21}\neq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+More generally, by Sherman–Morrison–Woodbury formula,
+\begin_inset Formula 
+\[
+\left(I_{n_{2}}-b_{21}a_{12}\right)^{-1}=I+b_{21}\left(I_{n_{1}}-a_{12}b_{21}\right)^{-1}a_{12}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+target "https://en.wikipedia.org/wiki/Woodbury_matrix_identity"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Cal 
 \begin_inset Formula $v_{12}$
 \end_inset
