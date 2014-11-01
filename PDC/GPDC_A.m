@@ -1,6 +1,6 @@
 % calculate PDC
 
-function pdc = PDC_A(A2d, D, fftlen)
+function pdc = GPDC_A(A2d, D, fftlen)
 p = size(A2d, 1);
 
 Abar = cat(3, eye(p), reshape(A2d, p, p, []));
