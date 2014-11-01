@@ -985,10 +985,21 @@ a_{21} & a_{22}
 \end_inset
 
 
+\begin_inset Formula 
+\[
+=\left[\begin{array}{cc}
+a_{11}^{-1}+a_{11}^{-1}a_{12}\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}a_{21}a_{11}^{-1} & -a_{11}^{-1}a_{12}\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}\\
+-a_{22}^{-1}a_{21}\left(a_{11}-a_{12}a_{22}^{-1}a_{21}\right)^{-1} & a_{22}^{-1}+a_{22}^{-1}a_{21}\left(a_{11}-a_{12}a_{22}^{-1}a_{21}\right)^{-1}a_{12}a_{22}^{-1}
+\end{array}\right]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-(verified)
+(verified, PDC/test_2varinv.m)
 \end_layout
 
 \begin_layout Subsection

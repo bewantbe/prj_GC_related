@@ -13,8 +13,11 @@ iA = inv(A)
 a1 = inv(a11-a12/a22*a21);
 a2 = inv(a22-a21/a11*a12);
 iA_p = [
-a1 -a1*a12/a22
+a1, -a1*a12/a22
 -a2*a21/a11 a2]
+iA_p2 = [
+inv(a11) + a11\a12*a2*a21/a11, -a11 \ a12 * a2
+-a22 \ a21 * a1, inv(a22) + a22 \ a21 * a1 * a12 / a22]
 
 % following should be the same matrix
 inv(a22)
