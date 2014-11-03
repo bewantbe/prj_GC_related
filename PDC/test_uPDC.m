@@ -17,7 +17,8 @@ f_SM = @(x) real(mean(x.*conj(x),3));
 %A2d = [-0.9 ,  0.0, 0.5, 0.0;
        %-1.6, -0.8, 4.2, 0.5];
 
-D = diag([0.3 1.0 0.2]);
+%D = diag([0.3 1.0 0.2]);
+D = diag([1.0 1.0 1.0]);
 A2d = [-0.8  0.0 -0.4  0.5 -0.2  0.0;
         0.0 -0.9  0.0  0.0  0.8  0.0;
         0.0 -0.5 -0.5  0.0  0.0  0.2];
@@ -28,10 +29,13 @@ ARroots(A2d);  % check if the system is stable
 %A2d = [-0.9 ,  0.0, 0.5, 0.0;
        %-0.016, -0.8, 0.002, 0.5];
 
-od = 99;
+od = 200;
 fftlen = 8192;
 S = A2S_new(A2d, D, fftlen);
 R = S2cov(S, od);
+
+%eg = eig(R2covz(R));
+%condval = max(eg) / min(eg)
 
 % compare GC and PDC square mean
 GC = RGrangerT(R);
@@ -50,15 +54,14 @@ uGPDC_W_SM = f_SM( uGPDC_R(RW) );
 
 maxabs = @(x) max(abs(x(:)));
 if maxabs(GC_W - GC)>1e-9
-  GC_W - GC
-  warning('GC is Not filter invariant!!');
+  diff = GC_W - GC
+  warning('GC is Not filter invariant?!');
 end
 if maxabs(GPDC_SM - GPDC_W_SM)>1e-9
-  GPDC_W_SM - GPDC_SM
-  warning('GPDC is Not filter invariant!!');
+  diff = GPDC_W_SM - GPDC_SM
+  warning('GPDC is Not filter invariant?!');
 end
 if maxabs(uGPDC_SM - uGPDC_W_SM)>1e-9
-  uGPDC_W_SM - uGPDC_W_SM
-  warning('uGPDC is Not filter invariant!!');
+  diff = uGPDC_W_SM - uGPDC_SM
+  warning('uGPDC is Not filter invariant?!');
 end
-
