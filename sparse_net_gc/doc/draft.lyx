@@ -780,6 +780,17 @@ d-c=\left(\vec{s}^{(x|z)}Q^{(zy)}+\vec{s}^{(x|y)}Q^{(yy)}\right)(Q^{(yy)})^{-1}\
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+d-c=\vec{a}^{(12)}(Q^{(yy)})^{-1}\vec{a}^{(12)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 .
 \end_layout
 

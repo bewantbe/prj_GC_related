@@ -6055,6 +6055,25 @@ where
 , so we get the relationship between conditional GC and pairwise GC.
 \end_layout
 
+\begin_layout Standard
+Formula (
+\begin_inset Formula $\vec{a}^{(12)}$
+\end_inset
+
+ is for standard whitened data):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d-c=d-c=\vec{a}^{(12)}(Q^{(yy)})^{-1}\vec{a}^{(12)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Simulator 
 \family typewriter

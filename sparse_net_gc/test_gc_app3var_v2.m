@@ -252,6 +252,7 @@ v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*Q22*v1O2'
 [v1O2 v1O3] * [Q22  Q23; Q23' Q23' / Q22 * Q23] * [v1O2 v1O3]'
 (v1O3 * Q23' / Q22 + v1O2) * Q23 * v1O3' + v1O2*( Q22*v1O2' + Q23*v1O3')
 (v1O3*Q23' + v1O2*Q22) / Q22 * (v1O3*Q23' + v1O2*Q22)'
+b / Q22 * b'  % cool!
 
 % Check coef and correlation
 figure(1);
