@@ -56,10 +56,8 @@ are_you_joking = true;
           0.0   0.04 -0.5  0.0  0.03   0.2];
     fftlen = 1024;
     S = A2S(A, D, fftlen);
-    S = permute(S, [3 1 2]);
     S = StdWhiteS(S);
-    S = ipermute(S, [3 1 2]);
-    od = 50;
+    od = 90;
     R = S2cov(S, od);
     covz = R2covz(R);
 
@@ -79,10 +77,10 @@ are_you_joking = true;
       id_p = id_p + 1;
       id_p_2 = id_p_2 + p*(m+1) + 1;
   end
-  covz_orig = covz;
+  covz_orig = covz;  % save a copy
 
 else
-  covz = covz_orig;
+  covz = covz_orig;  % load copy
 end
 
 % Name for coefficients
@@ -95,24 +93,26 @@ end
 
 [GC_srd_covz, Deps, B] = pos_nGrangerT2RZ(covz, p);
 if (p < 6)
-	GC_srd_covz
+  GC_srd_covz
 end
 
 GC_srd_pairs = pairRGrangerT(R);
 if (p < 6)
-	GC_srd_pairs
+  GC_srd_pairs
 end
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
-permvec = [3 1 2];              % variable index after permutation
+%permvec = [3 1 2];              % variable index after permutation
 permvec = [1 2 3];              % variable index after permutation
+%permvec = [1 3 2];              % variable index after permutation
 id_rearrange = bsxfun(@plus, permvec', p*(0:m));
 covz = covz_orig(id_rearrange, id_rearrange);
 
 id_passive = permvec(1);
 id_driving = permvec(2);
 
+% do a 2-var GC
 l = size(R, 2);
 idx = [id_passive:p:l; id_driving:p:l];
 [~, ~, F] = RGrangerT([R(id_passive,idx); R(id_driving,idx)]);
@@ -224,6 +224,73 @@ coef_all = erv3 / eR3;
 coef_xx = coef_all( 1:m );
 coef_xy = coef_all((1:m)+m);
 coef_xz = coef_all(2*m+1:end);
+
+disp('new app');
+esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
+n1 = size(V11, 1);
+n2 = size(V22, 1);
+n3 = size(V33, 1);
+iv  = inv(eS3);
+Q11 = iv(1:n1, 1:n1);
+Q13 = iv(1:n1, n1+n2+1:end);
+Q33 = iv(n1+n2+1:end, n1+n2+1:end);
+
+vv = (eye(n1+n3) + iv([1:n1,n1+n2+1:end], n1+1:n1+n2) / (eye(n2) - eS3(n1+1:n1+n2, [1:n1,n1+n2+1:end]) * iv([1:n1,n1+n2+1:end], n1+1:n1+n2)) * eS3(n1+1:n1+n2, [1:n1,n1+n2+1:end])) * iv([1:n1, n1+n2+1:end],[1:n1, n1+n2+1:end]);
+norm( vv - inv(eS2) )
+
+eS2_3 = [
+    V11  O12  V13
+    O12' I22  O23
+    V13' O23' V33];
+Ds = inv(eS3) - inv(eS2_3);
+O11 = zeros(n1,n1);
+O12 = zeros(n1,n2);
+O13 = zeros(n1,n3);
+O22 = zeros(n2,n2);
+O23 = zeros(n2,n3);
+O33 = zeros(n3,n3);
+
+I22 = eye(n2);
+S12 = eS3(1:n1, n1+1:n1+n2);
+S23 = eS3(n1+1:n1+n2, n1+n2+1:end);
+
+iv  = inv(eS3);
+Q11 = iv(1:n1, 1:n1);
+Q12 = iv(1:n1, n1+1:n1+n2);
+Q13 = iv(1:n1, n1+n2+1:end);
+Q22 = iv(n1+1:n1+n2, n1+1:n1+n2);
+Q23 = iv(n1+1:n1+n2, n1+n2+1:end);
+Q33 = iv(n1+n2+1:end, n1+n2+1:end);
+
+iu = inv(eS2);
+P11 = iu(1:n1, 1:n1);
+P13 = iu(1:n1, n1+1:end);
+P33 = iu(n1+1:end, n1+1:end);
+
+norm(
+[Q11  Q12  Q13
+ Q12' Q22  Q23
+ Q13' Q23' Q33] - iv )
+
+vDs = -[Q12; O22; Q23'] / (I22 - [S12' S23]*[Q12; Q23']) * [S12' O22 S23] *...
+[Q11  O12  Q13
+ O12' I22  O23
+ Q13' O23' Q33] + ...
+[O11  Q12      O13
+ Q12' Q22-I22  Q23
+ O13' Q23'     O33];
+%vDs =...
+%[Q11  Q12  Q13
+ %Q12' Q22  Q23
+ %Q13' Q23' Q33] - ...
+%[P11  O12  P13
+ %O12' I22  O23
+ %P13' O23' P33];
+norm( vDs - Ds )
+
+Q23 = iv(n1+1:n1+n2, n1+n2+1:end);
+Q22 = iv(n1+1:n1+n2, n1+1:n1+n2);
+v1O2*v1O2' - v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*(Q22 - I22)*v1O2'
 
 % Check coef and correlation
 figure(1);

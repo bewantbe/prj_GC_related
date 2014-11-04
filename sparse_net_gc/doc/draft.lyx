@@ -525,5 +525,240 @@ I & 0 & 0\\
  can be small.
 \end_layout
 
+\begin_layout Standard
+......
+\end_layout
+
+\begin_layout Standard
+Way 3:
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+I\\
+ &  & I\\
+ & I
+\end{array}\right]\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]\left[\begin{array}{ccc}
+I\\
+ &  & I\\
+ & I
+\end{array}\right]=\left[\begin{array}{ccc}
+I & S^{(xz)} & S^{(xy)}\\
+S^{(zx)} & I & S^{(zy)}\\
+S^{(yx)} & S^{(yz)} & I
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}=\left[\begin{array}{ccc}
+Q^{(xx)} & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & Q^{(yy)} & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & Q^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+I & S^{(xz)}\\
+S^{(zx)} & I
+\end{array}\right]^{-1}=\left(I+\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\right)\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xz)}\\
+Q^{(zx)} & Q^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx d-c=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}+\left[\begin{array}{ccc}
+0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left(\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}-\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}\right)\left[\begin{array}{c}
+0\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}=\left[\begin{array}{ccc}
+P^{(xx)} & 0 & P^{(xz)}\\
+0 & I & 0\\
+P^{(zx)} & 0 & P^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(I+\left[\begin{array}{c}
+Q^{(xy)}\\
+O\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{ccc}
+S^{(yx)} & O & S^{(yz)}\end{array}\right]\right)\left[\begin{array}{ccc}
+Q^{(xx)} &  & Q^{(xz)}\\
+ & I\\
+Q^{(zx)} &  & Q^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+verified
+\begin_inset Formula 
+\[
+D_{s}=\left[\begin{array}{ccc}
+I & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & I & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & I
+\end{array}\right]^{-1}-\left[\begin{array}{ccc}
+I & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & I
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+D_{s}=\left[\begin{array}{c}
+Q^{(xy)}\\
+O\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{ccc}
+S^{(yx)} & O & S^{(yz)}\end{array}\right]\left[\begin{array}{ccc}
+Q^{(xx)} &  & Q^{(xz)}\\
+ & I\\
+Q^{(zx)} &  & Q^{(zz)}
+\end{array}\right]+\left[\begin{array}{ccc}
+ & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}-I & Q^{(yz)}\\
+ & Q^{(zy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left(\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(zz)}
+\end{array}\right]\right)\vec{s}^{(x|z)T}+..
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}\left(-Q^{(yz)}\right)\vec{s}^{(x|z)T}+\vec{s}^{(x|z)}Q^{(zy)}\vec{s}^{(x|y)T}+\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
 \end_body
 \end_document

@@ -1150,6 +1150,17 @@ target "https://en.wikipedia.org/wiki/Woodbury_matrix_identity"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a_{11}^{-1}=\left(I+b_{12}\left(I_{n_{2}}-a_{21}b_{12}\right)^{-1}a_{21}\right)b_{11}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Cal 
 \begin_inset Formula $v_{12}$
