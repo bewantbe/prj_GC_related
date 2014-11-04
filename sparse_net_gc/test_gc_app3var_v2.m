@@ -288,9 +288,8 @@ vDs = -[Q12; O22; Q23'] / (I22 - [S12' S23]*[Q12; Q23']) * [S12' O22 S23] *...
  %P13' O23' P33];
 norm( vDs - Ds )
 
-Q23 = iv(n1+1:n1+n2, n1+n2+1:end);
-Q22 = iv(n1+1:n1+n2, n1+1:n1+n2);
-v1O2*v1O2' - v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*(Q22 - I22)*v1O2'
+v1O2*v1O2' + esv3 * vDs * esv3'
+v1O2*v1O2' + v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*(Q22 - I22)*v1O2'
 
 % Check coef and correlation
 figure(1);

@@ -691,7 +691,7 @@ S^{(zx)} & 0 & I
 
 \begin_inset Formula 
 \[
-D_{s}=\left[\begin{array}{c}
+D_{s}=-\left[\begin{array}{c}
 Q^{(xy)}\\
 O\\
 Q^{(zy)}
@@ -716,7 +716,7 @@ Q^{(yx)} & Q^{(yy)}-I & Q^{(yz)}\\
 
 \begin_inset Formula 
 \[
-d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(I-\left[\begin{array}{cc}
+d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=-\vec{s}^{(x|z)}Q^{(zy)}(I-\left[\begin{array}{cc}
 S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
 Q^{(xy)}\\
 Q^{(zy)}
@@ -732,7 +732,7 @@ Q^{(zz)}
 
 \begin_inset Formula 
 \[
-d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}\left(-Q^{(yz)}\right)\vec{s}^{(x|z)T}+\vec{s}^{(x|z)}Q^{(zy)}\vec{s}^{(x|y)T}+\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}
+d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}\vec{s}^{(x|z)T}+2\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}(Q^{yy}-I)\vec{s}^{(x|y)T}
 \]
 
 \end_inset
