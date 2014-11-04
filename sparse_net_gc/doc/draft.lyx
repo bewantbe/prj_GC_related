@@ -732,7 +732,30 @@ Q^{(zz)}
 
 \begin_inset Formula 
 \[
-d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}\vec{s}^{(x|z)T}+2\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}(Q^{yy}-I)\vec{s}^{(x|y)T}
+d-c-\vec{s}^{(x|y)}\vec{s}^{(x|y)T}=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}\vec{s}^{(x|z)T}+2\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}(Q^{(yy)}-I)\vec{s}^{(x|y)T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d-c=\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}\vec{s}^{(x|z)T}+2\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}Q^{(yy)}\vec{s}^{(x|y)T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d-c=\left[\begin{array}{cc}
+\vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+Q^{(yy)} & Q^{(yz)}\\
+Q^{(zy)} & Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}
+\end{array}\right]\left[\begin{array}{c}
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
 \]
 
 \end_inset
