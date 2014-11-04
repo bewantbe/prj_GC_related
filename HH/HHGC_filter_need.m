@@ -47,11 +47,11 @@ sZw = fspec(Zw);
 disp('Get spectrum from AR regression');  fflush(stdout);
 use_od = 50;
 [A_o, De_o] = ARregressionpd(getcovzpd(X, use_od), size(X,1));
-sAX_o = A2S_new(A_o, De_o, fftlen);
+sAX_o = A2S(A_o, De_o, fftlen);
 sAX_o = permute(sAX_o, [3 1 2]);
 % TODO: Failed here, not a well posed problem
 %[A_l, De_l] = ARregressionpd(getcovzpd(Y, use_od), size(Y,1));
-%sAX_l = A2S_new(A_l, De_l, fftlen);
+%sAX_l = A2S(A_l, De_l, fftlen);
 % single variable AR
 use_od = 26;   % determined by chooseOrderAuto(Y(1,:),'AIC',30)
 a1s_l  = zeros(size(Y,1), use_od);
@@ -61,7 +61,7 @@ for id_neu = 1:size(Y,1)
   [a, de] = ARregressionpd(getcovzpd(Y(id_neu, :), use_od), 1);
   a1s_l(id_neu, :) = a;
   de1s_l(id_neu)   = de;
-  sa1s_l(id_neu, :) = A2S_new(a, de, fftlen);
+  sa1s_l(id_neu, :) = A2S(a, de, fftlen);
 end
 
 show_GC_mat = @(gc) disp([' '+zeros(2,2) num2str(gc, '%.1e  ')]);  disp('');

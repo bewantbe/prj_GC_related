@@ -31,7 +31,7 @@ ARroots(A2d);  % check if the system is stable
 
 od = 200;
 fftlen = 8192;
-S = A2S_new(A2d, D, fftlen);
+S = A2S(A2d, D, fftlen);
 R = S2cov(S, od);
 
 %eg = eig(R2covz(R));

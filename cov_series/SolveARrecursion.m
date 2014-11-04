@@ -13,7 +13,7 @@ m = round(mp/p);
 
 % solve R for initial values
 fftlen = 2^8;
-S = A2S_new(A,De,fftlen);
+S = A2S(A,De,fftlen);
 V_d3 = real(ifft(S, size(S,3), 3));
 V = zeros(mp,p);
 for j=1:m

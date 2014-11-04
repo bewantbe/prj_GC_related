@@ -16,7 +16,7 @@ m = round(mp/p);
 
 % theoretical Spectrum and Covs
 fftlen = 2^8;
-S = A2S_new(A,De,fftlen);
+S = A2S(A,De,fftlen);
 V_d3 = real(ifft(S, size(S,3), 3));
 od_max = floor(fftlen/2);
 R = reshape(V_d3(:,:,1:od_max),p,[]);

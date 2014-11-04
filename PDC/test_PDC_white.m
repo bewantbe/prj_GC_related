@@ -15,7 +15,7 @@ A2d = [-0.9 ,  0.6, 0.5, 0.1;
 
 od = 199;
 fftlen = 65536;
-S = A2S_new(A2d, D, fftlen);
+S = A2S(A2d, D, fftlen);
 R = S2cov(S, od);
 
 % compare GC and PDC square mean
