@@ -230,19 +230,7 @@ esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
 n1 = size(V11, 1);
 n2 = size(V22, 1);
 n3 = size(V33, 1);
-iv  = inv(eS3);
-Q11 = iv(1:n1, 1:n1);
-Q13 = iv(1:n1, n1+n2+1:end);
-Q33 = iv(n1+n2+1:end, n1+n2+1:end);
 
-vv = (eye(n1+n3) + iv([1:n1,n1+n2+1:end], n1+1:n1+n2) / (eye(n2) - eS3(n1+1:n1+n2, [1:n1,n1+n2+1:end]) * iv([1:n1,n1+n2+1:end], n1+1:n1+n2)) * eS3(n1+1:n1+n2, [1:n1,n1+n2+1:end])) * iv([1:n1, n1+n2+1:end],[1:n1, n1+n2+1:end]);
-norm( vv - inv(eS2) )
-
-eS2_3 = [
-    V11  O12  V13
-    O12' I22  O23
-    V13' O23' V33];
-Ds = inv(eS3) - inv(eS2_3);
 O11 = zeros(n1,n1);
 O12 = zeros(n1,n2);
 O13 = zeros(n1,n3);
@@ -251,8 +239,6 @@ O23 = zeros(n2,n3);
 O33 = zeros(n3,n3);
 
 I22 = eye(n2);
-S12 = eS3(1:n1, n1+1:n1+n2);
-S23 = eS3(n1+1:n1+n2, n1+n2+1:end);
 
 iv  = inv(eS3);
 Q11 = iv(1:n1, 1:n1);
@@ -262,34 +248,10 @@ Q22 = iv(n1+1:n1+n2, n1+1:n1+n2);
 Q23 = iv(n1+1:n1+n2, n1+n2+1:end);
 Q33 = iv(n1+n2+1:end, n1+n2+1:end);
 
-iu = inv(eS2);
-P11 = iu(1:n1, 1:n1);
-P13 = iu(1:n1, n1+1:end);
-P33 = iu(n1+1:end, n1+1:end);
-
-norm(
-[Q11  Q12  Q13
- Q12' Q22  Q23
- Q13' Q23' Q33] - iv )
-
-vDs = -[Q12; O22; Q23'] / (I22 - [S12' S23]*[Q12; Q23']) * [S12' O22 S23] *...
-[Q11  O12  Q13
- O12' I22  O23
- Q13' O23' Q33] + ...
-[O11  Q12      O13
- Q12' Q22-I22  Q23
- O13' Q23'     O33];
-%vDs =...
-%[Q11  Q12  Q13
- %Q12' Q22  Q23
- %Q13' Q23' Q33] - ...
-%[P11  O12  P13
- %O12' I22  O23
- %P13' O23' P33];
-norm( vDs - Ds )
-
 v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*Q22*v1O2'
 [v1O2 v1O3] * [Q22  Q23; Q23' Q23' / Q22 * Q23] * [v1O2 v1O3]'
+(v1O3 * Q23' / Q22 + v1O2) * Q23 * v1O3' + v1O2*( Q22*v1O2' + Q23*v1O3')
+(v1O3*Q23' + v1O2*Q22) / Q22 * (v1O3*Q23' + v1O2*Q22)'
 
 % Check coef and correlation
 figure(1);

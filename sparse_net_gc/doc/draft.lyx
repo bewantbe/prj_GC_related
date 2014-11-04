@@ -761,6 +761,22 @@ Q^{(zy)} & Q^{(zy)}(Q^{(yy)})^{-1}Q^{(yz)}
 \end_inset
 
 
+\begin_inset Formula 
+\[
+d-c=\left(\vec{s}^{(x|z)}Q^{(zy)}(Q^{(yy)})^{-1}+\vec{s}^{(x|y)}\right)Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}\left(Q^{(yz)}\vec{s}^{(x|z)T}+Q^{(yy)}\vec{s}^{(x|y)T}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d-c=\left(\vec{s}^{(x|z)}Q^{(zy)}+\vec{s}^{(x|y)}Q^{(yy)}\right)(Q^{(yy)})^{-1}\left(Q^{(yy)}\vec{s}^{(x|y)T}+Q^{(yz)}\vec{s}^{(x|z)T}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
