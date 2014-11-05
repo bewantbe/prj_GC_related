@@ -6060,13 +6060,21 @@ Formula (
 \begin_inset Formula $\vec{a}^{(12)}$
 \end_inset
 
- is for standard whitened data):
+ is from standard whitened data):
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-d-c=d-c=\vec{a}^{(12)}(Q^{(yy)})^{-1}\vec{a}^{(12)T}
+d-c=d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\vec{a}^{(12)T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=I-S^{(yz)}S^{(zy)}-\left(S^{(yx)}-S^{(yz)}S^{(zx)}\right)\left(I-S^{(xz)}S^{(zx)}\right)^{-1}\left(S^{(xy)}-S^{(xz)}S^{(zy)}\right)
 \]
 
 \end_inset
@@ -6083,7 +6091,7 @@ raster_tuning_HH
 \end_layout
 
 \begin_layout Standard
-Compared current version (2014-08-10, changeset 45:836f718da9cf) to JYL
+Compared current version (2014-10-27, changeset 49:20ba04b94c86) to JYL
  version (2014-05-01 just after branch created, changeset 27:9efee6777a85)
 \begin_inset Foot
 status open
