@@ -359,26 +359,18 @@ Q^{(yy)}=\left(I-a_{21}a_{12}-\left(a_{23}-a_{21}a_{13}\right)\left(I-a_{31}a_{1
 \end_layout
 
 \begin_layout Standard
-verified.
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=I-a_{23}a_{32}-\left(a_{21}-a_{23}a_{31}\right)\left(I-a_{13}a_{31}\right)^{-1}\left(a_{12}-a_{13}a_{32}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-\left(Q^{(yy)}\right)^{-1}=I-a_{21}a_{12}-\left(a_{23}-a_{21}a_{13}\right)\left(I-a_{31}a_{13}\right)^{-1}\left(a_{32}-a_{31}a_{12}\right)=I-a_{23}a_{32}-\left(a_{21}-a_{23}a_{31}\right)\left(I-a_{13}a_{31}\right)^{-1}\left(a_{12}-a_{13}a_{32}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(Q^{(yy)}\right)^{-1}=I-a_{21}a_{12}-\left(a_{23}-a_{21}a_{13}\right)\left(I+a_{31}\left(I-a_{13}a_{31}\right)^{-1}a_{13}\right)\left(a_{32}-a_{31}a_{12}\right)
-\]
-
-\end_inset
-
-
+verified.
 \end_layout
 
 \begin_layout Standard
@@ -404,6 +396,14 @@ S^{(zx)} & I
 \begin_inset Formula 
 \[
 c=\vec{s}^{(x|z)}\left(I-S^{(zx)}S^{(xz)}\right)^{-1}\vec{s}^{(x|z)T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c=\vec{s}^{(x|z)}\left(I+S^{(zx)}\left(I-S^{(xz)}S^{(zx)}\right)^{-1}S^{(xz)}\right)\vec{s}^{(x|z)T}=\vec{s}^{(x|z)}\vec{s}^{(x|z)T}+\vec{s}^{(x|z)}S^{(zx)}\left(I-S^{(xz)}S^{(zx)}\right)^{-1}S^{(xz)}\vec{s}^{(x|z)T}
 \]
 
 \end_inset
@@ -439,6 +439,22 @@ F_{y\rightarrow x|z}=\ln\frac{1-c}{1-d}=-\ln\frac{1-d}{1-c}=-\ln\left(1-\frac{d-
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+----
+\end_layout
+
+\begin_layout Standard
+Use 
+\begin_inset Formula $\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\vec{a}^{(12)T}$
+\end_inset
+
+ to calculate approximate GC could get 
+\begin_inset Formula $O(m^{3}p^{2})$
+\end_inset
+
+ time cost.
 \end_layout
 
 \begin_layout Standard
