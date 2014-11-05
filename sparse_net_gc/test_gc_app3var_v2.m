@@ -239,6 +239,7 @@ O23 = zeros(n2,n3);
 O33 = zeros(n3,n3);
 
 I22 = eye(n2);
+I33 = eye(n3);
 
 iv  = inv(eS3);
 Q11 = iv(1:n1, 1:n1);
@@ -253,6 +254,14 @@ v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*Q22*v1O2'
 (v1O3 * Q23' / Q22 + v1O2) * Q23 * v1O3' + v1O2*( Q22*v1O2' + Q23*v1O3')
 (v1O3*Q23' + v1O2*Q22) / Q22 * (v1O3*Q23' + v1O2*Q22)'
 b / Q22 * b'  % cool!
+
+C22 = inv(I22 - V12'*V12);
+ivQy1 = C22 + C22*V23*inv(I33 - V23'*C22*V23)*V23'*C22;
+ivSy = inv(
+[V11  V12  O13
+ V12' V22  V23
+ O13' V23' V33]);
+ivQy = ivSy(n1+1:n1+n2, n1+1:n1+n2);
 
 % Check coef and correlation
 figure(1);
