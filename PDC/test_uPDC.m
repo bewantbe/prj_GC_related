@@ -43,6 +43,7 @@ EXPm1_GC = expm1(GC)
 GPDC_SM = f_SM( GPDC_R(R) )
 uGPDC_SM = f_SM( uGPDC_R(R) )
 m_G_uG = 0.24*GPDC_SM + 0.76*uGPDC_SM
+[pdc2,gpdc2,ugpdc2,~,gpdc3,ugpdc3] = PDCall(A2d, D, fftlen);
 
 SW = StdWhiteS(S);
 RW = S2cov(SW, od);
