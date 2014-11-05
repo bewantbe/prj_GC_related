@@ -238,6 +238,7 @@ O22 = zeros(n2,n2);
 O23 = zeros(n2,n3);
 O33 = zeros(n3,n3);
 
+I11 = eye(n1);
 I22 = eye(n2);
 I33 = eye(n3);
 
@@ -254,18 +255,32 @@ v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*Q22*v1O2'
 (v1O3 * Q23' / Q22 + v1O2) * Q23 * v1O3' + v1O2*( Q22*v1O2' + Q23*v1O3')
 (v1O3*Q23' + v1O2*Q22) / Q22 * (v1O3*Q23' + v1O2*Q22)'
 b / Q22 * b'  % cool!
+coef_xy / Q22 * coef_xy'  % cool!
 
-C22 = inv(I22 - V12'*V12);
-ivQy1 = C22 + C22*V23*inv(I33 - V23'*C22*V23)*V23'*C22;
-ivSy = inv(
-[V11  V12  O13
- V12' V22  V23
- O13' V23' V33]);
-ivQy = ivSy(n1+1:n1+n2, n1+1:n1+n2);
-norm( ivQy - ivQy1 )
+max(abs(b+coef_xy))  % not very small
+plot(1:od, b+coef_xy);
 
-iQapp = I22 - V12'*V12 - V23*V23';
-norm( inv(ivQy) - iQapp)   % verified !!
+%C22 = inv(I22 - V12'*V12);
+%ivQy1 = C22 + C22*V23*inv(I33 - V23'*C22*V23)*V23'*C22;
+%ivSy = inv(
+%[V11  V12  O13
+ %V12' V22  V23
+ %O13' V23' V33]);
+%ivQy = ivSy(n1+1:n1+n2, n1+1:n1+n2);
+%norm( ivQy - ivQy1 )
+
+%iQapp = I22 - V12'*V12 - V23*V23';
+%norm( inv(ivQy) - iQapp)   % verified !!
+
+% if V13=0, V31=0, we have
+b * (I22 - V12'*V12 - V23*V23') * b'
+% in general
+iQ1 = I22 - V12'*V12 - (V23-V12'*V13)/(I33-V13'*V13)*(V23'-V13'*V12); % verified
+iQ3 = I22 - V23*V23' - (V12'-V23*V13')/(I11-V13*V13')*(V12-V13*V23'); % verified
+%norm(inv(Q22) - iQ1)
+%norm(inv(Q22) - iQ3)
+b * iQ1 * b'
+b * iQ3 * b'
 
 
 % Check coef and correlation
