@@ -262,6 +262,11 @@ ivSy = inv(
  V12' V22  V23
  O13' V23' V33]);
 ivQy = ivSy(n1+1:n1+n2, n1+1:n1+n2);
+norm( ivQy - ivQy1 )
+
+iQapp = I22 - V12'*V12 - V23*V23';
+norm( inv(ivQy) - iQapp)   % verified !!
+
 
 % Check coef and correlation
 figure(1);
