@@ -791,6 +791,388 @@ d-c=\vec{a}^{(12)}(Q^{(yy)})^{-1}\vec{a}^{(12)T}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For any invertable matrix 
+\begin_inset Formula $S$
+\end_inset
+
+, also assume 
+\begin_inset Formula $\left[\begin{array}{cc}
+S^{(xx)} & S^{(xz)}\\
+S^{(zx)} & S^{(zz)}
+\end{array}\right]$
+\end_inset
+
+ is invertable, then
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+S=\left[\begin{array}{ccc}
+S^{(xx)} & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & S^{(yy)} & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & S^{(zz)}
+\end{array}\right]^{-1}=\left[\begin{array}{ccc}
+Q^{(xx)} & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & Q^{(yy)} & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & Q^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+S^{(xx)} & S^{(xz)}\\
+S^{(zx)} & S^{(zz)}
+\end{array}\right]^{-1}=\left(I+\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\right)\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xz)}\\
+Q^{(zx)} & Q^{(zz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+D_{s}=\left[\begin{array}{ccc}
+S^{(xx)} & S^{(xy)} & S^{(xz)}\\
+S^{(yx)} & S^{(yy)} & S^{(yz)}\\
+S^{(zx)} & S^{(zy)} & S^{(zz)}
+\end{array}\right]^{-1}-\left[\begin{array}{ccc}
+S^{(xx)} & 0 & S^{(xz)}\\
+0 & I & 0\\
+S^{(zx)} & 0 & S^{(zz)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+D_{s}=-\left[\begin{array}{c}
+Q^{(xy)}\\
+O\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{ccc}
+S^{(yx)} & O & S^{(yz)}\end{array}\right]\left[\begin{array}{ccc}
+Q^{(xx)} &  & Q^{(xz)}\\
+ & I\\
+Q^{(zx)} &  & Q^{(zz)}
+\end{array}\right]+\left[\begin{array}{ccc}
+ & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}-I & Q^{(yz)}\\
+ & Q^{(zy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+D_{s}=-\left[\begin{array}{c}
+Q^{(xy)}\\
+O\\
+Q^{(zy)}
+\end{array}\right]\left(Q^{(yy)}\right)^{-1}\left[\begin{array}{ccc}
+Q^{(yx)} & O & Q^{(yz)}\end{array}\right]+\left[\begin{array}{ccc}
+ & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}-I & Q^{(yz)}\\
+ & Q^{(zy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified.
+\end_layout
+
+\begin_layout Standard
+For any row vector 
+\begin_inset Formula $\left[\begin{array}{ccc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]D_{s}\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right])^{-1}\left[\begin{array}{cc}
+S^{(yx)} & S^{(yz)}\end{array}\right]\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xz)}\\
+Q^{(zx)} & Q^{(zz)}
+\end{array}\right]\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]+ext.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right]\left(S^{(yy)}Q^{(yy)}\right)^{-1}S^{(yy)}\left[\begin{array}{cc}
+Q^{(yx)} & Q^{(yz)}\end{array}\right]\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]+ext.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ext.=\left[\begin{array}{ccc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+ & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}-I & Q^{(yz)}\\
+ & Q^{(zy)}
+\end{array}\right]\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+d-c=\left[\begin{array}{ccc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]D_{s}\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|y)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]+\vec{s}^{(x|y)}\vec{s}^{(x|y)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
++assume 
+\begin_inset Formula $S=S^{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(zy)}
+\end{array}\right]\left(Q^{(yy)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(yx)} & Q^{(yz)}\end{array}\right]\left[\begin{array}{c}
+\vec{s}^{(x|x)T}\\
+\vec{s}^{(x|z)T}
+\end{array}\right]+2\vec{s}^{(x|x)}Q^{(xy)}\vec{s}^{(x|y)T}+2\vec{s}^{(x|y)}Q^{(yz)}\vec{s}^{(x|z)T}+\vec{s}^{(x|y)}Q^{(yy)}\vec{s}^{(x|y)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\left(\vec{s}^{(x|x)}Q^{(xy)}+\vec{s}^{(x|y)}Q^{(yy)}+\vec{s}^{(x|z)}Q^{(zy)}\right)\left(Q^{(yy)}\right)^{-1}\left(Q^{(yx)}\vec{s}^{(x|x)T}+Q^{(yy)}\vec{s}^{(x|y)T}+Q^{(yz)}\vec{s}^{(x|z)T}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified
+\end_layout
+
+\begin_layout Standard
+Hence
+\begin_inset Formula 
+\[
+d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified
+\end_layout
+
+\begin_layout Standard
+??
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=a_{22}-a_{21}a_{11}^{-1}a_{12}-\left(a_{23}-a_{21}a_{11}^{-1}a_{13}\right)\left(a_{33}-a_{31}a_{11}^{-1}a_{13}\right)^{-1}\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=S^{(yy)}-S^{(yx)}\left(S^{(xx)}\right)^{-1}S^{(xy)}-\left(S^{(yz)}-S^{(yx)}\left(S^{(xx)}\right)^{-1}S^{(xz)}\right)\left(S^{(zz)}-S^{(zx)}\left(S^{(xx)}\right)^{-1}S^{(xz)}\right)^{-1}\left(S^{(zy)}-S^{(zx)}\left(S^{(xx)}\right)^{-1}S^{(xy)}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verified (also swap 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $z$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $S^{(xx)}=I$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=S^{(yy)}-S^{(yx)}S^{(xy)}-\left(S^{(yz)}-S^{(yx)}S^{(xz)}\right)\left(S^{(zz)}-S^{(zx)}S^{(xz)}\right)^{-1}\left(S^{(zy)}-S^{(zx)}S^{(xy)}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 .
 \end_layout
 

@@ -1004,7 +1004,7 @@ a_{11}^{-1}+a_{11}^{-1}a_{12}\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}a_{
 
 \begin_layout Subsection
 Know inverse of 
-\begin_inset Formula $n_{1}\times n_{2}$
+\begin_inset Formula $\left(n_{1}+n_{2}\right)\times\left(n_{1}+n_{2}\right)$
 \end_inset
 
  matrix, get inverse of 
