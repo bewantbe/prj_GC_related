@@ -1103,7 +1103,7 @@ verified
 \end_layout
 
 \begin_layout Standard
-Hence
+Hence ()
 \begin_inset Formula 
 \[
 d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}
@@ -1170,6 +1170,241 @@ For
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+----
+\end_layout
+
+\begin_layout Standard
+Note that:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}=-\ln\left(1-\frac{\frac{1}{\mathrm{var}(x_{t})}\left(d-c\right)}{1-\frac{1}{\mathrm{var}(x_{t})}c}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+hence
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx\frac{1}{\mathrm{var}(x_{t})}\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Relation to two-var GC
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+S^{(xx)} & S^{(xy)}\\
+S^{(yx)} & S^{(yy)}
+\end{array}\right]^{-1}=\left(I+\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right])^{-1}\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\right)\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left(I+\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left(S^{(zz)}Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\right)\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]-\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(zx)} & Q^{(zy)}\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+b^{(11)} & b^{(12)}\end{array}\right]=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)}\end{array}\right]\left[\begin{array}{cc}
+S^{(xx)} & S^{(xy)}\\
+S^{(yx)} & S^{(yy)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b^{(12)}=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)}\end{array}\right]\left(I+\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right](I-\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right])^{-1}\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\right)\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(yy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)}\end{array}\right]\left(I+\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left(S^{(zz)}Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+S^{(zx)} & S^{(zy)}\end{array}\right]\right)\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(yy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xy)}\\
+Q^{(yy)}
+\end{array}\right]-\left[\begin{array}{cc}
+\vec{s}^{(x|x)} & \vec{s}^{(x|y)}\end{array}\right]\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d_{xy}-c_{xy}=b^{(12)}\left(Q^{(yy)}-Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\right)^{-1}\left(b^{(12)}\right)^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+---
+\end_layout
+
+\begin_layout Standard
+rude approximation (very small corralation)
+\begin_inset Formula 
+\[
+F_{y\rightarrow x}\approx b^{(12)}\left(b^{(12)}\right)^{T}\approx\left(a^{(12)}-a^{(13)}Q^{(zy)}\right)\left(a^{(12)T}-Q^{(yz)}a^{(13)T}\right)\approx F_{y\rightarrow x|z}+a^{(13)}Q^{(zy)}Q^{(yz)}a^{(13)T}-2a^{(12)}Q^{(yz)}a^{(13)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Possible fast algorithm for GC
 \end_layout
 
 \begin_layout Standard
