@@ -1360,13 +1360,25 @@ Q^{(yz)}
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
-\]
+\begin{equation}
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\label{eq:b-from-a}
+\end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+(inference: 
+\begin_inset Formula $a^{(12)}=0,\ a^{(13)}=0\ \Rightarrow\ b^{(12)}=0$
+\end_inset
+
+, also 
+\begin_inset Formula $b^{(13)}=0$
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Standard
@@ -1393,6 +1405,192 @@ rude approximation (very small corralation)
 \begin_inset Formula 
 \[
 F_{y\rightarrow x}\approx b^{(12)}\left(b^{(12)}\right)^{T}\approx\left(a^{(12)}-a^{(13)}Q^{(zy)}\right)\left(a^{(12)T}-Q^{(yz)}a^{(13)T}\right)\approx F_{y\rightarrow x|z}+a^{(13)}Q^{(zy)}Q^{(yz)}a^{(13)T}-2a^{(12)}Q^{(yz)}a^{(13)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+??? get a formula that contain 
+\begin_inset Formula $a^{(23)}$
+\end_inset
+
+ which like Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b^{(13)}=a^{(13)}-a^{(12)}\left(Q^{(yy)}\right)^{-1}Q^{(yz)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b^{(23)}=a^{(23)}-a^{(21)}\left(Q^{(xx)}\right)^{-1}Q^{(xz)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(32)}=a^{(32)}-a^{(31)}\left(Q^{(xx)}\right)^{-1}Q^{(xy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+->
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-\left(b^{(13)}+a^{(12)}\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\right)\left(Q^{(zz)}\right)^{-1}Q^{(zy)}=a^{(12)}\left(I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\right)-b^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}+b^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}=a^{(12)}\left(I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(inference: 
+\begin_inset Formula $b^{(12)}=0,\ b^{(13)}=0\ \Rightarrow\ a^{(12)}=0$
+\end_inset
+
+, also 
+\begin_inset Formula $a^{(13)}=0$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+???
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a^{(12)}\left(Q^{(yy)}\right)^{-1}Q^{(yz)}=a^{(13)}-b^{(13)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+??? get starting point formula???
+\end_layout
+
+\begin_layout Standard
+??? if 
+\begin_inset Formula $a^{(12)}=0$
+\end_inset
+
+, what is 
+\begin_inset Formula $b^{(12)}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b^{(13)}=a^{(13)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(32)}=a^{(32)}-a^{(31)}\left(Q^{(xx)}\right)^{-1}Q^{(xy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+..
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}*b^{(12)T}=a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}a^{(13)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(13)}*b^{(32)T}=a^{(13)}a^{(32)T}-a^{(13)}Q^{(yx)}\left(Q^{(xx)}\right)^{-1}a^{(31)T}
 \]
 
 \end_inset
