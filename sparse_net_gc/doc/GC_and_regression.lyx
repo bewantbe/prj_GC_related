@@ -130,7 +130,7 @@ Define
 \begin_inset Formula $\cdot^{T}$
 \end_inset
 
- to conjugate transpose
+ to conjugate transpose 
 \begin_inset Formula $\cdot^{H}$
 \end_inset
 
@@ -243,6 +243,43 @@ Q^{(yz)}
 \end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
 Q^{(zx)} & Q^{(zy)}\end{array}\right]\label{eq:inv-2-from-3}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left(Q^{(zz)}\right)^{-1}=a_{22}^{-1}=b_{22}+b_{21}\left(I_{n_{1}}-a_{12}b_{21}\right)^{-1}a_{12}b_{22}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(Q^{(zz)}\right)^{-1}=a_{22}^{-1}=R^{(zz)}+??\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left(I-\left[\begin{array}{cc}
+Q^{(xz)} & Q^{(yz)}\end{array}\right]\left[\begin{array}{c}
+R^{(zx)}\\
+R^{(zy)}
+\end{array}\right]\right)^{-1}\left[\begin{array}{cc}
+Q^{(xz)} & Q^{(yz)}\end{array}\right]R^{(zz)}
+\]
 
 \end_inset
 
