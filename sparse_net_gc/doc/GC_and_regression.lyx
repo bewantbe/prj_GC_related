@@ -272,13 +272,15 @@ Q^{(zx)} & Q^{(zy)}\end{array}\right]\label{eq:inv-2-from-3}
 
 \begin_inset Formula 
 \[
-\left(Q^{(zz)}\right)^{-1}=a_{22}^{-1}=R^{(zz)}+??\left[\begin{array}{cc}
-R^{(zx)} & R^{(zy)}\end{array}\right]\left(I-\left[\begin{array}{cc}
-Q^{(xz)} & Q^{(yz)}\end{array}\right]\left[\begin{array}{c}
-R^{(zx)}\\
-R^{(zy)}
-\end{array}\right]\right)^{-1}\left[\begin{array}{cc}
-Q^{(xz)} & Q^{(yz)}\end{array}\right]R^{(zz)}
+\left(Q^{(zz)}\right)^{-1}=0R^{(zz)}+\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left(I-\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\right)^{-1}\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]R^{(zz)}
 \]
 
 \end_inset
