@@ -940,7 +940,7 @@ I & O & O\\
 
 \begin_layout Section
 Inverse of 
-\begin_inset Formula $n_{1}\times n_{2}$
+\begin_inset Formula $\left(n_{1}+n_{2}\right)\times\left(n_{1}+n_{2}\right)$
 \end_inset
 
  matrix
@@ -1133,6 +1133,17 @@ More generally, by Sherman–Morrison–Woodbury formula,
 \begin_inset Formula 
 \[
 \left(I_{n_{2}}-b_{21}a_{12}\right)^{-1}=I+b_{21}\left(I_{n_{1}}-a_{12}b_{21}\right)^{-1}a_{12}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a_{22}^{-1}=b_{22}-b_{21}\left(b_{11}\right)^{-1}b_{12}
 \]
 
 \end_inset
