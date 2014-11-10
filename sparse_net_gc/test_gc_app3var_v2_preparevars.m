@@ -9,7 +9,7 @@ id_driving = permvec(2);
 l = size(R, 2);
 idx = [id_passive:p:l; id_driving:p:l];
 F = ARregression([R(id_passive,idx); R(id_driving,idx)]);
-B = ARregression(S2cov(S(permvec,permvec,:), m));
+[B, D_B] = ARregression(S2cov(S(permvec,permvec,:), m));
 
 fprintf('analyse GC %d -> %d\n', id_driving, id_passive);
 

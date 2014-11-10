@@ -148,7 +148,7 @@ GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3'
 
 GC_approx_od1 = v1O2*v1O2'
 
-b12 = B(id_passive, id_driving:p:end);  % assume X is standard whitened
+b12 = -B(id_passive, id_driving:p:end);  % assume X is standard whitened
 GC_from_coef_app_od1 = sum(b12 .* b12)
 
 f12 = F(1, 2:2:end);  % assume X is standard whitened
@@ -168,6 +168,8 @@ coef_all = erv3 / eR3;
 a11 = coef_all( 1:m );
 a12 = coef_all((1:m)+m);  % should be the same as B(1,2:p:end)
 a13 = coef_all(2*m+1:end);
+
+a32 = -B(3, 2:p:end);
 
 disp('------------ new app ------------');
 id_x = (1:m);
@@ -221,21 +223,53 @@ ft_a12 = fft(a12, fftlen);
 ft_a13 = fft(a13, fftlen);
 %ft_a12 = fft([a12, zeros(1,fftlen - 2*size(a12,2)+1), fliplr(a12(2:end))], fftlen);  % worse
 %ft_a13 = fft([a13, zeros(1,fftlen - 2*size(a13,2)+1), fliplr(a13(2:end))], fftlen);  % worse
-ft_Qzy_a = QSp(3,2,:)(:)';
-ft_Qzz_a = QSp(3,3,:)(:)';
+ft_Qzy_a = QSp(3,2,:)(:).';
+ft_Qzz_a = QSp(3,3,:)(:).';
 
 %ft_b12_app = ft_a13 .* ft_Qzy_a;
 %real( mean(ft_b12_app .* conj(ft_b12_app)) )
 
-ft_b12_app = ft_a12 - ft_a13 ./ conj(ft_Qzz_a) .* conj(ft_Qzy_a);
+ft_b12_app = ft_a12 - ft_a13 ./ ft_Qzz_a .* ft_Qzy_a;
 ift_b12_app = ifft(ft_b12_app, fftlen)(1:m);
 %real( mean(ft_b12_app .* conj(ft_b12_app)) )
 real( ift_b12_app * ift_b12_app' )
+%figure(3); plot(1:m, b12, 1:m, ift_b12_app);
+%figure(4); plot(1:m, b12 - ift_b12_app);
 
-figure(3); plot(1:m, b12);
+%figure(3); plot(1:m, b12);
+%figure(4); plot(1:2*m-1, conv(a13, a32));
+
+%% exact ft_Qxx
+%max(abs( (A2S(B, D_B, fftlen) - Sp)(:) ))
+ft_A = fft( cat(3, eye(p), reshape(B, p,p,[])), fftlen, 3);
+ft_Qzz = conj(ft_A(1,3,:)) .* ft_A(1,3,:) / D_B(1,1) + ...
+         conj(ft_A(2,3,:)) .* ft_A(2,3,:) / D_B(2,2) + ...
+         conj(ft_A(3,3,:)) .* ft_A(3,3,:) / D_B(3,3);
+%ft_Qzz = ft_Qzz(:).';
+%max(abs( (ft_Qzz_a - ft_Qzz(:).')(:) ))
+ft_Qzy = conj(ft_A(1,3,:)) .* ft_A(1,2,:) / D_B(1,1) + ...
+         conj(ft_A(2,3,:)) .* ft_A(2,2,:) / D_B(2,2) + ...
+         conj(ft_A(3,3,:)) .* ft_A(3,2,:) / D_B(3,3);
+%ft_Qzy = ft_Qzy(:).';
+ft_b12_app_expr1 = (ft_A(1,3,:) ./ ft_Qzz .* ft_Qzy)(:);
+ift_b12_app_expr1 = ifft(ft_b12_app_expr1, fftlen)';
+figure(5); plot(1:m, b12, 1:m, ift_b12_app_expr1(2:m+1) )
+
+% approximate ft_Qzy
+ft_b12_app_expr2 = (ft_A(1,3,:) .* (ft_A(3,2,:) + conj(ft_A(2,3,:))) ./ ft_A(3,3,:))(:);
+ift_b12_app_expr2 = real(ifft(ft_b12_app_expr2, fftlen))';
+figure(6); plot(1:m, b12, 1:m, ift_b12_app_expr2(2:m+1) )
+
+%figure(15); plot(real(ifft(ft_b12_app_expr2)))
+
+%b12_app = D_B(3,3)/D_B(2,2) * (-conv(a13, a32)(1:m));
+%b12_app = D_B(3,3)/D_B(2,2) * (-conv(a13, a32)(1:m));
+%figure(5); plot(1:m, b12, 1:m, b12_app )
+
+%figure(3); plot(1:m, b12);
 %figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
 %figure(4); plot(real(ifft(ft_b12_app,fftlen)));
-figure(4); plot(1:m, b12 - real(ifft(ft_b12_app,fftlen))(1:m));
+%figure(4); plot(1:m, b12 - real(ifft(ft_b12_app,fftlen))(1:m));
 
 %vv = real(ifft(ft_b12_app,fftlen));
 %figure(5); plot(1:m, vv(1:m), 1:m, fliplr(vv)(1:m));

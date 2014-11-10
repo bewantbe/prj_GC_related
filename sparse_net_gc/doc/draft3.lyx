@@ -24,10 +24,11 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
-\paperfontsize default
+\paperfontsize 11
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \use_mhchem 1
@@ -42,6 +43,10 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -556,7 +561,7 @@ u(t)=\begin{cases}
 Then
 \begin_inset Formula 
 \[
-B_{xy}\approx\left[A_{xy}-A_{xz}/Q_{zz}^{*}*Q_{zy}^{*}\right]_{+}
+B_{xy}\approx\left[A_{xy}-A_{xz}/Q_{zz}*Q_{zy}\right]_{+}
 \]
 
 \end_inset
@@ -566,14 +571,6 @@ B_{xy}\approx\left[A_{xy}-A_{xz}/Q_{zz}^{*}*Q_{zy}^{*}\right]_{+}
 
 \begin_layout Standard
 Under assumption
-\begin_inset Formula 
-\[
-A_{xx}=A_{yy}=A_{zz}=1
-\]
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
@@ -589,7 +586,7 @@ A_{xx}=A_{yy}=A_{zz}=1
 We have
 \begin_inset Formula 
 \[
-Q_{zz}=\frac{A_{xz}A_{xz}^{*}}{\sigma_{x}^{2}}+\frac{A_{yz}A_{yz}^{*}}{\sigma_{y}^{2}}+\frac{1}{\sigma_{z}^{2}}
+Q_{zz}=\frac{A_{xz}^{*}A_{xz}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yz}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zz}}{\sigma_{z}^{2}}
 \]
 
 \end_inset
@@ -597,7 +594,7 @@ Q_{zz}=\frac{A_{xz}A_{xz}^{*}}{\sigma_{x}^{2}}+\frac{A_{yz}A_{yz}^{*}}{\sigma_{y
 
 \begin_inset Formula 
 \[
-Q_{zy}=\frac{A_{xy}A_{zx}^{*}}{\sigma_{x}^{2}}+\frac{A_{zy}^{*}}{\sigma_{y}^{2}}+\frac{A_{zy}}{\sigma_{z}^{2}}
+Q_{zy}=\frac{A_{xz}^{*}A_{xy}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yy}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zy}}{\sigma_{z}^{2}}
 \]
 
 \end_inset
@@ -609,7 +606,15 @@ Q_{zy}=\frac{A_{xy}A_{zx}^{*}}{\sigma_{x}^{2}}+\frac{A_{zy}^{*}}{\sigma_{y}^{2}}
 Hence
 \begin_inset Formula 
 \[
-A_{xz}/Q_{zz}^{*}*Q_{zy}^{*}\approx\sigma_{z}^{2}A_{xz}\left(\frac{A_{zy}}{\sigma_{y}^{2}}+\frac{A_{zy}^{*}}{\sigma_{z}^{2}}\right)\approx A_{xz}\left(A_{zy}+A_{zy}^{*}\right)
+A_{xz}/Q_{zz}*Q_{zy}\approx\frac{\sigma_{z}^{2}A_{xz}}{A_{zz}^{*}A_{zz}}\left(\frac{A_{yz}^{*}A_{yy}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zy}}{\sigma_{z}^{2}}\right)\approx\frac{A_{xz}A_{zy}}{A_{zz}}+\frac{A_{xz}A_{yz}^{*}A_{yy}\sigma_{z}^{2}}{A_{zz}^{*}A_{zz}\sigma_{y}^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
 \]
 
 \end_inset
