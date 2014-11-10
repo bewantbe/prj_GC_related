@@ -272,6 +272,11 @@ figure(7); plot(1:m, b12, 1:m, ift_b12_app_expr3(2:m+1) )
 b12_app_expr3 = conv(a13,fliplr(a23))(m+1:end) + [0, conv(a13, a32)(1:m-2)];
 figure(16); plot(1:m, b12, 1:m-1, b12_app_expr3 )
 
+disp('gc pairwise app');
+ift_b12_app_expr1(2:m+1) * ift_b12_app_expr1(2:m+1)'
+ift_b12_app_expr2(2:m+1) * ift_b12_app_expr2(2:m+1)'
+b12_app_expr3 * b12_app_expr3'
+
 %figure(3); plot(1:m, b12);
 %figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
 %figure(4); plot(real(ifft(ft_b12_app,fftlen)));

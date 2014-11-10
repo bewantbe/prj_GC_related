@@ -623,6 +623,21 @@ A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
 \end_layout
 
 \begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A_{xz}A_{xz}^{*}\left(A_{zy}A_{zy}^{*}+A_{zy}A_{yz}+A_{yz}^{*}A_{zy}^{*}+A_{yz}^{*}A_{yz}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 .
 \end_layout
 
