@@ -170,6 +170,7 @@ a12 = coef_all((1:m)+m);  % should be the same as B(1,2:p:end)
 a13 = coef_all(2*m+1:end);
 
 a32 = -B(3, 2:p:end);
+a23 = -B(2, 3:p:end);
 
 disp('------------ new app ------------');
 id_x = (1:m);
@@ -236,9 +237,6 @@ real( ift_b12_app * ift_b12_app' )
 %figure(3); plot(1:m, b12, 1:m, ift_b12_app);
 %figure(4); plot(1:m, b12 - ift_b12_app);
 
-%figure(3); plot(1:m, b12);
-%figure(4); plot(1:2*m-1, conv(a13, a32));
-
 %% exact ft_Qxx
 %max(abs( (A2S(B, D_B, fftlen) - Sp)(:) ))
 ft_A = fft( cat(3, eye(p), reshape(B, p,p,[])), fftlen, 3);
@@ -260,11 +258,19 @@ ft_b12_app_expr2 = (ft_A(1,3,:) .* (ft_A(3,2,:) + conj(ft_A(2,3,:))) ./ ft_A(3,3
 ift_b12_app_expr2 = real(ifft(ft_b12_app_expr2, fftlen))';
 figure(6); plot(1:m, b12, 1:m, ift_b12_app_expr2(2:m+1) )
 
-%figure(15); plot(real(ifft(ft_b12_app_expr2)))
+% approximate ft_Qzy
+ft_b12_app_expr3 = (ft_A(1,3,:) .* (ft_A(3,2,:) + conj(ft_A(2,3,:))))(:);
+%ft_b12_app_expr3 = (ft_A(1,3,:) .* ft_A(3,2,:))(:);
+ift_b12_app_expr3 = real(ifft(ft_b12_app_expr3, fftlen))';
+figure(7); plot(1:m, b12, 1:m, ift_b12_app_expr3(2:m+1) )
 
-%b12_app = D_B(3,3)/D_B(2,2) * (-conv(a13, a32)(1:m));
-%b12_app = D_B(3,3)/D_B(2,2) * (-conv(a13, a32)(1:m));
-%figure(5); plot(1:m, b12, 1:m, b12_app )
+% approximate b12 in time domain
+%b12_app_expr4 = conv(a13, a32)(1:m);
+%figure(5); plot(1:m, b12, 1:m, b12_app_expr4 )
+
+% approximate b12 in time domain, good!
+b12_app_expr3 = conv(a13,fliplr(a23))(m+1:end) + [0, conv(a13, a32)(1:m-2)];
+figure(16); plot(1:m, b12, 1:m-1, b12_app_expr3 )
 
 %figure(3); plot(1:m, b12);
 %figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
