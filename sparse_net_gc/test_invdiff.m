@@ -10,6 +10,11 @@ id_z = (1:n3)+n1+n2;
 
 Rxyz = randn(n1+n2+n3) + 1i * randn(n1+n2+n3);
 %Rxyz = Rxyz+Rxyz';
+
+%[M, ~] = qr(randn(n1+n2+n3));
+%Rxyz = diag(0.5+0.5*rand(1,n1+n2+n3));
+%Rxyz = M*Rxyz*M';
+
 Rxx = Rxyz(id_x, id_x);
 Rxy = Rxyz(id_x, id_y);
 Rxz = Rxyz(id_x, id_z);
@@ -139,7 +144,6 @@ disp('verify expression for Q^(zy)');
 Qzy_exp1 = -Qzz*(Rzy-Rzx/Rxx*Rxy)/(Ryy-Ryx/Rxx*Rxy);
 norm( Qzy - Qzy_exp1 )
 
-disp('verify ba');
 P = inv(R_XY);
 Pxy = P(id_x, id_y);
 Pyy = P(id_y, id_y);
