@@ -103,9 +103,11 @@ end
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
+permvec = [2 3 1];              % variable index after permutation
 %permvec = [3 1 2];              % variable index after permutation
-permvec = [1 2 3];              % variable index after permutation
 %permvec = [1 3 2];              % variable index after permutation
+%permvec = [1 2 3];              % variable index after permutation
+%permvec = [2 1 3];              % variable index after permutation
 id_rearrange = bsxfun(@plus, permvec', p*(0:m));
 covz = covz_orig(id_rearrange, id_rearrange);
 
@@ -222,67 +224,68 @@ eR3 = [
     R13' R23' R33];
 coef_all = erv3 / eR3;
 coef_xx = coef_all( 1:m );
-coef_xy = coef_all((1:m)+m);
+coef_xy = coef_all((1:m)+m);  % not exactly the same as b, plot(1:od, b+coef_xy);
 coef_xz = coef_all(2*m+1:end);
 
 disp('new app');
-esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
-n1 = size(V11, 1);
-n2 = size(V22, 1);
-n3 = size(V33, 1);
+d_minus_c = esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
 
-O11 = zeros(n1,n1);
-O12 = zeros(n1,n2);
-O13 = zeros(n1,n3);
-O22 = zeros(n2,n2);
-O23 = zeros(n2,n3);
-O33 = zeros(n3,n3);
-
-I11 = eye(n1);
-I22 = eye(n2);
-I33 = eye(n3);
-
-iv  = inv(eS3);
-Q11 = iv(1:n1, 1:n1);
-Q12 = iv(1:n1, n1+1:n1+n2);
-Q13 = iv(1:n1, n1+n2+1:end);
-Q22 = iv(n1+1:n1+n2, n1+1:n1+n2);
-Q23 = iv(n1+1:n1+n2, n1+n2+1:end);
-Q33 = iv(n1+n2+1:end, n1+n2+1:end);
-
-v1O3 * Q23' / Q22 * Q23 * v1O3' + 2 * v1O2*Q23*v1O3' + v1O2*Q22*v1O2'
-[v1O2 v1O3] * [Q22  Q23; Q23' Q23' / Q22 * Q23] * [v1O2 v1O3]'
-(v1O3 * Q23' / Q22 + v1O2) * Q23 * v1O3' + v1O2*( Q22*v1O2' + Q23*v1O3')
-(v1O3*Q23' + v1O2*Q22) / Q22 * (v1O3*Q23' + v1O2*Q22)'
-b / Q22 * b'  % cool!
-coef_xy / Q22 * coef_xy'  % cool!
-
-max(abs(b+coef_xy))  % not very small
-plot(1:od, b+coef_xy);
-
-%C22 = inv(I22 - V12'*V12);
-%ivQy1 = C22 + C22*V23*inv(I33 - V23'*C22*V23)*V23'*C22;
-%ivSy = inv(
-%[V11  V12  O13
- %V12' V22  V23
- %O13' V23' V33]);
-%ivQy = ivSy(n1+1:n1+n2, n1+1:n1+n2);
-%norm( ivQy - ivQy1 )
-
-%iQapp = I22 - V12'*V12 - V23*V23';
-%norm( inv(ivQy) - iQapp)   % verified !!
+id_x = (1:m);
+id_y = (1:m)+m;
+Q22 = inv(eS3)(id_y,id_y);
+coef_q = coef_xy / Q22 * coef_xy'  % cool!
 
 % if V13=0, V31=0, we have
-b * (I22 - V12'*V12 - V23*V23') * b'
+I11 = eye(m);
+I22 = eye(m);
+coef_q_app = b * (I22 - V12'*V12 - V23*V23') * b'
 % in general
-iQ1 = I22 - V12'*V12 - (V23-V12'*V13)/(I33-V13'*V13)*(V23'-V13'*V12); % verified
+iQ1 = I22 - V12'*V12 - (V23-V12'*V13)/(V33-V13'*V13)*(V23'-V13'*V12); % verified
 iQ3 = I22 - V23*V23' - (V12'-V23*V13')/(I11-V13*V13')*(V12-V13*V23'); % verified
-%norm(inv(Q22) - iQ1)
-%norm(inv(Q22) - iQ3)
 b * iQ1 * b'
 b * iQ3 * b'
 
+Q = inv(eS3);
+%figure(3); imagesc(Q - eye(size(Q)));
+%figure(4); plot(diag(Q,m));
 
+Qxy = Q(id_x, id_y);
+od_forward = ceil(m/2);
+%figure(5); plot(Qxy(od_forward+1,:));
+
+Sp = S(permvec, permvec, :);
+SpCov = S2cov(Sp, 100);
+-expm1(-RGrangerT(SpCov))   % x : gc = -ln(1-x)
+
+QSp = zeros(size(Sp));
+for k = 1 : fftlen
+  QSp(:,:,k) = inv(Sp(:,:,k));
+end
+
+%ift_QSp = ifft(QSp, fftlen, 3);
+%ift_QSp_xy = real( ift_QSp(1,2,:)(:) );
+%QSp_xy = [ift_QSp_xy, ift_QSp_xy](fftlen-od_forward + (1:m));
+%figure(6); plot(1:m, Qxy(od_forward+1,:), 1:m, QSp_xy);
+%figure(7); plot(1:m, Qxy(od_forward+1,:) - QSp_xy);
+
+Qyy = Q(id_y, id_y);
+iQyy = inv(Qyy);
+ift_iQSp_yy = real( ifft(squeeze(1./QSp(2,2,:)), fftlen) );
+iQSp_yy = [ift_iQSp_yy, ift_iQSp_yy](fftlen-od_forward + (1:m));
+%figure(6); plot(1:m, iQyy(od_forward+1,:), 1:m, iQSp_yy);
+%figure(7); plot(1:m, iQyy(od_forward+1,:) - iQSp_yy);
+
+ft_b = fft(coef_xy(:), fftlen);
+ft_Qyy_app = QSp(2,2,:)(:);
+ft_gc_1 = real( mean(ft_b ./ ft_Qyy_app .* conj(ft_b)) )
+ft_gc_2 = real( 0.5*mean(ft_b ./ ft_Qyy_app .* conj(ft_b)) + 0.5*mean(ft_b .* conj(ft_b)) )
+
+ft_gc_1 / d_minus_c
+ft_gc_2 / d_minus_c
+
+%figure(3); imagesc(iQyy - eye(size(iQyy)));
+
+return
 % Check coef and correlation
 figure(1);
 plot(1:m, -B(id_passive, id_driving:p:end), '-+',...

@@ -359,17 +359,27 @@ a^{(12)}\left(I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(
 
 \end_inset
 
-or (due to Eq.
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:inv-2-from-3"
+
+\end_layout
+
+\begin_layout Standard
+Note
+\begin_inset Formula 
+\begin{eqnarray*}
+\left(Q^{(zz)}\right)^{-1}Q^{(zy)} & = & -\left(R^{(zy)}-R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)\left(R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)^{-1}\\
+ & = & -\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{c}
+P^{(xy)}\\
+P^{(yy)}
+\end{array}\right]
+\end{eqnarray*}
 
 \end_inset
 
-)
+
 \begin_inset Formula 
 \[
-a^{(12)}\left(Q^{(yy)}\right)^{-1}P^{(yy)}=b^{(12)}+b^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}=\left(Q^{(yy)}\right)^{-1}P^{(yy)}
 \]
 
 \end_inset
@@ -397,6 +407,181 @@ In matrix form
 \vec{b}^{(11)} & \vec{b}^{(12)}\end{array}\right]=\left[\begin{array}{cc}
 \vec{a}^{(11)} & \vec{a}^{(12)}\end{array}\right]-a^{(13)}\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
 Q^{(zx)} & Q^{(zy)}\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\vec{b}^{(11)} & \vec{b}^{(12)}\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\end{array}\right]+a^{(13)}\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(21)}=a^{(21)}-a^{(23)}\left(Q^{(zz)}\right)^{-1}Q^{(zx)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{b}^{(22)}=\vec{a}^{(22)}-a^{(23)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\vec{b}^{(21)} & \vec{b}^{(22)}\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(21)} & \vec{a}^{(22)}\end{array}\right]-a^{(23)}\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(zx)} & Q^{(zy)}\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\vec{b}^{(11)} & \vec{b}^{(12)}\\
+\vec{b}^{(21)} & \vec{b}^{(22)}
+\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\\
+\vec{a}^{(21)} & \vec{a}^{(22)}
+\end{array}\right]-\left[\begin{array}{c}
+a^{(13)}\\
+a^{(23)}
+\end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(zx)} & Q^{(zy)}\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\vec{b}^{(11)} & \vec{b}^{(12)}\\
+\vec{b}^{(21)} & \vec{b}^{(22)}
+\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\\
+\vec{a}^{(21)} & \vec{a}^{(22)}
+\end{array}\right]+\left[\begin{array}{c}
+a^{(13)}\\
+a^{(23)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+a^{(13)}\\
+a^{(23)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]=\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)}\\
+\vec{r}^{(y|x)} & \vec{r}^{(y|y)}
+\end{array}\right]-\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\\
+\vec{a}^{(21)} & \vec{a}^{(22)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+a^{(13)}\\
+a^{(23)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}=\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)}\\
+\vec{r}^{(y|x)} & \vec{r}^{(y|y)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}-\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\\
+\vec{a}^{(21)} & \vec{a}^{(22)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Q: partial coef and coef??--should correct.
+\end_layout
+
+\begin_layout Subsection
+Partial correlation coefficient
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & O\\
+R^{(yx)} & R^{(yy)} & O\\
+O & O & R^{(zz)}
+\end{array}\right]=\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & 0\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x'_{t}=x_{t}-\alpha Y
 \]
 
 \end_inset
@@ -452,6 +637,17 @@ Inverse of
 
 \begin_layout Standard
 (Assume the inverse matries in the expressions are all valid)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(R^{(zy)}-R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)\left(R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)^{-1}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

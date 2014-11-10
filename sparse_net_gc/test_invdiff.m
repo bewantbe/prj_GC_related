@@ -134,3 +134,14 @@ disp('verify coef update formula');
 norm( b12 - b12_exp1 )
 norm( b11 - b11_exp1 )
 norm( a12 - a12_exp1 )
+
+disp('verify expression for Q^(zy)');
+Qzy_exp1 = -Qzz*(Rzy-Rzx/Rxx*Rxy)/(Ryy-Ryx/Rxx*Rxy);
+norm( Qzy - Qzy_exp1 )
+
+disp('verify ba');
+P = inv(R_XY);
+Pxy = P(id_x, id_y);
+Pyy = P(id_y, id_y);
+norm( Qzz\Qzy - (-[Rzx Rzy]*[Pxy;Pyy]) )
+norm( Qzz\[Qzx Qzy] - (-[Rzx Rzy]/R_XY) )
