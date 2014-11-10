@@ -6,10 +6,10 @@ A2d = [...
  0.05 -0.9   0.0  0.0  0.8    0.0;
  0.0   0.04 -0.5  0.0  0.03   0.2];
 p = size(D, 1);
-fftlen = 8192;
+fftlen = 2048;
 S = A2S(A2d, D, fftlen);
 S = StdWhiteS(S);
-od = m = 990;
+od = m = 190;
 R = S2cov(S, od);
 
 RGrangerT(R)
@@ -38,15 +38,31 @@ QS = zeros(size(S));
 for k = 1 : fftlen
   QS(:,:,k) = inv(S(:,:,k));
 end
-ift_Qxy = ifft(QS(1,2,:)(:),fftlen);
+ift_Qxy = real( ifft(QS(1,2,:)(:),fftlen) );
 
-%od_forward = ceil(m/2);
+od_forward = ceil(m/2);
 %od_forward = 1;
-od_forward = m-1;
+%od_forward = m-1;
 % compare Q and QS
 %figure(1); imagesc(Q - eye(size(Q)));
 figure(2); plot(1:m, Qxy(od_forward+1,:), 1:m, shift(ift_Qxy, od_forward)(1:m));
 figure(3); plot(1:m, Qxy(od_forward+1,:) - shift(ift_Qxy, od_forward)(1:m)');
+
+figure(4);
+colormap(jet(100));
+imagesc( Qxy );
+colorbar();
+
+figure(5);
+colormap(jet(100));
+diff_Qxy = Qxy - toeplitz([ift_Qxy(1); ift_Qxy(end:-1:end-m+2)], ift_Qxy(1:m));
+imagesc( diff_Qxy );
+colorbar();
+
+sg = svd(diff_Qxy);
+figure(10); plot(sg(1:10), '-*');
+% it is low rank!
+[U, sg2, V] = svds(diff_Qxy);
 
 %ift_iQS_yy = real( ifft(1 ./ QSp(2,2,:)(:), fftlen) );
 %iQSp_yy = [ift_iQSp_yy, ift_iQSp_yy](fftlen-od_forward + (1:m));

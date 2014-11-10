@@ -619,7 +619,7 @@ Binomial inverse theorem
 Specially
 \begin_inset Formula 
 \[
-\left(A-BD^{-1}C\right)^{-1}=A^{-1}+A^{-1}B\left(D-CA^{-1}B\right)CA^{-1}
+\left(A-BD^{-1}C\right)^{-1}=A^{-1}+A^{-1}B\left(D-CA^{-1}B\right)^{-1}CA^{-1}
 \]
 
 \end_inset

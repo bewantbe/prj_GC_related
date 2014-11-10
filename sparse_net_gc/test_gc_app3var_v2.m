@@ -51,13 +51,16 @@ are_you_joking = true;
 
   case 2
     D = diag([0.9 1.0 0.8]);
-    A = [-0.8   0.0   0.0  0.5 -0.07   0.0;
+    A = [-0.8   0.0   0.0  0.5 -0.02   0.0;
           0.05 -0.9   0.0  0.0  0.8    0.0;
-          0.0   0.04 -0.5  0.0  0.03   0.2];
-    fftlen = 1024;
+          0.0   0.02 -0.5  0.0  0.03   0.2];
+    %A = [-0.8   0.0   0.0  0.5 -0.07   0.0;
+          %0.05 -0.9   0.0  0.0  0.8    0.0;
+          %0.0   0.04 -0.5  0.0  0.03   0.2];
+    fftlen = 2048;
     S = A2S(A, D, fftlen);
     S = StdWhiteS(S);
-    od = 90;
+    od = 190;
     R = S2cov(S, od);
     covz = R2covz(R);
 
@@ -91,7 +94,7 @@ end
 %     [Xt Yt   ]' = E * eps[x,y  ]t
 % F * [Xt Yt   ]' =     eps[x,y  ]t
 
-[GC_srd_covz, Deps, B] = pos_nGrangerT2RZ(covz, p);
+[GC_srd_covz, Deps] = pos_nGrangerT2RZ(covz, p);
 if (p < 6)
   GC_srd_covz
 end
@@ -103,85 +106,29 @@ end
 % Permute the variables in covz
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
-permvec = [2 3 1];              % variable index after permutation
+%permvec = [2 3 1];              % variable index after permutation
 %permvec = [3 1 2];              % variable index after permutation
-%permvec = [1 3 2];              % variable index after permutation
+permvec = [1 3 2];              % variable index after permutation
 %permvec = [1 2 3];              % variable index after permutation
 %permvec = [2 1 3];              % variable index after permutation
-id_rearrange = bsxfun(@plus, permvec', p*(0:m));
-covz = covz_orig(id_rearrange, id_rearrange);
-
-id_passive = permvec(1);
-id_driving = permvec(2);
-
-% do a 2-var GC
-l = size(R, 2);
-idx = [id_passive:p:l; id_driving:p:l];
-[~, ~, F] = RGrangerT([R(id_passive,idx); R(id_driving,idx)]);
-
-fprintf('analyse GC %d -> %d\n', id_driving, id_passive);
-
-%
-% Get GC 2->1  (y->x)
-%
-
-% Rearrange the order of coefficients
-% from block toeplitz to toeplitz blocks
-id_p = p:p:(p*(m+1)-1);
-id_p_3 = bsxfun(@plus, [3:p]', p*(1:m))(:).';
-R11 = covz(id_p+1, id_p+1);        % should close to diagonal matrix
-R12 = covz(id_p+1, id_p+2);
-R13 = covz(id_p+1, id_p_3);
-R22 = covz(id_p+2, id_p+2);        % should close to diagonal matrix
-R23 = covz(id_p+2, id_p_3);
-R33 = covz(id_p_3, id_p_3);        % should close to diagonal matrix
-r1O1 = covz(1, id_p+1);            % v^(1|1), should close to zero
-r1O2 = covz(1, id_p+2);            % v^(1|2)
-r1O3 = covz(1, id_p_3);            % v^(1|3)
-
-covz_diag = diag(covz);
-invsqrt_var1 = diag(1./sqrt(covz_diag(1)));
-invsqrt_var1n = diag(1./sqrt(covz_diag(id_p+1)));
-invsqrt_var2n = diag(1./sqrt(covz_diag(id_p+2)));
-invsqrt_var3n = diag(1./sqrt(covz_diag(id_p_3)));
-
-% note here V := S
-V11 = invsqrt_var1n * R11 * invsqrt_var1n;
-V12 = invsqrt_var1n * R12 * invsqrt_var2n;
-V13 = invsqrt_var1n * R13 * invsqrt_var3n;
-V22 = invsqrt_var2n * R22 * invsqrt_var2n;
-V23 = invsqrt_var2n * R23 * invsqrt_var3n;
-V33 = invsqrt_var3n * R33 * invsqrt_var3n;
-v1O1= invsqrt_var1 * r1O1 * invsqrt_var1n; % s^(1|1), should close to zero
-v1O2= invsqrt_var1 * r1O2 * invsqrt_var2n;
-v1O3= invsqrt_var1 * r1O3 * invsqrt_var3n;
-
-esv2 = [v1O1 v1O3];
-eS2 = [
-    V11  V13
-    V13' V33];
-esv3 = [v1O1 v1O2 v1O3];
-eS3 = [
-    V11  V12  V13
-    V12' V22  V23
-    V13' V23' V33];
-
-GC_fomula = log(...
-    (1 - esv2 / eS2 * esv2')/...
-    (1 - esv3 / eS3 * esv3'))
+test_gc_app3var_v2_preparevars;
 
 % iterative
 B2 = eye(size(eS2)) - eS2;
 B3 = eye(size(eS3)) - eS3;
 
+fprintf('norm of B2 = %f\n', norm(B2));
+fprintf('norm of B3 = %f\n', norm(B3));
+
+GC_fomula = log(...
+    (1 - esv2 / eS2 * esv2')/...
+    (1 - esv3 / eS3 * esv3'))
+
 quotient_core =...
     1 - (1 - esv3 / eS3 * esv3') /...
         (1 - esv2 / eS2 * esv2')
-quotient_core_app =...
+var_reduction =...
     esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
-
-fprintf('norm of B2 = %f\n', norm(B2));
-fprintf('norm of B3 = %f\n', norm(B3));
 
 quotient_core_expension_od4_v1 =...
     1 - (1 - esv3 * (B3^0 + B3^1 + B3^2 + B3^3 + B3^4) * esv3') /...
@@ -201,11 +148,11 @@ GC_approx_od2_wrong = v1O2*v1O2' - v1O2 * V23 * v1O3'
 
 GC_approx_od1 = v1O2*v1O2'
 
-b = B(id_passive, id_driving:p:end);  % assume X is standard whitened
-GC_from_coef_app_od1 = sum(b.*b)
+b12 = B(id_passive, id_driving:p:end);  % assume X is standard whitened
+GC_from_coef_app_od1 = sum(b12 .* b12)
 
-b = F(1, 2:2:end);  % assume X is standard whitened
-GC_from_coef_app_pair= sum(b.*b)
+f12 = F(1, 2:2:end);  % assume X is standard whitened
+GC_from_coef_app_pair= sum(f12.*f12)
 
 %rF = [F(1, 1:2:end), F(1, 2:2:end)];
 %eR2xy = [
@@ -217,73 +164,89 @@ GC_from_coef_app_pair= sum(b.*b)
 GC_zero_ave = use_od / len
 
 % solve coefficients
-erv3 = [r1O1 r1O2 r1O3];
-eR3 = [
-    R11  R12  R13
-    R12' R22  R23
-    R13' R23' R33];
 coef_all = erv3 / eR3;
-coef_xx = coef_all( 1:m );
-coef_xy = coef_all((1:m)+m);  % not exactly the same as b, plot(1:od, b+coef_xy);
-coef_xz = coef_all(2*m+1:end);
+a11 = coef_all( 1:m );
+a12 = coef_all((1:m)+m);  % should be the same as B(1,2:p:end)
+a13 = coef_all(2*m+1:end);
 
-disp('new app');
-d_minus_c = esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
-
+disp('------------ new app ------------');
 id_x = (1:m);
 id_y = (1:m)+m;
-Q22 = inv(eS3)(id_y,id_y);
-coef_q = coef_xy / Q22 * coef_xy'  % cool!
+id_z = m+m+1 : size(eS3, 1);
+Q = inv(eS3);
+Qxy = Q(id_x, id_y);
+Qyy = Q(id_y, id_y);
+Qyz = Q(id_y, id_z);
+Qzy = Q(id_z, id_y);
+Qzz = Q(id_z, id_z);
+
+d_minus_c = esv3 / eS3 * esv3' - esv2 / eS2 * esv2'
+
+Qyy = inv(eS3)(id_y,id_y);
+d_minus_c_expr1 = a12 / Qyy * a12'  % cool!
 
 % if V13=0, V31=0, we have
 I11 = eye(m);
 I22 = eye(m);
-coef_q_app = b * (I22 - V12'*V12 - V23*V23') * b'
 % in general
 iQ1 = I22 - V12'*V12 - (V23-V12'*V13)/(V33-V13'*V13)*(V23'-V13'*V12); % verified
 iQ3 = I22 - V23*V23' - (V12'-V23*V13')/(I11-V13*V13')*(V12-V13*V23'); % verified
-b * iQ1 * b'
-b * iQ3 * b'
+d_minus_c_expr2 = a12 * iQ1 * a12'
+d_minus_c_expr3 = a12 * iQ3 * a12'
+d_minus_c_expr1_app = a12 * (I22 - V12'*V12 - V23*V23') * a12'
 
-Q = inv(eS3);
-%figure(3); imagesc(Q - eye(size(Q)));
-%figure(4); plot(diag(Q,m));
-
-Qxy = Q(id_x, id_y);
-od_forward = ceil(m/2);
-%figure(5); plot(Qxy(od_forward+1,:));
-
+disp('Relation between b and a');
 Sp = S(permvec, permvec, :);
 SpCov = S2cov(Sp, 100);
--expm1(-RGrangerT(SpCov))   % x : gc = -ln(1-x)
+%-expm1(-RGrangerT(SpCov))   % x : gc = -ln(1-x)
 
 QSp = zeros(size(Sp));
 for k = 1 : fftlen
   QSp(:,:,k) = inv(Sp(:,:,k));
 end
 
-%ift_QSp = ifft(QSp, fftlen, 3);
-%ift_QSp_xy = real( ift_QSp(1,2,:)(:) );
-%QSp_xy = [ift_QSp_xy, ift_QSp_xy](fftlen-od_forward + (1:m));
-%figure(6); plot(1:m, Qxy(od_forward+1,:), 1:m, QSp_xy);
-%figure(7); plot(1:m, Qxy(od_forward+1,:) - QSp_xy);
+b12 = -F(1, 2:2:end);
+b12_expr2 = a12 - a13 / Qzz * Qzy;
+%b12_expr2 = a12 - a13 * (Qzz \ Qzy);
+%norm( b12 - b12_expr2 )  % verify the exact formula
 
-Qyy = Q(id_y, id_y);
-iQyy = inv(Qyy);
-ift_iQSp_yy = real( ifft(squeeze(1./QSp(2,2,:)), fftlen) );
-iQSp_yy = [ift_iQSp_yy, ift_iQSp_yy](fftlen-od_forward + (1:m));
-%figure(6); plot(1:m, iQyy(od_forward+1,:), 1:m, iQSp_yy);
-%figure(7); plot(1:m, iQyy(od_forward+1,:) - iQSp_yy);
+Pyy = Qyy - Qyz/Qzz*Qzy;
 
-ft_b = fft(coef_xy(:), fftlen);
-ft_Qyy_app = QSp(2,2,:)(:);
-ft_gc_1 = real( mean(ft_b ./ ft_Qyy_app .* conj(ft_b)) )
-ft_gc_2 = real( 0.5*mean(ft_b ./ ft_Qyy_app .* conj(ft_b)) + 0.5*mean(ft_b .* conj(ft_b)) )
+gc12_var_reduction = b12 / Pyy * b12'
 
-ft_gc_1 / d_minus_c
-ft_gc_2 / d_minus_c
+gc12_var_red = [v1O1 v1O2] / [V11 V12; V12' V22] * [v1O1 v1O2]' - ...
+v1O1 / V11 * v1O1'
 
-%figure(3); imagesc(iQyy - eye(size(iQyy)));
+ft_a12 = fft(a12, fftlen);
+ft_a13 = fft(a13, fftlen);
+ft_Qzy_a = QSp(3,2,:)(:)';
+ft_Qzz_a = QSp(3,3,:)(:)';
+
+%ft_b12_app = ft_a13 .* ft_Qzy_a;
+%real( mean(ft_b12_app .* conj(ft_b12_app)) )
+
+ft_b12_app = ft_a12 - ft_a13 ./ conj(ft_Qzz_a) .* conj(ft_Qzy_a);
+real( mean(ft_b12_app .* conj(ft_b12_app)) )
+figure(3); plot(1:m, b12);
+figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
+
+%figure(1); plot(1:m, b12);
+%figure(2); plot(1:m, a13);
+
+ift_Qo = real( ifft( conj((ft_Qzy_a ./ ft_Qzz_a)(:)), fftlen) );
+diff_Qo = Qzz \ Qzy - toeplitz([ift_Qo(1); ift_Qo(end:-1:end-m+2)], ift_Qo(1:m));
+figure(19);  imagesc(Qzz \ Qzy);  colorbar();
+figure(20);  imagesc(diff_Qo);  colorbar();  % good approximation
+
+%ift_Qzz = real( ifft(QSp(3,3,:)(:),fftlen) );
+%diff_Qzz = Qzz - toeplitz([ift_Qzz(1); ift_Qzz(end:-1:end-m+2)], ift_Qzz(1:m));
+%figure(19);  imagesc(Qzz);  colorbar();
+%figure(20);  imagesc(diff_Qzz);  colorbar();
+
+%ift_Qzy = real( ifft(QSp(3,2,:)(:),fftlen) );
+%diff_Qzy = Qzy - toeplitz([ift_Qzy(1); ift_Qzy(end:-1:end-m+2)], ift_Qzy(1:m));
+%figure(19);  imagesc(Qzy);  colorbar();
+%figure(20);  imagesc(diff_Qzy);  colorbar();
 
 return
 % Check coef and correlation
