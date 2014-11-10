@@ -107,8 +107,8 @@ end
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
 %permvec = [2 3 1];              % variable index after permutation
-%permvec = [3 1 2];              % variable index after permutation
-permvec = [1 3 2];              % variable index after permutation
+permvec = [3 1 2];              % variable index after permutation
+%permvec = [1 3 2];              % variable index after permutation
 %permvec = [1 2 3];              % variable index after permutation
 %permvec = [2 1 3];              % variable index after permutation
 test_gc_app3var_v2_preparevars;
@@ -219,6 +219,8 @@ v1O1 / V11 * v1O1'
 
 ft_a12 = fft(a12, fftlen);
 ft_a13 = fft(a13, fftlen);
+%ft_a12 = fft([a12, zeros(1,fftlen - 2*size(a12,2)+1), fliplr(a12(2:end))], fftlen);  % worse
+%ft_a13 = fft([a13, zeros(1,fftlen - 2*size(a13,2)+1), fliplr(a13(2:end))], fftlen);  % worse
 ft_Qzy_a = QSp(3,2,:)(:)';
 ft_Qzz_a = QSp(3,3,:)(:)';
 
@@ -226,17 +228,25 @@ ft_Qzz_a = QSp(3,3,:)(:)';
 %real( mean(ft_b12_app .* conj(ft_b12_app)) )
 
 ft_b12_app = ft_a12 - ft_a13 ./ conj(ft_Qzz_a) .* conj(ft_Qzy_a);
-real( mean(ft_b12_app .* conj(ft_b12_app)) )
+ift_b12_app = ifft(ft_b12_app, fftlen)(1:m);
+%real( mean(ft_b12_app .* conj(ft_b12_app)) )
+real( ift_b12_app * ift_b12_app' )
+
 figure(3); plot(1:m, b12);
-figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
+%figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
+%figure(4); plot(real(ifft(ft_b12_app,fftlen)));
+figure(4); plot(1:m, b12 - real(ifft(ft_b12_app,fftlen))(1:m));
+
+%vv = real(ifft(ft_b12_app,fftlen));
+%figure(5); plot(1:m, vv(1:m), 1:m, fliplr(vv)(1:m));
 
 %figure(1); plot(1:m, b12);
 %figure(2); plot(1:m, a13);
 
-ift_Qo = real( ifft( conj((ft_Qzy_a ./ ft_Qzz_a)(:)), fftlen) );
-diff_Qo = Qzz \ Qzy - toeplitz([ift_Qo(1); ift_Qo(end:-1:end-m+2)], ift_Qo(1:m));
-figure(19);  imagesc(Qzz \ Qzy);  colorbar();
-figure(20);  imagesc(diff_Qo);  colorbar();  % good approximation
+%ift_Qo = real( ifft( conj((ft_Qzy_a ./ ft_Qzz_a)(:)), fftlen) );
+%diff_Qo = Qzz \ Qzy - toeplitz([ift_Qo(1); ift_Qo(end:-1:end-m+2)], ift_Qo(1:m));
+%figure(19);  imagesc(Qzz \ Qzy);  colorbar();
+%figure(20);  imagesc(diff_Qo);  colorbar();  % good approximation
 
 %ift_Qzz = real( ifft(QSp(3,3,:)(:),fftlen) );
 %diff_Qzz = Qzz - toeplitz([ift_Qzz(1); ift_Qzz(end:-1:end-m+2)], ift_Qzz(1:m));

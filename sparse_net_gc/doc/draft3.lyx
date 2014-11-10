@@ -60,6 +60,14 @@
 \begin_body
 
 \begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathscr{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 ---
 \end_layout
 
@@ -458,7 +466,155 @@ Use
 \end_layout
 
 \begin_layout Standard
-.
+----
+\end_layout
+
+\begin_layout Standard
+frequency domain: relation of pairwise GC and GC
+\begin_inset Formula 
+\[
+A(w)=\left[\begin{array}{ccc}
+A_{xx}(w) & A_{xy}(w) & A_{xz}(w)\\
+A_{yx}(w) & A_{yy}(w) & A_{yz}(w)\\
+A_{zx}(w) & A_{zy}(w) & A_{zz}(w)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+S(w)=\left[\begin{array}{ccc}
+S_{xx}(w) & S_{xy}(w) & S_{xz}(w)\\
+S_{yx}(w) & S_{yy}(w) & S_{yz}(w)\\
+S_{zx}(w) & S_{zy}(w) & S_{zz}(w)
+\end{array}\right]=A^{-1}(w)\Sigma A^{-1H}(w)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q(w)=S^{-1}(w)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B(w)=\left[\begin{array}{cc}
+B_{xx}(w) & B_{xz}(w)\\
+B_{yx}(w) & B_{yz}(w)
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+S_{[x,y]}(w)=\left[\begin{array}{cc}
+S_{xx}(w) & S_{xy}(w)\\
+S_{yx}(w) & S_{yy}(w)
+\end{array}\right]=B^{-1}(w)\Sigma_{[xy]}B^{-1H}(w)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[f(w)\right]_{+}=\F_{\mathrm{DFT}}\left[\F_{\mathrm{DFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u(t)=\begin{cases}
+1 & t\geq0\\
+0 & t<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then
+\begin_inset Formula 
+\[
+B_{xy}\approx\left[A_{xy}-A_{xz}/Q_{zz}^{*}*Q_{zy}^{*}\right]_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Under assumption
+\begin_inset Formula 
+\[
+A_{xx}=A_{yy}=A_{zz}=1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
+\sigma_{x}^{2} & \sigma_{y}^{2} & \sigma_{z}^{2}\end{array}\right]\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have
+\begin_inset Formula 
+\[
+Q_{zz}=\frac{A_{xz}A_{xz}^{*}}{\sigma_{x}^{2}}+\frac{A_{yz}A_{yz}^{*}}{\sigma_{y}^{2}}+\frac{1}{\sigma_{z}^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q_{zy}=\frac{A_{xy}A_{zx}^{*}}{\sigma_{x}^{2}}+\frac{A_{zy}^{*}}{\sigma_{y}^{2}}+\frac{A_{zy}}{\sigma_{z}^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hence
+\begin_inset Formula 
+\[
+A_{xz}/Q_{zz}^{*}*Q_{zy}^{*}\approx\sigma_{z}^{2}A_{xz}\left(\frac{A_{zy}}{\sigma_{y}^{2}}+\frac{A_{zy}^{*}}{\sigma_{z}^{2}}\right)\approx A_{xz}\left(A_{zy}+A_{zy}^{*}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
