@@ -50,13 +50,25 @@ are_you_joking = true;
     R = covz(1:p, 1:end);
 
   case 2
-    D = diag([0.9 1.0 0.8]);
-    A = [-0.8   0.0   0.0  0.5 -0.02   0.0;
-          0.05 -0.9   0.0  0.0  0.8    0.0;
-          0.0   0.02 -0.5  0.0  0.03   0.2];
+    %D = diag([0.9 1.0 0.8]);
+    %A = [-0.8   0.0   0.0  0.5 -0.02   0.0;
+          %0.05 -0.9   0.0  0.0  0.8    0.0;
+          %0.0   0.02 -0.5  0.0  0.03   0.2];
+    %A = [-0.8   0.0   0.01 0.5 -0.07   0.0;
+          %0.00 -0.9  -0.01  0.0  0.8   0.02;
+          %0.02  0.04 -0.5  0.0  0.03   0.2];
     %A = [-0.8   0.0   0.0  0.5 -0.07   0.0;
           %0.05 -0.9   0.0  0.0  0.8    0.0;
           %0.0   0.04 -0.5  0.0  0.03   0.2];
+    D = diag([0.6 0.5 0.3 0.3 0.6]);
+    s2 = sqrt(2);
+    A = zeros(5, 5*3);
+    A(1,1) =-0.95*s2;  A(1,6) = 0.09025;
+    A(2,6) =-0.05;
+    A(3,11)= 0.04;
+    A(4,6) = 0.05;      A(4,4) =-0.025*s2;  A(4,5) =-0.025*s2;
+    A(5,4) = 0.025*s2;  A(5,5) =-0.25*s2;
+
     fftlen = 2048;
     S = A2S(A, D, fftlen);
     S = StdWhiteS(S);
@@ -107,10 +119,11 @@ end
 % e.g. to get y->z, set permvec = [3 2 1]
 %permvec = [3 2 1];              % variable index after permutation
 %permvec = [2 3 1];              % variable index after permutation
-permvec = [3 1 2];              % variable index after permutation
+%permvec = [3 1 2];              % variable index after permutation
 %permvec = [1 3 2];              % variable index after permutation
 %permvec = [1 2 3];              % variable index after permutation
 %permvec = [2 1 3];              % variable index after permutation
+permvec = [3 4 1 2 5];              % variable index after permutation
 test_gc_app3var_v2_preparevars;
 
 % iterative
@@ -198,7 +211,7 @@ d_minus_c_expr2 = a12 * iQ1 * a12'
 d_minus_c_expr3 = a12 * iQ3 * a12'
 d_minus_c_expr1_app = a12 * (I22 - V12'*V12 - V23*V23') * a12'
 
-disp('Relation between b and a');
+disp('---- GC pairwise, (relation between b and a) ----');
 Sp = S(permvec, permvec, :);
 SpCov = S2cov(Sp, 100);
 %-expm1(-RGrangerT(SpCov))   % x : gc = -ln(1-x)
@@ -219,15 +232,28 @@ gc12_var_reduction_ans = [v1O1 v1O2] / [V11 V12; V12' V22] * [v1O1 v1O2]' - v1O1
 
 f_1dto3d = @(x) reshape(x, 1,1,[]);
 ft_a12 = f_1dto3d( fft(a12, fftlen) );
-ft_a13 = f_1dto3d( fft(a13, fftlen) );
+if p == 3
+  ft_a13 = f_1dto3d( fft(a13, fftlen) );
+else
+  ft_a13 = fft(reshape(a13, 1, p-2, []), fftlen, 3);
+end
+ft_Qyy_a = QSp(2,2,:);
+ft_Qyz_a = QSp(2,3:end,:);
 ft_Qzy_a = QSp(3:end,2,:);
 ft_Qzz_a = QSp(3:end,3:end,:);
 
 ft_b12_app = ft_a12 - rdiv3d( ft_a13, ft_Qzz_a, ft_Qzy_a);
-ift_b12_app = ifft(ft_b12_app, fftlen)(1:m);
-real( ift_b13_app * ift_b12_app' )
+ift_b12_app = real( ifft(ft_b12_app, fftlen) )(1:m);
+gc_ift_b12_app = ift_b12_app * ift_b12_app'
 %figure(3); plot(1:m, b12, 1:m, ift_b12_app);
 %figure(4); plot(1:m, b12 - ift_b12_app);
+
+vv = fft(ift_b12_app, fftlen) ./ (ft_Qyy_a - rdiv3d( ft_Qyz_a, ft_Qzz_a, ft_Qzy_a))(:).' .* conj(fft(ift_b12_app, fftlen));
+vv = fft(ift_b12_app, fftlen) .* conj(fft(ift_b12_app, fftlen));
+vv = real(vv);
+mean(vv)
+
+gc_ift_b12_app_v2 = ift_b12_app * ift_b12_app'
 
 %tcov = S2cov(Sp, 300);
 %[tB, tD] = ARregression(tcov);
@@ -245,33 +271,34 @@ ft_Qzz = rdiv3d( HTR(ft_A(1,3:end,:)), D_B(1,1), ft_A(1,3:end,:)) + ...
 ft_Qzy = rdiv3d( HTR(ft_A(1,3:end,:)), D_B(1,1), ft_A(1,2,:)) + ...
          rdiv3d( HTR(ft_A(2,3:end,:)), D_B(2,2), ft_A(2,2,:)) + ...
          rdiv3d( HTR(ft_A(3:end,3:end,:)), D_B(3:end,3:end), ft_A(3:end,2,:));
-ft_b12_app_expr1 = rdiv3d(ft_A(1,3:end,:), ft_Qzz, ft_Qzy)(:);
-ift_b12_app_expr1 = ifft(ft_b12_app_expr1, fftlen)';
+ft_b12_app_expr1 = -ft_A(1,2,:) + rdiv3d(ft_A(1,3:end,:), ft_Qzz, ft_Qzy);
+ift_b12_app_expr1 = real( ifft(ft_b12_app_expr1(:), fftlen) )';
 figure(5); plot(1:m, b12, 1:m, ift_b12_app_expr1(2:m+1) )
+gc_ift_b12_app_expr1 = ift_b12_app_expr1(2:m+1) * ift_b12_app_expr1(2:m+1)'
 
 % approximate ft_Qzy
 %ft_b12_app_expr2 = (ft_A(1,3:end,:) .* (ft_A(3:end,2,:) + HTR(ft_A(2,3:end,:))) ./ ft_A(3,3,:))(:);
 %ift_b12_app_expr2 = real(ifft(ft_b12_app_expr2, fftlen))';
 %figure(6); plot(1:m, b12, 1:m, ift_b12_app_expr2(2:m+1) )
+%ift_b12_app_expr2(2:m+1) * ift_b12_app_expr2(2:m+1)'
 
-% approximate ft_Qzy
-ft_b12_app_expr3 = mult3d(ft_A(1,3:end,:), (ft_A(3:end,2,:) + HTR(ft_A(2,3:end,:))))(:);
-ift_b12_app_expr3 = real(ifft(ft_b12_app_expr3, fftlen))';
+% Approximate ft_Qzy
+ft_b12_app_expr3 = -ft_A(1,2,:) + mult3d(ft_A(1,3:end,:), ft_A(3:end,2,:) + HTR(ft_A(2,3:end,:)));
+ift_b12_app_expr3 = real(ifft(ft_b12_app_expr3(:), fftlen))';
 figure(7); plot(1:m, b12, 1:m, ift_b12_app_expr3(2:m+1) )
+gc_ift_b12_app_expr3 = ift_b12_app_expr3(2:m+1) * ift_b12_app_expr3(2:m+1)'
 
 % approximate b12 in time domain
 %b12_app_expr4 = conv(a13, a32)(1:m);
 %figure(5); plot(1:m, b12, 1:m, b12_app_expr4 )
 
-% approximate b12 in time domain, good!
-b12_app_expr3 = conv(a13,fliplr(a23))(m+1:end) + [0, conv(a13, a32)(1:m-2)];
-figure(16); plot(1:m, b12, 1:m-1, b12_app_expr3 )
+if p == 3
+% Approximate b12 in time domain, good!
+b12_app_expr3 = a12(1:m-1) + conv(a13,fliplr(a23))(m+1:end) + [0, conv(a13, a32)(1:m-2)];
+figure(8); plot(1:m, b12, 1:m-1, b12_app_expr3 )
+gc_b12_app_expr3 = b12_app_expr3 * b12_app_expr3'
+end
 
-disp('gc pairwise app');
-ift_b12_app_expr1(2:m+1) * ift_b12_app_expr1(2:m+1)'
-%ift_b12_app_expr2(2:m+1) * ift_b12_app_expr2(2:m+1)'
-ift_b12_app_expr3(2:m+1) * ift_b12_app_expr3(2:m+1)'
-b12_app_expr3 * b12_app_expr3'
 
 %figure(3); plot(1:m, b12);
 %figure(4); plot(1:m, real(ifft(ft_b12_app,fftlen))(1:m));
