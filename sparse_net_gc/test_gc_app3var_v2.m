@@ -60,7 +60,7 @@ are_you_joking = true;
     fftlen = 2048;
     S = A2S(A, D, fftlen);
     S = StdWhiteS(S);
-    od = 190;
+    od = 300;
     R = S2cov(S, od);
     covz = R2covz(R);
 
@@ -214,53 +214,48 @@ b12_expr2 = a12 - a13 / Qzz * Qzy;
 %norm( b12 - b12_expr2 )  % verify the exact formula
 
 Pyy = Qyy - Qyz/Qzz*Qzy;
-
 gc12_var_reduction = b12 / Pyy * b12'
+gc12_var_reduction_ans = [v1O1 v1O2] / [V11 V12; V12' V22] * [v1O1 v1O2]' - v1O1 / V11 * v1O1'
 
-gc12_var_red = [v1O1 v1O2] / [V11 V12; V12' V22] * [v1O1 v1O2]' - ...
-v1O1 / V11 * v1O1'
+f_1dto3d = @(x) reshape(x, 1,1,[]);
+ft_a12 = f_1dto3d( fft(a12, fftlen) );
+ft_a13 = f_1dto3d( fft(a13, fftlen) );
+ft_Qzy_a = QSp(3:end,2,:);
+ft_Qzz_a = QSp(3:end,3:end,:);
 
-ft_a12 = fft(a12, fftlen);
-ft_a13 = fft(a13, fftlen);
-%ft_a12 = fft([a12, zeros(1,fftlen - 2*size(a12,2)+1), fliplr(a12(2:end))], fftlen);  % worse
-%ft_a13 = fft([a13, zeros(1,fftlen - 2*size(a13,2)+1), fliplr(a13(2:end))], fftlen);  % worse
-ft_Qzy_a = QSp(3,2,:)(:).';
-ft_Qzz_a = QSp(3,3,:)(:).';
-
-%ft_b12_app = ft_a13 .* ft_Qzy_a;
-%real( mean(ft_b12_app .* conj(ft_b12_app)) )
-
-ft_b12_app = ft_a12 - ft_a13 ./ ft_Qzz_a .* ft_Qzy_a;
+ft_b12_app = ft_a12 - rdiv3d( ft_a13, ft_Qzz_a, ft_Qzy_a);
 ift_b12_app = ifft(ft_b12_app, fftlen)(1:m);
-%real( mean(ft_b12_app .* conj(ft_b12_app)) )
-real( ift_b12_app * ift_b12_app' )
+real( ift_b13_app * ift_b12_app' )
 %figure(3); plot(1:m, b12, 1:m, ift_b12_app);
 %figure(4); plot(1:m, b12 - ift_b12_app);
 
+%tcov = S2cov(Sp, 300);
+%[tB, tD] = ARregression(tcov);
+%tS = A2S(tB, tD, fftlen);
+%max(abs( (tS - Sp)(:) ))  % see (corrlation) truncation and round-off error
+
 %% exact ft_Qxx
-%max(abs( (A2S(B, D_B, fftlen) - Sp)(:) ))
+%max(abs( (A2S(B, D_B, fftlen) - Sp)(:) ))  % see (corrlation) truncation and round-off error
+HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 ft_A = fft( cat(3, eye(p), reshape(B, p,p,[])), fftlen, 3);
-ft_Qzz = conj(ft_A(1,3,:)) .* ft_A(1,3,:) / D_B(1,1) + ...
-         conj(ft_A(2,3,:)) .* ft_A(2,3,:) / D_B(2,2) + ...
-         conj(ft_A(3,3,:)) .* ft_A(3,3,:) / D_B(3,3);
-%ft_Qzz = ft_Qzz(:).';
-%max(abs( (ft_Qzz_a - ft_Qzz(:).')(:) ))
-ft_Qzy = conj(ft_A(1,3,:)) .* ft_A(1,2,:) / D_B(1,1) + ...
-         conj(ft_A(2,3,:)) .* ft_A(2,2,:) / D_B(2,2) + ...
-         conj(ft_A(3,3,:)) .* ft_A(3,2,:) / D_B(3,3);
-%ft_Qzy = ft_Qzy(:).';
-ft_b12_app_expr1 = (ft_A(1,3,:) ./ ft_Qzz .* ft_Qzy)(:);
+ft_Qzz = rdiv3d( HTR(ft_A(1,3:end,:)), D_B(1,1), ft_A(1,3:end,:)) + ...
+         rdiv3d( HTR(ft_A(2,3:end,:)), D_B(2,2), ft_A(2,3:end,:)) + ...
+         rdiv3d( HTR(ft_A(3:end,3:end,:)), D_B(3:end,3:end), ft_A(3:end,3:end,:));
+%max(abs( (ft_Qzz_a - ft_Qzz)(:) ))
+ft_Qzy = rdiv3d( HTR(ft_A(1,3:end,:)), D_B(1,1), ft_A(1,2,:)) + ...
+         rdiv3d( HTR(ft_A(2,3:end,:)), D_B(2,2), ft_A(2,2,:)) + ...
+         rdiv3d( HTR(ft_A(3:end,3:end,:)), D_B(3:end,3:end), ft_A(3:end,2,:));
+ft_b12_app_expr1 = rdiv3d(ft_A(1,3:end,:), ft_Qzz, ft_Qzy)(:);
 ift_b12_app_expr1 = ifft(ft_b12_app_expr1, fftlen)';
 figure(5); plot(1:m, b12, 1:m, ift_b12_app_expr1(2:m+1) )
 
 % approximate ft_Qzy
-ft_b12_app_expr2 = (ft_A(1,3,:) .* (ft_A(3,2,:) + conj(ft_A(2,3,:))) ./ ft_A(3,3,:))(:);
-ift_b12_app_expr2 = real(ifft(ft_b12_app_expr2, fftlen))';
-figure(6); plot(1:m, b12, 1:m, ift_b12_app_expr2(2:m+1) )
+%ft_b12_app_expr2 = (ft_A(1,3:end,:) .* (ft_A(3:end,2,:) + HTR(ft_A(2,3:end,:))) ./ ft_A(3,3,:))(:);
+%ift_b12_app_expr2 = real(ifft(ft_b12_app_expr2, fftlen))';
+%figure(6); plot(1:m, b12, 1:m, ift_b12_app_expr2(2:m+1) )
 
 % approximate ft_Qzy
-ft_b12_app_expr3 = (ft_A(1,3,:) .* (ft_A(3,2,:) + conj(ft_A(2,3,:))))(:);
-%ft_b12_app_expr3 = (ft_A(1,3,:) .* ft_A(3,2,:))(:);
+ft_b12_app_expr3 = mult3d(ft_A(1,3:end,:), (ft_A(3:end,2,:) + HTR(ft_A(2,3:end,:))))(:);
 ift_b12_app_expr3 = real(ifft(ft_b12_app_expr3, fftlen))';
 figure(7); plot(1:m, b12, 1:m, ift_b12_app_expr3(2:m+1) )
 
@@ -274,7 +269,8 @@ figure(16); plot(1:m, b12, 1:m-1, b12_app_expr3 )
 
 disp('gc pairwise app');
 ift_b12_app_expr1(2:m+1) * ift_b12_app_expr1(2:m+1)'
-ift_b12_app_expr2(2:m+1) * ift_b12_app_expr2(2:m+1)'
+%ift_b12_app_expr2(2:m+1) * ift_b12_app_expr2(2:m+1)'
+ift_b12_app_expr3(2:m+1) * ift_b12_app_expr3(2:m+1)'
 b12_app_expr3 * b12_app_expr3'
 
 %figure(3); plot(1:m, b12);

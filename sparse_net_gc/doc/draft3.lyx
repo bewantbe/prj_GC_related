@@ -561,7 +561,7 @@ u(t)=\begin{cases}
 Then
 \begin_inset Formula 
 \[
-B_{xy}\approx\left[A_{xy}-A_{xz}/Q_{zz}*Q_{zy}\right]_{+}
+B_{xy}\approx\left[A_{xy}-A_{xz}Q_{zz}^{-1}Q_{zy}\right]_{+}
 \]
 
 \end_inset
@@ -574,7 +574,7 @@ Under assumption
 \begin_inset Formula 
 \[
 \Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
-\sigma_{x}^{2} & \sigma_{y}^{2} & \sigma_{z}^{2}\end{array}\right]\right)
+\Sigma_{xx} & \Sigma_{yy} & \Sigma_{zz}\end{array}\right]\right)
 \]
 
 \end_inset
@@ -586,7 +586,7 @@ Under assumption
 We have
 \begin_inset Formula 
 \[
-Q_{zz}=\frac{A_{xz}^{*}A_{xz}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yz}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zz}}{\sigma_{z}^{2}}
+Q_{zz}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xz}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yz}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zz}
 \]
 
 \end_inset
@@ -594,7 +594,7 @@ Q_{zz}=\frac{A_{xz}^{*}A_{xz}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yz}}{\sigma_{y
 
 \begin_inset Formula 
 \[
-Q_{zy}=\frac{A_{xz}^{*}A_{xy}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yy}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zy}}{\sigma_{z}^{2}}
+Q_{zy}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xy}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}
 \]
 
 \end_inset
@@ -606,7 +606,7 @@ Q_{zy}=\frac{A_{xz}^{*}A_{xy}}{\sigma_{x}^{2}}+\frac{A_{yz}^{*}A_{yy}}{\sigma_{y
 Hence
 \begin_inset Formula 
 \[
-A_{xz}/Q_{zz}*Q_{zy}\approx\frac{\sigma_{z}^{2}A_{xz}}{A_{zz}^{*}A_{zz}}\left(\frac{A_{yz}^{*}A_{yy}}{\sigma_{y}^{2}}+\frac{A_{zz}^{*}A_{zy}}{\sigma_{z}^{2}}\right)\approx\frac{A_{xz}A_{zy}}{A_{zz}}+\frac{A_{xz}A_{yz}^{*}A_{yy}\sigma_{z}^{2}}{A_{zz}^{*}A_{zz}\sigma_{y}^{2}}
+A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
 \]
 
 \end_inset
@@ -614,7 +614,7 @@ A_{xz}/Q_{zz}*Q_{zy}\approx\frac{\sigma_{z}^{2}A_{xz}}{A_{zz}^{*}A_{zz}}\left(\f
 
 \begin_inset Formula 
 \[
-A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
+B_{xy}\approx\left[A_{xy}-A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
 \]
 
 \end_inset
@@ -629,7 +629,7 @@ A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
 \begin_layout Standard
 \begin_inset Formula 
 \[
-A_{xz}A_{xz}^{*}\left(A_{zy}A_{zy}^{*}+A_{zy}A_{yz}+A_{yz}^{*}A_{zy}^{*}+A_{yz}^{*}A_{yz}\right)
+gc=A_{xz}A_{xz}^{*}\left(A_{zy}A_{zy}^{*}+A_{zy}A_{yz}+A_{yz}^{*}A_{zy}^{*}+A_{yz}^{*}A_{yz}\right)
 \]
 
 \end_inset
