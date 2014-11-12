@@ -638,6 +638,42 @@ gc=A_{xz}A_{xz}^{*}\left(A_{zy}A_{zy}^{*}+A_{zy}A_{yz}+A_{yz}^{*}A_{zy}^{*}+A_{y
 \end_layout
 
 \begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ln\Biggl(\frac{\mathrm{var}(x_{t}^{(1)})-c}{\mathrm{var}(x_{t}^{(1)})-d}\Biggr)=\ln\Biggl(1+\frac{d-c}{\mathrm{var}(x_{t}^{(1)})-d}\Biggr)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+known
+\begin_inset Formula 
+\begin{eqnarray*}
+d-c & = & ...\\
+\mathrm{var}(x_{t}^{(1)})-d & = & \mathrm{var}(e_{t})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
 .
 \end_layout
 
