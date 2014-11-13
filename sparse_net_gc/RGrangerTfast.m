@@ -15,6 +15,7 @@ function GC = RGrangerTfast(R, p)
     covz = R2covz(R);
     [A2d, D] = ARregressionpd(covz, p);
   end
+  m = size(covz, 2) / p - 1;
 
   Qz = inv(covz(p+1:end, p+1:end));
   a = reshape(-A2d, p,p,[]);
