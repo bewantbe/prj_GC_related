@@ -9,7 +9,6 @@ function GC = nGrangerTfast(X, m, b_whiten_first)
       % whiten time series data directly
       X = WhiteningFilter(X, m);  % whiten data
       covz = getcovzpd(X, m);
-      [A2d, D] = ARregressionpd(covz, p);
     case 2
       % whiten the covariance in frequency domain
       fftlen = max(1024, 5*m);
@@ -19,7 +18,6 @@ function GC = nGrangerTfast(X, m, b_whiten_first)
       S = StdWhiteS(S);
       R = S2cov(S, m);
       covz = R2covz(R);
-      [A2d, D] = ARregressionpd(covz, p);
     otherwise
       error('no this mode');
     end
@@ -28,20 +26,7 @@ function GC = nGrangerTfast(X, m, b_whiten_first)
     %covz = R2covz(R);
     %[A2d, D] = ARregression(R);
     covz = getcovzpd(X, m);
-    [A2d, D] = ARregressionpd(covz, p);
   end
 
-  d = diag(D);
-  Qz = inv(covz(p+1:end, p+1:end));
-  id_0 = 0:p:p*m-1;
-
-  a = reshape(-A2d, p,p,[]);
-  a = permute(a, [3,1,2]);   % index: (time lag, i, j)  (j->i)
-
-  GC = zeros(p, p);
-  for j = 1 : p
-    Qjj = Qz(id_0+j, id_0+j);
-    GC(:, j) = log1p(sum(Qjj \ a(:,:,j) .* a(:,:,j))' ./ d);
-    GC(j, j) = 0;
-  end
+  GC = RGrangerTfast(covz, p);
 end
