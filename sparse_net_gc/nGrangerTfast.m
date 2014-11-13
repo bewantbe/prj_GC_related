@@ -24,29 +24,24 @@ function GC = nGrangerTfast(X, m, b_whiten_first)
       error('no this mode');
     end
   else
-    R = getcovpd(X, m);
-    covz = R2covz(R);
-    [A2d, D] = ARregression(R);
-    %covz = getcovzpd(X, m);
-    %[A2d, D] = ARregressionpd(covz, p);
+    %R = getcovpd(X, m);
+    %covz = R2covz(R);
+    %[A2d, D] = ARregression(R);
+    covz = getcovzpd(X, m);
+    [A2d, D] = ARregressionpd(covz, p);
   end
 
   d = diag(D);
   Qz = inv(covz(p+1:end, p+1:end));
+  id_0 = 0:p:p*m-1;
 
   a = reshape(-A2d, p,p,[]);
   a = permute(a, [3,1,2]);   % index: (time lag, i, j)  (j->i)
 
-  id_0 = 0:p:p*m-1;
-
   GC = zeros(p, p);
   for j = 1 : p
     Qjj = Qz(id_0+j, id_0+j);
-    for i = 1 : p
-      if i ~= j
-        var_reduce = a(:,i,j)' / Qjj * a(:,i,j);
-        GC(i,j) = log1p(var_reduce / d(i));
-      end
-    end
+    GC(:, j) = log1p(sum(Qjj \ a(:,:,j) .* a(:,:,j))' ./ d);
+    GC(j, j) = 0;
   end
 end
