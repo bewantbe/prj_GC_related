@@ -68,9 +68,12 @@ s_case = {
 
 % not good example
 %'GCinfo_LIF_icc_ST_net_100_0X1BD7844F_p=100,0_sc=0.0055,0,0,0_pr=1_ps=0.003_stv=0.5_t=1.00e+06_od30'
-'GCinfo_LIF_icc_ST_net_100_0X238CDEA7_p=100,0_sc=0.0055,0,0,0_pr=1_ps=0.003_stv=0.5_t=1.00e+06_od30'
+%'GCinfo_LIF_icc_ST_net_100_0X238CDEA7_p=100,0_sc=0.0055,0,0,0_pr=1_ps=0.003_stv=0.5_t=1.00e+06_od30'
+
+%n = 1000; pr = 0.7, ps = 0.032
+'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 20%
 };
- 
+
 fi.p_val            = 1e-5;
 fi.use_od           = 'aic';
 fi.auto_gc_zero_cut = false;
