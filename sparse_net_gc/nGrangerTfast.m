@@ -22,9 +22,6 @@ function GC = nGrangerTfast(X, m, b_whiten_first)
       error('no this mode');
     end
   else
-    %R = getcovpd(X, m);
-    %covz = R2covz(R);
-    %[A2d, D] = ARregression(R);
     covz = getcovzpd(X, m);
   end
 
