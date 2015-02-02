@@ -13,8 +13,8 @@
 %  pm.scie = 0.00;       % default: 0. Strength from Ex. to In.
 %  pm.scei = 0.00;       % default: 0. Strength from In. to Ex.
 %  pm.scii = 0.00;       % default: 0.
-%  pm.pr   = 1.6;
-%  pm.ps   = 0.04;
+%  pm.pr   = 1.6;        % can be a vector
+%  pm.ps   = 0.04;       % can be a vector
 %  pm.t    = 1e4;
 %  pm.dt   = 1.0/32;     % default: 1/32
 %  pm.stv  = 0.5;        % default: 0.5
@@ -55,6 +55,7 @@ end
 X=[];
 ISI=[];
 ras=[];
+pm0 = pm;  % do a backup
 
 % Default generator settings
 new_run        = false;
@@ -160,12 +161,26 @@ else
   neuron_model_name = 'LIF';
 end
 
+if ~isfield(pm, 'st_extra_inf_post')
+    pm.st_extra_inf_post = '';
+end
+
+[pm, st_pr_mul_hash] = get_pm_mul_array(pm, 'pr');
+[pm, st_ps_mul_hash] = get_pm_mul_array(pm, 'ps');
+[pm, st_psi_mul_hash] = get_pm_mul_array(pm, 'psi');
+
 % construct file paths
 st_sc = strrep(mat2str([pm.scee, pm.scie, pm.scei, pm.scii]),' ',',');
 st_p  = strrep(mat2str([pm.nE, pm.nI]),' ',',');
+if isfield(pm,'psi')
+    st_psi = sprintf('_psi=%g%s', pm.psi, st_psi_mul_hash);
+else
+    st_psi = '';
+end
 file_inf_st =...
-    sprintf('%s_p=%s_sc=%s_pr=%g_ps=%g_stv=%g_t=%.2e',...
-            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, pm.ps, pm.stv, pm.t + ext_T);
+    sprintf('%s_p=%s_sc=%s_pr=%g%s_ps=%g%s%s_stv=%g_t=%.2e',...
+            pm.net, st_p(2:end-1), st_sc(2:end-1), pm.pr, st_pr_mul_hash,...
+            pm.ps, st_ps_mul_hash, st_psi, pm.stv, pm.t + ext_T);
 file_prefix = [data_dir_prefix, neuron_model_name, '_'];
 output_name     = [file_prefix, 'volt_',file_inf_st,'.dat'];
 output_ISI_name = [file_prefix, 'ISI_', file_inf_st,'.txt'];
@@ -185,6 +200,32 @@ st_neu_param =...
 st_neu_param = [st_neu_param, get_mul_st(pm, 'pr_mul')];
 st_neu_param = [st_neu_param, get_mul_st(pm, 'ps_mul')];
 st_neu_param = [st_neu_param, get_mul_st(pm, 'psi_mul')];
+pm.pr = pm0.pr;
+if isfield(pm, 'pr_mul')
+    if ~isfield(pm0, 'pr_mul')
+        pm = rmfield(pm, 'pr_mul');
+    else
+        pm.pr_mul = pm0.pr_mul;
+    end
+end
+pm.ps = pm0.ps;
+if isfield(pm, 'ps_mul')
+    if ~isfield(pm0, 'ps_mul')
+        pm = rmfield(pm, 'ps_mul');
+    else
+        pm.ps_mul = pm0.ps_mul;
+    end
+end
+if isfield(pm, 'psi')
+    pm.psi = pm0.psi;
+    if isfield(pm, 'psi_mul')
+        if ~isfield(pm0, 'psi_mul')
+            pm = rmfield(pm, 'psi_mul');
+        else
+            pm.psi_mul = pm0.psi_mul;
+        end
+    end
+end
 st_sim_param =...
     sprintf('-t %.16e -dt %.17e -stv %.17e',...
             pm.t + ext_T, pm.dt, pm.stv);
@@ -326,6 +367,44 @@ function st = get_mul_st(pm, field_name)
     end
 end
 
+% transform pr/ps/psi array to pr_mul/ps_mul/psi_mul array
+% field name should be pr/ps/psi
+function [pm, st_mul_hash] = get_pm_mul_array(pm, field_name)
+    st_mul_hash = '';
+    if isfield(pm, field_name)
+        f = getfield(pm, field_name);
+
+        field_name_mul = [field_name, '_mul'];
+        if numel(f) > 1.0
+            nn = pm.nI + pm.nE;   % number of neurons
+            if (numel(f) ~= nn)
+                error('number of neurons inconsist with vector pr.');
+            end
+            % set f=1, represent different rates in f_mul.
+            if isfield(pm, field_name_mul)
+                f_mul = getfield(pm, field_name_mul);
+                f_mul = [f_mul(:); ones(nn - numel(f_mul), 1)];
+                f_mul = (f_mul .* f(:))';
+            else
+                f_mul = f;
+            end
+            f = mean(f_mul);      % so f is more informative
+            f_mul = f_mul / f;
+            pm = setfield(pm, field_name, f);
+            pm = setfield(pm, field_name_mul, f_mul);
+        end
+        
+        if isfield(pm, field_name_mul)
+            f_mul = getfield(pm, field_name_mul);
+            st_mul_hash = ['0X', BKDRHash(mat2str(f_mul))];
+            pm = setfield(pm, [field_name_mul, '_hash'], st_mul_hash);
+            st_mul_hash = ['-', st_mul_hash];
+        end
+
+    else
+%        error('what?');
+    end
+end
 
 %test
 %{
