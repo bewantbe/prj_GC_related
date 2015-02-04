@@ -4,9 +4,9 @@
 %  [X, ISI, ras, pm] = gen_HH(pm [, gen_cmd [, data_dir_prefix]])
 %
 % Usage example 1:       % the items with default value are optional
-%  clear('pm');          % a new parameter set
+%  clear('pm');          % a new parameter set, or pm = [];
 %  pm.neuron_model = 'HH2_gcc';  % program to run, with prefix raster_tuning_
-%  pm.net  = 'net_2_2';  % can also be a connectivity matrix of full file path
+%  pm.net  = 'net_2_2';  % can also be a connectivity matrix or full file path
 %  pm.nI   = 0;          % default: 0. Number of Inhibitory neurons.
 %                        %             Indexes are later half
 %  pm.scee = 0.05;
@@ -33,10 +33,11 @@
 %  'read'   Read data files if exist, otherwise do nothing and return [];
 %  'nameX'  return path to the voltage data file, instead of read it;
 %  'cmd'    Show command call to raster_tuning_HH, then exit. Useful for debug
+%  'ext_T'  Generate a bit more data, so reduce "head effect".
 %
 % return value pm is a "normalized" input parameter set
 
-% Behaviour
+% Behaviour (parameter gen_cmd)
 % gen_cmd   no data    have data   background(partial data)
 % ''        gen+read   read        gen+read(overwrite)
 % 'new'     gen+read   gen+read    gen+read(overwrite)
@@ -44,6 +45,7 @@
 % 'read'    none       read        exit
 % 'rm'      none       rm          none
 % 'cmd'     print cmd for gen then exit
+% 'ext_T'   
 % background  gen&     none        gen&
 
 function [X, ISI, ras, pm] = gen_HH(pm, gen_cmd, data_dir_prefix)
