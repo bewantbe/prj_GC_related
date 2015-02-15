@@ -92,6 +92,7 @@ while ~isempty(gen_cmd)
         error('no this option: "%s"', tok);
     end
 end
+pm.ext_T = ext_T;
 
 % Default parameter values
 if ~exist('data_dir_prefix', 'var')
