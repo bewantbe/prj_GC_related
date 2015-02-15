@@ -328,7 +328,9 @@ for cid = 1:n_case
     end
 
     nn_GC_E = hist(GC(neu_network(:,1:pm.nE)==1)/scale_gc, xx);
-    nn_GC_I = hist(GC(:,1+pm.nE:p)(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
+    tmp_gc = GC(:,1+pm.nE:p)
+    nn_GC_I = hist(tmp_gc(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
+    %nn_GC_I = hist(GC(:,1+pm.nE:p)(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
     nn_GC_0 = hist(GC(neu_network()==0 & eye(p)==0)/scale_gc, xx);
     %bar(xx,nn, 'facecolor',[0.5,0.5,0.5],'linestyle','-');
     shading('flat');
