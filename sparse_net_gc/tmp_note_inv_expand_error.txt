@@ -1,0 +1,13 @@
+octave:6> max(abs( inv(eS3) - (B3^0 + B3^1 + B3^2 + B3^3 + B3^4) )(:))
+ans =  0.0030337
+octave:7> max(abs( inv(eS3) - (B3^0 + B3^1 + B3^2 + B3^3) )(:))
+ans =  0.0079875
+octave:8> max(abs( inv(eS3) - (B3^0 + B3^1 + B3^2) )(:))
+ans =  0.012299
+octave:9> max(abs( inv(eS3) - (B3^0 + B3^1) )(:))
+ans =  0.042750
+octave:10> max(abs( inv(eS3) - (B3^0) )(:))
+ans =  0.079498
+
+
+

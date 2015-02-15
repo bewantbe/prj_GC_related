@@ -1,0 +1,268 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+s
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+Q^{(zy)}=b_{3}c_{32}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c_{32}=-\left(a_{32}-a_{31}a_{11}^{-1}a_{12}\right)\left(a_{22}-a_{21}a_{11}^{-1}a_{12}\right)^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+b_{[zx]}^{31} & b_{[zx]}^{33}\end{array}\right]=\left[\begin{array}{cc}
+\vec{r}^{(z|z)} & \vec{r}^{(z|x)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xz)}\\
+R^{(zx)} & R^{(zz)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+b_{[yx]}^{11} & b_{[yy]}^{12}\end{array}\right]=\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xz)}\\
+R^{(zx)} & R^{(zz)}
+\end{array}\right]^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+sddsds
+\begin_inset Formula 
+\[
+c^{21}=R^{(yy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\min_{c}tr[E[\left(y-c^{21}x\right)\left(y-c^{21}x\right)^{T}]]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\partial_{c}E\left[\mathrm{tr}\left[yy^{T}-c^{21}xy^{T}-yx^{T}c^{21T}+c^{21}xx^{T}c^{21T}\right]\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c^{21}E\left[xx^{T}\right]=E\left[yx^{T}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c^{21}=R^{(yx)}\left(R^{(xx)}\right)^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c^{31}=R^{(zx)}\left(R^{(xx)}\right)^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ddd
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E\left[\left(z-c^{31}x\right)\left(y-c^{21}x\right)^{T}\right]=Q^{(zy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E\left[\left(z-c^{31}x\right)\left(y-c^{21}x\right)^{T}\right]=R^{(32)}-R^{(31)}c^{21T}-c^{31}R^{(12)}+c^{31}R^{(xx)}c^{21T}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=R^{(zy)}-R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}-R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}+R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,81 @@
+connection: 50138 / 999000 = 5.0%
+
+use_od = 10
+over guess: 94
+lack guess: 8550
+overall correctness: 99.1347
+
+use_od = 20
+over guess: 45
+lack guess: 685
+overall correctness: 99.9269
+
+use_od = 25
+over guess: 36
+lack guess: 972
+overall correctness: 99.8991
+
+use_od = 30
+over guess: 28
+lack guess: 1049
+overall correctness: 99.8922
+
+use_od = 35
+over guess: 26
+lack guess: 1406
+overall correctness: 99.8567
+
+use_od = 40
+over guess: 28
+lack guess: 1898
+overall correctness: 99.8072
+
+
+
+connection: 99815 / 999000 = 10.0%
+
+use_od = 30
+overall correctness: 95.1619
+
+use_od = 35
+overall correctness: 96.7926
+
+use_od = 40
+overall correctness: 97.7644
+
+p=1e-9;
+overall correctness: 98.8961
+
+
+
+connection: 150235 / 999000 = 15.0%
+
+use_od = 30
+overall correctness: 89.9082
+
+use_od = 35
+overall correctness: 91.7214
+
+use_od = 40
+overall correctness: 92.9216
+
+
+
+connection: 200013 / 999000 = 20.0%
+
+use_od = 20
+overall correctness: 76.679
+
+use_od = 30
+overall correctness: 84.9771
+
+use_od = 35
+overall correctness: 87.278
+
+use_od = 38
+overall correctness: 88.2739
+
+use_od = 40
+overall correctness: 88.7945
+
+
