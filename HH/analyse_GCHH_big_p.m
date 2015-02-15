@@ -203,6 +203,11 @@ for cid = 1:n_case
   fprintf('==== %d / %d, %.2f / %.2f, %.1f\n', bic_od, aic_od, mean_gc0/scale_gc,...
           use_od/len/scale_gc, 100*(1-(n_over+n_lack)/(p*(p-1))));
 
+    v0 = R(1:p,1:p);
+    vd0 = diag(1./sqrt(diag(v0)));
+    v0 = vd0 * v0 * vd0;
+    mean_cor_X = mean(v0(eye(p)==0))
+
   if b_cal_net
     addpath('/home/xyy/matcode/octave-networks-toolbox');
     addpath('/home/xyy/matcode/prj_neu_smallworld');
@@ -355,6 +360,13 @@ for cid = 1:n_case
     else
       pic_output_color('_gc_hist');
     end
+
+    % show cor of X
+    figure(7);  set(gca,'fontsize',font_size);
+    hist(v0(eye(p)==0), 100);
+    ylabel('count');
+    xlabel('correlation');
+    pic_output_color('_cor0');
 
   end  %if b_output_pics
 
