@@ -34,7 +34,7 @@ net_param.sparseness = 0.20;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
 b_use_spike_train = false;
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 7200s cal GC. (use AnalyseSeriesLevinson() in GC_basic_info() )
 b_use_spike_train = true;
 GCHH_analyse_core                 % cost h, t = s cal GC.
 

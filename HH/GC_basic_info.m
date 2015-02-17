@@ -12,7 +12,11 @@ tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Basic GC analysis
 s_od = 1:max_od;
-[oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
+if p<200
+  [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
+else
+  [oGC, oDe, R] = AnalyseSeriesLevinson(X, s_od);
+end
 [aic_od, bic_od, zero_GC, oAIC, oBIC] = AnalyseSeries2(s_od, oGC, oDe, len);
 %save('-v6','tmp_gc.mat','p','len','s_od','oGC','oDe','R');
 fprintf('t = %6.3fs cal GC.\n', toc());

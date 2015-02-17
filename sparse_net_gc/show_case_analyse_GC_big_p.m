@@ -75,21 +75,27 @@ s_case = {
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X51879353_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 5%
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 10%
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X39A0FE1E_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 15%
+'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 20%
 
 %n = 1000; pr = 0.7, ps = 0.032, volt
-'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 20%
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X12A54BDF_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 2.5%
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 5%
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 10%
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 20%
+
 };
 
 fi.p_val            = 1e-5;
 fi.use_od           = 40;  % 'aic'
 fi.auto_gc_zero_cut = false;
 fi.b_cal_net        = false;
-fi.b_output_pics    = true;
+fi.b_output_pics    = false;
 fi.gcdata_dir       = 'GCinfo/';
 
 fi.b_use_pairGC     = false;
 analyse_GCHH_big_p(s_case, fi, [], plot_settings);
 
+return
 fflush(stdout);
 
 fi.b_use_pairGC     = true;
