@@ -84,8 +84,8 @@ s_case = {
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'  % 20%
 
 %n = 1000; pr = 0.7, ps = 0.032, volt, subnet = 1..100
-'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'  % 10%
-
+'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
 
 };
 
