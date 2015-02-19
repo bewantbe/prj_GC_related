@@ -12,7 +12,7 @@ tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Basic GC analysis
 s_od = 1:max_od;
-if p<200
+if p<100
   [oGC, oDe, R] = AnalyseSeriesFast(X, s_od);
 else
   [oGC, oDe, R] = AnalyseSeriesLevinson(X, s_od);
