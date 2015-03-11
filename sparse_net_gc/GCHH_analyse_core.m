@@ -32,6 +32,10 @@ else
 end
 fflush(stdout);
 
+if ~exist(suffix_extra, 'var')
+  suffix_extra = '';
+end
+
 %[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm);
-[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, ['_od', num2str(max_od)], 'GCinfo');
+[zero_GC, bic_od, aic_od] = GC_basic_info(X, max_od, pm, b_use_spike_train, ISI, ['_od', num2str(max_od), suffix_extra], 'GCinfo');
 

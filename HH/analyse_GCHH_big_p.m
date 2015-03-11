@@ -71,6 +71,8 @@ for cid = 1:n_case
 
   neu_network = pm.net_adj;
   p = size(neu_network, 1);
+  nE = pm.nE;
+  nI = pm.nI;
   if any(diag(neu_network))
     error('neu_network: diagonal non-zero!');
   end
@@ -221,7 +223,34 @@ for cid = 1:n_case
     s_bic(cid)  = bic_od;
   end
 
-  if b_output_pics
+  if b_output_pics == 2
+    % show histogram of ISI
+    figure(1);  set(gca,'fontsize',font_size);
+    plain_network_XX = cell(2,2);
+    plain_network_XX{1,1} = neu_network(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
+    plain_network_XX{2,1} = neu_network(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+    plain_network_XX{1,2} = neu_network(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+    plain_network_XX{2,2} = neu_network(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
+    plain_gc_XX = cell(2,2);
+    plain_gc_XX{1,1} = GC(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
+    plain_gc_XX{2,1} = GC(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+    plain_gc_XX{1,2} = GC(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+    plain_gc_XX{2,2} = GC(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
+    type_label = {'EE', 'IE', 'EI', 'II'};
+    strength_label = [pm.scee, pm.scie, pm.scei, pm.scii];
+
+    for id_XX = 1 : (1 + 3*(nI>0))
+      [~, id_net_sort] = sort(plain_network_XX{id_XX});
+      plot(plain_network_XX{id_XX}(id_net_sort),
+           plain_gc_XX{id_XX}(id_net_sort)*1e4, 
+           'o', 'markersize', 2);
+      ylabel('GC (\times10^4)');
+      xlabel(sprintf('Cortial Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
+      pic_output_color(sprintf('_sc%s_GC', type_label{id_XX}));
+    end
+  end
+
+  if b_output_pics*1 == 1
     % show histogram of ISI
     figure(1);  set(gca,'fontsize',font_size);
     hist(ISI, 20);
@@ -328,7 +357,7 @@ for cid = 1:n_case
     end
 
     nn_GC_E = hist(GC(neu_network(:,1:pm.nE)==1)/scale_gc, xx);
-    tmp_gc = GC(:,1+pm.nE:p)
+    tmp_gc = GC(:,1+pm.nE:p);
     nn_GC_I = hist(tmp_gc(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
     %nn_GC_I = hist(GC(:,1+pm.nE:p)(neu_network(:,1+pm.nE:p)==1)/scale_gc, xx);
     nn_GC_0 = hist(GC(neu_network()==0 & eye(p)==0)/scale_gc, xx);
