@@ -245,9 +245,21 @@ for cid = 1:n_case
            plain_gc_XX{id_XX}(id_net_sort)*1e4, 
            'o', 'markersize', 2);
       ylabel('GC (\times10^4)');
-      xlabel(sprintf('Cortial Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
+      xlabel(sprintf('Cortical Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
       pic_output_color(sprintf('_sc%s_GC', type_label{id_XX}));
     end
+
+    % Show correctness v.s. cortical strength (for distributed)
+    figure(2);  set(gca,'fontsize',font_size);
+    s_div_sc = linspace(0, max(neu_network(eye(nE+nI)==0)), 40)
+    s_n_correct_ratio = zeros(1, length(s_div_sc)-1);
+    for j = 1:length(s_div_sc)-1
+      net_div_intv = s_div_sc(j) < neu_network & neu_network < s_div_sc(j+1);
+      s_n_correct_ratio(j) = sum((GC(net_div_intv) > gc_zero_cut)(:)) / sum(net_div_intv(:));
+    end
+    plot(s_div_sc(2:end), s_n_correct_ratio, '-o');
+    pic_output_color(sprintf('_correctratio_GC', type_label{id_XX}));
+
   end
 
   if b_output_pics*1 == 1
@@ -268,9 +280,11 @@ for cid = 1:n_case
     shading('faceted');
     %hd=pcolor(xx,yy,[[flipud(neu_network); zeros(1,p)],zeros(p+1,1)]);
     pcolor(xx,yy,[[neu_network; zeros(1,p)],zeros(p+1,1)]);
-    hd=colorbar();
-    set(hd,'fontsize',font_size);
-    set(hd,'ytick',[0;0.25;0.5;0.75;1],'yticklabel',['0  ';'   ';'0.5';'   ';'1.0']);
+    if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
+      hd=colorbar();
+      set(hd,'fontsize',font_size);
+      set(hd,'ytick',[0;0.25;0.5;0.75;1],'yticklabel',['0  ';'   ';'0.5';'   ';'1.0']);
+    end
     %axis('square','off');
     xlabel('index of driven one');
     ylabel('index of passive one');
@@ -287,9 +301,11 @@ for cid = 1:n_case
     %hd=pcolor(xx,yy,[[flipud(adj_gc); zeros(1,p)],zeros(p+1,1)]);
     pcolor(xx,yy,[[adj_gc; zeros(1,p)],zeros(p+1,1)]);
     %caxis([0,2]);
-    hd=colorbar();
-    %set(hd,'ylabel','GC');
-    set(hd,'fontsize',font_size);
+    if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
+      hd=colorbar();
+      %set(hd,'ylabel','GC');
+      set(hd,'fontsize',font_size);
+    end
     %set(hd,'ytick',s_gc_tick);
     if exist('s_gc_tick','var') && ~isempty(s_gc_tick)
       set(hd,'ytick',[s_gc_tick; s_gc_tick_white],'yticklabel',[num2str(s_gc_tick); char(32*ones(length(s_gc_tick_white),1))]);
@@ -308,8 +324,10 @@ for cid = 1:n_case
     %pcolor(xx,yy,[[flipud(adj_cmp); zeros(1,p)],zeros(p+1,1)]);
     pcolor(xx,yy,[[adj_cmp; zeros(1,p)],zeros(p+1,1)]);
     caxis([-1,1]);
-    hd=colorbar();
-    set(hd,'fontsize',font_size);
+    if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
+      hd=colorbar();
+      set(hd,'fontsize',font_size);
+    end
     %axis('square','off');
     xlabel('index of driven one');
     ylabel('index of passive one');
