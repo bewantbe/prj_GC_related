@@ -240,8 +240,14 @@ end
 st_paths =...
     sprintf('--bin-save -o %s --save-spike-interval %s --save-spike %s',...
             output_name, output_ISI_name, output_RAS_name);
-cmdst = sprintf('%s%sraster_tuning_%s -ng -v -inf - %s %s %s %s',...
-                pathdir, filesep, pm.neuron_model, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
+if pm.neuron_model(1) == '/'
+  program_name = sprintf('%s', pm.neuron_model);
+else
+  program_name = sprintf('%s%sraster_tuning_%s',...
+                         pathdir, filesep, pm.neuron_model);
+end
+cmdst = sprintf('%s -ng -v -inf - %s %s %s %s',...
+                program_name, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
 if mode_show_cmd
     disp(cmdst);
     return

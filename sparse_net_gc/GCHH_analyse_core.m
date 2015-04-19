@@ -32,7 +32,7 @@ else
 end
 fflush(stdout);
 
-if ~exist(suffix_extra, 'var')
+if ~exist('suffix_extra', 'var')
   suffix_extra = '';
 end
 
