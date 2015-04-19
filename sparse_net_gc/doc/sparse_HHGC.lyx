@@ -424,7 +424,7 @@ edges
 \begin_inset Text
 
 \begin_layout Plain Layout
-ISI
+firing rate
 \end_layout
 
 \end_inset
@@ -502,7 +502,7 @@ Correctness
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Hz
 \end_layout
 
 \end_inset
@@ -576,7 +576,7 @@ Joint / pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $84.9\pm2.7$
+\begin_inset Formula $11.8\pm0.4$
 \end_inset
 
 
@@ -727,7 +727,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $84.1\pm3.1$
+\begin_inset Formula $11.9\pm0.4$
 \end_inset
 
 
@@ -878,7 +878,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $83.4\pm3.9$
+\begin_inset Formula $12.0\pm0.6$
 \end_inset
 
 
@@ -1029,7 +1029,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $81.9\pm4.3$
+\begin_inset Formula $12.2\pm0.6$
 \end_inset
 
 
@@ -1223,7 +1223,7 @@ edges
 \begin_inset Text
 
 \begin_layout Plain Layout
-ISI
+firing rate
 \end_layout
 
 \end_inset
@@ -1301,7 +1301,7 @@ Correctness
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Hz
 \end_layout
 
 \end_inset
@@ -1375,7 +1375,7 @@ Joint / pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $80.2\pm3.4$
+\begin_inset Formula $12.5\pm0.5$
 \end_inset
 
 
@@ -1526,7 +1526,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $75.5\pm4.5$
+\begin_inset Formula $13.2\pm0.8$
 \end_inset
 
 
@@ -1677,7 +1677,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $71.1\pm4.9$
+\begin_inset Formula $14.1\pm1.0$
 \end_inset
 
 
@@ -1828,7 +1828,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $67.2\pm5.3$
+\begin_inset Formula $14.9\pm1.2$
 \end_inset
 
 
@@ -2022,7 +2022,7 @@ edges
 \begin_inset Text
 
 \begin_layout Plain Layout
-ISI
+firing rate
 \end_layout
 
 \end_inset
@@ -2100,7 +2100,7 @@ Correctness
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Hz
 \end_layout
 
 \end_inset
@@ -2174,7 +2174,7 @@ Joint / pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $72.0\pm4.4$
+\begin_inset Formula $13.9\pm0.9$
 \end_inset
 
 
@@ -2399,7 +2399,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $59.5\pm5.1$
+\begin_inset Formula $16.8\pm1.5$
 \end_inset
 
 
@@ -2624,7 +2624,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $43.0\pm4.3$
+\begin_inset Formula $23.3\pm2.3$
 \end_inset
 
 
@@ -2849,7 +2849,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30.3\pm1.2$
+\begin_inset Formula $33.0\pm1.3$
 \end_inset
 
 
@@ -3133,7 +3133,7 @@ edges
 \begin_inset Text
 
 \begin_layout Plain Layout
-ISI
+firing rate
 \end_layout
 
 \end_inset
@@ -3211,7 +3211,7 @@ Correctness
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Hz
 \end_layout
 
 \end_inset
@@ -3285,7 +3285,7 @@ Joint / pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $56.1\pm4.7$
+\begin_inset Formula $17.8\pm1.5$
 \end_inset
 
 
@@ -3510,7 +3510,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $28.2\pm0.3$
+\begin_inset Formula $35.5\pm0.4$
 \end_inset
 
 
@@ -3735,7 +3735,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $27.0\pm0.06$
+\begin_inset Formula $37.04\pm0.08$
 \end_inset
 
 
@@ -3960,7 +3960,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $26.9\pm0.04$
+\begin_inset Formula $37.17\pm0.06$
 \end_inset
 
 
@@ -4429,7 +4429,7 @@ edges
 \begin_inset Text
 
 \begin_layout Plain Layout
-ISI
+firing rate
 \end_layout
 
 \end_inset
@@ -4507,7 +4507,7 @@ Correctness
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Hz
 \end_layout
 
 \end_inset
@@ -4581,7 +4581,7 @@ Joint / pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $120.0\pm7.0$
+\begin_inset Formula $8.33\pm0.49$
 \end_inset
 
 
@@ -4732,7 +4732,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $99.0\pm8.8$
+\begin_inset Formula $10.1\pm0.9$
 \end_inset
 
 
@@ -4883,7 +4883,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $31.2\pm0.6$
+\begin_inset Formula $32.1\pm0.6$
 \end_inset
 
 
@@ -5034,7 +5034,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $29.8\pm0.1$
+\begin_inset Formula $33.6\pm0.1$
 \end_inset
 
 
@@ -5185,7 +5185,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $29.48\pm0.07$
+\begin_inset Formula $33.92\pm0.08$
 \end_inset
 
 
@@ -5336,7 +5336,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -5366,7 +5366,7 @@ Volt
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
