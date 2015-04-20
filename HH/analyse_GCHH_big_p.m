@@ -227,22 +227,44 @@ for cid = 1:n_case
     % show histogram of ISI
     figure(1);  set(gca,'fontsize',font_size);
     plain_network_XX = cell(2,2);
-    plain_network_XX{1,1} = neu_network(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
-    plain_network_XX{2,1} = neu_network(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
-    plain_network_XX{1,2} = neu_network(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
-    plain_network_XX{2,2} = neu_network(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
+    eyep = eye(p);
+    tmp0 = neu_network(1:nE,       1:nE);  % damn MATLAB
+    plain_network_XX{1,1} = tmp0(eyep(1:nE,       1:nE)==0);
+    tmp0 = neu_network(1+nE:nE+nI, 1:nE);
+    plain_network_XX{2,1} = tmp0(eyep(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+    tmp0 = neu_network(1:nE,       1+nE:nE+nI);
+    plain_network_XX{1,2} = tmp0(eyep(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+    tmp0 = neu_network(1+nE:nE+nI, 1+nE:nE+nI);
+    plain_network_XX{2,2} = tmp0(eyep(1+nE:nE+nI, 1+nE:nE+nI)==0);
+%    plain_network_XX{1,1} = neu_network(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
+%    plain_network_XX{2,1} = neu_network(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+%    plain_network_XX{1,2} = neu_network(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+%    plain_network_XX{2,2} = neu_network(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
     plain_gc_XX = cell(2,2);
-    plain_gc_XX{1,1} = GC(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
-    plain_gc_XX{2,1} = GC(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
-    plain_gc_XX{1,2} = GC(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
-    plain_gc_XX{2,2} = GC(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
+    tmp0 = GC(1:nE,       1:nE);
+    plain_gc_XX{1,1} = tmp0(eyep(1:nE,       1:nE)==0);
+    tmp0 = GC(1+nE:nE+nI, 1:nE);
+    plain_gc_XX{2,1} = tmp0(eyep(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+    tmp0 = GC(1:nE,       1+nE:nE+nI);
+    plain_gc_XX{1,2} = tmp0(eyep(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+    tmp0 = GC(1+nE:nE+nI, 1+nE:nE+nI);
+    plain_gc_XX{2,2} = tmp0(eyep(1+nE:nE+nI, 1+nE:nE+nI)==0);
+%    plain_gc_XX{1,1} = GC(1:nE,       1:nE)      (eye(p)(1:nE,       1:nE)==0);
+%    plain_gc_XX{2,1} = GC(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
+%    plain_gc_XX{1,2} = GC(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
+%    plain_gc_XX{2,2} = GC(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
     type_label = {'EE', 'IE', 'EI', 'II'};
     strength_label = [pm.scee, pm.scie, pm.scei, pm.scii];
 
     for id_XX = 1 : (1 + 3*(nI>0))
       [~, id_net_sort] = sort(plain_network_XX{id_XX});
-      plot(plain_network_XX{id_XX}(id_net_sort),
-           plain_gc_XX{id_XX}(id_net_sort)*1e4, 
+%      plot(plain_network_XX{id_XX}(id_net_sort),...
+%           plain_gc_XX{id_XX}(id_net_sort)*1e4,...
+%           'o', 'markersize', 2);
+      tmp1 = plain_network_XX{id_XX};
+      tmp2 = plain_gc_XX{id_XX};
+      plot(tmp1(id_net_sort),...
+           tmp2(id_net_sort)*1e4,...
            'o', 'markersize', 2);
       ylabel('GC (\times10^4)');
       xlabel(sprintf('Cortical Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
@@ -255,7 +277,9 @@ for cid = 1:n_case
     s_n_correct_ratio = zeros(1, length(s_div_sc)-1);
     for j = 1:length(s_div_sc)-1
       net_div_intv = s_div_sc(j) < neu_network & neu_network < s_div_sc(j+1);
-      s_n_correct_ratio(j) = sum((GC(net_div_intv) > gc_zero_cut)(:)) / sum(net_div_intv(:));
+%      s_n_correct_ratio(j) = sum((GC(net_div_intv) > gc_zero_cut)(:)) / sum(net_div_intv(:));
+      tmp3 = (GC(net_div_intv) > gc_zero_cut);
+      s_n_correct_ratio(j) = sum(tmp3(:)) / sum(net_div_intv(:));
     end
     plot(s_div_sc(2:end), s_n_correct_ratio, '-o');
     pic_output_color(sprintf('_correctratio_GC', type_label{id_XX}));

@@ -101,24 +101,23 @@ s_case = {
 %'GCinfo_HH3_gcc_ST_net_400_0X5EF21B69_p=380,20_sc=0.05,0.05,0.09,0.09_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'
 
 % n = 1000, pr = 0.7, ps = 0.032, volt, (2.5%, 5%, 10%, 15%, 20%)
-'GCinfo_HH3_gcc49_sparse_net_1000_0X12A54BDF_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
-'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
-'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
-'GCinfo_HH3_gcc49_sparse_net_1000_0X39A0FE1E_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
-'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X12A54BDF_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X39A0FE1E_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc49_sparse_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 
-%% ??
+% n = 1000, pr = 0.7, ps = 0.032, volt, (2.5%)
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X486F8F9B_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 
-%% n = 1000, pr = 0.7, ps = 0.032, ST, (2.5%, 5%, 10%, 15%, 20%)
+% n = 1000, pr = 0.7, ps = 0.032, ST, (2.5%, 5%, 10%, 15%, 20%)
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X12A54BDF_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X51879353_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X39A0FE1E_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc49_sparse_ST_net_1000_0X29FBF1F4_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40'
 
-%% n = 1000, pr = 0.7, ps = 0.032, volt, subnet = 1..100
-%'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=750,250_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
+% n = 1000, pr = 0.7, ps = 0.032, volt, subnet = 1..100
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
 
