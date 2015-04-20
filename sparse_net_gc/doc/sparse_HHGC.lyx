@@ -7075,11 +7075,11 @@ where variables
 \begin_inset Formula $z_{t}$
 \end_inset
 
- might be column vectors, coefficient 
+ can be column vectors, coefficient 
 \begin_inset Formula $a^{(ij)}$
 \end_inset
 
- might be matrix.
+ can be matrix.
 \end_layout
 
 \begin_layout Standard
@@ -7147,11 +7147,45 @@ R^{(uv)}=\left(b_{jk}\right)=\left(\mathrm{E}(x_{t-j}^{(u)}x_{t-k}^{(v)T})\right
 
 \end_inset
 
+Here 
+\begin_inset Formula $b$
+\end_inset
 
-\end_layout
+ is a placeholder variable to indicate row and column index.
+ 
+\begin_inset Formula $u$
+\end_inset
 
-\begin_layout Standard
-For example, 
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are indices of variables, it can be 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $y$
+\end_inset
+
+ or 
+\begin_inset Formula $z$
+\end_inset
+
+, or just 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula $2$
+\end_inset
+
+ or 
+\begin_inset Formula $3$
+\end_inset
+
+.
+ For example, 
 \begin_inset Formula $R^{(xy)}=\left(b_{jk}\right)=\left(\mathrm{E}(x_{t-j}y_{t-k}^{T})\right)$
 \end_inset
 
@@ -7168,11 +7202,6 @@ For example,
 \end_inset
 
 .
- 
-\begin_inset Formula $b$
-\end_inset
-
- is only a placeholder variable to indicate row and column index.
  
 \begin_inset Formula $R^{(uv)T}=R^{(vu)}$
 \end_inset
