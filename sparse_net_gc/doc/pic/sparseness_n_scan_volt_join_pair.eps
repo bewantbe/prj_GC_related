@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: pic/sparseness_n_scan_volt_join_pair.eps
-%%Creator: gnuplot 4.6 patchlevel 0
-%%CreationDate: Sun Feb 15 08:39:39 2015
+%%Creator: gnuplot 4.6 patchlevel 6
+%%CreationDate: Tue Apr 21 03:38:20 2015
 %%DocumentFonts: (atend)
 %%BoundingBox: 50 50 626 482
 %%EndComments
@@ -15,7 +15,7 @@ gnudict begin
 /Color false def
 /Blacktext false def
 /Solid false def
-/Dashlength 1 def
+/Dashlength 2 def
 /Landscape false def
 /Level1 false def
 /Rounded false def
@@ -47,7 +47,7 @@ gnudict begin
   } if
 } def
 %
-% Gnuplot Prolog Version 4.4 (August 2010)
+% Gnuplot Prolog Version 4.6 (September 2012)
 %
 %/SuppressPDFMark true def
 %
@@ -314,7 +314,8 @@ gnudict begin
 /PatternFill {gsave /PFa [ 9 2 roll ] def
   PFa 0 get PFa 2 get 2 div add PFa 1 get PFa 3 get 2 div add translate
   PFa 2 get -2 div PFa 3 get -2 div PFa 2 get PFa 3 get Rec
-  gsave 1 setgray fill grestore clip
+  TransparentPatterns {} {gsave 1 setgray fill grestore} ifelse
+  clip
   currentlinewidth 0.5 mul setlinewidth
   /PFs PFa 2 get dup mul PFa 3 get dup mul add sqrt def
   0 0 M PFa 5 get rotate PFs -2 div dup translate
@@ -456,11 +457,11 @@ systemdict /pdfmark known not {
 SDict begin [
   /Title (pic/sparseness_n_scan_volt_join_pair.eps)
   /Subject (gnuplot plot)
-  /Creator (gnuplot 4.6 patchlevel 0)
+  /Creator (gnuplot 4.6 patchlevel 6)
   /Author (xyy)
 %  /Producer (gnuplot)
 %  /Keywords ()
-  /CreationDate (Sun Feb 15 08:39:39 2015)
+  /CreationDate (Tue Apr 21 03:38:20 2015)
   /DOCINFO pdfmark
 end
 } ifelse
@@ -550,6 +551,16 @@ Color InterpolatedColor or { % COLOUR vs. GRAY map
 }{
   /g {stroke pm3dround pm3dGamma exp setgray} bind def
 } ifelse
+1.000 UL
+LTb
+1.00 1.00 1.00 C 1.000 1452 880 9274 7230 BoxColFill
+LCb setrgbcolor
+1452 880 M
+0 7230 V
+9274 0 V
+0 -7230 V
+-9274 0 V
+stroke
 0.500 UL
 LTb
 1452 880 M
@@ -618,37 +629,37 @@ LTb
 0 -88 V
 stroke
 0.00 0.00 0.00 C 1452 440 M
-[ [({}) 440.0 0.0 true true 0 (  50)]
+[ [({}) 440.0 0.0 true true 0 (50)]
 ] -146.7 MCshow
 0.500 UL
 LTb
-4544 880 M
+3771 880 M
 0 88 V
 0 7143 R
 0 -88 V
 stroke
-0.00 0.00 0.00 C 4544 440 M
-[ [({}) 440.0 0.0 true true 0 ( 100)]
+0.00 0.00 0.00 C 3771 440 M
+[ [({}) 440.0 0.0 true true 0 (100)]
 ] -146.7 MCshow
 0.500 UL
 LTb
-7635 880 M
+6090 880 M
 0 88 V
 0 7143 R
 0 -88 V
 stroke
-0.00 0.00 0.00 C 7635 440 M
-[ [({}) 440.0 0.0 true true 0 ( 200)]
+0.00 0.00 0.00 C 6090 440 M
+[ [({}) 440.0 0.0 true true 0 (200)]
 ] -146.7 MCshow
 0.500 UL
 LTb
-10727 880 M
+8408 880 M
 0 88 V
 0 7143 R
 0 -88 V
 stroke
-0.00 0.00 0.00 C 10727 440 M
-[ [({}) 440.0 0.0 true true 0 ( 400)]
+0.00 0.00 0.00 C 8408 440 M
+[ [({}) 440.0 0.0 true true 0 (400)]
 ] -146.7 MCshow
 0.500 UL
 LTb
@@ -663,161 +674,175 @@ Z stroke
 1.000 UP
 0.500 UL
 LTb
+1.000 UL
+LTb
+1716 943 N
+0 3520 V
+5079 0 V
+0 -3520 V
+-5079 0 V
+Z stroke
 % Begin plot #1
 3.000 UL
 LT5
-0.00 0.00 1.00 C LCb setrgbcolor
-5148 4243 M
+0.00 0.00 1.00 C 0.00 0.00 0.00 C 6795 4243 M
 [ [({}) 440.0 0.0 true true 0 (volt-join  5%)]
 ] -146.7 MRshow
 LT5
-0.00 0.00 1.00 C 5412 4243 M
+0.00 0.00 1.00 C 1980 4243 M
 1119 0 V
 1452 8111 M
-3092 0 V
-3091 0 V
-3092 -7 V
+2319 0 V
+2319 0 V
+2318 -7 V
+2319 7 V
 % End plot #1
 % Begin plot #2
 2.000 UP
 stroke
 LT0
-0.00 0.00 1.00 C LCb setrgbcolor
-5148 3803 M
+0.00 0.00 1.00 C 0.00 0.00 0.00 C 6795 3803 M
 [ [({}) 440.0 0.0 true true 0 (volt-join 10%)]
 ] -146.7 MRshow
 LT0
-0.00 0.00 1.00 C 5412 3803 M
+0.00 0.00 1.00 C 1980 3803 M
 1119 0 V
 1452 8111 M
-3092 0 V
-3091 0 V
-3092 -535 V
+2319 0 V
+2319 0 V
+8408 7576 L
+2319 390 V
 1452 8111 Pls
-4544 8111 Pls
-7635 8111 Pls
-10727 7576 Pls
-5971 3803 Pls
+3771 8111 Pls
+6090 8111 Pls
+8408 7576 Pls
+10727 7966 Pls
+2540 3803 Pls
 % End plot #2
 % Begin plot #3
 2.000 UP
 3.000 UL
 LT0
-0.00 0.00 1.00 C LCb setrgbcolor
-5148 3363 M
+0.00 0.00 1.00 C 0.00 0.00 0.00 C 6795 3363 M
 [ [({}) 440.0 0.0 true true 0 (volt-join 15%)]
 ] -146.7 MRshow
 LT0
-0.00 0.00 1.00 C 5412 3363 M
+0.00 0.00 1.00 C 1980 3363 M
 1119 0 V
 1452 8111 M
-3092 0 V
-7635 7836 L
-10727 6737 L
+2319 0 V
+6090 7836 L
+8408 6737 L
+2319 918 V
 1452 8111 Crs
-4544 8111 Crs
-7635 7836 Crs
-10727 6737 Crs
-5971 3363 Crs
+3771 8111 Crs
+6090 7836 Crs
+8408 6737 Crs
+10727 7655 Crs
+2540 3363 Crs
 % End plot #3
 % Begin plot #4
 2.000 UP
 3.000 UL
 LT0
-0.00 0.00 1.00 C LCb setrgbcolor
-5148 2923 M
+0.00 0.00 1.00 C 0.00 0.00 0.00 C 6795 2923 M
 [ [({}) 440.0 0.0 true true 0 (volt-join 20%)]
 ] -146.7 MRshow
 LT0
-0.00 0.00 1.00 C 5412 2923 M
+0.00 0.00 1.00 C 1980 2923 M
 1119 0 V
 1452 8111 M
-3092 0 V
-7635 7012 L
-3092 -875 V
+2319 0 V
+6090 7012 L
+8408 6137 L
+2319 1164 V
 1452 8111 Circle
-4544 8111 Circle
-7635 7012 Circle
-10727 6137 Circle
-5971 2923 Circle
+3771 8111 Circle
+6090 7012 Circle
+8408 6137 Circle
+10727 7301 Circle
+2540 2923 Circle
 % End plot #4
 % Begin plot #5
 3.000 UL
 LT5
-1.00 0.00 0.00 C LCb setrgbcolor
-5148 2483 M
+1.00 0.00 0.00 C 0.00 0.00 0.00 C 6795 2483 M
 [ [({}) 440.0 0.0 true true 0 (volt-pair  5%)]
 ] -146.7 MRshow
 LT5
-1.00 0.00 0.00 C 5412 2483 M
+1.00 0.00 0.00 C 1980 2483 M
 1119 0 V
 1452 8111 M
-3092 0 V
-3091 -7 V
-10727 6672 L
+2319 0 V
+2319 -7 V
+8408 6672 L
+2319 383 V
 % End plot #5
 % Begin plot #6
 2.000 UP
 stroke
 LT0
-1.00 0.00 0.00 C LCb setrgbcolor
-5148 2043 M
+1.00 0.00 0.00 C 0.00 0.00 0.00 C 6795 2043 M
 [ [({}) 440.0 0.0 true true 0 (volt-pair 10%)]
 ] -146.7 MRshow
 LT0
-1.00 0.00 0.00 C 5412 2043 M
+1.00 0.00 0.00 C 1980 2043 M
 1119 0 V
 1452 8111 M
-3092 0 V
-7635 4242 L
-10727 1610 L
+2319 0 V
+6090 4242 L
+8408 1610 L
+2319 -7 V
 1452 8111 Pls
-4544 8111 Pls
-7635 4242 Pls
-10727 1610 Pls
-5971 2043 Pls
+3771 8111 Pls
+6090 4242 Pls
+8408 1610 Pls
+10727 1603 Pls
+2540 2043 Pls
 % End plot #6
 % Begin plot #7
 2.000 UP
 3.000 UL
 LT0
-1.00 0.00 0.00 C LCb setrgbcolor
-5148 1603 M
+1.00 0.00 0.00 C 0.00 0.00 0.00 C 6795 1603 M
 [ [({}) 440.0 0.0 true true 0 (volt-pair 15%)]
 ] -146.7 MRshow
 LT0
-1.00 0.00 0.00 C 5412 1603 M
+1.00 0.00 0.00 C 1980 1603 M
 1119 0 V
 1452 8104 M
-3092 7 V
-7635 1986 L
-3092 -14 V
+2319 7 V
+6090 1986 L
+2318 -14 V
+2319 -7 V
 1452 8104 Crs
-4544 8111 Crs
-7635 1986 Crs
-10727 1972 Crs
-5971 1603 Crs
+3771 8111 Crs
+6090 1986 Crs
+8408 1972 Crs
+10727 1965 Crs
+2540 1603 Crs
 % End plot #7
 % Begin plot #8
 2.000 UP
 3.000 UL
 LT0
-1.00 0.00 0.00 C LCb setrgbcolor
-5148 1163 M
+1.00 0.00 0.00 C 0.00 0.00 0.00 C 6795 1163 M
 [ [({}) 440.0 0.0 true true 0 (volt-pair 20%)]
 ] -146.7 MRshow
 LT0
-1.00 0.00 0.00 C 5412 1163 M
+1.00 0.00 0.00 C 1980 1163 M
 1119 0 V
 1452 8060 M
-3092 51 V
-7635 2341 L
-3092 -8 V
+2319 51 V
+6090 2341 L
+2318 -8 V
+2319 -7 V
 1452 8060 Circle
-4544 8111 Circle
-7635 2341 Circle
-10727 2333 Circle
-5971 1163 Circle
+3771 8111 Circle
+6090 2341 Circle
+8408 2333 Circle
+10727 2326 Circle
+2540 1163 Circle
 % End plot #8
 1.000 UP
 0.500 UL

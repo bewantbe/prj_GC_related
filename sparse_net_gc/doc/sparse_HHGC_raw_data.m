@@ -37,6 +37,12 @@ a(:,:,4) = [  % n = 400
 81.0	15.1	56.0	15.1	87.8	15.1
 72.7	20.1	52.4	20.1	81.5	20.1
 ];
+a(:,:,5) = [  % n = 1000
+100.0	85.4	99.8	99.1	99.8	99.1
+98.0	10.0	97.8	10.0	97.8	10.0
+93.7	15.0	92.9	15.0	92.9	15.0
+88.8	20.0	86.5	20.0	86.5	20.0
+];
 
 figure(1);
 h1=plot(squeeze(a(1,1,:)), '-.b');
@@ -71,7 +77,7 @@ h3=plot(squeeze(a(3,6,:)), '-xr');
 h4=plot(squeeze(a(4,6,:)), '-or');
 
 hold off
-set(gca, 'xtick', [1 2 3 4], 'xticklabel', [50 100 200 400 1000]);
+set(gca, 'xtick', [1 2 3 4 5], 'xticklabel', [50 100 200 400 1000]);
 legend({'ST-join  5%','ST-join 10%','ST-join 15%','ST-join 20%',...
         'ST-pair  5%','ST-pair 10%','ST-pair 15%','ST-pair 20%'});
 legend('location', 'southwest');

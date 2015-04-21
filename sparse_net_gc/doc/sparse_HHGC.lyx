@@ -4385,7 +4385,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Basic statistics, n=1000,pval=1e-7
+Basic statistics, n=1000,pval=1e-5
 \end_layout
 
 \end_inset
@@ -4703,7 +4703,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-99.6% / 99.6%
+99.7% / 99.6%
 \end_layout
 
 \end_inset
@@ -4854,7 +4854,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-99.6% / 99.1%
+99.8% / 99.1%
 \end_layout
 
 \end_inset
@@ -5005,7 +5005,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-98.3% / 10.0%
+97.8% / 10.0%
 \end_layout
 
 \end_inset
@@ -5156,7 +5156,7 @@ ST
 \begin_inset Text
 
 \begin_layout Plain Layout
-93.5% / 15.0%
+92.9% / 15.0%
 \end_layout
 
 \end_inset
@@ -7084,6 +7084,7 @@ where variables
 
 \begin_layout Standard
 In order to solve Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var"
@@ -7109,6 +7110,7 @@ reference "eq: Eq 3-var"
 \end_inset
 
  to (a) of Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var"
@@ -7246,6 +7248,7 @@ For example,
 
 \begin_layout Standard
 By use above symbols, Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var"
@@ -7274,6 +7277,7 @@ note
 
 .
  And similarly for (b), (c) of Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var"
@@ -7303,7 +7307,7 @@ We need to solve
 \end_layout
 
 \begin_layout Standard
-Further assume 
+For simplicity, further assume 
 \begin_inset Formula $x_{t}$
 \end_inset
 
@@ -7354,6 +7358,7 @@ status open
 
 \begin_layout Standard
 Rewrite Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var clear"
@@ -7379,6 +7384,7 @@ R^{(zx)} & R^{(zy)} & v^{(z)}I
 
 \begin_layout Standard
 In order to solve the variance of residual, in Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var eq11"
@@ -7402,6 +7408,7 @@ reference "eq: Eq 3-var eq11"
 
 \begin_layout Standard
 Due to Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var more clear"
@@ -7519,7 +7526,7 @@ S^{(zx)} & I
 \end_layout
 
 \begin_layout Standard
-For simplicity, assume 
+For scalars 
 \begin_inset Formula $x_{t}$
 \end_inset
 
@@ -7527,11 +7534,7 @@ For simplicity, assume
 \begin_inset Formula $y_{t}$
 \end_inset
 
- are scalars below.
-\end_layout
-
-\begin_layout Standard
-Finally get GC
+ the GC is
 \begin_inset Formula 
 \begin{equation}
 F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-\left[\begin{array}{cc}
@@ -7562,6 +7565,10 @@ S^{(zx)} & S^{(zy)} & I
 Approximation of Three-Variable GC
 \end_layout
 
+\begin_layout Subsubsection
+Rude Approximation
+\end_layout
+
 \begin_layout Standard
 For 
 \begin_inset Formula $\vec{s}^{(u|v)}$
@@ -7576,6 +7583,7 @@ For
 \end_inset
 
 ) small, view the inverse matrix in Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:GC3"
@@ -7599,6 +7607,7 @@ Since
 \end_inset
 
  in Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var"
@@ -7606,6 +7615,7 @@ reference "eq: Eq 3-var"
 \end_inset
 
  might be a vector, Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: GC y->x approx"
@@ -7617,6 +7627,7 @@ reference "eq: GC y->x approx"
 
 \begin_layout Standard
 Similarly through Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: Eq 3-var more clear"
@@ -7639,29 +7650,30 @@ reference "eq: Eq 3-var more clear"
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace medskip
-\end_inset
+This approximation essentially treat the joint regression pairwisely.
+\end_layout
 
-
+\begin_layout Subsubsection
+Slightly Better Approximation
 \end_layout
 
 \begin_layout Standard
-Note that Eq.
+Now we try to correct the above result (Eq.
+  
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: GC y->x approx"
 
 \end_inset
 
- is actually the same as the approximation for bivariate GC.
- So we need to correct it to reflect effect from other variables.
+) to reflect effect from other variables.
 \end_layout
 
 \begin_layout Standard
 We have
 \begin_inset Formula 
 \[
-1-\frac{1-d}{1-c}\approx d-c,\quad\textrm{for }d,c\ll1,
+\ln(\frac{1}{1-b})\approx b,\quad\textrm{for }b\ll1.
 \]
 
 \end_inset
@@ -7669,7 +7681,7 @@ We have
 
 \begin_inset Formula 
 \[
-\ln(\frac{1}{1-b})\approx b,\quad\textrm{for }b\ll1.
+b=1-\frac{1-d}{1-c}\approx d-c,\quad\textrm{for }d,c\ll1,
 \]
 
 \end_inset
@@ -7679,6 +7691,7 @@ We have
 
 \begin_layout Standard
 So Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:GC3"
@@ -7687,15 +7700,15 @@ reference "eq:GC3"
 
  become
 \begin_inset Formula 
-\[
-F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-c}{1-d}\Biggr)\approx d-c
-\]
+\begin{equation}
+F_{y\rightarrow x|z}=\ln\Biggl(\frac{1-c}{1-d}\Biggr)\approx d-c,\quad\textrm{for }d,c\ll1,\label{eq:d-c app GC(y->x)}
+\end{equation}
 
 \end_inset
 
 where
 \begin_inset Formula 
-\[
+\begin{equation}
 c=\left[\begin{array}{cc}
 0 & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
 I & S^{(xz)}\\
@@ -7703,14 +7716,14 @@ S^{(zx)} & I
 \end{array}\right]^{-1}\left[\begin{array}{c}
 0\\
 \vec{s}^{(x|z)T}
-\end{array}\right]
-\]
+\end{array}\right]\label{eq:def c}
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 d=\left[\begin{array}{ccc}
 0 & \vec{s}^{(x|y)} & \vec{s}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
 I & S^{(xy)} & S^{(xz)}\\
@@ -7720,8 +7733,8 @@ S^{(zx)} & S^{(zy)} & I
 0\\
 \vec{s}^{(x|y)T}\\
 \vec{s}^{(x|z)T}
-\end{array}\right]
-\]
+\end{array}\right]\label{eq:def d}
+\end{equation}
 
 \end_inset
 
@@ -7786,6 +7799,7 @@ d\approx\left[\begin{array}{ccc}
 
 \begin_layout Standard
 Get the corrected GC (compared with Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: GC y->x approx"
@@ -7840,6 +7854,7 @@ For vector
 \end_inset
 
 , Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:GCapp-od2"
@@ -7870,6 +7885,7 @@ F_{y\rightarrow x|z}\approx\frac{1}{\mathrm{var}(x_{t})\mathrm{var}(y_{t})}\left
 
 \begin_layout Standard
 But Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:GCapp-od2-1"
@@ -7892,22 +7908,19 @@ reference "eq:GCapp-od2-1"
 \begin_inset Formula $\left\Vert B_{3}\right\Vert \ll1$
 \end_inset
 
- not satisfies any more (hence the approximation Eq.
+ not well satisfied any more (hence the approximation Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:linear operator app"
 
 \end_inset
 
- not valid).
+ is not good or even not valid).
 \end_layout
 
 \begin_layout Standard
-For large 
-\begin_inset Formula $n$
-\end_inset
-
-, we may use
+Recall
 \begin_inset Formula 
 \[
 F_{y\rightarrow x|z}\approx d-c=\vec{s}^{(x|y)}\vec{s}^{(x|y)T}+\left[\begin{array}{ccc}
@@ -7935,18 +7948,49 @@ where
 , so we get the relationship between conditional GC and pairwise GC.
 \end_layout
 
-\begin_layout Standard
-Formula (
-\begin_inset Formula $\vec{a}^{(12)}$
-\end_inset
-
- is from standard whitened data):
+\begin_layout Subsubsection
+A Far Better Approximation
 \end_layout
 
 \begin_layout Standard
+Start from Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:d-c app GC(y->x)"
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:def c"
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:def d"
+
+\end_inset
+
+ again.
+\end_layout
+
+\begin_layout Standard
+In covariance form, define
 \begin_inset Formula 
 \[
-d-c=d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\vec{a}^{(12)T}
+\left[\begin{array}{ccc}
+Q^{(xx)} & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & Q^{(yy)} & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & Q^{(zz)}
+\end{array}\right]=\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & R^{(yy)} & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & R^{(zz)}
+\end{array}\right]^{-1},
 \]
 
 \end_inset
@@ -7954,7 +7998,289 @@ d-c=d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\vec{a}^{(12)T}
 
 \begin_inset Formula 
 \[
-\left(Q^{(yy)}\right)^{-1}=I-S^{(yz)}S^{(zy)}-\left(S^{(yx)}-S^{(yz)}S^{(zx)}\right)\left(I-S^{(xz)}S^{(zx)}\right)^{-1}\left(S^{(xy)}-S^{(xz)}S^{(zy)}\right)
+c^{(R)}=\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xz)}\\
+R^{(zx)} & R^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]^{T},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+d^{(R)}=\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & R^{(yy)} & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & R^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]^{T}.
+\]
+
+\end_inset
+
+Note that:
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}=-\ln\left(1-\frac{\frac{1}{\mathrm{var}(x_{t})}\left(d^{(R)}-c^{(R)}\right)}{1-\frac{1}{\mathrm{var}(x_{t})}c^{(R)}}\right),
+\]
+
+\end_inset
+
+get
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx\frac{1}{\mathrm{var}(x_{t})}\left(d^{(R)}-c^{(R)}\right)=\frac{1}{\mathrm{var}(x_{t})}\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In correlation form (for the 
+\begin_inset Quotes eld
+\end_inset
+
+z-score
+\begin_inset Quotes erd
+\end_inset
+
+ data),
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx d-c=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\vec{a}^{(12)T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If data is further whitenned (as in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var more clear"
+
+\end_inset
+
+), then
+\begin_inset Formula 
+\begin{eqnarray*}
+\left(Q^{(yy)}\right)^{-1} & = & I-S^{(yz)}S^{(zy)}-\left(S^{(yx)}-S^{(yz)}S^{(zx)}\right)\left(I-S^{(xz)}S^{(zx)}\right)^{-1}\left(S^{(xy)}-S^{(xz)}S^{(zy)}\right)\\
+ & \approx & I-S^{(yz)}S^{(zy)}-S^{(yx)}S^{(xy)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a very weak GC, we might even use
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}\approx\vec{a}^{(12)}\vec{a}^{(12)T}\label{eq:GC coef app}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Relation of Joint Regression and Pairwise Regression
+\end_layout
+
+\begin_layout Standard
+If we do a 
+\begin_inset Formula $x$
+\end_inset
+
+ regression with 
+\begin_inset Formula $y$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cc}
+\vec{b}^{(11)} & \vec{b}^{(12)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]=\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)}\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then from similar way to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC coef app"
+
+\end_inset
+
+, we get
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x}\approx d_{xy}-c_{xy}=b^{(12)}\left(Q^{(yy)}-Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\right)^{-1}\left(b^{(12)}\right)^{T}\approx\vec{b}^{(12)}\vec{b}^{(12)T}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So the relation between 
+\begin_inset Formula $\vec{a}^{(uv)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{b}^{(uv)}$
+\end_inset
+
+ is important for understanding the relation between joint regression and
+ pairwise regression 
+\begin_inset Formula 
+\begin{equation}
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\label{eq:b-from-a}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+a^{(12)}\left(I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}\right)=b^{(12)}+b_{[xz]}^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cc}
+\vec{b}^{(11)} & \vec{b}^{(12)}\\
+\vec{b}^{(21)} & \vec{b}^{(22)}
+\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(12)}\\
+\vec{a}^{(21)} & \vec{a}^{(22)}
+\end{array}\right]+\left[\begin{array}{c}
+a^{(13)}\\
+a^{(23)}
+\end{array}\right]\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Implies: 
+\begin_inset Formula $b^{(12)}=0,\ b^{(13)}=0\ \Rightarrow\ a^{(12)}=0$
+\end_inset
+
+, also 
+\begin_inset Formula $a^{(13)}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a"
+
+\end_inset
+
+, and note that 
+\begin_inset Formula $Q^{(uv)}$
+\end_inset
+
+ are approximately toeplitz matrix, in frequency domain (
+\begin_inset Formula $B_{xy}\sim\F[b^{(12)}]$
+\end_inset
+
+ etc.).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B_{xy}\approx\left[A_{xy}-A_{xz}Q_{zz}^{-1}Q_{zy}\right]_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Under assumption
+\begin_inset Formula 
+\[
+\Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
+\Sigma_{xx} & \Sigma_{yy} & \Sigma_{zz}\end{array}\right]\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B_{xy}\approx\left[A_{xy}-A_{xz}\left(A_{zy}+\Sigma_{zz}A_{yz}^{*T}\Sigma_{yy}^{-1}\right)\right]_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For scaler 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ (
+\begin_inset Formula $z$
+\end_inset
+
+ might be vector), and further assume 
+\begin_inset Formula $\Sigma_{zz}\approx\Sigma_{yy}$
+\end_inset
+
+ (which is the usual case), we get
+\begin_inset Formula 
+\[
+B_{xy}\approx\left[A_{xy}-A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
 \]
 
 \end_inset
@@ -9531,6 +9857,7 @@ Gain function under Poisson pulse drive.
 
 \begin_layout Subsection
 Derivation Details of Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: var(eps)<-S"
@@ -9747,6 +10074,7 @@ If
 \end_inset
 
  below) part of Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: e1"
@@ -9777,6 +10105,7 @@ Further, If
 \end_inset
 
 , which lead to Eq.
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq: var(eps)<-S"
