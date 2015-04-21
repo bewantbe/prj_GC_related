@@ -8197,7 +8197,7 @@ R^{(yx)} & R^{(yy)}
 \end_layout
 
 \begin_layout Standard
-Implies: 
+Imply: 
 \begin_inset Formula $b^{(12)}=0,\ b^{(13)}=0\ \Rightarrow\ a^{(12)}=0$
 \end_inset
 

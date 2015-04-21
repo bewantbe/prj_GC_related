@@ -57,7 +57,7 @@ h3=plot(squeeze(a(3,2,:)), '-xr');
 h4=plot(squeeze(a(4,2,:)), '-or');
 
 hold off
-set(gca, 'xtick', [1 2 3 4], 'xticklabel', [50 100 200 400 1000]);
+set(gca, 'xtick', [1 2 3 4 5], 'xticklabel', [50 100 200 400 1000]);
 legend({'volt-join  5%','volt-join 10%','volt-join 15%','volt-join 20%',...
         'volt-pair  5%','volt-pair 10%','volt-pair 15%','volt-pair 20%'});
 legend('location', 'southwest');
@@ -84,4 +84,28 @@ legend('location', 'southwest');
 ylim([0,100]);
 print('-depsc2', 'pic/sparseness_n_scan_ST_join_pair.eps');
 
+
+% firing rate
+aISI = [
+% 5%	10%	15%	20%
+11.8	11.9	12.0	12.2	% 50
+12.5	13.2	14.1	14.9	% 100
+13.9	16.8	23.3	33.0	% 200
+17.8	35.5	37.04	37.17	% 400
+10.1	32.1	33.6	33.92	% 1000
+];
+
+figure(3);
+plot(aISI(:,1), '-.');
+hold on
+plot(aISI(:,2), '-+');
+plot(aISI(:,3), '-x');
+plot(aISI(:,4), '-o');
+hold off
+set(gca, 'xtick', [1 2 3 4 5], 'xticklabel', [50 100 200 400 1000]);
+legend({'5%','10%','15%','20%'});
+legend('location', 'northwest');
+ylim([0 40]);
+ylabel('firing rate (Hz)');
+print('-depsc2', 'pic/sparseness_n_scan_volt_join_pair_ISI.eps');
 
