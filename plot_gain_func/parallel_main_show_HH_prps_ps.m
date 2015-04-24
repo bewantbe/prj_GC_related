@@ -35,17 +35,17 @@ for id_s_data = 1:length(s_data_file_name)
   s_prps = s_ps.*s_pr;
   s_more_prps = linspace(s_prps(1),s_prps(end),1000);
 
-  hd = plot(s_prps/1e-3, s_freq, '-o', 'color',...
+  hd = plot(s_prps*31, s_freq, '-o', 'color',...
             cm(id_s_data,:),'markersize',2);
   hd = legend(hd, sprintf('f = %g (%-5.2g mV)', s_ps(1), 31*s_ps(1)), 'location', 'southeast');
   set(hd, 'fontsize', 18);
 end
 hold off
 ylabel('spike rate /Hz');
-xlabel('\mu\cdotf /1e-3');
-
+xlabel('\mu\cdotf (kHz\cdotmV(EPSP))');
+axis([0,s_prps(end)*31,0,100]);
 pic_output_color('HH_gain_func_prps_ps');
 
 legend('location', 'northwest');
-axis([0,100,0,30]);
+axis([0,3,0,30]);
 pic_output_color('HH_gain_func_prps_ps_local');

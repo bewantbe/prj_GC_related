@@ -9,6 +9,8 @@
 
 \setbeamercovered{transparent}
 % or whatever (possibly just delete it)
+
+\setbeamersize{text margin left=14pt,text margin right=14pt}
 \end_preamble
 \options 8pt
 \use_default_options false
@@ -45,7 +47,7 @@
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
-\suppress_date false
+\suppress_date true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -1577,59 +1579,84 @@ All of the following is optional and typically not needed.
 Appendix
 \end_layout
 
-\begin_layout Subsection*
-For Further Reading
-\end_layout
-
 \begin_layout BeginFrame
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-[allowframebreaks]
-\end_layout
-
-\end_inset
-
-For Further Reading
+Supplemental Data
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-beamertemplatebookbibitems
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Start with overview books.
-\end_layout
+\align center
+\begin_inset Graphics
+	filename pic_raster/raster_n=80,20_net_100_0X07E0EF5A_5.2%_pr=1.0_ps=0.030_showN=100.eps
+	lyxscale 50
+	scale 20
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename pic_raster/raster_n=80,20_net_100_0X1515715F_10.2%_pr=1.0_ps=0.030_showN=100.eps
+	lyxscale 50
+	scale 20
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename pic_raster/raster_n=80,20_net_100_0X65763652_15.2%_pr=1.0_ps=0.030_showN=100.eps
+	lyxscale 50
+	scale 20
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-Binomial inverse theorems
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic_raster/raster_n=180,20_net_200_0X0CD87C95_5.2%_pr=1.0_ps=0.030_showN=200.eps
+	lyxscale 50
+	scale 20
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename pic_raster/raster_n=180,20_net_200_0X4656EA6C_10.2%_pr=1.0_ps=0.030_showN=200.eps
+	lyxscale 50
+	scale 20
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename pic_raster/raster_n=180,20_net_200_0X1416174F_15.3%_pr=1.0_ps=0.030_showN=200.eps
+	lyxscale 50
+	scale 20
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left(A+UBV\right)^{-1}=A^{-1}-A^{-1}UB\left(B+BVA^{-1}UB\right)^{-1}BVA^{-1}
-\]
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Raster (n=100, 5%(100.0%), 10%(99.9%), 15%(98.2%), n=200, 5%(100.0%), 10%(84.8%),
+ 15%(15.3%))
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
