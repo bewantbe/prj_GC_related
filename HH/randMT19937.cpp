@@ -19,7 +19,7 @@
 #include <random>
 
 #define HELP_MSG \
-"Usage: randMT19937(m, n)\n"
+"Usage: see help of rand()\n"
 
 void ShowUsage()
 {
@@ -141,7 +141,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs,
         vec_dims[k] = (mwSize)pr[k];
       }
       dims = vec_dims.data();
-      printf("ndim=%d\n", ndim);
     } else {
       // rand (N)
       if (mxGetScalar(prhs[0]) < 0) {

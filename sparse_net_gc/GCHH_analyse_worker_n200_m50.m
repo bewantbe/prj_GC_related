@@ -1,11 +1,10 @@
 % Generate HH data
 % work with GCHH_analyse_core.m
 
-net_param.generator  = 'gen_sparse';
+net_param.generator  = 'gen_sparse_mt19937';
 net_param.p          = 200;
 net_param.sparseness = 50/200;
 net_param.seed       = 124;
-net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
 i_stv   = 1;  % Down sampling factor
@@ -21,14 +20,15 @@ pm.scei = 0.07;
 pm.scii = 0.07;
 pm.pr   = 0.7;
 pm.ps   = 0.032;  % 0.032 = 1 mV
-pm.t    = 1e6;
+pm.t    = 1e5;
 pm.stv  = 0.5;
 
 max_od = 40;
 
- gen_HH(pm, 'ext_T,cmd');
+gen_HH(pm, 'ext_T,cmd');
+
 %[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, new, rm');
-%return;
+return;
 
 net_param.sparseness = 0.20;
 pm.net_param = net_param;
