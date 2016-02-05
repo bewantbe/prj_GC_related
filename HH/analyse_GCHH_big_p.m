@@ -240,6 +240,7 @@ for cid = 1:n_case
 %    plain_network_XX{2,1} = neu_network(1+nE:nE+nI, 1:nE)      (eye(p)(1+nE:nE+nI, 1:nE)==0);        % IE: E -> I
 %    plain_network_XX{1,2} = neu_network(1:nE,       1+nE:nE+nI)(eye(p)(1:nE,       1+nE:nE+nI)==0);  % EI; I -> E
 %    plain_network_XX{2,2} = neu_network(1+nE:nE+nI, 1+nE:nE+nI)(eye(p)(1+nE:nE+nI, 1+nE:nE+nI)==0);
+    GC = GC - use_od / len;
     plain_gc_XX = cell(2,2);
     tmp0 = GC(1:nE,       1:nE);
     plain_gc_XX{1,1} = tmp0(eyep(1:nE,       1:nE)==0);
@@ -263,17 +264,20 @@ for cid = 1:n_case
 %           'o', 'markersize', 2);
       tmp1 = plain_network_XX{id_XX};
       tmp2 = plain_gc_XX{id_XX};
-      plot(tmp1(id_net_sort),...
+      plot(tmp1(id_net_sort).^2,...
            tmp2(id_net_sort)*1e4,...
            'o', 'markersize', 2);
       ylabel('GC (\times10^4)');
-      xlabel(sprintf('Cortical Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
-      pic_output_color(sprintf('_sc%s_GC', type_label{id_XX}));
+      xlabel(sprintf('Square of Cortical Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
+      yl = ylim();
+      ylim([0 yl(2)]);
+      pic_output_color(sprintf('_sc%s^2_GC', type_label{id_XX}));
     end
 
     % Show correctness v.s. cortical strength (for distributed)
     figure(2);  set(gca,'fontsize',font_size);
-    s_div_sc = linspace(0, max(neu_network(eye(nE+nI)==0)), 40)
+    s_div_max = max(neu_network(eye(nE+nI)==0));
+    s_div_sc = linspace(0, s_div_max, 20);
     s_n_correct_ratio = zeros(1, length(s_div_sc)-1);
     for j = 1:length(s_div_sc)-1
       net_div_intv = s_div_sc(j) < neu_network & neu_network < s_div_sc(j+1);
@@ -281,7 +285,15 @@ for cid = 1:n_case
       tmp3 = (GC(net_div_intv) > gc_zero_cut);
       s_n_correct_ratio(j) = sum(tmp3(:)) / sum(net_div_intv(:));
     end
-    plot(s_div_sc(2:end), s_n_correct_ratio, '-o');
+%    plot(s_div_sc(2:end), s_n_correct_ratio, '-o');
+    bar(s_div_sc(2:end), 100*s_n_correct_ratio, 1.0, 'FaceColor', [.1 .7 .1]);
+    xlim([0 s_div_max + s_div_sc(2)/2]);
+    xlabel('relative cortial strength');
+    ylabel('reconstruction correct ratio(%)');
+%    h=gca;
+%    labels=get(h,'YTick'); % get the y axis labels, buggy
+%    labels_modif=[num2str(100*str2num(labels)) ones(length(labels),1)*'%']
+%    set(h,'yticklabel',labels_modif);
     pic_output_color(sprintf('_correctratio_GC', type_label{id_XX}));
 
   end

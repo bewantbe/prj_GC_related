@@ -23,7 +23,7 @@ fi.p_val            = 1e-4;
 fi.use_od           = 40;  % 'aic'
 fi.auto_gc_zero_cut = false;
 fi.b_cal_net        = false;
-fi.b_output_pics    = 1;
+fi.b_output_pics    = 2;
 fi.gcdata_dir       = 'GCinfo/';
 
 fi.b_use_pairGC     = false;
