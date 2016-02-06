@@ -3,7 +3,10 @@ pic_common_include;
 
 % load results
 s_data_file_name = {
-'scan_scee_HH3_gcc49_westmere_pr=1.6_ps=4.0e-02_scee=5.0e-02-5.0e-02_t=1.0e+05.mat'
+'scan_scee_HH3_gcc49_westmere_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07.mat'  % synchronous firing, strong inverse GC
+'scan_scee_HH3_gcc49_westmere_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07.mat'  % clustered firing, significant inverse GC
+'scan_scee_HH3_gcc49_westmere_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07.mat'  %  asynchronous firing, week inverse GC
+'scan_scee_HH3_gcc49_westmere_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07.mat'  % near-synchronous firing, looks zero invverse GC
 };
 
 p = 2;
@@ -27,7 +30,7 @@ for id_s_data = 1:length(s_data_file_name)
 end
 
 figure(1);
-plot(s_scee, s_gc);
+plot(s_scee, s_gc*1e3);
 
 figure(2);
 plot(s_scee, s_freq);

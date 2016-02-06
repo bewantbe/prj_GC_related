@@ -269,8 +269,9 @@ for cid = 1:n_case
            'o', 'markersize', 2);
       ylabel('GC (\times10^4)');
       xlabel(sprintf('Square of Cortical Strength %s (\\times%.3f)', type_label{id_XX}, strength_label(id_XX)));
-      yl = ylim();
-      ylim([0 yl(2)]);
+%      yl = ylim();
+%      ylim([0 yl(2)]);
+      ylim([0 max(tmp2(id_net_sort)*1e4)]);
       pic_output_color(sprintf('_sc%s^2_GC', type_label{id_XX}));
     end
 

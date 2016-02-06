@@ -10,3 +10,4 @@ prj_nuft/pic/
 *.mex*
 *.o
 sparse_net_gc/GCinfo
+HH/scan_worker/scan_scee_results
