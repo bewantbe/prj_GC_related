@@ -1,5 +1,5 @@
 %
-neuron_model = 'HH3_gcc49_westmere';
+neuron_model = 'HH3_gcc49_westmere2';
 pr = 0.94;
 ps = 0.032;
 s_scee = 0.05*linspace(0, 1, 30);
