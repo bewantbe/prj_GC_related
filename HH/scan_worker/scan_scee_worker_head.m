@@ -1,24 +1,26 @@
-%
-% input parameters
-%neuron_model = 'HH3_gcc49_westmere';
-%pr = 0.94;
-%ps = 0.032;
-%s_scee = 0.05*linspace(0, 1, 10);
-%simu_time = 1e6;
-
-addpath([getenv('HOME') '/matcode/prj_GC_clean/plot_gain_func/']);
+% Fixed input parameters
+% See scan_scee_worker_w_test.m
 
 % function to calculate in each loop
-func_name = 'cal_job_HH';
+func_name = 'cal_job_HH_VST';
+
+pm.neuron_model = neuron_model;
+pm.net  = 'net_2_2';
+pm.pr   = pr;
+pm.ps   = ps;
+pm.t    = simu_time;
+pm.stv  = 0.5;
+pm.extra_cmd = '-q';
+
+% Parameters beside scee
+in_const_data.pm = pm;
+in_const_data.s_od = 1:99;           % fitting order scan
+in_const_data.hist_div = 0:1:500;    % ISI hist range
 
 % generate input parameter set
 s_jobs = cell(size(s_scee));
 for k=1:numel(s_scee)
-  in.neuron_model = neuron_model;
-  in.pr = pr;
-  in.ps = ps;
   in.scee = s_scee(k);
-  in.simu_time = simu_time;
   s_jobs{k}=in;   % inputs are saved in a struct named 'in'
 end
 
@@ -27,8 +29,11 @@ end
 t0 = tic();
 tocs = @(st) fprintf('%s: t = %6.3fs\n', st, toc());
 
+st_extra = '_VST';
+
 % results will be saved here
-data_file_name = sprintf('scan_scee_results/scan_scee_%s_pr=%1.1f_ps=%.1e_scee=%.1e-%.1e_t=%1.1e.mat', neuron_model, pr, ps, in.scee(1), in.scee(end), simu_time);
+data_file_name = sprintf('scan_scee_results/scan_scee_%s_pr=%1.1f_ps=%.1e_scee=%.1e-%.1e_t=%1.1e%s.mat', neuron_model, pr, ps, in.scee(1), in.scee(end), simu_time, st_extra);
+clear('st_extra');
 
 prefix_tmpdata = 'scan_scee_results/';
 
