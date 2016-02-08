@@ -5,26 +5,29 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
 % load results
 s_data_file_name = {
-%'scan_scee_HH3_gcc49_westmere_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'  % synchronous firing, strong inverse GC
-'scan_scee_HH3_gcc49_westmere2_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'
+%'scan_scee_HH3_gcc49_westmere_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'  % synchronous firing, (strong inverse GC at od=20)
+%'scan_scee_HH3_gcc49_westmere2_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'
 
-%'scan_scee_HH3_gcc49_westmere_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'  % clustered firing, significant inverse GC
-'scan_scee_HH3_gcc49_westmere2_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'
+%'scan_scee_HH3_gcc49_westmere_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'  % clustered firing, (significant inverse GC at od=20)
+%'scan_scee_HH3_gcc49_westmere2_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07'
 
-%'scan_scee_HH3_gcc49_westmere_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'  %  asynchronous firing, week inverse GC
-'scan_scee_HH3_gcc49_westmere2_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'
+%'scan_scee_HH3_gcc49_westmere_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'  %  asynchronous firing, (week inverse GC at od=20)
+%'scan_scee_HH3_gcc49_westmere2_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'
 
-%'scan_scee_HH3_gcc49_westmere_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'  % near-synchronous firing, looks zero invverse GC
-'scan_scee_HH3_gcc49_westmere2_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'
+%'scan_scee_HH3_gcc49_westmere_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'  % near-synchronous firing, (looks zero invverse GC at od=20)
+%'scan_scee_HH3_gcc49_westmere2_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07'
 };
 
 s_data_file_name = {
-'scan_scee_HH3_gcc49_westmere2_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=1.0e+06_test'
+'scan_scee_HH3_gcc49_westmere2_pr=95.0_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07_VST'
+'scan_scee_HH3_gcc49_westmere2_pr=56.5_ps=2.0e-03_scee=5.0e-02-5.0e-02_t=5.0e+07_VST'
+'scan_scee_HH3_gcc49_westmere2_pr=0.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07_VST'
+'scan_scee_HH3_gcc49_westmere2_pr=5.9_ps=3.2e-02_scee=5.0e-02-5.0e-02_t=5.0e+07_VST'
 };
 
 p = 2;
 stv = 0.5;    % see also cal_job_HH.m for this value
-mode_ST = true;
+mode_ST = false;
 if mode_ST
   st_ext = 'ST_';
 else
