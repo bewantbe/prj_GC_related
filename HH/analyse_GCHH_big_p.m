@@ -311,12 +311,13 @@ for cid = 1:n_case
     pic_output_color('_ISI_hist');
 
     % show true adjacency matrix
-    [xx,yy] = meshgrid(0:p, 0:p);
     figure(2);  set(gca,'fontsize',font_size);
     colormap(fliplr(gray()')');
-    shading('faceted');
-    %hd=pcolor(xx,yy,[[flipud(neu_network); zeros(1,p)],zeros(p+1,1)]);
-    pcolor(xx,yy,[[neu_network; zeros(1,p)],zeros(p+1,1)]);
+    imagesc(neu_network);
+    if p<=200
+      line(0.5+[zeros(p+1,1), p*ones(p+1,1)]', 0.5+[1;1]*(0:p), 'color', 'k', 'linewidth', min(1,30/p));
+      line(0.5+[1;1]*(0:p), [zeros(p+1,1), 0.5+p*ones(p+1,1)]', 'color', 'k', 'linewidth', min(1,30/p));
+    end
     if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
       hd=colorbar();
       set(hd,'fontsize',font_size);
@@ -325,18 +326,18 @@ for cid = 1:n_case
     %axis('square','off');
     xlabel('index of driven one');
     ylabel('index of passive one');
-    set(gca,'xtick',[1 50 100]);
-    set(gca,'ytick',[1 50 100]);
     pic_output('_gcadj_ans');
 
     % show GC adjacency matrix (gray points)
     figure(3);  set(gca,'fontsize',font_size);
     colormap(fliplr(gray()')');
-    shading('faceted');
     adj_gc = zero_GC/scale_gc;
     adj_gc(adj_gc<0) = 0;
-    %hd=pcolor(xx,yy,[[flipud(adj_gc); zeros(1,p)],zeros(p+1,1)]);
-    pcolor(xx,yy,[[adj_gc; zeros(1,p)],zeros(p+1,1)]);
+    imagesc(adj_gc);
+    if p<=200
+      line(0.5+[zeros(p+1,1), p*ones(p+1,1)]', 0.5+[1;1]*(0:p), 'color', 'k', 'linewidth', min(1,30/p));
+      line(0.5+[1;1]*(0:p), [zeros(p+1,1), 0.5+p*ones(p+1,1)]', 'color', 'k', 'linewidth', min(1,30/p));
+    end
     %caxis([0,2]);
     if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
       hd=colorbar();
@@ -350,16 +351,16 @@ for cid = 1:n_case
     %axis('square','off');
     xlabel('index of driven one');
     ylabel('index of passive one');
-    set(gca,'xtick',[1 50 100]);
-    set(gca,'ytick',[1 50 100]);
     %zlabel('GC value (10^{',num2str(round(log10(scale_gc))),'})');
     pic_output('_gcadj');
 
     % show correctness by color map
     figure(4);  set(gca,'fontsize',font_size);
-    shading('faceted');
-    %pcolor(xx,yy,[[flipud(adj_cmp); zeros(1,p)],zeros(p+1,1)]);
-    pcolor(xx,yy,[[adj_cmp; zeros(1,p)],zeros(p+1,1)]);
+    imagesc(adj_cmp);
+    if p<=200
+      line(0.5+[zeros(p+1,1), p*ones(p+1,1)]', 0.5+[1;1]*(0:p), 'color', 'k', 'linewidth', min(1,30/p));
+      line(0.5+[1;1]*(0:p), [zeros(p+1,1), 0.5+p*ones(p+1,1)]', 'color', 'k', 'linewidth', min(1,30/p));
+    end
     caxis([-1,1]);
     if isfield(function_item, 'b_output_colorbar') && function_item.b_output_colorbar
       hd=colorbar();
@@ -368,8 +369,6 @@ for cid = 1:n_case
     %axis('square','off');
     xlabel('index of driven one');
     ylabel('index of passive one');
-    set(gca,'xtick',[1 50 100]);
-    set(gca,'ytick',[1 50 100]);
     pic_output_color('_adj_cmp');
 
     % show sorted GC values
@@ -421,7 +420,7 @@ for cid = 1:n_case
     bar(xx, nn_GC_0, 1.0, 'facecolor',[0.5,0.5,0.5]);
     bar(xx, nn_GC_I, 1.0, 'facecolor',[0.0,0.0,0.9]);
     bar(xx, nn_GC_E, 1.0, 'facecolor',[0.9,0.0,0.0]);
-    set(findobj(gca,'Type','patch'), 'facealpha', 0.5);
+%    set(findobj(gca,'Type','patch'), 'facealpha', 0.5);
     xlabel(['GC value (10^{',num2str(round(log10(scale_gc))),'})']);
     ylabel('count/bin');
     %set(gca, 'xtick',s_gc_tick);

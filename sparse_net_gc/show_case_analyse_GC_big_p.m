@@ -55,7 +55,7 @@ s_case = {
 %'GCinfo_HH3_gcc_net_100_0X07E0EF5A_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc_net_100_0X1515715F_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc_net_100_0X65763652_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
-'GCinfo_HH3_gcc_net_100_0X46DFF9E2_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
+%'GCinfo_HH3_gcc_net_100_0X46DFF9E2_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
 % n = 100, pr = 2, ST, (5%, 10%, 15%, 20%)
 %'GCinfo_HH3_gcc_ST_net_100_0X07E0EF5A_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
 %'GCinfo_HH3_gcc_ST_net_100_0X1515715F_p=80,20_sc=0.05,0.05,0.09,0.09_pr=2_ps=0.03_stv=0.5_t=1.00e+06_od40'
@@ -124,6 +124,10 @@ s_case = {
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X5BC1ABB2_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
 %'GCinfo_HH3_gcc49_sparse_net_1000_0X51879353_p=100,0_sc=0.04,0.04,0.07,0.07_pr=0.7_ps=0.032_stv=0.5_t=1.00e+06_od40_sub1t100'
 
+%'GCinfo_HH3_gcc49_westmere2_net_200_0X177BAD9D_p=160,40_sc=0.05,0.05,0.1,0.1_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % eg=40
+%'GCinfo_HH3_gcc49_westmere2_net_200_0X177BAD9D_p=160,40_sc=0.025,0.025,0.05,0.05_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'  % eg=40
+'GCinfo_HH3_gcc49_westmere2_net_200_0X071CF3F4_p=160,40_sc=0.025,0.025,0.05,0.05_pr=1_ps=0.03_stv=0.5_t=1.00e+06_od40'
+
 };
 
 fi.p_val            = 1e-5;
@@ -132,7 +136,7 @@ fi.auto_gc_zero_cut = false;
 fi.b_cal_net        = false;
 fi.b_output_pics    = 1;
 fi.b_output_colorbar= false;
-fi.gcdata_dir       = 'GCinfo/';
+fi.gcdata_dir       = 'worker/GCinfo/';
 
 fi.b_use_pairGC     = false;
 analyse_GCHH_big_p(s_case, fi, [], plot_settings);
