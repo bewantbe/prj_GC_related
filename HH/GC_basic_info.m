@@ -68,7 +68,9 @@ plot(s_od(rg), (squeeze(oGC(2,1,rg)) - s_od(rg)'/len)/gc_scale)
 rg = s_od;
 gc_scale = 1e-4;
 figure(1);
-plot(s_od(rg), squeeze(oGC(1,2,rg))/gc_scale, '-o', 'markersize', 2,...
+%plot(s_od(rg), squeeze(oGC(1,2,rg))/gc_scale, '-o', 'markersize', 2,...
+%     s_od(rg), squeeze(oGC(2,1,rg))/gc_scale, '-o', 'markersize', 2);
+plot(s_od(rg), squeeze(oGC(1,2,rg))/gc_scale, ...
      s_od(rg), squeeze(oGC(2,1,rg))/gc_scale, '-o', 'markersize', 2);
 set(gca, 'fontsize', 24);
 xlabel('fitting order');
@@ -85,7 +87,8 @@ for k=1:length(s_od)
 end
 
 figure(2);
-plot(s_od(2:end), oAIC(2:end)/len, '-o', 'markersize', 2, s_od(2:end), s1(2:end), '-o', 'markersize', 2);
+%plot(s_od(2:end), oAIC(2:end)/len, '-o', 'markersize', 2, s_od(2:end), s1(2:end), '-o', 'markersize', 2);
+plot(s_od(2:end), oAIC(2:end)/len, s_od(2:end), s1(2:end), '-o', 'markersize', 2);
 set(gca, 'fontsize', 24);
 xlabel('fitting order');
 h=legend('AIC/L', 'log\sigma^2');

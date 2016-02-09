@@ -1,0 +1,5 @@
+% project startup file
+
+run('../../../GC_clean/.octaverc');
+addpath('../../HH');
+addpath('../');
