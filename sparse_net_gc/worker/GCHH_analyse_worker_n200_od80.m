@@ -39,7 +39,7 @@ max_od = 80;
 net_param.sparseness = 10/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % HH: 2.00h, t = 246.82s cal GC.
+GCHH_analyse_core                 % HH: 2.00h, t = 709s cal GC.
 
 net_param.sparseness = 20/net_param.p;
 pm.net_param = net_param;
@@ -49,4 +49,4 @@ GCHH_analyse_core                 % HH: 1.95h, t = 603.751s cal GC.
 net_param.sparseness = 40/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % HH: 2.02h, t = 154.533s cal GC.
+GCHH_analyse_core                 % HH: 2.02h, t = 706s cal GC.
