@@ -5,7 +5,7 @@ net_param.generator  = 'gen_sparse_mt19937';
 net_param.p          = 200;
 net_param.sparseness = 40/net_param.p;  % 0.20 0.15 0.10 0.05
 net_param.seed       = 423;
-net_param.software   = myif(exist('OCTAVE_VERSION','builtin'), 'octave', 'matlab');
+net_param.software   = 'MT19937';
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
 b_use_spike_train = false;
