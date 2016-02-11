@@ -16,16 +16,16 @@ pm.neuron_model = 'HH3_gcc49_westmere2';
 pm.net_param = net_param;
 pm.net  = gen_network(net_param);
 pm.nI   = round(0.2*net_param.p);
-pm.scee = 0.05/2;
-pm.scie = 0.05/2;
-pm.scei = 0.10/2;
-pm.scii = 0.10/2;
+pm.scee = 0.05;
+pm.scie = 0.05;
+pm.scei = 0.10;
+pm.scii = 0.10;
 pm.pr   = 1.0;
 pm.ps   = 0.03;
 pm.t    = 1e6;
 pm.stv  = 0.5;
 
-max_od = 40;
+max_od = 80;
 %return
 %pm.t    = 1e3;
 %[X, ISI, ras, pm] = gen_HH(pm, 'ext_T, new, rm');
@@ -34,7 +34,7 @@ max_od = 40;
 %ras_plot(ras, 0, 1000, 1:100);
 %return;
 
-%GCHH_analyse_core                 % 
+%GCHH_analyse_core                 % cost  h, t = s cal GC.
 
 %net_param.sparseness = 10/net_param.p;
 %pm.net_param = net_param;
@@ -44,14 +44,36 @@ max_od = 40;
 net_param.sparseness = 20/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = 907.424s cal GC.
+GCHH_analyse_core                 % cost h, t = s cal GC.
 
 net_param.sparseness = 40/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost 13.00h, t = 989.668s cal GC.
+GCHH_analyse_core                 % cost h, t = s cal GC.
 
 net_param.sparseness = 60/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost 13.398h, t = 1011.937s cal GC.
+GCHH_analyse_core                 % cost h, t = s cal GC.
+
+
+pm.scee = 0.05/2;
+pm.scie = 0.05/2;
+pm.scei = 0.10/2;
+pm.scii = 0.10/2;
+
+net_param.sparseness = 20/net_param.p;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core                 % cost h, t = s cal GC.
+
+net_param.sparseness = 40/net_param.p;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core                 % cost h, t = s cal GC.
+
+net_param.sparseness = 60/net_param.p;
+pm.net_param = net_param;
+pm.net = gen_network(net_param);
+GCHH_analyse_core                 % cost h, t = s cal GC.
+
