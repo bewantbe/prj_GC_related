@@ -44,17 +44,17 @@ max_od = 80;
 net_param.sparseness = 20/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2581.580s cal GC.
 
 net_param.sparseness = 40/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2573.308s cal GC.
 
 net_param.sparseness = 60/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2563.216s cal GC.
 
 
 pm.scee = 0.05/2;
@@ -65,15 +65,15 @@ pm.scii = 0.10/2;
 net_param.sparseness = 20/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2570.807s cal GC.
 
 net_param.sparseness = 40/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2562.108s cal GC.
 
 net_param.sparseness = 60/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % cost h, t = s cal GC.
+GCHH_analyse_core                 % cost h, t = 2571.725s cal GC.
 
