@@ -1,5 +1,13 @@
 % show result of parallel_main
-pic_common_include;
+    fontsize = 19;
+    linewidth = 1;
+    pic_prefix = 'pic_tmp/';
+    pic_output       = @(st)print('-deps',  [pic_prefix, st, '.eps']);
+    pic_output_color = @(st)print('-depsc2',[pic_prefix, st, '.eps']);
+%    set(0, 'defaultfigurevisible', 'off');
+    set(0, 'defaultlinelinewidth', linewidth);
+    set(0, 'defaultaxesfontsize', fontsize);
+
 %set(0, 'defaultfigurevisible', 'off');
 addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
@@ -24,7 +32,10 @@ for id_s_data = 1:length(s_data_file_name)
 
   % variables in plot
   s_sparseness = zeros(size(s_jobs));
+  s_sparseness_true = s_sparseness;
   s_correct_rate_best_guess = zeros(size(s_jobs));
+  s_rate = zeros(size(s_jobs));
+  s_rate_std = zeros(size(s_jobs));
   for id_job=1:numel(s_jobs)
     in = s_jobs{id_job};
     ou = s_data{id_job};
@@ -61,13 +72,26 @@ for id_s_data = 1:length(s_data_file_name)
     neu_network_best_guess = GC >= min_err_gc;
     adj_cmp_best_guess = neu_network_best_guess - neu_network;
 
+    s_sparseness_true(id_job) = sum(plain_network)/(p*(p-1));
+
+    s_rate(id_job) = mean(1000 ./ ou.ISI);
+    s_rate_std(id_job) = std(1000 ./ ou.ISI);
   end
 
   figure(2);
   plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
+  xlabel('sparseness');
+  ylabel('best edge correct reconstruction ratio (pairwise GC)');
   set(gca, 'xdir', 'reverse');
   ylim([50 100]);
-%  pic_output_color();
+  pic_output_color(sprintf('scan_sparse_correct_p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t));
+
+  figure(3);
+  errorbar(s_sparseness, s_rate, s_rate_std);
+  xlabel('sparseness');
+  ylabel('firing rate (distribution) (Hz)');
+  set(gca, 'xdir', 'reverse');
+  pic_output_color(sprintf('scan_sparse_ISI_p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t));
 
 end
 
