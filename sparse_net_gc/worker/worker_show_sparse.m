@@ -5,14 +5,14 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
 % load results
 s_data_file_name = {
-'scan_sparse_HH3_gcc49_westmere2_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+05'
+'scan_HH3_gcc49_westmere2_sparse=1.0e-02-2.0e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+05'
 };
 
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
 for id_s_data = 1:length(s_data_file_name)
 
-  data_file_name = ['./' s_data_file_name{id_s_data} '.mat'];
+  data_file_name = ['scan_sparseness/' s_data_file_name{id_s_data} '.mat'];
   load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
 
   pm        = in_const_data.pm;
@@ -52,7 +52,7 @@ for id_s_data = 1:length(s_data_file_name)
     neu_network_best_guess = GC >= min_err_gc;
     adj_cmp_best_guess = neu_network_best_guess - neu_network;
 
-    s_correct_rate_best_guess(id_job) = sum(0==adj_cmp_best_guess(eye(p)==0));
+    s_correct_rate_best_guess(id_job) = sum(0==adj_cmp_best_guess(eye(p)==0))/(p*(p-1));
 
     % cutline according to p-value
     p_val = min(0.01, 1 / p);
@@ -63,7 +63,7 @@ for id_s_data = 1:length(s_data_file_name)
   end
 
   figure(2);
-  plot(s_sparseness, s_correct_rate_best_guess);
+  plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
 %  pic_output_color();
 
 end
