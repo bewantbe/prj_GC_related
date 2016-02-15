@@ -5,7 +5,8 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
 % load results
 s_data_file_name = {
-'scan_HH3_gcc49_westmere2_sparse=1.0e-02-2.0e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+05'
+%'scan_HH3_gcc49_westmere2_sparse=1.0e-02-2.0e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+05'
+'scan_HH3_gcc49_westmere2_sparse=1.0e-02-3.2e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06'
 };
 
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
@@ -64,6 +65,8 @@ for id_s_data = 1:length(s_data_file_name)
 
   figure(2);
   plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
+  set(gca, 'xdir', 'reverse');
+  ylim([50 100]);
 %  pic_output_color();
 
 end

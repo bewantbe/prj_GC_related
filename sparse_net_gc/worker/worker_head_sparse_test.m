@@ -47,7 +47,7 @@ end
 func_name = 'worker_cell_GC_HH_VST';
 
 % results will be saved here
-data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee(1), pm.t);
+data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee(1), pm.t, datestr(now, 30));
 
 prefix_tmpdata = 'data/';
 addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker']);
