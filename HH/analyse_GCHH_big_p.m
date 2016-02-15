@@ -387,7 +387,7 @@ for cid = 1:n_case
               'location','northwest');
     set(hd,'fontsize',font_size-6);
     pic_output_color('_gc_sort');
-    pic_data_save('_gc_sort', p, use_od, len, plain_gc, plain_network);
+    pic_data_save('_gc_sort', p, use_od, len, plain_gc, plain_network, gc_zero_line, min_err_gc, scale_gc);
 
     % show histogram of GC values
     figure(6);

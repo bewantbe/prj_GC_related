@@ -40,19 +40,19 @@ max_od = 40;
 %net_param.sparseness = 10/net_param.p;
 %pm.net_param = net_param;
 %pm.net = gen_network(net_param);
-%GCHH_analyse_core                 % HH: 2.04 h, t = 192.013s cal GC.
+%GCHH_analyse_core                 % HH:  h, t = 192.013s cal GC.
 
 net_param.sparseness = 20/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % HH: 1.93 h, t = 569.666s cal GC.
+GCHH_analyse_core                 % HH: 82.27 h, t = 2507.136s cal GC.
 
 net_param.sparseness = 40/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % HH: 1.96 h, t = 169.728s cal GC.
+GCHH_analyse_core                 % HH: 85.13 h, t = 2479.539s cal GC.
 
 net_param.sparseness = 60/net_param.p;
 pm.net_param = net_param;
 pm.net = gen_network(net_param);
-GCHH_analyse_core                 % HH: 1.96 h, t = 169.728s cal GC.
+GCHH_analyse_core                 % HH: 88.89 h, t = 2471.070s cal GC.
