@@ -16,7 +16,7 @@ net_param.p          = p;
 net_param.software   = 'MT19937';
 
 pm = [];
-pm.neuron_model = 'HH3_gcc49_westmere2';
+pm.neuron_model = 'HH3_gcc49_westmere2_nogui';
 pm.net_param = net_param;
 %pm.net  = gen_network(net_param);
 pm.nI   = round(0.2*net_param.p);
