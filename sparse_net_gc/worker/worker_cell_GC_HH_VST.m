@@ -9,7 +9,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn)
   net_param = in.const_data.net_param;
 
   net_param.sparseness = in.sparseness;
-  net_param.seed       = floor((2^31-1)*rand());
+  net_param.seed       = in.net_seed;
   gen_network = @(np) eval(sprintf('%s(np);', np.generator));
   pm.net  = gen_network(net_param);
   pm.net_param = net_param;

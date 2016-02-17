@@ -1,5 +1,6 @@
 % Scan sparseness of big network.
 rng('shuffle')
+fprintf('\nFirst_rand: %.16f\n\n', rand());
 
 %input:
 %simu_time = 1e5;
@@ -41,6 +42,7 @@ in_const_data.use_od = use_od;
 s_jobs = cell(size(s_sparseness));
 for k=1:numel(s_jobs)
   in.sparseness = s_sparseness(k);
+  in.net_seed = randi(2^31-1);
   s_jobs{k}=in;   % inputs are saved in a struct named 'in'
 end
 
