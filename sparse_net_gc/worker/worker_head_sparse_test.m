@@ -1,4 +1,5 @@
 % Scan sparseness of big network.
+rng('shuffle')
 
 %input:
 %simu_time = 1e5;
