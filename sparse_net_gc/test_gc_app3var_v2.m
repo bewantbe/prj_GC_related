@@ -249,11 +249,9 @@ gc_ift_b12_app = ift_b12_app * ift_b12_app'
 %figure(4); plot(1:m, b12 - ift_b12_app);
 
 vv = fft(ift_b12_app, fftlen) ./ (ft_Qyy_a - rdiv3d( ft_Qyz_a, ft_Qzz_a, ft_Qzy_a))(:).' .* conj(fft(ift_b12_app, fftlen));
-vv = fft(ift_b12_app, fftlen) .* conj(fft(ift_b12_app, fftlen));
+%vv = fft(ift_b12_app, fftlen) .* conj(fft(ift_b12_app, fftlen));
 vv = real(vv);
-mean(vv)
-
-gc_ift_b12_app_v2 = ift_b12_app * ift_b12_app'
+gc_ift_b12_fullmimic = mean(vv)
 
 %tcov = S2cov(Sp, 300);
 %[tB, tD] = ARregression(tcov);
