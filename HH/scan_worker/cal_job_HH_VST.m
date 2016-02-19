@@ -32,3 +32,5 @@ function cal_job_HH_VST(input_fn, output_fn)
   ou.oDe_ST = oDe_ST;
   ou.R_ST = R_ST;
   save('-v7', output_fn, 'ou');
+  s=datestr(now, 30);
+  save('-v7', [output_fn '.finished'], 's');

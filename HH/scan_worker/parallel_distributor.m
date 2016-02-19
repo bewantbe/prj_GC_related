@@ -41,7 +41,7 @@ while ~isempty(id_jobs_head)
     input_fn  = sprintf( '%sinput_j%d.mat', prefix_tmpdata, id_job);
     output_fn = sprintf('%soutput_j%d.mat', prefix_tmpdata, id_job);
     if s_b_launched(id_job)
-      if ~exist(output_fn, 'file')   % data is not ready
+      if ~exist([output_fn '.finished'], 'file')   % data is not ready
         pause(0.1/ncpu);             % save CPU time
         continue
       end
@@ -75,6 +75,7 @@ while ~isempty(id_jobs_head)
     % delete temporary files, to save disk space
     delete(input_fn);
     delete(output_fn);
+    delete([output_fn '.finished']);
     num_working = num_working - 1;
     s_b_finished(id_job) = true;
     id_jobs_head = id_jobs_head + find(~s_b_finished(id_jobs_head:end), 1) - 1;

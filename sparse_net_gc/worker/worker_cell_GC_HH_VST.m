@@ -36,3 +36,5 @@ function worker_cell_GC_HH_VST(input_fn, output_fn)
   ou.pairGC_ST = pairRGrangerT(R);
 
   save('-v7', output_fn, 'ou');
+  s=datestr(now, 30);
+  save('-v7', [output_fn '.finished'], 's');
