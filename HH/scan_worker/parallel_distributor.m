@@ -58,8 +58,9 @@ while ~isempty(id_jobs_head)
         delete(output_fn);
       end
       % run the worker in background
-      cmd = sprintf('%s "%s(''%s'', ''%s'')" &',...
-                   exec_name, func_name, input_fn, output_fn);
+      cmd = sprintf('%s "%s(''%s'', ''%s'')" > %s 2>&1 &',...
+                   exec_name, func_name, input_fn, output_fn,...
+                   [output_fn '.stdout']);
       system(cmd);
       num_working = num_working + 1;
       s_b_launched(id_job) = true;
@@ -70,6 +71,14 @@ while ~isempty(id_jobs_head)
     pause(0.05);
     % read result, then save it
     load(output_fn);
+    if isfield(ou, 'need_postprocess')
+      fprintf('id_job =%4d postprocessing.\n', id_job);  fflush(stdout);
+      func_st = sprintf('%s(''%s'', ''%s'', ou.need_postprocess)',...
+                   func_name, input_fn, output_fn);
+      eval(func_st);  % execute in serial
+      % load real result
+      load(output_fn);
+    end
     s_data{id_job} = ou;  % ou is loaded from output_fn
 
     % delete temporary files, to save disk space

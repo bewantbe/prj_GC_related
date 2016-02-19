@@ -3,3 +3,4 @@
 run('../../../GC_clean/.octaverc');
 addpath('../../HH');
 addpath('../');
+rng = @(x) 0;

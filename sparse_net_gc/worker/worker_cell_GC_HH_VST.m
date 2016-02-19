@@ -1,4 +1,4 @@
-function worker_cell_GC_HH_VST(input_fn, output_fn)
+function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
   addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
   addpath([getenv('HOME') '/matcode/GC_clean/prj_neuron_gc/']);
   addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/']);
@@ -13,6 +13,15 @@ function worker_cell_GC_HH_VST(input_fn, output_fn)
   gen_network = @(np) eval(sprintf('%s(np);', np.generator));
   pm.net  = gen_network(net_param);
   pm.net_param = net_param;
+
+  if ~exist('need_postprocess', 'var')
+    gen_HH(pm, 'new');
+    ou.need_postprocess = ['finish data gen '  datestr(now, 30)];
+    save('-v7', output_fn, 'ou');
+    s = ou.need_postprocess;
+    save('-v7', [output_fn '.finished'], 's');
+    return;
+  end
 
   [X, ISI, ras, pm] = gen_HH(pm, 'rm');
   [p, len] = size(X);
