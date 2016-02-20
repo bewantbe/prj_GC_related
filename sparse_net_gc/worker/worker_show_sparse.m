@@ -78,6 +78,11 @@ for id_s_data = 1:length(s_data_file_name)
     s_rate_std(id_job) = std(1000 ./ ou.ISI);
   end
 
+  [s_sparseness, id_sort] = sort(s_sparseness);
+  s_correct_rate_best_guess = s_correct_rate_best_guess(id_sort);
+  s_rate = s_rate(id_sort);
+  s_rate_std = s_rate_std(id_sort);
+
   figure(2);
   plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
   xlabel('sparseness');

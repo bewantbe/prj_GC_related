@@ -1,6 +1,4 @@
 % Scan sparseness of big network.
-rng('shuffle')
-fprintf('\nFirst_rand: %.16f\n\n', rand());
 
 %input:
 %simu_time = 1e5;
@@ -9,6 +7,8 @@ fprintf('\nFirst_rand: %.16f\n\n', rand());
 %Note:
 % p * prob * prob = const.; prob = o/p;
 % o = sqrt(const. * p);
+
+%% Fixed parameters
 
 net_param = [];
 net_param.generator  = 'gen_sparse_mt19937';
@@ -35,6 +35,17 @@ pm.extra_cmd = '-q';
 
 use_od = 40;
 
+% function to be calculate in each loop
+func_name = 'worker_cell_GC_HH_VST';
+
+% results will be saved here
+data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.t, datestr(now, 30));
+
+rng('shuffle');             % make output of rand random.
+rng_state_curr = rng();     % used to reproduce the results.
+save('-v7', [data_file_name '.rng'], 'rng_state_curr');  % will be removed once job finished.
+
+in_const_data.rng_state_curr = rng_state_curr;
 in_const_data.pm = pm;
 in_const_data.net_param = net_param;
 in_const_data.use_od = use_od;
@@ -46,15 +57,10 @@ for k=1:numel(s_jobs)
   s_jobs{k}=in;   % inputs are saved in a struct named 'in'
 end
 
-% function to calculate in each loop
-func_name = 'worker_cell_GC_HH_VST';
-
-% results will be saved here
-data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee(1), pm.t, datestr(now, 30));
-
 %prefix_tmpdata = 'data/';
 addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker']);
 t0 = tic();
 parallel_distributor;
+delete([data_file_name '.rng']);
 fprintf('Elapsed time is %6.3f\n', (double(tic()) - double(t0))*1e-6 );
 
