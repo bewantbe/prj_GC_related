@@ -38,8 +38,16 @@ use_od = 40;
 % function to be calculate in each loop
 func_name = 'worker_cell_GC_HH_VST_v2';
 
+if ~exist('identity_str', 'var')
+  identity_str = datestr(now, 30);
+end
+
+% temp file will be saved here
+%prefix_tmpdata = ['data/' mfilename '_' datestr(now, 30) '_'];
+prefix_tmpdata = ['data/' identity_str '_'];
+
 % results will be saved here
-data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.t, datestr(now, 30));
+data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.t, identity_str);
 
 rng('shuffle');             % make output of rand random.
 rng_state_curr = rng();     % used to reproduce the results.
