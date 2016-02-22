@@ -35,9 +35,6 @@ pm.extra_cmd = '-q';
 
 use_od = 40;
 
-% function to be calculate in each loop
-func_name = 'worker_cell_GC_HH_VST_v2';
-
 if ~exist('identity_str', 'var')
   identity_str = datestr(now, 30);
 end

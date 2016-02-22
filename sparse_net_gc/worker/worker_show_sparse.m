@@ -14,16 +14,33 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 % load results
 s_data_file_name = {
 %'scan_HH3_gcc49_westmere2_sparse=1.0e-02-2.0e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+05'
-'scan_HH3_gcc49_westmere2_sparse=1.0e-02-3.2e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06'
+%'scan_HH3_gcc49_westmere2_sparse=1.0e-02-3.2e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06',
+{'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-1.5e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2192760.hpc0.abudhabi.nyu.edu'
+'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-1.5e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2192758.hpc0.abudhabi.nyu.edu'}
 };
 
 gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 
 for id_s_data = 1:length(s_data_file_name)
 
-  data_file_name = ['scan_sparseness/' s_data_file_name{id_s_data} '.mat'];
-  load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
-
+  if iscell(s_data_file_name{id_s_data})
+    cell_data_file = s_data_file_name{id_s_data};
+    c_data = {};
+    c_jobs = {};
+    for id_c_data = 1:numel(cell_data_file)
+      data_file_name = ['scan_sparseness/' cell_data_file{id_c_data} '.mat'];
+      load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
+      c_data = {c_data{:}, s_data{:}};
+      c_jobs = {c_jobs{:}, s_jobs{:}};
+      size(c_data)
+    end
+    s_data = c_data;
+    s_jobs = c_jobs;
+  else
+    data_file_name = ['scan_sparseness/' s_data_file_name{id_s_data} '.mat'];
+    load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
+  end
+  
   pm        = in_const_data.pm;
   net_param = in_const_data.net_param;
   use_od    = in_const_data.use_od;
