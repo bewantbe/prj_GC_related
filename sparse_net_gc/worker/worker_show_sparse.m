@@ -17,11 +17,17 @@ s_data_file_name = {
 %'scan_HH3_gcc49_westmere2_sparse=1.0e-02-3.2e-01_p=100_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06',
 %{'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-1.5e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2192760.hpc0.abudhabi.nyu.edu'
 %'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-1.5e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2192758.hpc0.abudhabi.nyu.edu'}
+%{
+%'scan_HH3_gcc49_westmere2_nogui_sparse=2.5e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[1]'
+%'scan_HH3_gcc49_westmere2_nogui_sparse=7.6e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[2]'
+%'scan_HH3_gcc49_westmere2_nogui_sparse=1.3e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[3]'
+%'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[4]'
+%}
 {
-'scan_HH3_gcc49_westmere2_nogui_sparse=2.5e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[1]'
-'scan_HH3_gcc49_westmere2_nogui_sparse=7.6e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[2]'
-'scan_HH3_gcc49_westmere2_nogui_sparse=1.3e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[3]'
-'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=2.0e+04_2199015[4]'
+'scan_HH3_gcc49_westmere2_nogui_sparse=2.5e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2199052[1]'
+'scan_HH3_gcc49_westmere2_nogui_sparse=7.6e-03-2.1e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2199052[2]'
+'scan_HH3_gcc49_westmere2_nogui_sparse=1.3e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2199052[3]'
+'scan_HH3_gcc49_westmere2_nogui_sparse=1.8e-02-2.2e-01_p=400_pr=1.0_ps=3.0e-02_scee=5.0e-02_t=1.0e+06_2199052[4]'
 }
 };
 
@@ -57,6 +63,7 @@ for id_s_data = 1:length(s_data_file_name)
   s_sparseness = zeros(size(s_jobs));
   s_sparseness_true = s_sparseness;
   s_correct_rate_best_guess = zeros(size(s_jobs));
+  s_correct_rate_pval = zeros(size(s_jobs));
   s_rate = zeros(size(s_jobs));
   s_rate_std = zeros(size(s_jobs));
   for id_job=1:numel(s_jobs)
@@ -92,8 +99,10 @@ for id_s_data = 1:length(s_data_file_name)
     % cutline according to p-value
     p_val = min(0.01, 1 / p);
     gc_zero_line = chi2inv(1-p_val, use_od)/len;
-    neu_network_best_guess = GC >= min_err_gc;
-    adj_cmp_best_guess = neu_network_best_guess - neu_network;
+    neu_network_pval = GC >= gc_zero_line;
+    adj_cmp_pval = neu_network_pval - neu_network;
+
+    s_correct_rate_pval(id_job) = sum(0==adj_cmp_pval(eye(p)==0))/(p*(p-1));
 
     s_sparseness_true(id_job) = sum(plain_network)/(p*(p-1));
 
@@ -103,8 +112,17 @@ for id_s_data = 1:length(s_data_file_name)
 
   [s_sparseness, id_sort] = sort(s_sparseness);
   s_correct_rate_best_guess = s_correct_rate_best_guess(id_sort);
+  s_correct_rate_pval = s_correct_rate_pval(id_sort);
   s_rate = s_rate(id_sort);
   s_rate_std = s_rate_std(id_sort);
+
+  figure(1);
+  plot(s_sparseness, 100*s_correct_rate_pval, 'o');
+  xlabel('sparseness');
+  ylabel('p-val correct reconstruction ratio (pairwise GC)');
+  set(gca, 'xdir', 'reverse');
+%  ylim([50 100]);
+  pic_output_color(sprintf('scan_sparse_correct_pval_p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t));
 
   figure(2);
   plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
@@ -112,7 +130,7 @@ for id_s_data = 1:length(s_data_file_name)
   ylabel('best edge correct reconstruction ratio (pairwise GC)');
   set(gca, 'xdir', 'reverse');
   ylim([50 100]);
-  pic_output_color(sprintf('scan_sparse_correct_p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t));
+  pic_output_color(sprintf('scan_sparse_correct_best_p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t));
 
   figure(3);
   errorbar(s_sparseness, s_rate, s_rate_std);
