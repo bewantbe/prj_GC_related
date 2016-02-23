@@ -14,8 +14,10 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
   pm.net  = gen_network(net_param);
   pm.net_param = net_param;
 
+  data_dir_prefix = ['.', filesep, 'data', filesep, in.const_data.identity_str, '_'];
+
   if ~exist('need_postprocess', 'var')
-    gen_HH(pm, 'ext_T');
+    gen_HH(pm, 'ext_T', data_dir_prefix);
     ou.need_postprocess = ['finish data gen '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
@@ -30,12 +32,12 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
     return;
   end
 
-  [X_file, ISI, ras, pm] = gen_HH(pm, 'nameX,ext_T');
+  [X_file, ISI, ras, pm] = gen_HH(pm, 'nameX,ext_T', data_dir_prefix);
   p = net_param.p;
   len = floor(pm.t/pm.stv);
   x_skip = floor(pm.ext_T/pm.stv);
   R = getcovpdFile(X_file, p, in.const_data.use_od, x_skip);
-  gen_HH(pm, 'rm');
+  gen_HH(pm, 'rm', data_dir_prefix);
 
   ou.net_seed = net_param.seed;
   ou.ISI = ISI;

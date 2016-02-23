@@ -54,6 +54,7 @@ in_const_data.rng_state_curr = rng_state_curr;
 in_const_data.pm = pm;
 in_const_data.net_param = net_param;
 in_const_data.use_od = use_od;
+in_const_data.identity_str = identity_str;
 
 s_jobs = cell(size(s_sparseness));
 for k=1:numel(s_jobs)

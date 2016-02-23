@@ -1,6 +1,6 @@
 %
 
-simu_time = 2e4;
+simu_time = 1e6;
 p = 400;
 n_indirect = 20;
 s_sparseness = linspace(1, round(sqrt(p*n_indirect)), 44)/p;
