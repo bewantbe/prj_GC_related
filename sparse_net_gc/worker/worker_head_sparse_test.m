@@ -44,7 +44,7 @@ end
 prefix_tmpdata = ['data/' identity_str '_'];
 
 % results will be saved here
-data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_scee=%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.t, identity_str);
+data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_sc=%.1e,%.1e,%.1e,%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.scie, pm.scei, pm.scii, pm.t, identity_str);
 
 rng('shuffle');             % make output of rand random.
 rng_state_curr = rng();     % used to reproduce the results.
