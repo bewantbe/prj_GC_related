@@ -14,18 +14,27 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
   pm.net  = gen_network(net_param);
   pm.net_param = net_param;
 
+  data_dir_prefix = ['.', filesep, 'data', filesep, in.const_data.identity_str, '_'];
+
   if ~exist('need_postprocess', 'var')
-    gen_HH(pm, 'new,ext_T');
+    gen_HH(pm, 'ext_T', data_dir_prefix);
     ou.need_postprocess = ['finish data gen '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
     save('-v7', [output_fn '.finished'], 's');
     return;
   end
+  if isfield(in, 'no_postprocess')
+    ou.need_postprocess = ['data postprocess ignored. '  datestr(now, 30)];
+    save('-v7', output_fn, 'ou');
+    s = ou.need_postprocess;
+    save('-v7', [output_fn '.finished'], 's');
+    return;
+  end
 
-  [X, ISI, ras, pm] = gen_HH(pm, 'rm,ext_T');
+  [X, ISI, ras, pm] = gen_HH(pm, 'rm,ext_T', data_dir_prefix);
   [p, len] = size(X);
-  X = WhiteningFilter(X, 4);
+%  X = WhiteningFilter(X, 4);
 
   ou.net_seed = net_param.seed;
   ou.ISI = ISI;

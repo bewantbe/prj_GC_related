@@ -16,6 +16,7 @@ gen_network = @(np) eval(sprintf('%s(np);', np.generator));
 for id_s_data = 1:length(s_data_file_name)
 
   if iscell(s_data_file_name{id_s_data})
+    % combine job group (scan different area (other parameters are exactly the same))
     cell_data_file = s_data_file_name{id_s_data};
     c_data = {};
     c_jobs = {};
@@ -24,7 +25,6 @@ for id_s_data = 1:length(s_data_file_name)
       load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
       c_data = {c_data{:}, s_data{:}};
       c_jobs = {c_jobs{:}, s_jobs{:}};
-      size(c_data)
     end
     s_data = c_data;
     s_jobs = c_jobs;
@@ -46,6 +46,8 @@ for id_s_data = 1:length(s_data_file_name)
   s_correct_rate_pval = zeros(size(s_jobs));
   s_rate = zeros(size(s_jobs));
   s_rate_std = zeros(size(s_jobs));
+  s_indirect2connect = zeros(size(s_jobs));
+  s_supposeWrongPairGC = zeros(size(s_jobs));
   for id_job=1:numel(s_jobs)
     in = s_jobs{id_job};
     ou = s_data{id_job};
@@ -54,7 +56,7 @@ for id_s_data = 1:length(s_data_file_name)
     % get the answer
     net_param.sparseness = in.sparseness;
     net_param.seed       = ou.net_seed;
-    neu_network = gen_network(net_param);
+    neu_network = 1.0*gen_network(net_param);
 
     GC = ou.pairGC;
 
@@ -88,15 +90,25 @@ for id_s_data = 1:length(s_data_file_name)
 
     s_rate(id_job) = mean(1000 ./ ou.ISI);
     s_rate_std(id_job) = std(1000 ./ ou.ISI);
+
+    net_2indirect = neu_network*neu_network;  % indirect connection
+    net_2indirect(eye(p)==1) = 0;             % remove loop back interactions
+    net_2common = neu_network*neu_network';   % common input
+    net_2common(eye(p)==1) = 0;               % remove self common input
+    s_indirect2connect(id_job) = mean(net_2indirect(eye(p)==0)+net_2common(eye(p)==0));
   end
+
+  fprintf('p = %d (%dE + %dI)\n', p, pm.nE, pm.nI);
+  fprintf('  using p-val = %.2g\n', p_val);
 
   [s_sparseness, id_sort] = sort(s_sparseness);
   s_correct_rate_best_guess = s_correct_rate_best_guess(id_sort);
   s_correct_rate_pval = s_correct_rate_pval(id_sort);
   s_rate = s_rate(id_sort);
   s_rate_std = s_rate_std(id_sort);
+  s_indirect2connect = s_indirect2connect(id_sort);
   
-  param_str = sprintf('p=%d+%d_pr=%.1e_ps=%.1e_scee=%.1e_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.t);
+  param_str = sprintf('p=%d+%d_pr=%.1e_ps=%.1e_sc=%.1g,%.1g,%.1g,%.1g_t=%.1e', pm.nE, pm.nI, pm.pr, pm.ps, pm.scee, pm.scie, pm.scei, pm.scii, pm.t);
   if isfield(in_const_data, 'identity_str')
     if isempty(strfind(in_const_data.identity_str, '['))
       param_str = [param_str '_j' in_const_data.identity_str];
@@ -110,24 +122,57 @@ for id_s_data = 1:length(s_data_file_name)
   plot(s_sparseness, 100*s_correct_rate_pval, 'o');
   xlabel('sparseness');
   ylabel('p-val correct reconstruction ratio (pairwise GC)');
-  set(gca, 'xdir', 'reverse');
+  xlim([0, max(s_sparseness)]);
 %  ylim([50 100]);
+  set(gca, 'xdir', 'reverse');
   pic_output_color(['scan_sparse_correct_pval_' param_str]);
 
   figure(2);
   plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
   xlabel('sparseness');
   ylabel('best edge correct reconstruction ratio (pairwise GC)');
-  set(gca, 'xdir', 'reverse');
+  xlim([0, max(s_sparseness)]);
   ylim([50 100]);
+  set(gca, 'xdir', 'reverse');
   pic_output_color(['scan_sparse_correct_best_' param_str]);
 
   figure(3);
   errorbar(s_sparseness, s_rate, s_rate_std);
+  xlim([0, max(s_sparseness)]);
   xlabel('sparseness');
   ylabel('firing rate (distribution) (Hz)');
   set(gca, 'xdir', 'reverse');
   pic_output_color(['scan_sparse_ISI_' param_str]);
+
+  figure(4);
+%  [axs, h1, h2] = plotyy(s_sparseness, 100*s_correct_rate_pval, s_sparseness, s_indirect2connect);
+  [axs, h1, h2] = plotyy(s_sparseness, s_indirect2connect, s_sparseness, 100*s_correct_rate_pval);
+  xlim(axs(2), [0, max(s_sparseness)]);
+  xlim(axs(1), [0, max(s_sparseness)]);
+  ylim(axs(1), [0, 20]);  % hand tune ....
+  xlabel('sparseness');
+  ylabel(axs(1), 'p-val correct reconstruction ratio (pairwise GC)');
+  ylabel(axs(2), 'mean # of indirect and common inputs');
+  set(axs(1), 'xdir', 'reverse');
+  set(axs(2), 'xdir', 'reverse');
+  set(h1, 'Marker', 'o');  % , 'LineStyle', 'None'
+  set(h2, 'Marker', 'x');
+  pic_output_color(['scan_sparse_yy_indir_comm_correct_pval_' param_str]);
+
+  figure(5);
+  plot(s_sparseness, s_indirect2connect, 'o');
+  xlabel('sparseness');
+  ylabel('mean # of indirect and common inputs');
+  xlim([0, max(s_sparseness)]);
+  set(gca, 'xdir', 'reverse');
+  pic_output_color(['scan_sparse_indir_comm_' param_str]);
+  
+  figure(6);
+  plot(s_indirect2connect, 100*s_correct_rate_pval, 'o');
+  xlim([0 2*s_sparseness(end)^2*p]);
+  xlabel('mean # of indirect and common inputs');
+  ylabel('p-val correct reconstruction ratio (pairwise GC)');
+  pic_output_color(['scan_sparse_xy_indir_comm_correct_pval_' param_str]);
 
 end
 
