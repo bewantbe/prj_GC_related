@@ -37,7 +37,8 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
 %  [X, ISI, ras, pm] = gen_HH(pm, 'rm,ext_T', data_dir_prefix);
   X = randn(net_param.p, round(pm.t/pm.stv));
   ISI = 100*rand(1, net_param.p);
-  ras = [randi(net_param.p, 1e6, 1) pm.t*sort(rand(1e6,1))];
+  len_ras = 35*net_param.p*pm.t/1000;
+  ras = [randi(net_param.p, len_ras, 1) pm.t*sort(rand(len_ras,1))];
   [p, len] = size(X);
 %  X = WhiteningFilter(X, 4);
 
