@@ -18,6 +18,8 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
 
   if ~exist('need_postprocess', 'var')
 %    gen_HH(pm, 'ext_T', data_dir_prefix);
+    system('sleep 1');
+    system('date');
     ou.need_postprocess = ['finish data gen '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
@@ -34,7 +36,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
 
 %  [X, ISI, ras, pm] = gen_HH(pm, 'rm,ext_T', data_dir_prefix);
   X = randn(net_param.p, round(pm.t/pm.stv));
-  ISI = zeros(1,net_param.p);
+  ISI = 100*rand(1, net_param.p);
   ras = [randi(net_param.p, 1e6, 1) pm.t*sort(rand(1e6,1))];
   [p, len] = size(X);
 %  X = WhiteningFilter(X, 4);
