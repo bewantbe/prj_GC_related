@@ -1,8 +1,8 @@
 #!/bin/bash
-#PBS -N BigSparseNet400parted
+#PBS -N BigSparseNet400partedMemtest
 #PBS -M yx742@nyu.edu
 #PBS -m abe
-#PBS -l nodes=1:ppn=12,walltime=20:00:00
+#PBS -l nodes=1:ppn=12,walltime=5:00:00
 #PBS -o localhost:${PBS_O_WORKDIR}/
 #PBS -e localhost:${PBS_O_WORKDIR}/
 
@@ -11,6 +11,6 @@ module load gcc/4.9.1
 module load matlab
 cd $PBS_O_WORKDIR
 
-LD_PRELOAD="/share/apps/NYUAD/gcc/gcc/4.9.1/el6/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/libstdc++.so.6" matlab -nodisplay -nosplash -r "identity_str='${PBS_JOBID%%\.*}'; ids_parted=reshape(1:44,4,[]); ids_parted=ids_parted($PBS_ARRAYID,:); worker_var_sparse_p400_parted10_VST_testmem; exit"
+LD_PRELOAD="/share/apps/NYUAD/gcc/gcc/4.9.1/el6/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/libstdc++.so.6" matlab -nodisplay -nosplash -r "identity_str='test'; ids_parted=reshape(1:44,4,[]); ids_parted=ids_parted(1,:); worker_var_sparse_p400_parted10_VST_testmem; exit"
 
 exit 0;
