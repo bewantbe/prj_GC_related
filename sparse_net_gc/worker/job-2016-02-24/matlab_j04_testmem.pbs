@@ -11,6 +11,6 @@ module load gcc/4.9.1
 module load matlab
 cd $PBS_O_WORKDIR
 
-LD_PRELOAD="/share/apps/NYUAD/gcc/gcc/4.9.1/el6/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/libstdc++.so.6" matlab -nodisplay -nosplash -r "a=ones(1e8,34); disp(sum(a(:))); exit"
+LD_PRELOAD="/share/apps/NYUAD/gcc/gcc/4.9.1/el6/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/libstdc++.so.6" matlab -nodisplay -nosplash -r "a=ones(1e8,34); a=a+a; disp(sum(a(:))); exit"
 
 exit 0;
