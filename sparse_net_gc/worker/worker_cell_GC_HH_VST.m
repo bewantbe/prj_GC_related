@@ -45,7 +45,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
   ou.pairGC = pairRGrangerT(R);
   clear('R');
 
-  X = SpikeTrains(ras, p, len, pm.stv);
+  X = SpikeTrainsFast(ras, p, len, pm.stv);
   clear('ras');
 
   R = getcovpd(X, in.const_data.use_od);

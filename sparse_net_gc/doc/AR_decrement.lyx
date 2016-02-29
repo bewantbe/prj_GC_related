@@ -708,6 +708,33 @@ B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
 \end_layout
 
 \begin_layout Standard
+----------------
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+O & A_{xy} & A_{xz}\\
+\\
+\\
+\end{array}\right]\left(\left[\begin{array}{ccc}
+ & A_{xy}\\
+ & O\\
+ & A_{zy}
+\end{array}\right]+\left[\begin{array}{ccc}
+\\
+A_{yz} & O & A_{yz}\\
+\\
+\end{array}\right]^{*T}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 

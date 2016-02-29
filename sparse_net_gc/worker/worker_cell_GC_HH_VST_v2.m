@@ -24,7 +24,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
     save('-v7', [output_fn '.finished'], 's');
     return;
   end
-  if isfield(in, 'no_postprocess')
+  if isfield(in.const_data, 'no_postprocess') && in.const_data.no_postprocess
     ou.need_postprocess = ['data postprocess ignored. '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
@@ -37,7 +37,9 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
   len = floor(pm.t/pm.stv);
   x_skip = floor(pm.ext_T/pm.stv);
   R = getcovpdFile(X_file, p, in.const_data.use_od, x_skip);
-  gen_HH(pm, 'rm', data_dir_prefix);
+  if ~isfield(in.const_data, 'no_remove_simulation_data')
+    gen_HH(pm, 'rm', data_dir_prefix);
+  end
 
   ou.net_seed = net_param.seed;
   ou.ISI = ISI;
