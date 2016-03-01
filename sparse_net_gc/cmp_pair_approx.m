@@ -113,8 +113,6 @@ m = use_od;
 
 %id1 = 25;
 %id2 = 54;
-id1 = 1;
-id2 = 2;
 
 %figure(2);
 %plot(1:m, pairwA(id1,id2:p:end), '-x', 1:m, squeeze(pairA_app(id1,id2,:))', '-o');
@@ -158,6 +156,9 @@ id2 = 2;
 %print('-depsc2', 'd.eps');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+id1 = 1;
+id2 = 2;
+
 Qw = zeros(size(S));
 for k = 1:fftlen
     Qw(:,:,k) = inv(S(:,:,k));
@@ -165,19 +166,27 @@ end
 
 id3 = 1:p;
 id3([id1 id2]) = [];
+ft_Qyy_a = Qw(id2,id2,:);
+ft_Qyz_a = Qw(id2,id3,:);
 ft_Qzy_a = Qw(id3,id2,:);
 ft_Qzz_a = Qw(id3,id3,:);
+
+ft_A = fft( cat(3, eye(p), reshape(wA, p,p,[])), fftlen, 3);
+HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 
 a1_3d = permute(reshape(wA(id1, :), p, []), [3 1 2]);
 ft_a12 = fft(a1_3d(1,id2,:), fftlen, 3);
 ft_a13 = fft(a1_3d(1,id3,:), fftlen, 3);
 ft_b12_app = ft_a12 - rdiv3d( ft_a13, ft_Qzz_a, ft_Qzy_a);
 ift_b12_app = real( ifft(ft_b12_app, fftlen) );
-ift_b12_app = squeeze(ift_b12_app(1:m))';
-gc_ift_b12_app = ift_b12_app * ift_b12_app'
+ift_b12_app(floor((end+1)/2)+1:end) = 0;
+ft_b12_app = fft(ift_b12_app);
 
-ft_A = fft( cat(3, eye(p), reshape(wA, p,p,[])), fftlen, 3);
-HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
+%ft_b12_app = squeeze(ft_b12_app)';
+%gc_ift_b12_app_full = sum(ft_b12_app .* conj(ft_b12_app))
+gc_ift_b12_app_full = sum(ft_b12_app ./ (ft_Qyy_a - rdiv3d(ft_Qyz_a, ft_Qzz_a, ft_Qzy_a)) .* conj(ft_b12_app)) / R(id2,id2)
+
+gc_ift_b12_app = ift_b12_app(1:m) * ift_b12_app(1:m)'
 
 %ft_Qzz_a_app = S(id3,id3,:) - rdiv3d(S(id3,[id1 id2],:), S([id1 id2],[id1 id2],:), S([id1 id2], id3,:)); % - rdiv3d(eye(p-2),Qw(id3,id3,:))
 ft_Qzz_a_app = ...
@@ -195,10 +204,10 @@ gc_ift_b12_app_v4 = ift_b12_app_v4 * ift_b12_app_v4'
 
 figure(3);
 plot(1:m, pairwA(id1,id2:p:end), '-x',...
-     1:m, ift_b12_app, '-+',...
-     1:m, ift_b12_app_v4, '-o',...
+     1:m, squeeze(ift_b12_app(1:m)), '-+',...
+     1:m, ift_b12_app_v4(1:m), '-o',...
      1:m, wA(id1,id2:p:end), '-.');
-legend('cal', 'app full', 'app acoef')
+legend('cal', 'app full', 'app acoef', 'cond')
 print('-depsc2', 'e.eps');
 
 ft_b12_app_v4 = - rdiv3d( ft_a13, ft_Qzz_a_app, ft_Qzy_a);
@@ -207,8 +216,8 @@ ift_b12_app_v4 = squeeze(ift_b12_app_v4(1:2*m))';
 
 figure(4);
 plot(1:m, pairwA(id1,id2:p:end) - wA(id1,id2:p:end), '-x',...
-     1:m, ift_b12_app - wA(id1,id2:p:end), '-+',...
-     1:2*m, ift_b12_app_v4, '-o')
+     1:m, squeeze(ift_b12_app(1:m))' - wA(id1,id2:p:end), '-+',...
+     1:2*m, ift_b12_app_v4(1:2*m), '-o')
 
 
 % vim: set ts=4 sw=4 ss=4
