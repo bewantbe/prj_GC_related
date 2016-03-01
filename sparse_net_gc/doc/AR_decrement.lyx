@@ -708,6 +708,17 @@ B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+Q_{zz}^{-1}=S_{zz}-S_{z,xy}S_{xy,xy}^{-1}S_{xy,z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 ----------------
 \end_layout
 
@@ -726,11 +737,19 @@ O & A_{xy} & A_{xz}\\
 \\
 A_{yz} & O & A_{yz}\\
 \\
-\end{array}\right]^{*T}\right)
+\end{array}\right]^{*T}\right)=A(A+A^{*})
 \]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+as
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
