@@ -4,8 +4,8 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 ed = true;
 
 %gen_data_n10_c1;
-gen_data_n40_c1;
-%gen_data_n100_c1;
+%gen_data_n40_c1;
+gen_data_n100_c1;
 
 [p len] = size(X);
 
@@ -14,7 +14,8 @@ gen_data_n40_c1;
 use_od = 80;
 whiten_od = 80;
 
-mode_preprocessing = 1;
+mode_preprocessing = 2;
+tic
 switch mode_preprocessing
   case 1
     X = WhiteningFilter2(X, whiten_od);
@@ -37,31 +38,33 @@ switch mode_preprocessing
     end
     clear A2d D
     get_R_S;
+  otherwise
+    get_R_S;
 end
+toc
 
-
-tic;
 [GC, De, A] = RGrangerTfast(R);
-toc;
-
-tic;
 [pairGC, ~, pairA] = pairRGrangerT(R);
-toc;
 
 end
+
+net = 1*pm.net_adj;
+fftlen = size(S,3);
+m = use_od;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 id1 = 1;
-id2 = 2;
+id2 = 40;
+
+fprintf('net_connect (%d, %d) = %d\n', id1, id2, net(id1,id2));
+fprintf('net_indirect(%d, %d) = %d\n', id1, id2, net(id1,:)*net(:,id2));
+fprintf('net_common  (%d, %d) = %d\n', id1, id2, net(id1,:)*net(id2,:)');
 
 gc_ans_joint = GC(id1, id2)
 gc_ans_pair = pairGC(id1, id2)
 
 id3 = 1:p;
 id3([id1 id2]) = [];
-
-fftlen = size(S,3);
-m = use_od;
 
 Qw = zeros(size(S));
 for k = 1:fftlen
@@ -73,9 +76,18 @@ Qyz_w = Qw(id2,id3,:);
 Qzy_w = Qw(id3,id2,:);
 Qzz_w = Qw(id3,id3,:);
 
+figure(10);
+plot(squeeze(S(id2,id2,:)));
+ylabel('S(id2,id2)');
+
+figure(11);
+plot(real(squeeze(Qw(id2,id2,:))));
+ylabel('Qw(id2,id2)');
+
 A3d_w = fft( cat(3, eye(p), reshape(A, p,p,[])), fftlen, 3);
 HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 
+% full mimic approximation
 A1c_w = permute(reshape(A(id1, :), p, []), [3 1 2]);
 A12_w = fft(A1c_w(1,id2,:), fftlen, 3);
 A13_w = fft(A1c_w(1,id3,:), fftlen, 3);
@@ -84,10 +96,12 @@ b12_t_app = real( ifft(b12_w_app, fftlen, 3) );
 b12_t_app(floor((end+1)/2)+1:end) = 0;
 b12_w_app = fft(b12_t_app, fftlen, 3);
 
-gc_b12_w_app = mean(b12_w_app .* conj(b12_w_app))
-gc_b12_t_app_full = mean(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app)) / R(id2,id2)
+gc_cond_a12_w_app_full = real(mean(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
 
-gc_b12_t_app = sum(b12_t_app(1:m).^2)
+gc_b12_t_app_full = mean(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app)) / R(id1,id1)
+
+gc_b12_w_app = mean(b12_w_app .* conj(b12_w_app)) / R(id1, id1) * R(id2, id2)
+gc_b12_t_app = sum(b12_t_app(1:m).^2) / R(id1, id1) * R(id2, id2)
 
 %Qzz_w_app = S(id3,id3,:) - rdiv3d(S(id3,[id1 id2],:), S([id1 id2],[id1 id2],:), S([id1 id2], id3,:)); % - rdiv3d(eye(p-2),Qw(id3,id3,:))
 Qzz_w_app = ...
@@ -103,7 +117,7 @@ b12_t_app_v4 = real( ifft(b12_w_app_v4, fftlen, 3) );
 b12_t_app_v4(floor((end+1)/2)+1:end) = 0;
 b12_w_app_v4 = fft(b12_t_app_v4, fftlen, 3);
 
-gc_b12_t_app_v4 = sum(b12_t_app_v4(1:m).^2)
+gc_b12_t_app_v4 = sum(b12_t_app_v4(1:m).^2) / R(id1, id1) * R(id2, id2)
 
 figure(3);
 plot(1:m, pairA(id1,id2:p:end), '-x',...
