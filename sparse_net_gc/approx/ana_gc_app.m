@@ -4,11 +4,13 @@ gen_data_n10_c1;
 %gen_data_n40_c1;
 %gen_data_n100_c1;
 
+[p len] = size(X);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % preprocessing and get spectrum, R and covz
-whiten_od = 80;
 use_od = 80;
 fftlen = 1024;
+whiten_od = 80;
 
 mode_preprocessing = 1;
 switch mode_preprocessing
@@ -20,7 +22,7 @@ switch mode_preprocessing
 		% whiten the covariance in frequency domain
 		covz = getcovzpd(X, whiten_od);
 		[A2d, D] = ARregressionpd(covz, p);
-		S = A2S(A2d, D, fftlen);
+		S = A2S(A2d, D, max(2^ceil(log2(8*whiten_od)), 1024));
 		S = StdWhiteS(S);
 		R = S2cov(S, use_od);
 		covz = R2covz(R);
@@ -43,7 +45,7 @@ tic;
 [pairGC, ~, pairA] = pairRGrangerT(R);
 toc;
 
-
+return
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 id1 = 1;
