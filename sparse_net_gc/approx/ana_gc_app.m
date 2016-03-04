@@ -1,20 +1,25 @@
 %
+pow2ceil = @(x) 2^ceil(log2(x));
+maxerr = @(x) max(abs(x(:)));
+HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
+%ed = 0;
 
 if ~exist('ed', 'var') || isempty(ed) || ~ed
 ed = true;
 
 %gen_data_n10_c1;
-%gen_data_n40_c1;
-gen_data_n100_c1;
+%gen_data_n40_c1;  % 1 40
+gen_data_n100_c1;  % 32  32
 
 [p len] = size(X);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % preprocessing and get spectrum, R and covz
-use_od = 80;
+fit_od = 80;
+use_od = 600;
 whiten_od = 80;
 
-mode_preprocessing = 2;
+mode_preprocessing = 5;
 tic
 switch mode_preprocessing
   case 1
@@ -23,9 +28,8 @@ switch mode_preprocessing
     get_R_S;
   case 2
     % whiten the covariance in frequency domain
-    covz = getcovzpd(X, whiten_od);
-    [A2d, D] = ARregressionpd(covz, p);
-    S = A2S(A2d, D, max(2^ceil(log2(8*whiten_od)), 1024));
+    [A2d, D] = ARregressionpd(getcovzpd(X, whiten_od), p);
+    S = A2S(A2d, D, max(pow2ceil(8*whiten_od), 1024));
     S = StdWhiteS(S);
     R = S2cov(S, use_od);
     covz = R2covz(R);
@@ -38,13 +42,90 @@ switch mode_preprocessing
     end
     clear A2d D
     get_R_S;
+  case 4
+    % get A from original signal, then whiten
+    R_orig = getcovzpd(X, fit_od);
+    [A2d, D] = ARregressionpd(R_orig, p);
+    toc
+    S = A2S(A2d, D, max(pow2ceil(8*whiten_od), 1024));
+    S_orig = S;
+    P_whiten_w = zeros(size(S));
+    A_whiten_w = zeros(size(S));
+    for k= 1:p
+      P_whiten_w(k,k,:) = S2H1D(squeeze(S(k,k,:)));
+      A_whiten_w(k,k,:) = 1 ./ P_whiten_w(k,k,:);
+    end
+%    A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S,3), 3);
+%    A_w = mult3d(A3d_w, P_whiten_w);
+
+    S = mult3d(A_whiten_w, S, HTR(A_whiten_w));
+    for k=1:p
+      S(k,k,:) = real(S(k,k,:));
+    end
+    R = S2cov(S, use_od);
+%    covz = R2covz(R);
+%    A3d = ifft(A_w, size(S,3), 3);
+
+    [A2d, D] = ARregression(R);  % p=100, od=300, 132 sec
+
+%    % verify that that A_w (or A0) is coef of whittened data
+%    A1 = ARregression(R);
+%    m = use_od;
+%    figure(3); plot(1:m, real(A0(1,1,2:m+1)(:)), '-+', 1:m, A1(1,1:p:end), '-x')
+%    figure(5); plot(1:m, real(A0(1,2,2:m+1)(:))' - A1(1,2:p:end), '-x')
+    
+  case 5
+    % get A from original signal, then whiten
+    covz_orig = getcovzpd(X, fit_od);  % p=100, 112 sec
+    [A2d, D] = ARregressionpd(covz_orig, p);
+    toc
+    % p=100, 4 sec
+    S_orig = A2S(A2d, D, max(pow2ceil(8*use_od), 1024));
+    P_whiten_w = zeros(size(S_orig));
+    A_whiten_w = zeros(size(S_orig));
+    for k= 1:p
+      P_whiten_w(k,k,:) = S2H1D(squeeze(S_orig(k,k,:)));
+      A_whiten_w(k,k,:) = 1 ./ P_whiten_w(k,k,:);
+    end
+    A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S_orig,3), 3);
+    A_w = mult3d(A3d_w, P_whiten_w);
+    A3d = ifft(A_w, size(S,3), 3);
+    A2d = reshape(real(A3d(:,:,2:use_od+1)), p, []);  % overwrite A2d
+
+    S = mult3d(A_whiten_w, S_orig, HTR(A_whiten_w));
+    for k=1:p
+      S(k,k,:) = real(S(k,k,:));
+    end
+    R = S2cov(S, use_od);
   otherwise
     get_R_S;
 end
 toc
 
-[GC, De, A] = RGrangerTfast(R);
-[pairGC, ~, pairA] = pairRGrangerT(R);
+%A0 = A2d;
+%D0 = D;
+%A1 = A2d;
+%D1 = D;
+%maxerr(A0 - A1)
+%maxerr(D1 - D0)
+%m = use_od;
+%figure(4); plot(1:m, A0(1,2:p:end)); print -depsc2 a0.eps
+%figure(4); plot(1:m, A1(1,2:p:end)); print -depsc2 a1.eps
+%figure(5); plot(1:m, A0(1,2:p:end) - A1(1,2:p:end), '-x'); print -depsc2 b.eps
+%return
+
+R_orig = S2cov(S_orig, fit_od);
+GC     = RGrangerTfast(R_orig);
+pairGC = pairRGrangerT(R_orig);
+
+tic
+%[~, De, A] = RGrangerTLevinson(R);  % p=100,od=300, 52 sec
+A = A2d;
+De = D;
+toc
+tic
+[~, ~, pairA] = pairRGrangerT(R);  % p=100,od=300, 37 sec, od=600, 147 sec
+toc
 
 end
 
@@ -96,9 +177,9 @@ b12_t_app = real( ifft(b12_w_app, fftlen, 3) );
 b12_t_app(floor((end+1)/2)+1:end) = 0;
 b12_w_app = fft(b12_t_app, fftlen, 3);
 
-gc_cond_a12_w_app_full = real(mean(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
+gc_cond_a12_w_app_full = mean(real(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
 
-gc_b12_t_app_full = mean(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app)) / R(id1,id1)
+gc_b12_t_app_full = mean(real(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app))) / R(id1,id1)
 
 gc_b12_w_app = mean(b12_w_app .* conj(b12_w_app)) / R(id1, id1) * R(id2, id2)
 gc_b12_t_app = sum(b12_t_app(1:m).^2) / R(id1, id1) * R(id2, id2)
@@ -128,8 +209,8 @@ legend('cal', 'app full', 'app acoef', 'cond')
 print('-depsc2', 'e.eps');
 
 diff_pairA_A = pairA(id1,id2:p:end) - A(id1,id2:p:end);
-diff_b12_t_app_A = squeeze(b12_t_app(1:m))' - A(id1,id2:p:end);
-diff_b12_t_app_v4_A = squeeze(b12_t_app_v4(1:m))' - A(id1,id2:p:end);
+diff_b12_t_app_A = b12_t_app(:,1:m) - A(id1,id2:p:end);
+diff_b12_t_app_v4_A = b12_t_app_v4(:,1:m) - A(id1,id2:p:end);
 
 figure(4);
 plot(1:m, diff_pairA_A, '-x',...

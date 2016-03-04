@@ -146,7 +146,7 @@ for id_s_data = 1:length(s_data_file_name)
     figure(2);
     plot(s_sparseness, 100*s_correct_rate_best_guess, 'o');
     xlabel('sparseness');
-    ylabel('best edge correct reconstruction ratio (pairwise GC)');
+    ylabel('best edge reconstruction correct ratio (pairwise GC)');
     xlim([0, max(s_sparseness)]);
     ylim([50 100]);
     set(gca, 'xdir', 'reverse');
@@ -167,8 +167,8 @@ for id_s_data = 1:length(s_data_file_name)
     xlim(axs(1), [0, max(s_sparseness)]);
     ylim(axs(1), [0, 20]);  % hand tune ....
     xlabel('sparseness');
-    ylabel(axs(1), 'p-val correct reconstruction ratio (pairwise GC)');
-    ylabel(axs(2), 'mean # of indirect and common inputs');
+    ylabel(axs(1), 'mean # of indirect and common inputs');
+    ylabel(axs(2), 'reconstruction correct ratio (pairwise GC, p-val)');
     set(axs(1), 'xdir', 'reverse');
     set(axs(2), 'xdir', 'reverse');
     set(h1, 'Marker', 'o');  % , 'LineStyle', 'None'
@@ -187,7 +187,7 @@ for id_s_data = 1:length(s_data_file_name)
     plot(s_indirect2connect, 100*s_correct_rate_pval, 'o');
     xlim([0 2*s_sparseness(end)^2*p]);
     xlabel('mean # of indirect and common inputs');
-    ylabel('p-val correct reconstruction ratio (pairwise GC)');
+    ylabel('reconstruction correct ratio (pairwise GC, p-val)');
     pic_output_color(['scan_sparse_xy_indir_comm_correct_pval_' param_str]);
   end
 
