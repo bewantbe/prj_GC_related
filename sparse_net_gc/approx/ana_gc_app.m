@@ -89,7 +89,7 @@ switch mode_preprocessing
     end
     A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S_orig,3), 3);
     A_w = mult3d(A3d_w, P_whiten_w);
-    A3d = ifft(A_w, size(S,3), 3);
+    A3d = ifft(A_w, size(S_orig,3), 3);
     A2d = reshape(real(A3d(:,:,2:use_od+1)), p, []);  % overwrite A2d
 
     S = mult3d(A_whiten_w, S_orig, HTR(A_whiten_w));
@@ -178,8 +178,15 @@ b12_t_app(floor((end+1)/2)+1:end) = 0;
 b12_w_app = fft(b12_t_app, fftlen, 3);
 
 gc_cond_a12_w_app_full = mean(real(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
+gc_cond_a12_w_app = mean(real(A12_w .* conj(A12_w))) / R(id1,id1)
 
-gc_b12_t_app_full = mean(real(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app))) / R(id1,id1)
+%gc_b12_t_app_full = mean(real(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app))) / R(id1,id1)
+gc_b12_t_app_full = mean(real(b12_w_app .* (S(id2,id2,:) - rdiv3d(S(id2,id1,:), S(id1,id1,:), S(id1,id2,:))) .* conj(b12_w_app))) / R(id1,id1)
+
+aa=1./Qyy_w;
+bb=1./(Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w));
+cc=(S(id2,id2,:) - rdiv3d(S(id2,id1,:), S(id1,id1,:), S(id1,id2,:)));
+%figure(9); plot(real(cc(:)))
 
 gc_b12_w_app = mean(b12_w_app .* conj(b12_w_app)) / R(id1, id1) * R(id2, id2)
 gc_b12_t_app = sum(b12_t_app(1:m).^2) / R(id1, id1) * R(id2, id2)
