@@ -178,10 +178,16 @@ b12_t_app(floor((end+1)/2)+1:end) = 0;
 b12_w_app = fft(b12_t_app, fftlen, 3);
 
 gc_cond_a12_w_app_full = mean(real(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
-gc_cond_a12_w_app = mean(real(A12_w .* conj(A12_w))) / R(id1,id1)
+gc_cond_a12_w_app = mean(real(A12_w .* conj(A12_w))) / R(id1,id1) * R(id2, id2)
+
+Pw = zeros(2,2,size(S,3));
+for k = 1:fftlen
+    Pw(:,:,k) = inv(S([id1 id2],[id1 id2],k));
+end
 
 %gc_b12_t_app_full = mean(real(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app))) / R(id1,id1)
 gc_b12_t_app_full = mean(real(b12_w_app .* (S(id2,id2,:) - rdiv3d(S(id2,id1,:), S(id1,id1,:), S(id1,id2,:))) .* conj(b12_w_app))) / R(id1,id1)
+gc_b12_t_app_full = mean(real(b12_w_app ./Pw(2,2,:) .* conj(b12_w_app))) / R(id1,id1)
 
 aa=1./Qyy_w;
 bb=1./(Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w));

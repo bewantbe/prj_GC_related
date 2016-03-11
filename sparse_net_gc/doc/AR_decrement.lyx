@@ -102,7 +102,11 @@ For invertable
 \begin_inset Formula $R$
 \end_inset
 
- (no need symmetric)
+ (no need symmetric), define 
+\begin_inset Formula $Q$
+\end_inset
+
+
 \family roman
 \series medium
 \shape up
@@ -117,15 +121,15 @@ For invertable
 
 \begin_inset Formula 
 \begin{equation}
-R=\left[\begin{array}{ccc}
-R^{(xx)} & R^{(xy)} & R^{(xz)}\\
-R^{(yx)} & R^{(yy)} & R^{(yz)}\\
-R^{(zx)} & R^{(zy)} & R^{(zz)}
-\end{array}\right]^{-1}=\left[\begin{array}{ccc}
+Q=\left[\begin{array}{ccc}
 Q^{(xx)} & Q^{(xy)} & Q^{(xz)}\\
 Q^{(yx)} & Q^{(yy)} & Q^{(yz)}\\
 Q^{(zx)} & Q^{(zy)} & Q^{(zz)}
-\end{array}\right]
+\end{array}\right]=R^{-1}=\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & R^{(yy)} & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & R^{(zz)}
+\end{array}\right]^{-1}.
 \end{equation}
 
 \end_inset
@@ -143,11 +147,29 @@ For any
 \begin_inset Formula $n_{4}\times\left(n_{1}+n_{2}+n_{3}\right)$
 \end_inset
 
- matrix)
+ matrix),
 \end_layout
 
 \begin_layout Standard
-Define
+define 
+\begin_inset Formula $\textrm{SS}_{R[x,z]}$
+\end_inset
+
+, 
+\begin_inset Formula $\textrm{SS}_{R[x,y,z]}$
+\end_inset
+
+, 
+\begin_inset Formula $\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\left[\begin{array}{ccc}
+\vec{a}_{T}^{(11)} & \vec{a}_{T}^{(12)} & \vec{a}_{T}^{(13)}\end{array}\right]$
+\end_inset
+
+ as
 \end_layout
 
 \begin_layout Standard
@@ -170,7 +192,7 @@ Define
 R^{(xx)} & R^{(xz)}\\
 R^{(zx)} & R^{(zz)}
 \end{array}\right]^{-1}\left[\begin{array}{cc}
-\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]^{T}
+\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]^{T},
 \]
 
 \end_inset
@@ -184,7 +206,7 @@ R^{(xx)} & R^{(xy)} & R^{(xz)}\\
 R^{(yx)} & R^{(yy)} & R^{(yz)}\\
 R^{(zx)} & R^{(zy)} & R^{(zz)}
 \end{array}\right]^{-1}\left[\begin{array}{ccc}
-\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]^{T}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]^{T},
 \]
 
 \end_inset
@@ -198,7 +220,7 @@ R^{(xx)} & R^{(xy)} & R^{(xz)}\\
 R^{(yx)} & R^{(yy)} & R^{(yz)}\\
 R^{(zx)} & R^{(zy)} & R^{(zz)}
 \end{array}\right]=\left[\begin{array}{ccc}
-\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right],
 \]
 
 \end_inset
@@ -212,7 +234,7 @@ R^{(xx)} & R^{(xy)} & R^{(xz)}\\
 R^{(yx)} & R^{(yy)} & R^{(yz)}\\
 R^{(zx)} & R^{(zy)} & R^{(zz)}
 \end{array}\right]^{T}=\left[\begin{array}{ccc}
-\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right].
 \]
 
 \end_inset
@@ -226,13 +248,13 @@ Then the difference of the quadratic form is
 
 \begin_layout Standard
 (Assume the inverse matries in the expressions are all valid, pseudo-inverse
- could also work)
+ might also work)
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\textrm{SS}_{R[x,y,z]}-\textrm{SS}_{R[x,z]}=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}_{T}^{(12)}\right)^{T}
+\textrm{SS}_{R[x,y,z]}-\textrm{SS}_{R[x,z]}=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}_{T}^{(12)}\right)^{T}.
 \end{equation}
 
 \end_inset
@@ -245,7 +267,11 @@ The
 \begin_inset Formula $\left(Q^{(yy)}\right)^{-1}$
 \end_inset
 
- might be expressed as
+ might be expressed in 
+\begin_inset Formula $R$
+\end_inset
+
+ blocks as
 \end_layout
 
 \begin_layout Standard
@@ -277,7 +303,11 @@ The
 \end_layout
 
 \begin_layout Standard
-The inverse matrices have relation
+Define 
+\begin_inset Formula $P$
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 \left[\begin{array}{cc}
@@ -418,67 +448,9 @@ Also
 
 \begin_layout Standard
 In matrix form
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-\vec{b}^{(11)} & \vec{b}^{(12)}\end{array}\right]=\left[\begin{array}{cc}
-\vec{a}^{(11)} & \vec{a}^{(12)}\end{array}\right]-a^{(13)}\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
-Q^{(zx)} & Q^{(zy)}\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-\vec{b}^{(11)} & \vec{b}^{(12)}\end{array}\right]=\left[\begin{array}{cc}
-\vec{a}^{(11)} & \vec{a}^{(12)}\end{array}\right]+a^{(13)}\left[\begin{array}{cc}
-R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
-R^{(xx)} & R^{(xy)}\\
-R^{(yx)} & R^{(yy)}
-\end{array}\right]^{-1}
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-b^{(21)}=a^{(21)}-a^{(23)}\left(Q^{(zz)}\right)^{-1}Q^{(zx)}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\vec{b}^{(22)}=\vec{a}^{(22)}-a^{(23)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-\vec{b}^{(21)} & \vec{b}^{(22)}\end{array}\right]=\left[\begin{array}{cc}
-\vec{a}^{(21)} & \vec{a}^{(22)}\end{array}\right]-a^{(23)}\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
-Q^{(zx)} & Q^{(zy)}\end{array}\right]
-\]
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
@@ -599,6 +571,41 @@ O & O & R^{(zz)}
 \begin_inset Formula 
 \[
 x'_{t}=x_{t}-\alpha Y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What if 
+\begin_inset Formula $z$
+\end_inset
+
+ is totally whitened? i.e.
+\begin_inset Formula 
+\[
+R^{(zz)}=I
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+not verified
+\begin_inset Formula 
+\[
+c^{(33)}=a^{(33)}-\left[\begin{array}{cc}
+a^{(31)} & a^{(32)}\end{array}\right]\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]^{-1}\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]
 \]
 
 \end_inset
@@ -749,8 +756,137 @@ A_{yz} & O & A_{yz}\\
 as
 \end_layout
 
-\begin_layout Standard
+\begin_layout Section
+Approximation of Toeplitz Matrix Operations
+\end_layout
 
+\begin_layout Standard
+Mul of band toeplitz matrix
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+a_{0} & a_{1}\\
+a_{-1} & a_{0} & a_{1}\\
+ & a_{-1} & a_{0}
+\end{array}\right]\left[\begin{array}{ccc}
+b_{0} & b_{1}\\
+b_{-1} & b_{0} & b_{1}\\
+ & b_{-1} & b_{0}
+\end{array}\right]=\left[\begin{array}{ccc}
+c_{0}-a_{-1}b_{1} & c_{1} & c_{2}\\
+c_{-1} & c_{0} & c_{1}\\
+c_{-2} & c_{-1} & c_{0}-a_{1}b_{-1}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $c_{0}=a_{-1}b_{1}+a_{0}b_{0}+a_{1}b_{-1}$
+\end_inset
+
+, 
+\begin_inset Formula $c_{-1}=a_{-1}b_{0}+a_{0}b_{-1}$
+\end_inset
+
+, 
+\begin_inset Formula $c_{1}=a_{0}b_{1}+a_{1}b_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Inverse of band toeplitz ??????????
+\begin_inset Formula 
+\[
+R(Q+G)=I
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+GR=I-QR
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+GRQ=Q-QRQ
+\]
+
+\end_inset
+
+since
+\begin_inset Formula 
+\[
+RQ\approx I
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+G\approx Q-QRQ
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+R^{-1}\approx Q+Q-QRQ
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In summary, that is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+K=I-QR
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+R^{-1}=(I-K)^{-1}Q
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bad......since it possible that 
+\begin_inset Formula $\left\Vert K\right\Vert >1$
+\end_inset
+
+.
+ Indeed, there is a 10 neuron case that 
+\begin_inset Formula $\left\Vert K\right\Vert =8.34$
+\end_inset
+
+ (for non-whitenned covz).
+ But seems work for whitened signal and 
+\begin_inset Formula $p<40$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -962,6 +1098,141 @@ b_{2}c_{21}+a_{23}b_{3}c_{31} & b_{2}+a_{23}b_{3}c_{32} & a_{23}b_{3}\\
 b_{3}c_{31} & b_{3}c_{32} & b_{3}
 \end{array}\right]
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Useful Theorems
+\end_layout
+
+\begin_layout Subsection
+Spectral Representation of Multivariate Stationary Time Series 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brockwell2013timeseries"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+R(h)=\int_{-\pi}^{\pi}e^{ihw}\mathrm{d}F(w),\quad h=0,\pm1,\ldots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $F(-\pi)=0$
+\end_inset
+
+, 
+\begin_inset Formula $F$
+\end_inset
+
+ is right-continuous, 
+\begin_inset Formula $F(\mu)-F(\lambda)$
+\end_inset
+
+ non-negative define for all 
+\begin_inset Formula $\lambda<\mu$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E\left(Z(\lambda)Z^{*}(\lambda)\right)$
+\end_inset
+
+ finite
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E\left(Z(\lambda)\right)=0$
+\end_inset
+
+, 
+\begin_inset Formula $-\pi<\lambda<\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E\left(Z(\lambda_{4})-Z(\lambda_{3})\right)\left(Z(\lambda_{2})-Z(\lambda_{1})\right)^{*}=0$
+\end_inset
+
+ 
+\begin_inset Formula $(\lambda_{1},\lambda_{2}]\cap(\lambda_{3},\lambda_{4}]=\phi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E\left(Z(\lambda+\delta)-Z(\lambda)\right)\left(Z(\lambda+\delta)-Z(\lambda)\right)^{*}\rightarrow0$
+\end_inset
+
+, as 
+\begin_inset Formula $\delta\downarrow0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+unique matrix distribution 
+\begin_inset Formula $F$
+\end_inset
+
+, 
+\begin_inset Formula $F(\mu)-F(\lambda)=E\left(\left(Z(\mu)-Z(\lambda)\right)\left(Z(\mu)-Z(\lambda)\right)^{*}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda\leq\mu$
+\end_inset
+
+.
+ o
+\begin_inset Formula 
+\[
+E\left(\mathrm{d}Z(\lambda)\mathrm{d}Z^{*}(\lambda)\right)=\begin{cases}
+\mathrm{d}F(\lambda) & \mu=\lambda\\
+0 & \textrm{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{t}=\int_{-\pi}^{\pi}e^{itv}\mathrm{d}Z(v),\quad t=0,\pm1,\ldots\quad\textrm{with probability 1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "math"
+options "plain"
 
 \end_inset
 
