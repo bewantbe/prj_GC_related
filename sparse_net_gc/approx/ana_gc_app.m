@@ -11,6 +11,8 @@ ed = true;
 %gen_data_n40_c1;  % 1 40
 gen_data_n100_c1;  % 32  32
 
+clear ras
+
 [p len] = size(X);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,16 +51,16 @@ switch mode_preprocessing
     toc
     S = A2S(A2d, D, max(pow2ceil(8*whiten_od), 1024));
     S_orig = S;
-    P_whiten_w = zeros(size(S));
-    A_whiten_w = zeros(size(S));
+    H_single_fact_S = zeros(size(S));
+    A_single_fact_S = zeros(size(S));
     for k= 1:p
-      P_whiten_w(k,k,:) = S2H1D(squeeze(S(k,k,:)));
-      A_whiten_w(k,k,:) = 1 ./ P_whiten_w(k,k,:);
+      H_single_fact_S(k,k,:) = S2H1D(squeeze(S(k,k,:)));
+      A_single_fact_S(k,k,:) = 1 ./ H_single_fact_S(k,k,:);
     end
 %    A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S,3), 3);
-%    A_w = mult3d(A3d_w, P_whiten_w);
+%    A_w = mult3d(A3d_w, H_single_fact_S);
 
-    S = mult3d(A_whiten_w, S, HTR(A_whiten_w));
+    S = mult3d(A_single_fact_S, S, HTR(A_single_fact_S));
     for k=1:p
       S(k,k,:) = real(S(k,k,:));
     end
@@ -76,27 +78,43 @@ switch mode_preprocessing
     
   case 5
     % get A from original signal, then whiten
-    covz_orig = getcovzpd(X, fit_od);  % p=100, 112 sec
+    if ~exist('covz_orig', 'var')
+      covz_orig = getcovzpd(X, fit_od);  % p=100, 112 sec
+    end
     [A2d, D] = ARregressionpd(covz_orig, p);
+    clear X
     toc
     % p=100, 4 sec
     S_orig = A2S(A2d, D, max(pow2ceil(8*use_od), 1024));
-    P_whiten_w = zeros(size(S_orig));
-    A_whiten_w = zeros(size(S_orig));
+    %H_single_fact_S = zeros(size(S_orig));
+    %A_single_fact_S = zeros(size(S_orig));
+    Qw = zeros(size(S));
+    for k = 1:fftlen
+        Qw(:,:,k) = inv(S_orig(:,:,k));
+    end
+    H_single_fact_Q = zeros(size(S_orig));
+    A_single_fact_Q = zeros(size(S_orig));
     for k= 1:p
-      P_whiten_w(k,k,:) = S2H1D(squeeze(S_orig(k,k,:)));
-      A_whiten_w(k,k,:) = 1 ./ P_whiten_w(k,k,:);
+      %H_single_fact_S(k,k,:) = S2H1D(squeeze(S_orig(k,k,:)));
+      %A_single_fact_S(k,k,:) = 1 ./ H_single_fact_S(k,k,:);
+      H_single_fact_Q(k,k,:) = S2H1D(squeeze(Qw(k,k,:)));
+      A_single_fact_Q(k,k,:) = 1 ./ H_single_fact_Q(k,k,:);
     end
     A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S_orig,3), 3);
-    A_w = mult3d(A3d_w, P_whiten_w);
+    %A_w = mult3d(A3d_w, H_single_fact_S);  disp('whiten in S')
+    %A_w = mult3d(A3d_w, HTR(A_single_fact_Q));  disp('whiten in Q');
+    A_w = mult3d(A3d_w, A_single_fact_Q);  disp('whiten in Q');
     A3d = ifft(A_w, size(S_orig,3), 3);
     A2d = reshape(real(A3d(:,:,2:use_od+1)), p, []);  % overwrite A2d
 
-    S = mult3d(A_whiten_w, S_orig, HTR(A_whiten_w));
+    %S = mult3d(A_single_fact_S, S_orig, HTR(A_single_fact_S));
+    %S = mult3d(HTR(H_single_fact_Q), S_orig, H_single_fact_Q);
+    S = mult3d(H_single_fact_Q, S_orig, HTR(H_single_fact_Q));
     for k=1:p
       S(k,k,:) = real(S(k,k,:));
     end
     R = S2cov(S, use_od);
+    clear A_single_fact_S A3d_w A_w A3d H_single_fact_Q
   otherwise
     get_R_S;
 end
@@ -141,8 +159,8 @@ fprintf('net_connect (%d, %d) = %d\n', id1, id2, net(id1,id2));
 fprintf('net_indirect(%d, %d) = %d\n', id1, id2, net(id1,:)*net(:,id2));
 fprintf('net_common  (%d, %d) = %d\n', id1, id2, net(id1,:)*net(id2,:)');
 
-gc_ans_joint = GC(id1, id2)
-gc_ans_pair = pairGC(id1, id2)
+gc_ans_joint = expm1(GC(id1, id2))
+gc_ans_pair = expm1(pairGC(id1, id2))
 
 id3 = 1:p;
 id3([id1 id2]) = [];
@@ -164,6 +182,7 @@ ylabel('S(id2,id2)');
 figure(11);
 plot(real(squeeze(Qw(id2,id2,:))));
 ylabel('Qw(id2,id2)');
+
 
 A3d_w = fft( cat(3, eye(p), reshape(A, p,p,[])), fftlen, 3);
 HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
@@ -187,7 +206,7 @@ end
 
 %gc_b12_t_app_full = mean(real(b12_w_app ./ (Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w)) .* conj(b12_w_app))) / R(id1,id1)
 gc_b12_t_app_full = mean(real(b12_w_app .* (S(id2,id2,:) - rdiv3d(S(id2,id1,:), S(id1,id1,:), S(id1,id2,:))) .* conj(b12_w_app))) / R(id1,id1)
-gc_b12_t_app_full = mean(real(b12_w_app ./Pw(2,2,:) .* conj(b12_w_app))) / R(id1,id1)
+gc_b12_t_app_full = mean(real(b12_w_app ./ Pw(2,2,:) .* conj(b12_w_app))) / R(id1,id1)
 
 aa=1./Qyy_w;
 bb=1./(Qyy_w - rdiv3d(Qyz_w, Qzz_w, Qzy_w));

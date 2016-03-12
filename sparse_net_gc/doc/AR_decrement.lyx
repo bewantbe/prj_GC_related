@@ -75,7 +75,98 @@
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\sinc}{\,\textrm{sinc}\,}
+{\,\textrm{sinc}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\var}{\,\textrm{var}\,}
+{\,\textrm{var}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\F}{\mathscr{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\la}{\leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ra}{\rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\lra}{\leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\La}{\Leftarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Ra}{\Rightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Lra}{\Leftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Llra}{\Longleftrightarrow}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sgn}{\mysgn}
+{\,\textrm{sgn}}
 \end_inset
 
 
@@ -254,7 +345,7 @@ Then the difference of the quadratic form is
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\textrm{SS}_{R[x,y,z]}-\textrm{SS}_{R[x,z]}=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}_{T}^{(12)}\right)^{T}.
+\textrm{SS}_{R[x,y,z]}-\textrm{SS}_{R[x,z]}=\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}_{T}^{(12)}\right)^{T}.\label{eq:diff-Sum-square-residual}
 \end{equation}
 
 \end_inset
@@ -754,6 +845,191 @@ A_{yz} & O & A_{yz}\\
 
 \begin_layout Standard
 as
+\end_layout
+
+\begin_layout Section
+Relation to Linear Regression For Time Series
+\end_layout
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $\mathrm{E}(x_{t})=\mathrm{E}(y_{t})=\mathrm{E}(y_{t})=0$
+\end_inset
+
+, as usual, let's do a 3-var AR of order 
+\begin_inset Formula $m$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}a_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(12)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1)} & \quad\mathrm{(a)}\\
+y_{t}=\sum_{j=1}^{m}a_{j}^{(21)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(22)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(23)}z_{t-j}+\epsilon_{t}^{(2)} & \quad\mathrm{(b)}\\
+z_{t}=\sum_{j=1}^{m}a_{j}^{(31)}x_{t-j}+\sum_{j=1}^{m}a_{j}^{(32)}y_{t-j}+\sum_{j=1}^{m}a_{j}^{(33)}z_{t-j}+\epsilon_{t}^{(3)} & \quad\mathrm{(c)}
+\end{aligned}
+\right.\label{eq: Eq 3-var}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The least square solution for 
+\begin_inset Formula $\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}$
+\end_inset
+
+ in 
+\begin_inset Formula $\min\var\epsilon_{t}^{(1)}$
+\end_inset
+
+ (
+\begin_inset Formula $\mathrm{E}(\epsilon_{t}^{(u)}x_{t-k}^{(v)T})=0,\ \forall k=1\ldots m$
+\end_inset
+
+) satisfies
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & R^{(yy)} & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & R^{(zz)}
+\end{array}\right]=\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right],\label{eq: Eq 3-var more clear}
+\end{equation}
+
+\end_inset
+
+where (here 
+\begin_inset Formula $\E$
+\end_inset
+
+ can be expectation operator or 
+\begin_inset Formula $\frac{1}{L}\sum_{t=1}^{L}\cdot$
+\end_inset
+
+ )
+\begin_inset Formula 
+\[
+\vec{a}^{(uv)}=\left(a_{j}^{(uv)}\right)_{j=1\ldots m}^{\textrm{row}},\ (u,v\in\{1,2,3\}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+R^{(uv)}=\left(\E(x_{t-j}^{(u)}x_{t-k}^{(v)T})\right)_{j,k=1\ldots m},\ (u,v\in\{x,y,z\}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vec{r}^{(u|v)}=\left(\E(x_{t}^{(u)}x_{t-k}^{(v)T})\right)_{k=1\ldots m}^{\textrm{row}},\ (u,v\in\{x,y,z\}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And get 
+\begin_inset Formula $\mathrm{var}(\epsilon_{t}^{(1)})$
+\end_inset
+
+ from
+\begin_inset Formula 
+\[
+\mathrm{var}(x_{t})=\vec{a}^{(11)}\vec{r}^{(x|x)T}+\vec{a}^{(12)}\vec{r}^{(x|y)T}+\vec{a}^{(13)}\vec{r}^{(x|z)T}+\mathrm{var}(\epsilon_{t}^{(1)}).
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1)})=\mathrm{var}(x_{t})-\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & R^{(xz)}\\
+R^{(yx)} & R^{(yy)} & R^{(yz)}\\
+R^{(zx)} & R^{(zy)} & R^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & \vec{r}^{(x|z)}\end{array}\right]^{T}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly for least square 
+\begin_inset Formula $\min\var\epsilon_{t}^{(1|3)}$
+\end_inset
+
+ in
+\begin_inset Formula 
+\begin{equation}
+x_{t}=\sum_{j=1}^{m}c_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1|3)},
+\end{equation}
+
+\end_inset
+
+that is
+\begin_inset Formula 
+\begin{equation}
+\mathrm{var}(\epsilon_{t}^{(1|3)})=\mathrm{var}(x_{t})-\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xz)}\\
+R^{(zx)} & R^{(zz)}
+\end{array}\right]^{-1}\left[\begin{array}{cc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|z)}\end{array}\right]^{T}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note Granger causality 
+\begin_inset Formula $F_{y\rightarrow x|z}$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}=\ln\frac{\mathrm{var}(\epsilon_{t}^{(1|3)})}{\mathrm{var}(\epsilon_{t}^{(1)})}=\ln\Biggl(1+\frac{\mathrm{var}(\epsilon_{t}^{(1|3)})-\mathrm{var}(\epsilon_{t}^{(1)})}{\mathrm{var}(\epsilon_{t}^{(1)})}\Biggr).\label{eq:GC3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With help of Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:diff-Sum-square-residual"
+
+\end_inset
+
+, we get
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}=\ln\left(1+\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
