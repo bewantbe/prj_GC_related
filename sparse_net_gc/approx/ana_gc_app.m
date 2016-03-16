@@ -88,8 +88,8 @@ switch mode_preprocessing
     S_orig = A2S(A2d, D, max(pow2ceil(8*use_od), 1024));
     %H_single_fact_S = zeros(size(S_orig));
     %A_single_fact_S = zeros(size(S_orig));
-    Qw = zeros(size(S));
-    for k = 1:fftlen
+    Qw = zeros(size(S_orig));
+    for k = 1:size(S_orig,3)
         Qw(:,:,k) = inv(S_orig(:,:,k));
     end
     H_single_fact_Q = zeros(size(S_orig));
@@ -102,14 +102,13 @@ switch mode_preprocessing
     end
     A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S_orig,3), 3);
     %A_w = mult3d(A3d_w, H_single_fact_S);  disp('whiten in S')
-    %A_w = mult3d(A3d_w, HTR(A_single_fact_Q));  disp('whiten in Q');
     A_w = mult3d(A3d_w, A_single_fact_Q);  disp('whiten in Q');
     A3d = ifft(A_w, size(S_orig,3), 3);
     A2d = reshape(real(A3d(:,:,2:use_od+1)), p, []);  % overwrite A2d
 
     %S = mult3d(A_single_fact_S, S_orig, HTR(A_single_fact_S));
-    %S = mult3d(HTR(H_single_fact_Q), S_orig, H_single_fact_Q);
     S = mult3d(H_single_fact_Q, S_orig, HTR(H_single_fact_Q));
+    %S = S_orig;
     for k=1:p
       S(k,k,:) = real(S(k,k,:));
     end
@@ -135,6 +134,7 @@ toc
 R_orig = S2cov(S_orig, fit_od);
 GC     = RGrangerTfast(R_orig);
 pairGC = pairRGrangerT(R_orig);
+clear S_orig R_orig
 
 tic
 %[~, De, A] = RGrangerTLevinson(R);  % p=100,od=300, 52 sec
@@ -144,6 +144,9 @@ toc
 tic
 [~, ~, pairA] = pairRGrangerT(R);  % p=100,od=300, 37 sec, od=600, 147 sec
 toc
+
+%covz = R2covz(R);
+%Q = inv(covz);
 
 end
 
@@ -188,16 +191,16 @@ A3d_w = fft( cat(3, eye(p), reshape(A, p,p,[])), fftlen, 3);
 HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 
 % full mimic approximation
-A1c_w = permute(reshape(A(id1, :), p, []), [3 1 2]);
-A12_w = fft(A1c_w(1,id2,:), fftlen, 3);
-A13_w = fft(A1c_w(1,id3,:), fftlen, 3);
+A1c = permute(reshape(A(id1, :), p, []), [3 1 2]);
+A12_w = fft(A1c(1,id2,:), fftlen, 3);
+A13_w = fft(A1c(1,id3,:), fftlen, 3);
 b12_w_app = A12_w - rdiv3d( A13_w, Qzz_w, Qzy_w);  % key
 b12_t_app = real( ifft(b12_w_app, fftlen, 3) );
 b12_t_app(floor((end+1)/2)+1:end) = 0;
 b12_w_app = fft(b12_t_app, fftlen, 3);
 
-gc_cond_a12_w_app_full = mean(real(A12_w ./ Qyy_w .* conj(A12_w))) / R(id1,id1)
-gc_cond_a12_w_app = mean(real(A12_w .* conj(A12_w))) / R(id1,id1) * R(id2, id2)
+gc_cond_a12_w_app_full = mean(real(A12_w ./ Qyy_w .* conj(A12_w))) / De(id1,id1)
+gc_cond_a12_w_app = mean(real(A12_w .* conj(A12_w))) / De(id1,id1) * De(id2, id2)
 
 Pw = zeros(2,2,size(S,3));
 for k = 1:fftlen
