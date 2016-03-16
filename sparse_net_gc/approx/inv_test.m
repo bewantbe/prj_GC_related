@@ -1,5 +1,5 @@
 %
-if 0
+if 1
 a = [0.5 0.2 0.1];
 
 od = 6;
@@ -16,6 +16,7 @@ tQ - Q
 maxerr = @(x) max(abs(x(:)));
 %maxerr(Q-tQ)
 
+return
 end
 
 %% matrix case
