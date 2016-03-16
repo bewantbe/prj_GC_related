@@ -586,7 +586,7 @@ Q_{j}=\F^{-1}\left[S^{-1}(w)\right](j)
 \end_layout
 
 \begin_layout Standard
-We can find the difference can be expressed as
+The difference can be expressed as
 \begin_inset Formula 
 \[
 Q-V^{-1}=A_{\#}^{H}A_{\#}
@@ -612,10 +612,6 @@ A_{m} & \cdots & A_{m} & A_{m}
 
 \begin_layout Section
 Expression For Certain Block
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Standard
