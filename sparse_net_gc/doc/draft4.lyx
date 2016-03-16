@@ -618,7 +618,7 @@ Expression For Certain Block
 Define
 \begin_inset Formula 
 \[
-A^{(u)}=\left[\begin{array}{cccc}
+A^{(:,u)}=\left[\begin{array}{cccc}
 A_{0,[:,u]} & A_{1,[:,u]} & \cdots & A_{m-1,[:,u]}\\
 0 & A_{0,[:,u]} &  & \vdots\\
 \vdots &  & \ddots & A_{1,[:,u]}\\
@@ -643,7 +643,7 @@ A_{k,p,u}
 
 \begin_inset Formula 
 \[
-Q^{(zy)}=A^{(z)H}\Gamma^{-1}A^{(y)}
+Q^{(zy)}=A^{(:,z)H}\Gamma^{-1}A^{(:,y)}
 \]
 
 \end_inset
