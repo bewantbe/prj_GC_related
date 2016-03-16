@@ -25,9 +25,10 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
 \use_package cancel 1
@@ -51,6 +52,10 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -67,6 +72,22 @@
 \end_header
 
 \begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathscr{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+\end_inset
+
+
+\end_layout
 
 \begin_layout Title
 Inverse Covariance Matrix Age
@@ -117,11 +138,485 @@ key "godolphin1983evaluation"
 
 \begin_deeper
 \begin_layout Itemize
-Metod based on spectral polynomial and algebra operations to construct a
- linear equation.
+Metod based on spectral polynomial and algebra operations to construct related
+ linear equations.
+\end_layout
+
+\begin_layout Itemize
+With modification, can be extended to multivariate case to some extend (no
+ close form solution).
 \end_layout
 
 \end_deeper
+\begin_layout Section
+Solving Covariance Matrix And Its Inverse Using Method in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "godolphin1983evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The spectral polynomial of an (stable) AR process satisfies (
+\begin_inset Formula $\cdot^{H}$
+\end_inset
+
+ means conjugate transpose)
+\begin_inset Formula 
+\[
+\sum_{k=-\infty}^{\infty}R_{k}z^{k}=\left(\sum_{k=0}^{m}A_{k}z^{k}\right)^{-1}\Sigma\left(\sum_{k=0}^{m}A_{k}^{H}z^{-k}\right)^{-1}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+R_{k}=R_{-k}^{H},\quad A_{0}=I
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Match the coefficients of 
+\begin_inset Formula $z$
+\end_inset
+
+ in both side of
+\begin_inset Formula 
+\[
+\left(\sum_{k=-\infty}^{\infty}R_{k}z^{k}\right)\left(\sum_{k=0}^{m}A_{k}^{H}z^{-k}\right)=\left(\sum_{k=0}^{m}A_{k}z^{k}\right)^{-1}\Sigma,
+\]
+
+\end_inset
+
+get
+\begin_inset Formula 
+\begin{equation}
+\sum_{k=0}^{m}R_{k+j}A_{k}^{H}=\begin{cases}
+B_{j}\Sigma & j\geq0\\
+0 & j<0
+\end{cases},\label{eq:R-j-eqn}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\sum_{k=0}^{\infty}B_{k}z^{k}=\left(\sum_{k=0}^{m}A_{k}z^{k}\right)^{-1}.\label{eq:A-B}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Define (
+\begin_inset Formula $V$
+\end_inset
+
+ is the covariance matrix up to order 
+\begin_inset Formula $m$
+\end_inset
+
+) 
+\begin_inset Formula 
+\[
+V=\left[\begin{array}{cccc}
+R_{0} & R_{1} & \cdots & R_{m-1}\\
+R_{-1} & R_{0} &  & \vdots\\
+\vdots &  & \ddots\\
+R_{1-m} & \cdots &  & R_{0}
+\end{array}\right],\quad V_{\star}=\left[\begin{array}{cccc}
+R_{-m} & \cdots & R_{-2} & R_{-1}\\
+R_{-m-1} & R_{-m} &  & R_{-2}\\
+\vdots &  & \ddots & \vdots\\
+R_{1-2m} & \cdots &  & R_{-m}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A^{H}=\left[\begin{array}{cccc}
+A_{0}^{H} & 0 & \cdots & 0\\
+A_{1}^{H} & A_{0}^{H} &  & \vdots\\
+\vdots & \ddots & \ddots & 0\\
+A_{m-1}^{H} & \cdots & A_{1}^{H} & A_{0}^{H}
+\end{array}\right],\quad A_{\star}^{H}=\left[\begin{array}{cccc}
+A_{m}^{H} & \cdots & A_{2}^{H} & A_{1}^{H}\\
+0 & A_{m}^{H} &  & A_{2}^{H}\\
+\vdots &  & \ddots & \vdots\\
+0 & \cdots & 0 & A_{m}^{H}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B=\left[\begin{array}{cccc}
+B_{0} & B_{1} & \cdots & B_{m-1}\\
+0 & B_{0} & \ddots & \vdots\\
+\vdots &  & \ddots & B_{1}\\
+0 & \cdots & 0 & B_{0}
+\end{array}\right],\quad\Gamma=\left[\begin{array}{cccc}
+\Sigma & 0 & \cdots & 0\\
+0 & \Sigma & \ddots & \vdots\\
+\vdots & \ddots & \ddots & 0\\
+0 & \cdots & 0 & \Sigma
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:A-B"
+
+\end_inset
+
+ in matrix form is
+\begin_inset Formula 
+\[
+B=A^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Write Eq,
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:R-j-eqn"
+
+\end_inset
+
+ in matrix form:
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cc}
+V & V_{\star}^{H}\end{array}\right]\left[\begin{array}{c}
+A^{H}\\
+A_{\star}^{H}
+\end{array}\right]=B\Gamma\label{eq:VV1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cc}
+V_{\star} & V\end{array}\right]\left[\begin{array}{c}
+A^{H}\\
+A_{\star}^{H}
+\end{array}\right]=O\label{eq:VV2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VV1"
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VV2"
+
+\end_inset
+
+ we get
+\begin_inset Formula 
+\[
+\left\{ \begin{gathered}VA^{H}+V_{\star}^{H}A_{\star}^{H}=A^{-1}\Gamma\\
+V_{\star}A^{H}+VA_{\star}^{H}=O
+\end{gathered}
+\right.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+AVA^{H}-A_{\star}VA_{\star}^{H}=\Gamma\label{eq:V-normal}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If define
+\begin_inset Formula 
+\[
+G=A^{-1}A_{\star}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+U=A^{-1}\Gamma A^{-1H}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:V-normal"
+
+\end_inset
+
+ become
+\begin_inset Formula 
+\begin{equation}
+GVG^{H}-V+U=0,\label{eq:Lya-eqn}
+\end{equation}
+
+\end_inset
+
+which is the discrete Lyapunov equation.
+ The solution is
+\begin_inset Formula 
+\[
+V=\sum_{j=0}^{\infty}G^{j}UG^{jH}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To solve 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+, start from Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Lya-eqn"
+
+\end_inset
+
+, and use Binomial inverse theorem
+\begin_inset Formula 
+\begin{eqnarray}
+V^{-1} & = & \left(U+GVG^{H}\right)^{-1}\nonumber \\
+ & = & U^{-1}-U^{-1}G(V^{-1}+G^{H}U^{-1}G)^{-1}G^{H}U^{-1}\nonumber \\
+ & = & A^{H}\Gamma^{-1}A-A^{H}\Gamma^{-1}A_{\star}(V^{-1}+A_{\star}^{H}\Gamma^{-1}A_{\star})^{-1}A_{\star}^{H}\Gamma^{-1}A\label{eq:V-inv-V}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that by sufficient zero padding to 
+\begin_inset Formula $A_{k}$
+\end_inset
+
+ (increase the size of 
+\begin_inset Formula $V$
+\end_inset
+
+ or 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+ but keep the real fitting order), non-zero terms of 
+\begin_inset Formula $A_{\star}$
+\end_inset
+
+ will locate at lower left corner, non-zero terms of 
+\begin_inset Formula $A$
+\end_inset
+
+ will locate around (upper) diagonal.
+ Therefore the non-zero terms of 
+\begin_inset Formula $A^{H}\Gamma^{-1}A_{\star}$
+\end_inset
+
+ will locate at lower left corner, and hence (no matter what 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+ is) the non-zeros of 
+\begin_inset Formula $A^{H}\Gamma^{-1}A_{\star}(V^{-1}+A_{\star}^{H}\Gamma^{-1}A_{\star})^{-1}A_{\star}^{H}\Gamma^{-1}A$
+\end_inset
+
+ will locate at lower right, the width is (the real) 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So as a consequence, except the 
+\begin_inset Formula $m\times m$
+\end_inset
+
+ block of the 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+, it can be calculated as 
+\begin_inset Formula $A^{H}\Gamma^{-1}A$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+V^{-1}\approx A^{H}\Gamma^{-1}A\label{eq:V-inv-app}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It happens that only the upper left of 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+ is in our interesting.
+\end_layout
+
+\begin_layout Standard
+Following 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wise1955theautocorrelation"
+
+\end_inset
+
+ will get the same result as Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:V-inv-app"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Comparison to Spectral Density Inversion Approximation
+\end_layout
+
+\begin_layout Standard
+The inverse if spectral density of AR process can be easily calculated as
+\begin_inset Formula 
+\begin{equation}
+S^{-1}(w)=A^{H}(w)\Sigma A(w).\label{eq:S-inv}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then by inverse Fourier transform, we can construct an (another) approximation
+ of 
+\begin_inset Formula $V^{-1}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q=\left[\begin{array}{cccc}
+Q_{0} & Q_{1} & \cdots & Q_{m-1}\\
+Q_{-1} & Q_{0} &  & \vdots\\
+\vdots &  & \ddots\\
+Q_{1-m} & \cdots &  & Q_{0}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q_{j}=\F^{-1}\left[S^{-1}(w)\right](j)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can find the difference can be expressed as
+\begin_inset Formula 
+\[
+Q-V^{-1}=
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
