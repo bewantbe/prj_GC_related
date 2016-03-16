@@ -20,15 +20,12 @@ return
 end
 
 %% matrix case
-if 0
-
 a = [
  0.5 0.1 0.21 0.15
 -0.2 0.4 0.33 0.09];
-a = [a zeros(2, 4)]
+a = [a zeros(2, 4)];
 
 %a = [0.5 0.2 0.1];
-
 od = 6;
 
 p = size(a,1);
@@ -41,6 +38,7 @@ V = R2covz(R);
 Q = inv(V);
 Q(abs(Q)<1e-14)=0;
 
+if 0
 %tA = toeplitz([1; zeros(od,1)], [1 a zeros(1, od-size(a,2))]);
 
 tA = zeros((od+1)*p);
@@ -61,7 +59,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%
 % Qyy
 
-id_y = 2;
+id_y = 1;
 id_comb = p*(0:od);
 
 tAy = zeros((od+1)*p, od+1);
@@ -70,4 +68,18 @@ for k=0:od
 end
 
 tAy' * tAy - Q(id_y+id_comb, id_y+id_comb)
+
+
+id_y = 1;
+id_z = 2;  % z <- y
+id_comb = p*(0:od);
+
+tAy = zeros((od+1)*p, od+1);
+tAz = zeros((od+1)*p, od+1);
+for k=0:od
+  tAy(k*p+1:(k+1)*p, k+1:end) = reshape(A3d(:,id_y,1:end-k), p, []);
+  tAz(k*p+1:(k+1)*p, k+1:end) = reshape(A3d(:,id_z,1:end-k), p, []);
+end
+
+tAz' * tAy - Q(id_z+id_comb, id_y+id_comb)
 

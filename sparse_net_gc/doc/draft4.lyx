@@ -589,7 +589,7 @@ Q_{j}=\F^{-1}\left[S^{-1}(w)\right](j)
 The difference can be expressed as
 \begin_inset Formula 
 \[
-Q-V^{-1}=A_{\#}^{H}A_{\#}
+Q-V^{-1}=A_{\#}^{H}\Gamma^{-1}A_{\#}
 \]
 
 \end_inset
@@ -612,6 +612,43 @@ A_{m} & \cdots & A_{m} & A_{m}
 
 \begin_layout Section
 Expression For Certain Block
+\end_layout
+
+\begin_layout Standard
+Define
+\begin_inset Formula 
+\[
+A^{(u)}=\left[\begin{array}{cccc}
+A_{0,[:,u]} & A_{1,[:,u]} & \cdots & A_{m-1,[:,u]}\\
+0 & A_{0,[:,u]} &  & \vdots\\
+\vdots &  & \ddots & A_{1,[:,u]}\\
+0 & \cdots & 0 & A_{0,[:,u]}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A_{k,[:,u]}=\left[\begin{array}{c}
+A_{k,1,u}\\
+\vdots\\
+A_{k,p,u}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q^{(zy)}=A^{(z)H}\Gamma^{-1}A^{(y)}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
