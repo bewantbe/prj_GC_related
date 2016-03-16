@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass article
@@ -12,13 +12,13 @@
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -29,15 +29,24 @@
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -659,6 +668,149 @@ known
 d-c & = & ...\\
 \mathrm{var}(x_{t}^{(1)})-d & = & \mathrm{var}(e_{t})
 \end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+----------------------
+\end_layout
+
+\begin_layout Standard
+all in matrix form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(13)}=a^{(13)}-a^{(12)}\left(Q^{(yy)}\right)^{-1}Q^{(yz)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(23)}=a^{(23)}-a^{(21)}\left(Q^{(xx)}\right)^{-1}Q^{(xz)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(21)}=a^{(21)}-a^{(23)}\left(Q^{(zz)}\right)^{-1}Q^{(zx)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(31)}=a^{(31)}-a^{(32)}\left(Q^{(yy)}\right)^{-1}Q^{(yx)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+b^{(32)}=a^{(32)}-a^{(31)}\left(Q^{(xx)}\right)^{-1}Q^{(xy)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+ & a^{(12)} & a^{(13)}\\
+a^{(21)} &  & a^{(23)}\\
+a^{(31)} & a^{(32)}
+\end{array}\right]\left[\begin{array}{ccc}
+\left(Q^{(xx)}\right)^{-1}\\
+ & \left(Q^{(yy)}\right)^{-1}\\
+ &  & \left(Q^{(zz)}\right)^{-1}
+\end{array}\right]\left[\begin{array}{ccc}
+O & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & O & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & O
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+ & a^{(12)}\left(Q^{(yy)}\right)^{-1} & a^{(13)}\left(Q^{(zz)}\right)^{-1}\\
+a^{(21)}\left(Q^{(xx)}\right)^{-1} &  & a^{(23)}\left(Q^{(zz)}\right)^{-1}\\
+a^{(31)}\left(Q^{(xx)}\right)^{-1} & a^{(32)}\left(Q^{(yy)}\right)^{-1}
+\end{array}\right]\left[\begin{array}{ccc}
+O & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & O & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & O
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+xx & b^{(12)} & b^{(13)}\\
+b^{(21)} & xx & b^{(23)}\\
+b^{(31)} & b^{(32)} & xx
+\end{array}\right]=\left[\begin{array}{ccc}
+ & a^{(12)} & a^{(13)}\\
+a^{(21)} &  & a^{(23)}\\
+a^{(31)} & a^{(32)}
+\end{array}\right]\left(1-\left[\begin{array}{ccc}
+\left(Q^{(xx)}\right)^{-1}\\
+ & \left(Q^{(yy)}\right)^{-1}\\
+ &  & \left(Q^{(zz)}\right)^{-1}
+\end{array}\right]\left[\begin{array}{ccc}
+O & Q^{(xy)} & Q^{(xz)}\\
+Q^{(yx)} & O & Q^{(yz)}\\
+Q^{(zx)} & Q^{(zy)} & O
+\end{array}\right]\right)
+\]
 
 \end_inset
 
