@@ -163,7 +163,7 @@ figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
 gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x)
 err_gc_mapp = maxerr(gc_mapp - gc_xy)
 
-%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % get pairwise GC
 
 R_xy = S2cov(S([id_x id_y],[id_x id_y],:), m);
@@ -172,7 +172,7 @@ maxerr(R_xy - R_xy_)
 [pairGC D_B B] = RGrangerTfast(R_xy);
 gc_pair = expm1(pairGC(1,2))
 
-%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % get pairwise coef
 
 a13_mapp = erv3 * Q(:, id_bz);
@@ -189,17 +189,21 @@ b12_mapp = a12 - a13_mapp / Qzz_mapp * Qzy_mapp;
 err_b12_mapp = maxerr(b12 - b12_mapp)
 figure(52); plot(b12 - b12_mapp);
 
-%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gc app
+
 Qyz_mapp = M(:, id_by)'*iG*M(:, id_bz);
 % the answers
 P = inv(eR3([id_bx id_by], [id_bx id_by]));
-gc_pair_P = b12 / P(m+1:end, m+1:end) * b12'
-%gc_pair_Q = b12_mapp / (Q(id_by,id_by) - Q(id_by,id_bz)/Q(id_bz,id_bz)*Q(id_bz,id_by)) * b12_mapp'
-gc_pair_Q = b12 / (Q(id_by,id_by) - Q(id_by,id_bz)/Q(id_bz,id_bz)*Q(id_bz,id_by)) * b12'
+gc_pair_P = b12 / P(m+1:end, m+1:end) * b12' / D_B(1,1)
+gc_pair_Q = b12 / (Q(id_by,id_by) - Q(id_by,id_bz)/Q(id_bz,id_bz)*Q(id_bz,id_by)) * b12' / D_B(1,1)
+
 % the approximation
-gc_pair_mapp = b12_mapp / (Qyy_mapp - Qyz_mapp/Qzz_mapp*Qzy_mapp) * b12_mapp'
-gc_pair_mapp2 = b12_mapp / Qyy_mapp * b12_mapp'
+gc_pair_mapp = b12_mapp / (Qyy_mapp - Qyz_mapp/Qzz_mapp*Qzy_mapp) * b12_mapp' / D_B(1,1)
+gc_pair_mapp2 = b12_mapp / Qyy_mapp * b12_mapp' / D_B(1,1)
 
-
+%covz_xy = R2covz(R_xy);
+%id_xy_re = reshape(1:2*m, 2, [])'(:);
+%RR = covz_xy(id_xy_re, id_xy_re);
+%maxerr(RR - eR3([id_bx id_by], [id_bx id_by]))
 
