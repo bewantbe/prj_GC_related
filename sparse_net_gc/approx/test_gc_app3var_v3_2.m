@@ -106,16 +106,27 @@ err_gc_mapp = maxerr(gc_mapp - gc_xy)
 
 %% is inverse of covariance sparse
 
+% sum blocks of m*m
 arr = permute(reshape(Q, m, p, m, p), [1 3 2 4]);
 arr = squeeze(sum(reshape(abs(arr), m*m, p, p)));
 arr(eye(p)==1) = 0;
 
 figure(5);
 MatShow(arr, 0.1);
-
 figure(6);
 adj = pm.net_adj*1;
 MatShow(adj'+adj, 0.1);
+
+figure(7);
+MatShow(arr, 0.001);
+figure(8);
+adj_e = pm.net_adj*1 + eye(p);
+MatShow(adj_e'*adj_e, 0.1);
+
+figure(14);
+MatShow(M, 0.001);
+figure(15);
+MatShow(adj_e, 0.001);
 
 %%%%%%%%%%%%%%%
 % get pairwise GC coef
