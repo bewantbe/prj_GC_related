@@ -24,11 +24,11 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   % purify coef
   [GC De A2d] = RGrangerTfast(covz, p);
-  %id_no_conn = GC < 2*fit_od/len;
-  %id_no_conn(eye(p)==1) = 0;
-  %id_a_zero = find(id_no_conn);
-  %A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
-  %De(eye(p)==0) = 0;
+  id_no_conn = GC < 2*fit_od/len;
+  id_no_conn(eye(p)==1) = 0;
+  id_a_zero = find(id_no_conn);
+  A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
+  De(eye(p)==0) = 0;
 
   S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
   %S = StdWhiteS(S);
@@ -43,8 +43,11 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   eR3 = bigR(id_bt2tb, id_bt2tb);
   Q = inv(eR3);
 
-  function MatShow(A)
-      imagesc(A); colorbar; caxis([-1 1]*1e-3*max(abs(A(:))));
+  function MatShow(A, err)
+    if ~exist('err','var')
+      err = 1e-3;
+    end
+    imagesc(A); colorbar; caxis([-1 1]*err*max(abs(A(:))));
   end
 
   figure(11); MatShow(bigR);
@@ -73,7 +76,7 @@ toc;
 
 % analyse x <- y
 id_x = 1;
-id_y = 2;
+id_y = 6;
 
 id_bx = (1:m) + (id_x-1)*m;
 id_by = (1:m) + (id_y-1)*m;
@@ -101,7 +104,19 @@ figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
 gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x)
 err_gc_mapp = maxerr(gc_mapp - gc_xy)
 
+%% is inverse of covariance sparse
+
+arr = permute(reshape(Q, m, p, m, p), [1 3 2 4]);
+arr = squeeze(sum(reshape(abs(arr), m*m, p, p)));
+arr(eye(p)==1) = 0;
+
+figure(5);
+MatShow(arr, 0.1);
+
+figure(6);
+adj = pm.net_adj*1;
+MatShow(adj'+adj, 0.1);
+
 %%%%%%%%%%%%%%%
 % get pairwise GC coef
-
 
