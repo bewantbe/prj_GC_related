@@ -107,26 +107,53 @@ err_gc_mapp = maxerr(gc_mapp - gc_xy)
 %% is inverse of covariance sparse
 
 % sum blocks of m*m
-arr = permute(reshape(Q, m, p, m, p), [1 3 2 4]);
-arr = squeeze(sum(reshape(abs(arr), m*m, p, p)));
-arr(eye(p)==1) = 0;
+function arr = sumBlock(Q, m, p)
+  arr = permute(reshape(Q, m, p, m, p), [1 3 2 4]);
+  arr = squeeze(sum(reshape(abs(arr), m*m, p, p))) / m;
+  %arr(eye(p)==1) = 0;
+end
+
+arr= sumBlock(Q, m, p);
 
 figure(5);
-MatShow(arr, 0.1);
+MatShow(arr, 2e-3);
 figure(6);
 adj = pm.net_adj*1;
-MatShow(adj'+adj, 0.1);
+MatShow(adj'+adj+eye(p), 0.1);
 
 figure(7);
-MatShow(arr, 0.001);
+MatShow(arr, 5e-5);
 figure(8);
 adj_e = pm.net_adj*1 + eye(p);
 MatShow(adj_e'*adj_e, 0.1);
 
-figure(14);
-MatShow(M, 0.001);
 figure(15);
+MatShow(M, 0.001);
+figure(16);
 MatShow(adj_e, 0.001);
+figure(17);
+arr2 = sumBlock(M, m, p);
+MatShow(arr2,0.02);
+maxerr((arr2>1e-10) - (adj_e))
+
+figure(21);
+semilogy(sort(sort(arr(:))), '-o')
+figure(22);
+semilogy(sort(sort(sumBlock(M'*iG*M, m, p)(:))), '-o')
+
+net_h1 = zeros(p); net_h1(10<arr) = 1;
+net_h2 = zeros(p); net_h2(0.1<arr & arr<10) = 1;
+net_h3 = zeros(p); net_h3(1e-3<arr & arr<0.1) = 1;
+net_h4 = zeros(p); net_h4(arr<1e-3) = 1;
+figure(31);  MatShow(net_h1);
+figure(32);  MatShow(net_h2);
+figure(33);  MatShow(net_h3);
+figure(34);  MatShow(net_h4);
+
+figure(41);  MatShow(eye(p));
+figure(42);  MatShow(adj'+adj);
+figure(43);  MatShow(1*((1*(adj'*adj>0) - 1*((eye(p) + adj' + adj)>0))>0));
+
 
 %%%%%%%%%%%%%%%
 % get pairwise GC coef
