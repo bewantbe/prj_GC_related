@@ -37,6 +37,7 @@ id_z = 1:p;
 id_z([id_x id_y]) = [];
 permvec = [id_x id_y id_z];
 id_rearrange = bsxfun(@plus, permvec', p*(0:m-1))(:);
+id_bt2tb = bsxfun(@plus, permvec', p*(0:m-1))'(:);
 id_p = 0 : p : p*m-1;
 id_p_3 = bsxfun(@plus, [3:p]', p*(0:m-1))(:).';
 
@@ -121,7 +122,15 @@ iG = inv(G);
 %di = Qyy - (M(:, id_p+2)'*inv(G)*M(:, id_p+2));  % def
 
 id_3p = [id_p+1 id_p+2 id_p_3];
-di = Qyy - (M(id_3p, id_p+2)'*iG(id_3p,id_3p)*M(id_3p, id_p+2));
+Qyy_mapp = M(id_3p, id_p+2)'*iG(id_3p,id_3p)*M(id_3p, id_p+2);
+di = Qyy - Qyy_mapp;
 
 figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
+
+gc_mapp = a12 / Qyy_mapp * a12' / D(id_x,id_x)
+maxerr(gc_mapp - gc_xy)
+
+%%%%%%%%%%%%%%%
+% get pairwise GC coef
+
 
