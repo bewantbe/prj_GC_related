@@ -2107,6 +2107,11 @@ For Matlab (2012b),
 \end_layout
 
 \begin_layout Standard
+For p=5000, L=5e5.
+ far502, getcovpd: 4605.276253 seconds, RGrangerTLevinson: 11918.119042 seconds.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false

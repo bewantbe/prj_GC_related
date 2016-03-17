@@ -7,7 +7,7 @@ fit_od = 40;
 use_od = 120;
 m = use_od;
 
-ed = 0;
+%ed = 0;
 tic;
 if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
@@ -19,7 +19,7 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   len = size(X,2);
 
   % whiten the covariance in frequency domain
-  covz = getcovzpd(X, fit_od);
+  covz = getcovzpd(X, fit_od);  clear X
   %[A2d, De] = ARregressionpd(covz, p);
 
   % purify coef
@@ -40,6 +40,7 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   %id_bt2tb = reshape(1:p*m, p, [])'(:);
   id_bt2tb = reshape(1:p*m, p, [])';
+  %id_bt2tb = id_bt2tb(:);
   % prepare toeplitz block matrix
   eR3 = bigR(id_bt2tb, id_bt2tb);
   Q = inv(eR3);
@@ -124,7 +125,7 @@ end
 %%%%%%%%%%%%%%%%
 % analyse GC: x <- y
 id_x = 2;
-id_y = 7;
+id_y = 8;
 
 id_bx = (1:m) + (id_x-1)*m;
 id_by = (1:m) + (id_y-1)*m;
@@ -140,7 +141,7 @@ err_coef = maxerr( a12 + A2d(id_x, id_y:p:end) )
 
 % GC verification
 gc_xy = expm1(GC(id_x, id_y))
-gc_xy_exact = a12 / Q(id_by, id_by) * a12' / De(1,1)
+gc_xy_exact = a12 / Q(id_by, id_by) * a12' / De(id_x,id_x)
 err_gc_exact = maxerr(gc_xy - gc_xy_exact)
 
 % GC approximation
