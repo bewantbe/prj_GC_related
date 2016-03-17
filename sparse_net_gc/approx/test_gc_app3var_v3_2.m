@@ -20,14 +20,15 @@ len = size(X,2);
 
     % whiten the covariance in frequency domain
     covz = getcovzpd(X, fit_od);
-    [A2d, De] = ARregressionpd(covz, p);
+    %[A2d, De] = ARregressionpd(covz, p);
 
     % purify coef
-    %[GC De A2d] = RGrangerTfast(covz, p);
-    %id_no_conn = GC < 2*fit_od/len;
-    %id_no_conn(eye(p)==1) = 0;
-    %id_a_zero = find(id_no_conn);
-    %A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
+    [GC De A2d] = RGrangerTfast(covz, p);
+    id_no_conn = GC < 2*fit_od/len;
+    id_no_conn(eye(p)==1) = 0;
+    id_a_zero = find(id_no_conn);
+    A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
+    De(eye(p)==0) = 0;
 
     S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
     %S = StdWhiteS(S);
@@ -42,12 +43,8 @@ toc;
 
 % analyse x <- y
 id_x = 1;
-id_y = 6;
+id_y = 2;
 
-%id_z = 1:p;
-%id_z([id_x id_y]) = [];
-%permvec = [id_x id_y id_z];
-%id_bt2tb = bsxfun(@plus, permvec', p*(0:m-1))'(:);
 id_bt2tb = reshape(1:p*m, p, [])'(:);
 
 gc_xy = expm1(GC(id_x, id_y))
@@ -55,10 +52,6 @@ gc_xy = expm1(GC(id_x, id_y))
 % prepare toeplitz block matrix
 erv3 = covz_orig(id_x, id_bt2tb+p);
 eR3 = bigR(id_bt2tb, id_bt2tb);
-
-%id_bx = (1:m);
-%id_by = (1:m)+m;
-%id_bz = m+m+1 : size(bigR, 1);
 
 id_bx = (1:m) + (id_x-1)*m;
 id_by = (1:m) + (id_y-1)*m;
@@ -76,14 +69,13 @@ figure(12); MatShow(inv(bigR));
 figure(13); MatShow(eR3);
 figure(14); MatShow(Q);
 
-%a12 = (erv3 * Q)(m+1:2*m);
 a12 = erv3 * Q(:, id_by);
 
 figure(1); plot(a12);
-maxerr( a12 + A2d(id_x, id_y:p:end) )
+err_coef = maxerr( a12 + A2d(id_x, id_y:p:end) )
 
 gc_xy_exact = a12 / Q(id_by, id_by) * a12' / De(1,1)
-maxerr(gc_xy - gc_xy_exact)
+err_gc_exact = maxerr(gc_xy - gc_xy_exact)
 
 % approximation
 
@@ -110,7 +102,7 @@ di = Q(id_by, id_by) - Qyy_mapp;
 figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
 
 gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x)
-maxerr(gc_mapp - gc_xy)
+err_gc_mapp = maxerr(gc_mapp - gc_xy)
 
 %%%%%%%%%%%%%%%
 % get pairwise GC coef
