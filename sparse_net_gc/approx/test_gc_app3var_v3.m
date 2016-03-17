@@ -36,7 +36,6 @@ id_y = 2;
 id_z = 1:p;
 id_z([id_x id_y]) = [];
 permvec = [id_x id_y id_z];
-id_rearrange = bsxfun(@plus, permvec', p*(0:m-1))(:);
 id_bt2tb = bsxfun(@plus, permvec', p*(0:m-1))'(:);
 id_p = 0 : p : p*m-1;
 id_p_3 = bsxfun(@plus, [3:p]', p*(0:m-1))(:).';
@@ -44,21 +43,8 @@ id_p_3 = bsxfun(@plus, [3:p]', p*(0:m-1))(:).';
 gc_xy = expm1(GC(id_x, id_y))
 
 % prepare toeplitz block matrix
-R11 = bigR(id_p+1, id_p+1);
-R12 = bigR(id_p+1, id_p+2);
-R13 = bigR(id_p+1, id_p_3);
-R22 = bigR(id_p+2, id_p+2);
-R23 = bigR(id_p+2, id_p_3);
-R33 = bigR(id_p_3, id_p_3);
-r1O1 = covz_orig(1, id_p+1+p);
-r1O2 = covz_orig(1, id_p+2+p);
-r1O3 = covz_orig(1, id_p_3+p);
-
-erv3 = [r1O1 r1O2 r1O3];
-eR3 = [
-    R11  R12  R13
-    R12' R22  R23
-    R13' R23' R33];
+erv3 = covz_orig(id_x, id_bt2tb+p);
+eR3 = bigR(id_bt2tb, id_bt2tb);
 
 id_vx = (1:m);
 id_vy = (1:m)+m;
