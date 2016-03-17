@@ -24,22 +24,40 @@ gen_data_n10_c1;
     covz = R2covz(R);
     covz_orig = covz;
 
+    [GC De A] = RGrangerTfast(R);
+    bigR = covz_orig(p+1:end, p+1:end);
 end
 toc;
-
-[GC De A] = RGrangerTfast(R);
 
 % analyse x <- y
 id_x = 1;
 id_y = 2;
 
-gc_xy = expm1(GC(id_x, id_y))
-
 id_z = 1:p;
 id_z([id_x id_y]) = [];
 permvec = [id_x id_y id_z];
+id_rearrange = bsxfun(@plus, permvec', p*(0:m-1))(:);
+id_p = 0 : p : p*m-1;
+id_p_3 = bsxfun(@plus, [3:p]', p*(0:m-1))(:).';
 
-test_gc_app3var_v2_preparevars;
+gc_xy = expm1(GC(id_x, id_y))
+
+% prepare toeplitz block matrix
+R11 = bigR(id_p+1, id_p+1);
+R12 = bigR(id_p+1, id_p+2);
+R13 = bigR(id_p+1, id_p_3);
+R22 = bigR(id_p+2, id_p+2);
+R23 = bigR(id_p+2, id_p_3);
+R33 = bigR(id_p_3, id_p_3);
+r1O1 = covz_orig(1, id_p+1+p);
+r1O2 = covz_orig(1, id_p+2+p);
+r1O3 = covz_orig(1, id_p_3+p);
+
+erv3 = [r1O1 r1O2 r1O3];
+eR3 = [
+    R11  R12  R13
+    R12' R22  R23
+    R13' R23' R33];
 
 id_vx = (1:m);
 id_vy = (1:m)+m;
@@ -59,8 +77,7 @@ maxerr( a12(1:fit_od) + A2d(id_x, id_y:p:end) )
 gc_xy_exact = a12 / Qyy * a12' / D(1,1)
 maxerr(gc_xy - gc_xy_exact)
 
-% 
-bigR = covz_orig(p+1:end, p+1:end);
+% approximation
 
 A3d = cat(3, eye(p), reshape(A,p,p,[]));
 A3d(:,:,end) = [];
@@ -78,39 +95,33 @@ end
 di = inv(bigR) - M'*inv(G)*M;
 figure(2); imagesc( di(1:end-fit_od*p, 1:end-fit_od*p) ); colorbar
 
-id_rearrange = bsxfun(@plus, permvec', p*(0:m-1))(:);
-id_p = 0 : p : p*m-1;
-id_p_3 = bsxfun(@plus, [3:p]', p*(0:m-1))(:).';
-
 M = M(id_rearrange, id_rearrange);
-Mxx = M(id_p+1, id_p+1);
-Mxy = M(id_p+1, id_p+2);
-Mxz = M(id_p+1, id_p_3);
-Myx = M(id_p+2, id_p+1);
-Myy = M(id_p+2, id_p+2);
-Myz = M(id_p+2, id_p_3);
-Mzx = M(id_p_3, id_p+1);
-Mzy = M(id_p_3, id_p+2);
-Mzz = M(id_p_3, id_p_3);
+%Mxx = M(id_p+1, id_p+1);
+%Mxy = M(id_p+1, id_p+2);
+%Mxz = M(id_p+1, id_p_3);
+%Myx = M(id_p+2, id_p+1);
+%Myy = M(id_p+2, id_p+2);
+%Myz = M(id_p+2, id_p_3);
+%Mzx = M(id_p_3, id_p+1);
+%Mzy = M(id_p_3, id_p+2);
+%Mzz = M(id_p_3, id_p_3);
 
 iG = inv(G);
-iGx = iG(id_p+1, id_p+1);
-iGy = iG(id_p+2, id_p+2);
-iGz = iG(id_p_3, id_p_3);
+%iGx = iG(id_p+1, id_p+1);
+%iGy = iG(id_p+2, id_p+2);
+%iGz = iG(id_p_3, id_p_3);
 
-Qyy_ = inv(bigR)(id_p+2, id_p+2);
+%Qyy_ = inv(bigR)(id_p+2, id_p+2);
 
-%di = Qyy_ - (Mxy'*iGx*Mxy + Myy'*iGy*Myy + Mzy'*iGz*Mzy);  % approximation
+%di = Qyy - (Mxy'*iGx*Mxy + Myy'*iGy*Myy + Mzy'*iGz*Mzy);  % approximation
 
-M_y = [Mxy; Myy; Mzy];
-di = Qyy_ - (M_y'*iG(id_3p,id_3p)*M_y);  % exact
-
-%di = Qyy_ - (M(:, id_p+2)'*inv(G)*M(:, id_p+2));
-%id_3p = [id_p+1 id_p+2 id_p_3];
-%di = Qyy_ - (M(id_3p, id_p+2)'*inv(G)(id_3p,id_3p)*M(id_3p, id_p+2));
 %M_y = [Mxy; Myy; Mzy];
-%di = Qyy_ - (M_y'*inv(G)*M_y);
+%di = Qyy - (M_y'*iG(id_3p,id_3p)*M_y);  % exact
+
+%di = Qyy - (M(:, id_p+2)'*inv(G)*M(:, id_p+2));  % def
+
+id_3p = [id_p+1 id_p+2 id_p_3];
+di = Qyy - (M(id_3p, id_p+2)'*iG(id_3p,id_3p)*M(id_3p, id_p+2));
 
 figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
-%figure(3); imagesc(Qyy); colorbar
 
