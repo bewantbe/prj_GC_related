@@ -7,14 +7,14 @@ fit_od = 40;
 use_od = 120;
 m = use_od;
 
-%ed = 0;
+ed = 0;
 tic;
 if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
 
-  gen_data_n10_c1;
+  %gen_data_n10_c1;
   %gen_data_n40_c1;  % 1 40
-  %gen_data_n100_c1;  % 32  32
+  gen_data_n100_c1;  % 32  32
 
   len = size(X,2);
 
@@ -24,44 +24,39 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   % purify coef
   [GC De A2d] = RGrangerTfast(covz, p);
-  id_no_conn = GC < 2*fit_od/len;
-  id_no_conn(eye(p)==1) = 0;
-  id_a_zero = find(id_no_conn);
-  A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
-  De(eye(p)==0) = 0;
+  %id_no_conn = GC < 2*fit_od/len;
+  %id_no_conn(eye(p)==1) = 0;
+  %id_a_zero = find(id_no_conn);
+  %A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
+  %De(eye(p)==0) = 0;
 
   S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
   %S = StdWhiteS(S);
-  R = S2cov(S, use_od);
+  R = S2cov(S, use_od);  clear S
   covz = R2covz(R);
 
   [GC De A2d] = RGrangerTfast(R);
   bigR = covz(p+1:end, p+1:end);
 
-  id_bt2tb = reshape(1:p*m, p, [])'(:);
+  %id_bt2tb = reshape(1:p*m, p, [])'(:);
+  id_bt2tb = reshape(1:p*m, p, [])';
   % prepare toeplitz block matrix
   eR3 = bigR(id_bt2tb, id_bt2tb);
   Q = inv(eR3);
 
-  function MatShow(A, err)
-    if ~exist('err','var')
-      err = 1e-3;
-    end
-    imagesc(A); colorbar; caxis([-1 1]*err*max(abs(A(:))));
-  end
-
   A3d = cat(3, eye(p), reshape(A2d,p,p,[]));
   A3d(:,:,end) = [];
+  invDe = inv(De);
   M = zeros(size(Q));
-  G = zeros(size(Q));
+  iG = zeros(size(Q));
   for k=0:m-1
     M(k*p+1:(k+1)*p, k*p+1:end) = reshape(A3d(:,:,1:end-k), p, []);
-    G(k*p+1:(k+1)*p, k*p+1:(k+1)*p) = De;
+    iG(k*p+1:(k+1)*p, k*p+1:(k+1)*p) = invDe;
   end
-  iG = inv(G);
+  %iG = inv(G);
 
-  di = inv(bigR) - M'*iG*M;
-  figure(4); imagesc( di(1:end-fit_od*p, 1:end-fit_od*p) ); colorbar
+  %di = inv(bigR) - M'*iG*M;
+  %figure(4); imagesc( di(1:end-fit_od*p, 1:end-fit_od*p) ); colorbar
 
   M  = M (id_bt2tb, id_bt2tb);
   iG = iG(id_bt2tb, id_bt2tb);
@@ -77,13 +72,6 @@ if 0
   figure(12); MatShow(inv(bigR));
   figure(13); MatShow(eR3);
   figure(14); MatShow(Q);
-
-  % sum blocks of m*m
-  function arr = sumBlock(Q, m, p)
-    arr = permute(reshape(Q, m, p, m, p), [1 3 2 4]);
-    arr = squeeze(sum(reshape(abs(arr), m*m, p, p))) / m;
-    %arr(eye(p)==1) = 0;
-  end
 
   arr= sumBlock(Q, m, p);
 
@@ -112,9 +100,10 @@ if 0
 
   % Different level of Q
   figure(21);
-  semilogy(sort(sort(arr(:))), '-o')
+  semilogy(sort(arr(:)), '-o')
   figure(22);
-  semilogy(sort(sort(sumBlock(M'*iG*M, m, p)(:))), '-o')
+  arr4 = sumBlock(M'*iG*M, m, p);
+  semilogy(sort(arr4(:)), '-o')
 
   % Adj for different level of Q
   net_h1 = zeros(p); net_h1(10<arr) = 1;
@@ -166,9 +155,9 @@ err_gc_mapp = maxerr(gc_mapp - gc_xy)
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % get pairwise GC
 
-R_xy = S2cov(S([id_x id_y],[id_x id_y],:), m);
-R_xy_ = R([id_x id_y], bsxfun(@plus, [id_x id_y]', 0:p:end-1));
-maxerr(R_xy - R_xy_)
+%R_xy_ = S2cov(S([id_x id_y],[id_x id_y],:), m);
+R_xy = R([id_x id_y], bsxfun(@plus, [id_x id_y]', 0:p:end-1));
+%maxerr(R_xy - R_xy_)
 [pairGC D_B B] = RGrangerTfast(R_xy);
 gc_pair = expm1(pairGC(1,2))
 
@@ -192,15 +181,16 @@ figure(52); plot(b12 - b12_mapp);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % gc app
 
-Qyz_mapp = M(:, id_by)'*iG*M(:, id_bz);
 % the answers
 P = inv(eR3([id_bx id_by], [id_bx id_by]));
 gc_pair_P = b12 / P(m+1:end, m+1:end) * b12' / D_B(1,1)
-gc_pair_Q = b12 / (Q(id_by,id_by) - Q(id_by,id_bz)/Q(id_bz,id_bz)*Q(id_bz,id_by)) * b12' / D_B(1,1)
+%gc_pair_Q = b12 / (Q(id_by,id_by) - Q(id_by,id_bz)/Q(id_bz,id_bz)*Q(id_bz,id_by)) * b12' / D_B(1,1)
 
 % the approximation
+Qyz_mapp = M(:, id_by)'*iG*M(:, id_bz);
 gc_pair_mapp = b12_mapp / (Qyy_mapp - Qyz_mapp/Qzz_mapp*Qzy_mapp) * b12_mapp' / D_B(1,1)
 gc_pair_mapp2 = b12_mapp / Qyy_mapp * b12_mapp' / D_B(1,1)
+err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp)
 
 %covz_xy = R2covz(R_xy);
 %id_xy_re = reshape(1:2*m, 2, [])'(:);
