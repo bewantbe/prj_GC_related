@@ -4,7 +4,7 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 120;
+use_od = 180;
 m = use_od;
 
 %ed = 0;
@@ -36,13 +36,13 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   covz = R2covz(R);
 
   [GC De A2d] = RGrangerTfast(R);
-  bigR = covz(p+1:end, p+1:end);
+  bigR = covz(p+1:end, p+1:end);  clear covz
 
   %id_bt2tb = reshape(1:p*m, p, [])'(:);
   id_bt2tb = reshape(1:p*m, p, [])';
   %id_bt2tb = id_bt2tb(:);
   % prepare toeplitz block matrix
-  eR3 = bigR(id_bt2tb, id_bt2tb);
+  eR3 = bigR(id_bt2tb, id_bt2tb);  clear bigR
   Q = inv(eR3);
 
   A3d = cat(3, eye(p), reshape(A2d,p,p,[]));
@@ -63,7 +63,7 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   iG = iG(id_bt2tb, id_bt2tb);
 
 end
-toc;
+toc; tic;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% is inverse of covariance sparse
@@ -125,7 +125,7 @@ end
 %%%%%%%%%%%%%%%%
 % analyse GC: x <- y
 id_x = 2;
-id_y = 8;
+id_y = 12;
 
 id_bx = (1:m) + (id_x-1)*m;
 id_by = (1:m) + (id_y-1)*m;
@@ -133,7 +133,7 @@ id_bz = 1:p*m;
 id_bz([id_bx id_by]) = [];
 
 % a12 coef verification
-erv3 = covz(id_x, id_bt2tb+p);
+erv3 = R(id_x, id_bt2tb+p);
 a12 = erv3 * Q(:, id_by);
 
 figure(1); plot(a12);
@@ -152,6 +152,8 @@ figure(3); imagesc(di(1:end-fit_od, 1:end-fit_od)); colorbar
 
 gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x)
 err_gc_mapp = maxerr(gc_mapp - gc_xy)
+
+toc; tic
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % get pairwise GC
@@ -198,3 +200,4 @@ err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp)
 %RR = covz_xy(id_xy_re, id_xy_re);
 %maxerr(RR - eR3([id_bx id_by], [id_bx id_by]))
 
+toc
