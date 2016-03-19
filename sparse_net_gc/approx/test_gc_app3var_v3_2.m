@@ -4,7 +4,7 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 180;
+use_od = 50;
 m = use_od;
 
 %ed = 0;
@@ -12,9 +12,9 @@ tic;
 if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
 
-  %gen_data_n10_c1;
+  gen_data_n10_c1;
   %gen_data_n40_c1;  % 1 40
-  gen_data_n100_c1;  % 32  32
+  %gen_data_n100_c1;  % 32  32
 
   len = size(X,2);
 
@@ -125,7 +125,7 @@ end
 %%%%%%%%%%%%%%%%
 % analyse GC: x <- y
 id_x = 2;
-id_y = 12;
+id_y = 7;
 
 id_bx = (1:m) + (id_x-1)*m;
 id_by = (1:m) + (id_y-1)*m;
@@ -200,4 +200,8 @@ err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp)
 %RR = covz_xy(id_xy_re, id_xy_re);
 %maxerr(RR - eR3([id_bx id_by], [id_bx id_by]))
 
+pm.net_adj(id_x, id_y)
+m
+
+clear Qzz_mapp
 toc
