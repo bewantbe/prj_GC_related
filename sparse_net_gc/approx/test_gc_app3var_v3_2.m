@@ -4,10 +4,10 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 50;
+use_od = 200;
 m = use_od;
 
-%ed = 0;
+ed = 0;
 tic;
 if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
@@ -18,22 +18,57 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   len = size(X,2);
 
+  X = SpikeTrainsFast(ras, p, len, pm.stv);
+
   % whiten the covariance in frequency domain
   covz = getcovzpd(X, fit_od);  clear X
   %[A2d, De] = ARregressionpd(covz, p);
 
   % purify coef
   [GC De A2d] = RGrangerTfast(covz, p);
-  %id_no_conn = GC < 2*fit_od/len;
-  %id_no_conn(eye(p)==1) = 0;
-  %id_a_zero = find(id_no_conn);
-  %A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
-  %De(eye(p)==0) = 0;
+  id_no_conn = GC < 2*fit_od/len;
+  id_no_conn(eye(p)==1) = 0;
+  id_a_zero = find(id_no_conn);
+  A2d(bsxfun(@plus, id_a_zero, 0:p*p:end-1)) = 0;
+  De(eye(p)==0) = 0;
 
-  S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
+  %S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
   %S = StdWhiteS(S);
-  R = S2cov(S, use_od);  clear S
-  covz = R2covz(R);
+  %R = S2cov(S, use_od);  clear S
+  %covz = R2covz(R);
+
+
+    HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
+    S_orig = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
+    %H_single_fact_S = zeros(size(S_orig));
+    %A_single_fact_S = zeros(size(S_orig));
+    Qw = zeros(size(S_orig));
+    for k = 1:size(S_orig,3)
+        Qw(:,:,k) = inv(S_orig(:,:,k));
+    end
+    H_single_fact_Q = zeros(size(S_orig));
+    A_single_fact_Q = zeros(size(S_orig));
+    for k= 1:p
+      %H_single_fact_S(k,k,:) = S2H1D(squeeze(S_orig(k,k,:)));
+      %A_single_fact_S(k,k,:) = 1 ./ H_single_fact_S(k,k,:);
+      H_single_fact_Q(k,k,:) = S2H1D(squeeze(Qw(k,k,:)));
+      A_single_fact_Q(k,k,:) = 1 ./ H_single_fact_Q(k,k,:);
+    end
+    A3d_w = fft( cat(3, eye(p), reshape(A2d, p,p,[])), size(S_orig,3), 3);
+    %A_w = mult3d(A3d_w, H_single_fact_S);  disp('whiten in S')
+    A_w = mult3d(A3d_w, A_single_fact_Q);  disp('whiten in Q');
+    A3d = ifft(A_w, size(S_orig,3), 3);
+    A2d = reshape(real(A3d(:,:,2:use_od+1)), p, []);  % overwrite A2d
+
+    %S = mult3d(A_single_fact_S, S_orig, HTR(A_single_fact_S));
+    S = mult3d(H_single_fact_Q, S_orig, HTR(H_single_fact_Q));
+    %S = S_orig;
+    for k=1:p
+      S(k,k,:) = real(S(k,k,:));
+    end
+    R = S2cov(S, use_od);
+    covz = R2covz(R);
+
 
   [GC De A2d] = RGrangerTfast(R);
   bigR = covz(p+1:end, p+1:end);  clear covz
@@ -42,16 +77,15 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   id_bt2tb = reshape(1:p*m, p, [])';
   %id_bt2tb = id_bt2tb(:);
   % prepare toeplitz block matrix
-  eR3 = bigR(id_bt2tb, id_bt2tb);  clear bigR
+  eR3 = bigR(id_bt2tb, id_bt2tb);
   Q = inv(eR3);
 
-  A3d = cat(3, eye(p), reshape(A2d,p,p,[]));
-  A3d(:,:,end) = [];
+  A2d_I = [eye(p) A2d(:, 1:end-p)];
   invDe = inv(De);
   M = zeros(size(Q));
-  iG = zeros(size(Q));
+  iG = sparse(p*m, p*m);
   for k=0:m-1
-    M(k*p+1:(k+1)*p, k*p+1:end) = reshape(A3d(:,:,1:end-k), p, []);
+    M(k*p+1:(k+1)*p, k*p+1:end) = A2d_I(:,1:end-k*p);
     iG(k*p+1:(k+1)*p, k*p+1:(k+1)*p) = invDe;
   end
   %iG = inv(G);
@@ -68,7 +102,7 @@ toc; tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% is inverse of covariance sparse
 
-if 0
+if 1
   figure(11); MatShow(bigR);
   figure(12); MatShow(inv(bigR));
   figure(13); MatShow(eR3);

@@ -4,7 +4,7 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 200;
+use_od = 100;
 m = use_od;
 
 ed = 0;
@@ -32,7 +32,8 @@ end
 id_x = 2;
 id_y = 7;
 
-fprintf('Extended fitting order = %d\n', m);
+fprintf('Number of variate: %d\n', p);
+fprintf('Extended fitting order: %d\n', m);
 fprintf('Edge net(%d, %d) = %d\n', id_x, id_y, pm.net_adj(id_x, id_y));
 
 % The answers
@@ -47,11 +48,13 @@ tic;
 [gc_mapp, b12_mapp, gc_pair_mapp] = GC_mapp(A2d, De, id_x, id_y);
 toc
 
+%figure(10); plot(1:m, b12, 1:m, b12_mapp);
+
 % errors
 err_gc_mapp = maxerr(gc_mapp - gc_xy);
-fprintf('Err GC mapp     : %.1e\n', err_gc_mapp);
+fprintf('  Err GC mapp     : %.1e\n', err_gc_mapp);
 err_b12_mapp = maxerr(b12 - b12_mapp);
-fprintf('Err B12 mapp    : %.1e\n', err_b12_mapp);
+fprintf('  Err B12 mapp    : %.1e\n', err_b12_mapp);
 err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp);
-fprintf('Err pair GC mapp: %.1e\n', err_gc_pair_mapp);
+fprintf('  Err pair GC mapp: %.1e\n', err_gc_pair_mapp);
 
