@@ -848,12 +848,12 @@ as
 \end_layout
 
 \begin_layout Section
-Relation to Linear Regression For Time Series
+Relation to Linear Regression and Granger Causality For Time Series
 \end_layout
 
 \begin_layout Standard
 Assume 
-\begin_inset Formula $\mathrm{E}(x_{t})=\mathrm{E}(y_{t})=\mathrm{E}(y_{t})=0$
+\begin_inset Formula $\mathrm{E}(x_{t})=\mathrm{E}(y_{t})=\mathrm{E}(y_{t})=O$
 \end_inset
 
 , as usual, let's do a 3-var AR of order 
@@ -908,10 +908,10 @@ where (here
 \end_inset
 
  can be expectation operator or 
-\begin_inset Formula $\frac{1}{L}\sum_{t=1}^{L}\cdot$
+\begin_inset Formula $\frac{1}{L}\sum_{t=1}^{L}$
 \end_inset
 
- )
+)
 \begin_inset Formula 
 \[
 \vec{a}^{(uv)}=\left(a_{j}^{(uv)}\right)_{j=1\ldots m}^{\textrm{row}},\ (u,v\in\{1,2,3\}),
@@ -939,14 +939,50 @@ R^{(uv)}=\left(\E(x_{t-j}^{(u)}x_{t-k}^{(v)T})\right)_{j,k=1\ldots m},\ (u,v\in\
 \end_layout
 
 \begin_layout Standard
-And get 
-\begin_inset Formula $\mathrm{var}(\epsilon_{t}^{(1)})$
+\begin_inset Formula $\left(a_{j}\right)_{j=1\ldots m}^{\textrm{row}}$
 \end_inset
 
- from
+ means tiling 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ in a row: 
+\begin_inset Formula $\left(a_{j}\right)_{j=1\ldots m}^{\textrm{row}}=\left[\begin{array}{ccc}
+a_{1} & \cdots & a_{m}\end{array}\right]$
+\end_inset
+
+, and 
+\begin_inset Formula $\left(a_{jk}\right)_{j,k=1\ldots m}$
+\end_inset
+
+ is a matrix which its 
+\begin_inset Formula $j$
+\end_inset
+
+ row 
+\begin_inset Formula $k$
+\end_inset
+
+ column is 
+\begin_inset Formula $a_{jk}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The residual variance of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: Eq 3-var"
+
+\end_inset
+
+ can be obtained by
 \begin_inset Formula 
 \[
-\mathrm{var}(x_{t})=\vec{a}^{(11)}\vec{r}^{(x|x)T}+\vec{a}^{(12)}\vec{r}^{(x|y)T}+\vec{a}^{(13)}\vec{r}^{(x|z)T}+\mathrm{var}(\epsilon_{t}^{(1)}).
+\mathrm{var}(x_{t})=\vec{a}^{(11)}\vec{r}^{(x|x)T}+\vec{a}^{(12)}\vec{r}^{(x|y)T}+\vec{a}^{(13)}\vec{r}^{(x|z)T}+\mathrm{var}(\epsilon_{t}^{(1)})
 \]
 
 \end_inset
@@ -973,7 +1009,15 @@ Similarly for least square
 \begin_inset Formula $\min\var\epsilon_{t}^{(1|3)}$
 \end_inset
 
- in
+ in (regression of 
+\begin_inset Formula $x$
+\end_inset
+
+ without 
+\begin_inset Formula $y$
+\end_inset
+
+)
 \begin_inset Formula 
 \begin{equation}
 x_{t}=\sum_{j=1}^{m}c_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1|3)},
@@ -998,7 +1042,7 @@ R^{(zx)} & R^{(zz)}
 \end_layout
 
 \begin_layout Standard
-Note Granger causality 
+Note conditional Granger causality 
 \begin_inset Formula $F_{y\rightarrow x|z}$
 \end_inset
 
@@ -1026,6 +1070,66 @@ reference "eq:diff-Sum-square-residual"
 \[
 F_{y\rightarrow x|z}=\ln\left(1+\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}\right)
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Conditional GC and pairwise GC
+\end_layout
+
+\begin_layout Standard
+d
+\end_layout
+
+\begin_layout Subsection
+Approximation of GC
+\end_layout
+
+\begin_layout Standard
+Due to Taylor expansion, we have approximation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ln(1+x)=\sum_{k=1}^{\infty}\frac{(-1)^{k-1}x{}^{k}}{k}\approx x,\quad\textrm{for }x\ll1.\label{eq:app log}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC3"
+
+\end_inset
+
+ get
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}\approx\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}.\label{eq:GC app a}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For whitened signal and a weak GC, we might even use to get a reasonable
+ approximation
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}\approx\frac{\var(\epsilon_{t}^{(2)})}{\var(\epsilon_{t}^{(1)})}\vec{a}^{(12)}\vec{a}^{(12)T}\label{eq:GC coef app}
+\end{equation}
 
 \end_inset
 

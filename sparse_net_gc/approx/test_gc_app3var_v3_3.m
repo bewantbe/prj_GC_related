@@ -52,7 +52,7 @@ toc
 
 % errors
 err_gc_mapp = maxerr(gc_mapp - gc_xy);
-fprintf('  Err GC mapp     : %.1e\n', err_gc_mapp);
+fprintf('  Err GC mapp     : %.1e (true = %.2e)\n', err_gc_mapp, );
 err_b12_mapp = maxerr(b12 - b12_mapp);
 fprintf('  Err B12 mapp    : %.1e\n', err_b12_mapp);
 err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp);
