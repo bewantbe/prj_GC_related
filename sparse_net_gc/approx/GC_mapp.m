@@ -44,6 +44,8 @@ function [gc_mapp, b12_mapp, gc_pair_mapp] = GC_mapp(A2d, De, id_x, id_y)
 
   % pairwise GC value y -> x
   Qyz_mapp = M(:, id_by)'*iG*M(:, id_bz);
-  epsilon_1 = De(id_x,id_x) + a13_div_Qzz * a13';
-  gc_pair_mapp = b12_mapp / (Qyy_mapp - Qyz_mapp/Qzz_mapp*Qzy_mapp) * b12_mapp' / epsilon_1;
+  D_B1_mapp = De(id_x,id_x) + a13_div_Qzz * a13';
+  gc_pair_mapp = b12_mapp / (Qyy_mapp - Qyz_mapp/Qzz_mapp*Qzy_mapp) * b12_mapp' / D_B1_mapp;
 
+  % an rude approximation
+  %gc_pair_mapp2 = b12_mapp / Qyy_mapp * b12_mapp' / D_B1_mapp
