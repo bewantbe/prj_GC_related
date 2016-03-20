@@ -4,7 +4,7 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 100;
+use_od = 200;
 m = use_od;
 
 ed = 0;
@@ -12,8 +12,8 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
 
   %gen_data_n10_c1;
-  gen_data_n40_c1;  % 1 40
-  %gen_data_n100_c1;  % 32  32
+  %gen_data_n40_c1;  % 1 40
+  gen_data_n100_c1;  % 32  32
 
   len = size(X,2);
 
@@ -52,9 +52,9 @@ toc
 
 % errors
 err_gc_mapp = maxerr(gc_mapp - gc_xy);
-fprintf('  Err GC mapp     : %.1e (true = %.2e)\n', err_gc_mapp, );
+fprintf('  Err GC mapp     : %.1e (true = %.2e)\n', err_gc_mapp, gc_xy);
 err_b12_mapp = maxerr(b12 - b12_mapp);
-fprintf('  Err B12 mapp    : %.1e\n', err_b12_mapp);
+fprintf('  Err B12 mapp    : %.1e (true = %.2e)\n', err_b12_mapp, max(abs(b12)));
 err_gc_pair_mapp = maxerr(gc_pair - gc_pair_mapp);
-fprintf('  Err pair GC mapp: %.1e\n', err_gc_pair_mapp);
+fprintf('  Err pair GC mapp: %.1e (true = %.2e)\n', err_gc_pair_mapp, gc_pair);
 
