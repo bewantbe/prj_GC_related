@@ -1,0 +1,97 @@
+% Test where is the error
+
+pow2ceil = @(x) 2^ceil(log2(x));
+maxerr = @(x) max(abs(x(:)));
+
+fit_od = 40;
+use_od = 200;
+m = use_od;
+
+%ed = 0;
+if ~exist('ed', 'var') || isempty(ed) || ~ed
+  ed = true;
+
+  %gen_data_n10_c1;
+  %gen_data_n40_c1;  % 1 40
+  gen_data_n100_c1;  % 32  32
+
+  len = size(X,2);
+
+  tic
+  covz = getcovzpd(X, fit_od);  clear X
+  toc
+  [A2d, De] = ARregressionpd(covz, p);  clear covz
+  S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
+%  S = StdWhiteS(S);
+  R = S2cov(S, use_od);
+  tic
+  [GC De A2d] = RGrangerTfast(R);
+  toc
+end
+
+% GC verification
+id_x = 2;
+id_y = 8;
+
+  % ====== triangle matrix way =======
+  [p, m] = size(A2d);
+  m = m/p;
+
+  % Construct M and inverse G matrix
+  A2d_I = [eye(p) A2d(:, 1:end-p)];
+  invDe = inv(De);
+  tic
+  M = zeros(p*m, p*m);
+  iG = sparse(p*m, p*m);
+  for k=0:m-1
+    M(k*p+1:(k+1)*p, k*p+1:end) = A2d_I(:,1:end-k*p);
+    iG(k*p+1:(k+1)*p, k*p+1:(k+1)*p) = invDe;
+  end
+
+  % Blocked toeplitz matrix to toeplitz-block blocked matrix
+  id_bt2tb = reshape(1:p*m, p, [])';
+  M  = M (id_bt2tb, id_bt2tb);
+  iG = iG(id_bt2tb, id_bt2tb);
+
+  % index for indexing variates x,y,z
+  id_bx = (1:m) + (id_x-1)*m;
+  id_by = (1:m) + (id_y-1)*m;
+  id_bz = 1:p*m;
+  id_bz([id_bx id_by]) = [];
+
+  a12 = -A2d(id_x, id_y:p:end);  % coef: id_y -> id_x
+
+  % Conditional GC y -> x
+  Qyy_mapp = M(:, id_by)'*iG*M(:, id_by);
+  gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x);
+
+  toc;
+
+  % ======= spectrum way =========
+  fftlen  = 1024;
+  HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
+
+  [p, m] = size(A2d);
+  m = round(m/p);
+  id_z = 1:p;
+  id_z([id_x id_y]) = [];
+
+  A_f = fft(reshape([eye(p), A2d], p, p, []), fftlen, 3);
+  Q_f = rdiv3d(HTR(A_f), De, A_f);
+
+  % conditional GC y -> x
+  a12_f = A_f(id_x, id_y, :);
+  gc_sapp_f = real(a12_f ./ Q_f(id_y,id_y,:) .* conj(a12_f) / De(id_x,id_x));
+  gc_sapp = mean(gc_sapp_f);
+
+  figure(2); plot(squeeze(gc_sapp_f));
+
+
+  % Show diff
+  sq = @squeeze;
+
+  figure(10);  plot(sq(S(8,8,:)));
+  figure(11);  plot(sq(S(2,2,:)));
+
+
+
