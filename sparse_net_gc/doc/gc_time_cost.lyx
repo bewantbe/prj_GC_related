@@ -2109,6 +2109,13 @@ For Matlab (2012b),
 \begin_layout Standard
 For p=5000, L=5e5.
  far502, getcovpd: 4605.276253 seconds, RGrangerTLevinson: 11918.119042 seconds.
+ (far502)
+\end_layout
+
+\begin_layout Standard
+For p=3500, L=5e5.
+ far502, getcovpd: 4009.421711 seconds, RGrangerTLevinson: 7115.759815 seconds.
+ (farzdz)
 \end_layout
 
 \begin_layout Standard
