@@ -582,15 +582,27 @@ Q_{j}=\F^{-1}\left[S^{-1}(w)\right](j)
 
 \end_inset
 
+where the 
+\begin_inset Formula $j$
+\end_inset
 
+ is time.
 \end_layout
 
 \begin_layout Standard
-The difference can be expressed as
+The difference of this 
+\begin_inset Formula $Q$
+\end_inset
+
+ approximation to 
+\begin_inset Formula $A^{H}\Gamma^{-1}A$
+\end_inset
+
+ is
 \begin_inset Formula 
-\[
-Q-V^{-1}=A_{\#}^{H}\Gamma^{-1}A_{\#}
-\]
+\begin{equation}
+Q-A^{H}\Gamma^{-1}A=A_{\#}^{H}\Gamma^{-1}A_{\#}\label{eq:Q_decomp}
+\end{equation}
 
 \end_inset
 
@@ -598,16 +610,36 @@ Q-V^{-1}=A_{\#}^{H}\Gamma^{-1}A_{\#}
 \begin_inset Formula 
 \[
 A_{\#}=\left[\begin{array}{cccc}
-A_{1} & 0 & \cdots & 0\\
-A_{2} & A_{2} & \ddots & \vdots\\
-\vdots & \ddots & \ddots & 0\\
-A_{m} & \cdots & A_{m} & A_{m}
-\end{array}\right]
+0 &  & \cdots & 0\\
+A_{m-1} & 0 &  & \vdots\\
+\vdots & \ddots & \ddots\\
+A_{1} & \cdots & A_{m-1} & 0
+\end{array}\right].
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Which can be seen as the triangular partition of circulant matrix.
+\end_layout
+
+\begin_layout Standard
+Note that for Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Q_decomp"
+
+\end_inset
+
+ to be correct, a much longer FFT length should be choosen (e.g.
+ fftlen 
+\begin_inset Formula $>2m$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Section

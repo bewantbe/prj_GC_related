@@ -181,11 +181,12 @@ Matrix Formulas That Is Useful In Least Square Analysis
 \end_layout
 
 \begin_layout Section
-Difference of Quadratic Forms, Inverse Matrices and Solution of Linear Systems
+Difference of Quadratic Forms - The Regression Improvement by Introducing
+ a Variate
 \end_layout
 
 \begin_layout Standard
-For invertable 
+For invertible 
 \begin_inset Formula $\left(n_{1}+n_{2}+n_{3}\right)\times\left(n_{1}+n_{2}+n_{3}\right)$
 \end_inset
 
@@ -242,15 +243,15 @@ For any
 \end_layout
 
 \begin_layout Standard
-define 
+define quadratic forms 
 \begin_inset Formula $\textrm{SS}_{R[x,z]}$
 \end_inset
 
-, 
+ and 
 \begin_inset Formula $\textrm{SS}_{R[x,y,z]}$
 \end_inset
 
-, 
+, solutions 
 \begin_inset Formula $\left[\begin{array}{ccc}
 \vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]$
 \end_inset
@@ -334,12 +335,12 @@ R^{(zx)} & R^{(zy)} & R^{(zz)}
 \end_layout
 
 \begin_layout Standard
-Then the difference of the quadratic form is
+Then the difference of the quadratic forms is
 \end_layout
 
 \begin_layout Standard
-(Assume the inverse matries in the expressions are all valid, pseudo-inverse
- might also work)
+(Assume the inverse matries in the expressions are all valid.
+ Pseudo-inverse might also work?)
 \end_layout
 
 \begin_layout Standard
@@ -386,77 +387,9 @@ The
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Define 
-\begin_inset Formula $P$
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\left[\begin{array}{cc}
-P^{(xx)} & P^{(xy)}\\
-P^{(yx)} & P^{(yy)}
-\end{array}\right]\triangleq\left[\begin{array}{cc}
-R^{(xx)} & R^{(xy)}\\
-R^{(yx)} & R^{(yy)}
-\end{array}\right]^{-1}=\left[\begin{array}{cc}
-Q^{(xx)} & Q^{(xy)}\\
-Q^{(yx)} & Q^{(yy)}
-\end{array}\right]-\left[\begin{array}{c}
-Q^{(xz)}\\
-Q^{(yz)}
-\end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
-Q^{(zx)} & Q^{(zy)}\end{array}\right]\label{eq:inv-2-from-3}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula 
-\[
-\left(Q^{(zz)}\right)^{-1}=R^{(zz)}-\left[\begin{array}{cc}
-R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
-R^{(xx)} & R^{(xy)}\\
-R^{(yx)} & R^{(yy)}
-\end{array}\right]^{-1}\left[\begin{array}{c}
-R^{(xz)}\\
-R^{(yz)}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
+\begin_layout Section
+Difference of Solutions - The Correction to Coefficients When Introducing
+ a Variate
 \end_layout
 
 \begin_layout Standard
@@ -501,7 +434,98 @@ a^{(12)}\left(I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(
 \end_layout
 
 \begin_layout Standard
-Note
+Define 
+\begin_inset Formula $P$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P=\left[\begin{array}{cc}
+P^{(xx)} & P^{(xy)}\\
+P^{(yx)} & P^{(yy)}
+\end{array}\right]\triangleq\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are relations between 
+\begin_inset Formula $P$
+\end_inset
+
+, 
+\begin_inset Formula $Q$
+\end_inset
+
+ and 
+\begin_inset Formula $R$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+P=\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]-\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(zx)} & Q^{(zy)}\end{array}\right]\label{eq:inv-2-from-3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\left(Q^{(zz)}\right)^{-1}=R^{(zz)}-\left[\begin{array}{cc}
+R^{(zx)} & R^{(zy)}\end{array}\right]\left[\begin{array}{cc}
+R^{(xx)} & R^{(xy)}\\
+R^{(yx)} & R^{(yy)}
+\end{array}\right]^{-1}\left[\begin{array}{c}
+R^{(xz)}\\
+R^{(yz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
 \begin_inset Formula 
 \begin{eqnarray*}
 \left(Q^{(zz)}\right)^{-1}Q^{(zy)} & = & -\left(R^{(zy)}-R^{(zx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)\left(R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}\right)^{-1}\\
@@ -526,7 +550,11 @@ I-\left(Q^{(yy)}\right)^{-1}Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}=\left(Q^{
 \end_layout
 
 \begin_layout Standard
-Also
+Sometimes 
+\begin_inset Formula $\vec{b}^{(11)}$
+\end_inset
+
+ is also wanted
 \begin_inset Formula 
 \[
 \vec{b}^{(11)}=\vec{a}^{(11)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zx)}
@@ -626,225 +654,6 @@ R^{(yx)} & R^{(yy)}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Q: partial coef and coef??--should correct.
-\end_layout
-
-\begin_layout Subsection
-Partial correlation coefficient
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
-R^{(xx)} & R^{(xy)} & O\\
-R^{(yx)} & R^{(yy)} & O\\
-O & O & R^{(zz)}
-\end{array}\right]=\left[\begin{array}{ccc}
-\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & 0\end{array}\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(Q^{(yy)}\right)^{-1}=R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-x'_{t}=x_{t}-\alpha Y
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-What if 
-\begin_inset Formula $z$
-\end_inset
-
- is totally whitened? i.e.
-\begin_inset Formula 
-\[
-R^{(zz)}=I
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-not verified
-\begin_inset Formula 
-\[
-c^{(33)}=a^{(33)}-\left[\begin{array}{cc}
-a^{(31)} & a^{(32)}\end{array}\right]\left[\begin{array}{cc}
-Q^{(xx)} & Q^{(xy)}\\
-Q^{(yx)} & Q^{(yy)}
-\end{array}\right]^{-1}\left[\begin{array}{c}
-Q^{(xz)}\\
-Q^{(yz)}
-\end{array}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Spectrum domain approximation
-\end_layout
-
-\begin_layout Standard
-From Eq.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:b-from-a"
-
-\end_inset
-
- get analog formula for frequency domain:
-\begin_inset Formula 
-\[
-B_{xy}\approx A_{xy}-\left[A_{xz}Q_{zz}^{-1}Q_{zy}\right]_{+}
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\left[\cdot\right]_{+}$
-\end_inset
-
- stand for extract the positive time part.
- That is
-\begin_inset Formula 
-\[
-\left[f(w)\right]_{+}=\F_{\mathrm{DFT}}\left[\F_{\mathrm{DFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-u(t)=\begin{cases}
-1 & t\geq0\\
-0 & t<0
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Under assumption (blocked diagonal matrix)
-\begin_inset Formula 
-\[
-\Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
-\Sigma_{xx} & \Sigma_{yy} & \Sigma_{zz}\end{array}\right]\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We have
-\begin_inset Formula 
-\[
-Q_{zz}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xz}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yz}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zz}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-Q_{zy}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xy}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Hence
-\begin_inset Formula 
-\[
-A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-Q_{zz}^{-1}=S_{zz}-S_{z,xy}S_{xy,xy}^{-1}S_{xy,z}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-----------------
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-O & A_{xy} & A_{xz}\\
-\\
-\\
-\end{array}\right]\left(\left[\begin{array}{ccc}
- & A_{xy}\\
- & O\\
- & A_{zy}
-\end{array}\right]+\left[\begin{array}{ccc}
-\\
-A_{yz} & O & A_{yz}\\
-\\
-\end{array}\right]^{*T}\right)=A(A+A^{*})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-as
 \end_layout
 
 \begin_layout Section
@@ -1042,7 +851,7 @@ R^{(zx)} & R^{(zz)}
 \end_layout
 
 \begin_layout Standard
-Note conditional Granger causality 
+Conditional Granger causality 
 \begin_inset Formula $F_{y\rightarrow x|z}$
 \end_inset
 
@@ -1067,9 +876,9 @@ reference "eq:diff-Sum-square-residual"
 
 , we get
 \begin_inset Formula 
-\[
-F_{y\rightarrow x|z}=\ln\left(1+\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}\right)
-\]
+\begin{equation}
+F_{y\rightarrow x|z}=\ln\left(1+\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}\right)\label{eq:GC-Qyy}
+\end{equation}
 
 \end_inset
 
@@ -1081,7 +890,98 @@ Conditional GC and pairwise GC
 \end_layout
 
 \begin_layout Standard
-d
+Due to expression Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-Qyy"
+
+\end_inset
+
+, the pairwise GC can be expressed as
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}=\ln\left(1+\frac{\vec{b}^{(12)}\left(P^{(yy)}\right)^{-1}\left(\vec{b}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1|2)})}\right)\label{eq:GC2}
+\end{equation}
+
+\end_inset
+
+where (recall Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a"
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:diff-Sum-square-residual"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:inv-2-from-3"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+b^{(12)}=a^{(12)}-a^{(13)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathrm{var}(\epsilon_{t}^{(1|2)})=\mathrm{var}(\epsilon_{t}^{(1)})+\vec{a}^{(13)}\left(Q^{(zz)}\right)^{-1}\left(\vec{a}^{(13)}\right)^{T},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P^{(yy)}=Q^{(yy)}-Q^{(yz)}\left(Q^{(zz)}\right)^{-1}Q^{(zy)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The related regression is
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}b_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}b_{j}^{(12)}y_{t-j}+\epsilon_{t}^{(1|2)} & \quad\mathrm{(a)}\\
+y_{t}=\sum_{j=1}^{m}b_{j}^{(21)}x_{t-j}+\sum_{j=1}^{m}b_{j}^{(22)}y_{t-j}+\epsilon_{t}^{(2|1)} & \quad\mathrm{(b)}
+\end{aligned}
+\right.\label{eq: Eq 2-var-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC2"
+
+\end_inset
+
+, one can know that the pairwise GC can be expressed by joint regression
+ coefficients and residuals, and 
+\begin_inset Formula $Q$
+\end_inset
+
+ matrix.
 \end_layout
 
 \begin_layout Subsection
@@ -1134,6 +1034,221 @@ F_{y\rightarrow x|z}\approx\frac{\var(\epsilon_{t}^{(2)})}{\var(\epsilon_{t}^{(1
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Partial correlation coefficient (seems useless)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+\vec{a}^{(11)} & \vec{a}^{(12)} & \vec{a}^{(13)}\end{array}\right]\left[\begin{array}{ccc}
+R^{(xx)} & R^{(xy)} & O\\
+R^{(yx)} & R^{(yy)} & O\\
+O & O & R^{(zz)}
+\end{array}\right]=\left[\begin{array}{ccc}
+\vec{r}^{(x|x)} & \vec{r}^{(x|y)} & 0\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(Q^{(yy)}\right)^{-1}=R^{(yy)}-R^{(yx)}\left(R^{(xx)}\right)^{-1}R^{(xy)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x'_{t}=x_{t}-\alpha Y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What if 
+\begin_inset Formula $z$
+\end_inset
+
+ is totally whitened? i.e.
+\begin_inset Formula 
+\[
+R^{(zz)}=I
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+not verified
+\begin_inset Formula 
+\[
+c^{(33)}=a^{(33)}-\left[\begin{array}{cc}
+a^{(31)} & a^{(32)}\end{array}\right]\left[\begin{array}{cc}
+Q^{(xx)} & Q^{(xy)}\\
+Q^{(yx)} & Q^{(yy)}
+\end{array}\right]^{-1}\left[\begin{array}{c}
+Q^{(xz)}\\
+Q^{(yz)}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Spectrum Domain Approximation
+\end_layout
+
+\begin_layout Standard
+From Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a"
+
+\end_inset
+
+ get analog formula for frequency domain:
+\begin_inset Formula 
+\[
+B_{xy}\approx A_{xy}-\left[A_{xz}Q_{zz}^{-1}Q_{zy}\right]_{+}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left[\cdot\right]_{+}$
+\end_inset
+
+ stand for extract the positive time part.
+ That is
+\begin_inset Formula 
+\[
+\left[f(w)\right]_{+}=\F_{\mathrm{DFT}}\left[\F_{\mathrm{DFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u(t)=\begin{cases}
+1 & t\geq0\\
+0 & t<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Under assumption (blocked diagonal matrix)
+\begin_inset Formula 
+\[
+\Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
+\Sigma_{xx} & \Sigma_{yy} & \Sigma_{zz}\end{array}\right]\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have
+\begin_inset Formula 
+\[
+Q_{zz}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xz}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yz}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zz}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q_{zy}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xy}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hence
+\begin_inset Formula 
+\[
+A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q_{zz}^{-1}=S_{zz}-S_{z,xy}S_{xy,xy}^{-1}S_{xy,z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+----------------
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+O & A_{xy} & A_{xz}\\
+\\
+\\
+\end{array}\right]\left(\left[\begin{array}{ccc}
+ & A_{xy}\\
+ & O\\
+ & A_{zy}
+\end{array}\right]+\left[\begin{array}{ccc}
+\\
+A_{yz} & O & A_{yz}\\
+\\
+\end{array}\right]^{*T}\right)=A(A+A^{*})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+as
 \end_layout
 
 \begin_layout Section
@@ -1402,7 +1517,7 @@ Inverse of
 \begin_inset Formula $\left(n_{1}+n_{2}+n_{3}\right)\times\left(n_{1}+n_{2}+n_{3}\right)$
 \end_inset
 
- maxtrix
+ matrix
 \end_layout
 
 \begin_layout Standard

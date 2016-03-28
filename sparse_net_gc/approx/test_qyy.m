@@ -26,8 +26,15 @@ figure(23);
 imagesc(Qyy_app_diff);
 colorbar(); caxis([-1 1]*1e-2);
 
-% cool!
+% cool! Impossible!
 figure(24);
 imagesc(Qyy_app_diff + Qyy_mapp - Qyy_sapp);
-colorbar(); caxis([-1 1]*1e-14);
+colorbar(); caxis([-1 1]*1e-13);
+maxerr(Qyy_app_diff + Qyy_mapp - Qyy_sapp)
+
+
+% cool!
+figure(25);
+imagesc(Qyy_app_diff - ((M(:, id_by)+M_c(:, id_by))'*iG*(M(:, id_by)+M_c(:, id_by))));
+colorbar(); caxis([-1 1]*1e-13);
 
