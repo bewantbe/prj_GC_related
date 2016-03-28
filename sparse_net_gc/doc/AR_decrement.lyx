@@ -93,6 +93,15 @@
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\cov}{\,\textrm{cov}\,}
+{\,\textrm{cov}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\F}{\mathscr{F}}
 \end_inset
 
@@ -1109,11 +1118,24 @@ Q^{(yz)}
 \end_layout
 
 \begin_layout Section
-Spectrum Domain Approximation
+Spectral Approximation
 \end_layout
 
 \begin_layout Standard
-From Eq.
+The 
+\begin_inset Formula $Q^{(uv)}$
+\end_inset
+
+ and 
+\begin_inset Formula $R^{(uv)}$
+\end_inset
+
+ can be approximated by circulant matrix.
+ Hence, related operations can be approxiamted by operations of spectrum.
+\end_layout
+
+\begin_layout Standard
+Eq.
  
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1121,10 +1143,10 @@ reference "eq:b-from-a"
 
 \end_inset
 
- get analog formula for frequency domain:
+ has approximation in frequency domain:
 \begin_inset Formula 
 \[
-B_{xy}\approx A_{xy}-\left[A_{xz}Q_{zz}^{-1}Q_{zy}\right]_{+}
+\hat{b}^{(12)}\approx\hat{a}^{(12)}-\left[\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\right]_{+}
 \]
 
 \end_inset
@@ -1137,7 +1159,7 @@ where
  That is
 \begin_inset Formula 
 \[
-\left[f(w)\right]_{+}=\F_{\mathrm{DFT}}\left[\F_{\mathrm{DFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
+\left[f(w)\right]_{+}=\F_{\mathrm{DTFT}}\left[\F_{\mathrm{DTFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
 \]
 
 \end_inset
@@ -1146,9 +1168,108 @@ where
 \begin_inset Formula 
 \[
 u(t)=\begin{cases}
-1 & t\geq0\\
-0 & t<0
+1 & t>0\\
+0 & t\leq0
 \end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here
+\begin_inset Formula 
+\[
+\hat{a}^{(12)}=\F_{DTFT}\left[\{a_{j}^{(12)}\}_{j=0..m}\right],
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{Q}_{zy}=\sum_{j,k=1}^{3}\left(\hat{a}^{(jz)}\right)^{H}\left(\Sigma^{-1}\right)^{(jk)}\hat{a}^{(ky)}
+\]
+
+\end_inset
+
+and so on.
+ Where 
+\begin_inset Formula $\left(\Sigma^{-1}\right)^{(jk)}$
+\end_inset
+
+ means the 
+\begin_inset Formula $j$
+\end_inset
+
+-th row 
+\begin_inset Formula $k$
+\end_inset
+
+-th column of 
+\begin_inset Formula $\Sigma^{-1}$
+\end_inset
+
+, 
+\begin_inset Formula $\Sigma=\var\left([\begin{array}{ccc}
+\epsilon_{t}^{(1)T} & \epsilon_{t}^{(2)T} & \epsilon_{t}^{(3)T}\end{array}]^{T}\right)$
+\end_inset
+
+.
+ Note the time lag for coefficients are start from 
+\begin_inset Formula $0$
+\end_inset
+
+, 
+\begin_inset Formula $a_{0}^{(uv)}=\delta_{uv}I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+More consisely
+\begin_inset Formula 
+\[
+\hat{Q}=\hat{a}^{H}\Sigma^{-1}\hat{a}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{Q}_{uv}$
+\end_inset
+
+ is the 
+\begin_inset Formula $u$
+\end_inset
+
+-th row 
+\begin_inset Formula $v$
+\end_inset
+
+-th column of 
+\begin_inset Formula $\hat{Q}$
+\end_inset
+
+, and similarly 
+\begin_inset Formula $\hat{a}^{(uv)}$
+\end_inset
+
+ to 
+\begin_inset Formula $\hat{a}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+GC is 
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}\approx\frac{1}{2\pi}\int_{[-\pi,\pi]}\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}\mathrm{\ d}w
 \]
 
 \end_inset
@@ -1173,7 +1294,7 @@ Under assumption (blocked diagonal matrix)
 We have
 \begin_inset Formula 
 \[
-Q_{zz}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xz}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yz}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zz}
+\hat{Q}_{zz}=\hat{a}_{xz}^{*T}\Sigma_{xx}^{-1}\hat{a}_{xz}+\hat{a}_{yz}^{*T}\Sigma_{yy}^{-1}\hat{a}_{yz}+\hat{a}_{zz}^{*T}\Sigma_{zz}^{-1}\hat{a}_{zz}
 \]
 
 \end_inset
@@ -1181,7 +1302,7 @@ Q_{zz}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xz}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yz}+A_{zz
 
 \begin_inset Formula 
 \[
-Q_{zy}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xy}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}
+\hat{Q}_{zy}=\hat{a}_{xz}^{*T}\Sigma_{xx}^{-1}\hat{a}_{xy}+\hat{a}_{yz}^{*T}\Sigma_{yy}^{-1}\hat{a}_{yy}+\hat{a}_{zz}^{*T}\Sigma_{zz}^{-1}\hat{a}_{zy}
 \]
 
 \end_inset
@@ -1193,7 +1314,7 @@ Q_{zy}=A_{xz}^{*T}\Sigma_{xx}^{-1}A_{xy}+A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz
 Hence
 \begin_inset Formula 
 \[
-A_{xz}/Q_{zz}*Q_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
+\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
 \]
 
 \end_inset
@@ -1248,11 +1369,178 @@ A_{yz} & O & A_{yz}\\
 \end_layout
 
 \begin_layout Standard
-as
+Assume no instantaneous correlation.
+ Approximation (normalize first: 
+\begin_inset Formula $\var\left(\epsilon_{t}^{(u)}\right)=1$
+\end_inset
+
+, 
+\begin_inset Formula $u=1,2,3$
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}+\hat{a}^{(32)H}\hat{a}^{(32)}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 2-var
+\begin_inset Formula 
+\[
+\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}}=\frac{1}{1+\frac{\hat{a}^{(22)H}\hat{a}^{(22)}}{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assume with instantaneous correlation
+\begin_inset Formula 
+\[
+\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}-(\hat{a}^{(22)H}\hat{a}^{(12)}-\hat{a}^{(12)H}\hat{a}^{(22)})\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+r=\hat{a}^{(12)}/\hat{a}^{(22)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{\frac{1}{rr^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r}+1}=\frac{1}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The answer is
+\begin_inset Formula 
+\[
+\exp(F)-1=\frac{1-\Upsilon^{2}}{\frac{1}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}=\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compare
+\begin_inset Formula 
+\[
+\frac{1}{1/x-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\frac{1}{rr^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r}}<>\frac{1-\Upsilon^{2}}{\frac{1}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{1/x-(1-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2})}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}}<>\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is good:
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{1/x-(\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2})}
+\]
+
+\end_inset
+
+ or
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{1/x-\frac{1}{1-\Upsilon^{2}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}}<>\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{\frac{1-\Upsilon^{2}}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+1-\Upsilon^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}}=\frac{(1-\Upsilon^{2})^{2}}{\frac{1-\Upsilon^{2}}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Section
-Approximation of Toeplitz Matrix Operations
+Approximation of Toeplitz Matrix Operations (not useful)
 \end_layout
 
 \begin_layout Standard
@@ -1615,6 +1903,43 @@ key "brockwell2013timeseries"
 \end_layout
 
 \begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+For 
+\begin_inset Formula $X(h)$
+\end_inset
+
+ widesense stationary, for its covariance 
+\begin_inset Formula $R(h)$
+\end_inset
+
+, there exist 
+\begin_inset Formula $F(w)$
+\end_inset
+
+ such that
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
 \begin_inset Formula 
 \[
 R(h)=\int_{-\pi}^{\pi}e^{ihw}\mathrm{d}F(w),\quad h=0,\pm1,\ldots
@@ -1642,6 +1967,7 @@ R(h)=\int_{-\pi}^{\pi}e^{ihw}\mathrm{d}F(w),\quad h=0,\pm1,\ldots
 \end_inset
 
 .
+ And satisfies
 \end_layout
 
 \begin_layout Itemize
@@ -1655,7 +1981,7 @@ R(h)=\int_{-\pi}^{\pi}e^{ihw}\mathrm{d}F(w),\quad h=0,\pm1,\ldots
 \begin_inset Formula $E\left(Z(\lambda)\right)=0$
 \end_inset
 
-, 
+, for 
 \begin_inset Formula $-\pi<\lambda<\pi$
 \end_inset
 
@@ -1666,7 +1992,7 @@ R(h)=\int_{-\pi}^{\pi}e^{ihw}\mathrm{d}F(w),\quad h=0,\pm1,\ldots
 \begin_inset Formula $E\left(Z(\lambda_{4})-Z(\lambda_{3})\right)\left(Z(\lambda_{2})-Z(\lambda_{1})\right)^{*}=0$
 \end_inset
 
- 
+, for 
 \begin_inset Formula $(\lambda_{1},\lambda_{2}]\cap(\lambda_{3},\lambda_{4}]=\phi$
 \end_inset
 

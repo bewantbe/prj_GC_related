@@ -13,14 +13,21 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   %gen_data_n10_c1;
   %gen_data_n40_c1;  % 1 40
-  gen_data_n100_c1;  % 32  32
+%  gen_data_n100_c1;  % 32  32
 
-  len = size(X,2);
+%  len = size(X,2);
 
   tic
-  covz = getcovzpd(X, fit_od);  clear X
+%  covz = getcovzpd(X, fit_od);  clear X
   toc
-  [A2d, De] = ARregressionpd(covz, p);  clear covz
+%  [A2d, De] = ARregressionpd(covz, p);  clear covz
+  
+  fa = sqrt(1/0.7);
+	De = [1.0, 0.4*fa; 0.4*fa, 1.0];
+	A2d = [-0.8,-0.16*fa, 0.5, 0.2*fa;
+		     0.0/fa, -0.9, 0.0/fa, 0.5];
+	p = size(A,1);
+
   S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
 %  S = StdWhiteS(S);
   R = S2cov(S, use_od);
@@ -30,8 +37,10 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 end
 
 % GC verification
-id_x = 2;
-id_y = 8;
+%id_x = 2;
+%id_y = 8;
+id_x = 1;
+id_y = 2;
 
   % ====== triangle matrix way =======
   [p, m] = size(A2d);
@@ -90,8 +99,8 @@ id_y = 8;
   % Show diff
   sq = @squeeze;
 
-  figure(10);  plot(sq(S(8,8,:)));
-  figure(11);  plot(sq(S(2,2,:)));
+  figure(10);  plot(sq(S(id_y,id_y,:)));
+  figure(11);  plot(sq(S(id_x,id_x,:)));
 
 
 
