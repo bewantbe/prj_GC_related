@@ -13,7 +13,7 @@ else
         fontsize = 22;
         linewidth = 3;
     else
-        fontsize = 16;
+        fontsize = 20;
         linewidth = 1;
     end
     pic_prefix = 'pic_tmp/';

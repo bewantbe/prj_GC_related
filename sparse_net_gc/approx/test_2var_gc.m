@@ -1,4 +1,5 @@
 % two var test
+pic_common_include;
 
 %De = [1.0, 0.4; 0.4, 0.7];
 %A = [-0.9 ,  0.0, 0.5, 0.0;
@@ -52,13 +53,22 @@ gc_f_core_app = 1 ./ (abs(1 ./ r - Up2).^2 + 1 - Up2*Up2);
 gc_f_core_h = real(squeeze(S(1,1,:)) ./ (abs(d ./ (a.*d-b.*c)).^2)) - 1;
 
 % search approximation
-fq = 0:length(gc_f_core)-1;
+fq = (0:fftlen-1)/fftlen;
+
 figure(1); plot(fq, gc_f_core, fq, gc_f_core_app);
+xlabel('frequency');  ylabel('exp(GC(w))-1');  legend('f^{(linear)}_{y\rightarrowx|z}', 'f^{(app freq)}_{y\rightarrowx|z}');
+pic_output_color('GC_f_core_2var_app');
+
+figure(6); plot(gc_f_core, gc_f_core_app, [0 max(gc_f_core)], [0 max(gc_f_core)], '--');
+xlabel('f^{(linear)}_{y\rightarrowx|z}');  ylabel('f^{(app freq)}_{y\rightarrowx|z}');
+pic_output_color('GC_f_core_2var_cmp');
+
 figure(2); plot(fq, gc_f_core, fq, 1 ./ (1 ./ gc_f_core_app - 1));
 figure(3); plot(fq, gc_f_core, fq, (1-Up*Up) ./ (1 ./ gc_f_core_app - (1-Up2*Up2)));
 figure(4); plot(fq, gc_f_core, fq, (1-Up*Up) ./ (1 ./ gc_f_core_app - (1/(1-Up^2)^2-Up2*Up2)));
 figure(5); plot(fq, gc_f_core, fq, (1-Up*Up) ./ (1 ./ gc_f_core_app - (1/(1-Up*Up))));
-figure(6); plot(gc_f_core, gc_f_core_app);
+xlabel('frequency');  ylabel('exp(GC(w))-1');  legend('f^{(linear)}_{y\rightarrowx|z}', 'g_\Upsilon (f^{(app freq)}_{y\rightarrowx|z})');
+pic_output_color('GC_f_core_2var_app_modify');
 
 % non-instantanious resistant
 figure(10); plot(fq, gc_f_core, fq, gc_f_core_h);

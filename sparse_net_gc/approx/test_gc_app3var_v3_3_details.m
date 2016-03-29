@@ -37,8 +37,10 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 end
 
 % GC verification
+id_y = 0;
+while (id_y < 20)
 id_x = 2;
-id_y = 18;
+id_y = id_y + 1;
 %id_x = 1;
 %id_y = 2;
 
@@ -121,6 +123,6 @@ fprintf('GC : %.2e\n', GC(id_x, id_y));
 
   fq = 0:fftlen-1;
   figure(2); plot(fq, wGc, fq, gc_sapp_f); legend('fgc', 'sapp');
-  figure(3); plot(wGc, gc_sapp_f, [0 max(wGc)], [0 max(wGc)]);
+  figure(3); plot(wGc, gc_sapp_f, [0 max(wGc)], [0 max(wGc)]); hold on;
 %  figure(4); plot(wGc, 1 ./(1 ./gc_sapp_f-1), [0 max(wGc)], [0 max(wGc)]);
-
+end

@@ -24,6 +24,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement H
 \paperfontsize 11
 \spacing single
 \use_hyperref false
@@ -993,12 +994,22 @@ reference "eq:GC2"
  matrix.
 \end_layout
 
+\begin_layout Standard
+Later we will know, the 
+\begin_inset Formula $Q$
+\end_inset
+
+ matrix can be approximated by joint regression coefficients and residuals
+ easily and accurately.
+\end_layout
+
 \begin_layout Subsection
-Application in Frequency Domain Conditional GC
+Application: Get Regression that is Used in Frequency Domain Conditional
+ GC
 \end_layout
 
 \begin_layout Standard
-The equation is
+The extra regression is
 \begin_inset Formula 
 \begin{equation}
 \left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}c_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1|3)} & \quad\mathrm{(a)}\\
@@ -1068,7 +1079,19 @@ reference "eq:diff-Sum-square-residual"
 
 \end_inset
 
+(not verified).
+\end_layout
 
+\begin_layout Standard
+The frequency domain conditional GC then use 
+\begin_inset Formula $\epsilon_{t}^{(1|3)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon_{t}^{(3|1)}$
+\end_inset
+
+ for further processing..
 \end_layout
 
 \begin_layout Subsection
@@ -1326,7 +1349,7 @@ We use
 \end_inset
 
 , and similarly 
-\begin_inset Formula $\hat{a}^{(uv)}$
+\begin_inset Formula $-\hat{a}^{(uv)}$
 \end_inset
 
  to 
@@ -1334,7 +1357,7 @@ We use
 \end_inset
 
 , 
-\begin_inset Formula $a_{j}^{(uv)}$
+\begin_inset Formula $-a_{j}^{(uv)}$
 \end_inset
 
  to 
@@ -1364,7 +1387,7 @@ reference "eq:AR xz"
 
 \end_inset
 
-).
+) (also note the negative sign).
  Also note the time lag for coefficients are starting from 
 \begin_inset Formula $0$
 \end_inset
@@ -1504,7 +1527,11 @@ f_{y\rightarrow x|z}\approx f_{y\rightarrow x|z}^{(\textrm{linear})}\approx f_{y
 
 \end_inset
 
+where 
+\begin_inset Formula $f_{y\rightarrow x|z}^{(\textrm{linear})}=\exp(f_{y\rightarrow x|z})-1$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Standard
@@ -1536,6 +1563,17 @@ key "geweke1984measures"
 \end_inset
 
  is non-diagonal.
+\end_layout
+
+\begin_layout Standard
+See sec 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:cmp-to-exact-GC-f"
+
+\end_inset
+
+ for numerical example.
 \end_layout
 
 \begin_layout Subsection
@@ -1691,6 +1729,13 @@ Note, for system involves hundreds of neurons,
 
 \begin_layout Subsubsection
 Comparison to exact frequency domain GC
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:cmp-to-exact-GC-f"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1821,9 +1866,9 @@ f_{y\rightarrow x|z}^{(\textrm{app freq})} & = & \hat{a}^{(12)}\left(\hat{a}^{(1
 \begin_layout Standard
 If apply the function
 \begin_inset Formula 
-\[
-g_{\Upsilon}(f)=\frac{1-\Upsilon^{2}}{1/f-\frac{1}{1-\Upsilon^{2}}}
-\]
+\begin{equation}
+g_{\Upsilon}(f)=\frac{1-\Upsilon^{2}}{1/f-\frac{1}{1-\Upsilon^{2}}}\label{eq:GC-g-correction}
+\end{equation}
 
 \end_inset
 
@@ -1836,10 +1881,181 @@ The approximation can be more accurate:
 \end_inset
 
 .
+ See Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GC-2var-Upsilon-ex1"
+
+\end_inset
+
+, for an example model
+\begin_inset Formula 
+\begin{equation}
+a=\left[\begin{array}{cccc}
+-0.8 & -0.16k_{a} & 0.5 & 0.2k_{a}\\
+0 & -0.9 & 0 & 0.5
+\end{array}\right],\quad\Sigma=\left[\begin{array}{cc}
+1 & 0.2k_{a}\\
+0.2k_{a} & 1
+\end{array}\right],\quad k_{a}=\sqrt{1/0.7}\label{eq:2var-model-1}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-<TODO: pic to show that>
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename AR_decrement_pic/GC_f_core_2var_app.eps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename AR_decrement_pic/GC_f_core_2var_cmp.eps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename AR_decrement_pic/GC_f_core_2var_app_modify.eps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Two variable frequency domain GC example Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2var-model-1"
+
+\end_inset
+
+.
+ Decrease 
+\begin_inset Formula $\Upsilon$
+\end_inset
+
+ will lead to better approximation.
+ (a) Comparison of exact result and approximation.
+ (b) The relation (curve) between true result and approximation, 
+\begin_inset Formula $w$
+\end_inset
+
+ is the varying parameter.
+ A thin curve here means that the difference can be compromised by a static
+ transform.
+ (c) The approximation after apply correction Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-g-correction"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GC-2var-Upsilon-ex1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
