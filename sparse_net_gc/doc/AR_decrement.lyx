@@ -580,7 +580,7 @@ In matrix form
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 \left[\begin{array}{cc}
 \vec{b}^{(11)} & \vec{b}^{(12)}\\
 \vec{b}^{(21)} & \vec{b}^{(22)}
@@ -591,8 +591,8 @@ In matrix form
 a^{(13)}\\
 a^{(23)}
 \end{array}\right]\left(Q^{(zz)}\right)^{-1}\left[\begin{array}{cc}
-Q^{(zx)} & Q^{(zy)}\end{array}\right]
-\]
+Q^{(zx)} & Q^{(zy)}\end{array}\right]\label{eq:b-from-a-all}
+\end{equation}
 
 \end_inset
 
@@ -991,6 +991,84 @@ reference "eq:GC2"
 \end_inset
 
  matrix.
+\end_layout
+
+\begin_layout Subsection
+Application in Frequency Domain Conditional GC
+\end_layout
+
+\begin_layout Standard
+The equation is
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}c_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1|3)} & \quad\mathrm{(a)}\\
+z_{t}=\sum_{j=1}^{m}c_{j}^{(31)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(33)}z_{t-j}+\epsilon_{t}^{(3|1)} & \quad\mathrm{(b)}
+\end{aligned}
+\right.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly to Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a-all"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\vec{c}^{(11)} & \vec{c}^{(13)}\\
+\vec{c}^{(31)} & \vec{c}^{(33)}
+\end{array}\right]=\left[\begin{array}{cc}
+\vec{a}^{(11)} & \vec{a}^{(13)}\\
+\vec{a}^{(31)} & \vec{a}^{(33)}
+\end{array}\right]-\left[\begin{array}{c}
+a^{(12)}\\
+a^{(32)}
+\end{array}\right]\left(Q^{(yy)}\right)^{-1}\left[\begin{array}{cc}
+Q^{(yx)} & Q^{(yz)}\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And with help of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:diff-Sum-square-residual"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{var}(\epsilon_{t}^{(1,3)})-\mathrm{var}(\epsilon_{t}^{(1,3|2)})=\left[\begin{array}{c}
+\vec{a}^{(12)}\\
+\vec{a}^{(32)}
+\end{array}\right]\left(Q^{(yy)}\right)^{-1}\left[\begin{array}{c}
+\vec{a}^{(12)}\\
+\vec{a}^{(32)}
+\end{array}\right]^{T}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

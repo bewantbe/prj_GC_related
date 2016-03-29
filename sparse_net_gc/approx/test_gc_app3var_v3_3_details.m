@@ -13,20 +13,20 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   %gen_data_n10_c1;
   %gen_data_n40_c1;  % 1 40
-%  gen_data_n100_c1;  % 32  32
+  gen_data_n100_c1;  % 32  32
 
-%  len = size(X,2);
+  len = size(X,2);
 
   tic
-%  covz = getcovzpd(X, fit_od);  clear X
+  covz = getcovzpd(X, fit_od);  clear X
   toc
-%  [A2d, De] = ARregressionpd(covz, p);  clear covz
+  [A2d, De] = ARregressionpd(covz, p);  clear covz
   
-  fa = sqrt(1/0.7);
-	De = [1.0, 0.4*fa; 0.4*fa, 1.0];
-	A2d = [-0.8,-0.16*fa, 0.5, 0.2*fa;
-		     0.0/fa, -0.9, 0.0/fa, 0.5];
-	p = size(A,1);
+%  fa = sqrt(1/0.7);
+%	De = [1.0, 0.4*fa; 0.4*fa, 1.0];
+%	A2d = [-0.8,-0.16*fa, 0.5, 0.2*fa;
+%		     0.0/fa, -0.9, 0.0/fa, 0.5];
+%	p = size(A,1);
 
   S = A2S(A2d, De, max(pow2ceil(8*use_od), 1024));
 %  S = StdWhiteS(S);
@@ -37,11 +37,17 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 end
 
 % GC verification
-%id_x = 2;
-%id_y = 8;
-id_x = 1;
-id_y = 2;
+id_x = 2;
+id_y = 18;
+%id_x = 1;
+%id_y = 2;
 
+fprintf('Number of variates: %d\n', p);
+fprintf('Extended fitting order: %d\n', m);
+fprintf('Net edge(%d, %d) = %d\n', id_x, id_y, pm.net_adj(id_x, id_y));
+fprintf('GC : %.2e\n', GC(id_x, id_y));
+
+%{
   % ====== triangle matrix way =======
   [p, m] = size(A2d);
   m = m/p;
@@ -75,7 +81,7 @@ id_y = 2;
   gc_mapp = a12 / Qyy_mapp * a12' / De(id_x,id_x);
 
   toc;
-
+%}
   % ======= spectrum way =========
   fftlen  = 1024;
   HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
@@ -85,12 +91,14 @@ id_y = 2;
   id_z = 1:p;
   id_z([id_x id_y]) = [];
 
+  tic
   A_f = fft(reshape([eye(p), A2d], p, p, []), fftlen, 3);
   Q_f = rdiv3d(HTR(A_f), De, A_f);
+  toc
 
   % conditional GC y -> x
   a12_f = A_f(id_x, id_y, :);
-  gc_sapp_f = real(a12_f ./ Q_f(id_y,id_y,:) .* conj(a12_f) / De(id_x,id_x));
+  gc_sapp_f = squeeze(real(a12_f ./ Q_f(id_y,id_y,:) .* conj(a12_f) / De(id_x,id_x)));
   gc_sapp = mean(gc_sapp_f);
 
   figure(2); plot(squeeze(gc_sapp_f));
@@ -102,5 +110,17 @@ id_y = 2;
   figure(10);  plot(sq(S(id_y,id_y,:)));
   figure(11);  plot(sq(S(id_x,id_x,:)));
 
+  % frequency GC
+  tic
+  [D, De0_star] = ARregression(R((1:p)~=id_y, mod(1:end, p)~=mod(id_y,p)));
+%  [B, De0     ] = ARregression(R);
+  B = A2d;  De0 = De;
+  toc; tic
+  wGc = singleGrangerFA(D, De0_star, B, De0, id_y, id_x, fftlen);
+  toc
 
+  fq = 0:fftlen-1;
+  figure(2); plot(fq, wGc, fq, gc_sapp_f); legend('fgc', 'sapp');
+  figure(3); plot(wGc, gc_sapp_f, [0 max(wGc)], [0 max(wGc)]);
+%  figure(4); plot(wGc, 1 ./(1 ./gc_sapp_f-1), [0 max(wGc)], [0 max(wGc)]);
 

@@ -1,6 +1,6 @@
 % Give approximation of (conditional and pairwise) GC using coef
 
-function [gc_sapp, b12_sapp, gc_pair_sapp] = GC_sapp(A2d, De, id_x, id_y, fftlen)
+function [gc_sapp, b12_sapp, gc_pair_sapp, gc_sapp_f] = GC_sapp(A2d, De, id_x, id_y, fftlen)
   HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 
   [p, m] = size(A2d);
@@ -13,8 +13,8 @@ function [gc_sapp, b12_sapp, gc_pair_sapp] = GC_sapp(A2d, De, id_x, id_y, fftlen
 
   % conditional GC y -> x
   a12_f = A_f(id_x, id_y, :);
-  gc_sapp = a12_f ./ Q_f(id_y,id_y,:) .* conj(a12_f) / De(id_x,id_x);
-  gc_sapp = mean(real(gc_sapp));
+  gc_sapp_f = real(a12_f ./ Q_f(id_y,id_y,:) .* conj(a12_f) / De(id_x,id_x));
+  gc_sapp = mean(gc_sapp_f);
   plot(squeeze(real(gc_sapp)));
 
   % coef b12
