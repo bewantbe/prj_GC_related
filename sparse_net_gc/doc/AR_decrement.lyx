@@ -969,7 +969,7 @@ The related regression is
 \left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}b_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}b_{j}^{(12)}y_{t-j}+\epsilon_{t}^{(1|2)} & \quad\mathrm{(a)}\\
 y_{t}=\sum_{j=1}^{m}b_{j}^{(21)}x_{t-j}+\sum_{j=1}^{m}b_{j}^{(22)}y_{t-j}+\epsilon_{t}^{(2|1)} & \quad\mathrm{(b)}
 \end{aligned}
-\right.\label{eq: Eq 2-var-1}
+\right.\label{eq: AR xy}
 \end{equation}
 
 \end_inset
@@ -1004,7 +1004,7 @@ The equation is
 \left\{ \begin{aligned}x_{t}=\sum_{j=1}^{m}c_{j}^{(11)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(13)}z_{t-j}+\epsilon_{t}^{(1|3)} & \quad\mathrm{(a)}\\
 z_{t}=\sum_{j=1}^{m}c_{j}^{(31)}x_{t-j}+\sum_{j=1}^{m}c_{j}^{(33)}z_{t-j}+\epsilon_{t}^{(3|1)} & \quad\mathrm{(b)}
 \end{aligned}
-\right.
+\right.\label{eq:AR xz}
 \end{equation}
 
 \end_inset
@@ -1111,8 +1111,27 @@ F_{y\rightarrow x|z}\approx\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\
 \end_layout
 
 \begin_layout Standard
-For whitened signal and a weak GC, we might even use to get a reasonable
- approximation
+Or, one might choose a different definition of 
+\begin_inset Quotes eld
+\end_inset
+
+GC
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+F_{y\rightarrow x|z}^{(\textrm{linear})}=\exp(F_{y\rightarrow x|z})-1=\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For whitened signal and a weak GC, we might even get a reasonable approximation
 \begin_inset Formula 
 \begin{equation}
 F_{y\rightarrow x|z}\approx\frac{\var(\epsilon_{t}^{(2)})}{\var(\epsilon_{t}^{(1)})}\vec{a}^{(12)}\vec{a}^{(12)T}\label{eq:GC coef app}
@@ -1209,106 +1228,71 @@ The
 \end_inset
 
  can be approximated by circulant matrix.
- Hence, related operations can be approxiamted by operations of spectrum.
+ Hence, their related operations can be approxiamted by operations of spectrum.
+\end_layout
+
+\begin_layout Subsection
+Definitions
 \end_layout
 
 \begin_layout Standard
-Eq.
+The Fourier transform used here is (Discrete-time Fourier transform)
+\begin_inset Formula 
+\begin{equation}
+\F_{\mathrm{DTFT}}\left[\left\{ x_{j}\right\} _{j\in\mathbb{Z}}\right]=\sum_{j=-\infty}^{\infty}x_{j}e^{-\mathrm{i}jw},\label{eq:Fourier}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\F_{\mathrm{DTFT}}^{-1}\left[f(w)\right]=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(w)e^{\mathrm{i}jw}\mathrm{d}w.\label{eq:inv Fourier}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note in Eq.
  
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:b-from-a"
+reference "eq:Fourier"
 
 \end_inset
 
- has approximation in frequency domain:
-\begin_inset Formula 
-\[
-\hat{b}^{(12)}\approx\hat{a}^{(12)}-\left[\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\right]_{+}
-\]
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:inv Fourier"
 
 \end_inset
 
-where 
-\begin_inset Formula $\left[\cdot\right]_{+}$
+ both 
+\begin_inset Formula $x_{j}$
 \end_inset
 
- stand for extract the positive time part.
- That is
-\begin_inset Formula 
-\[
-\left[f(w)\right]_{+}=\F_{\mathrm{DTFT}}\left[\F_{\mathrm{DTFT}}^{-1}\left[f(w),t\right](t)\cdot u(t),w\right]
-\]
-
+ and 
+\begin_inset Formula $f(w)$
 \end_inset
 
-
-\begin_inset Formula 
-\[
-u(t)=\begin{cases}
-1 & t>0\\
-0 & t\leq0
-\end{cases}
-\]
-
-\end_inset
-
-
+ can be matrix.
+ And the convolution theorem still works.
 \end_layout
 
 \begin_layout Standard
-Here
+The frequency domain quantities we will use include
 \begin_inset Formula 
 \[
-\hat{a}^{(12)}=\F_{DTFT}\left[\{a_{j}^{(12)}\}_{j=0..m}\right],
+\hat{a}=\F_{DTFT}\left[\{a_{j}\}_{j=0..m}\right],\quad\hat{b}=\F_{DTFT}\left[\{b_{j}\}_{j=0..m}\right],\quad\hat{c}=\F_{DTFT}\left[\{c_{j}\}_{j=0..m}\right],
 \]
 
 \end_inset
 
 
-\begin_inset Formula 
-\[
-\hat{Q}_{zy}=\sum_{j,k=1}^{3}\left(\hat{a}^{(jz)}\right)^{H}\left(\Sigma^{-1}\right)^{(jk)}\hat{a}^{(ky)}
-\]
-
-\end_inset
-
-and so on.
- Where 
-\begin_inset Formula $\left(\Sigma^{-1}\right)^{(jk)}$
-\end_inset
-
- means the 
-\begin_inset Formula $j$
-\end_inset
-
--th row 
-\begin_inset Formula $k$
-\end_inset
-
--th column of 
-\begin_inset Formula $\Sigma^{-1}$
-\end_inset
-
-, 
-\begin_inset Formula $\Sigma=\var\left([\begin{array}{ccc}
-\epsilon_{t}^{(1)T} & \epsilon_{t}^{(2)T} & \epsilon_{t}^{(3)T}\end{array}]^{T}\right)$
-\end_inset
-
-.
- Note the time lag for coefficients are start from 
-\begin_inset Formula $0$
-\end_inset
-
-, 
-\begin_inset Formula $a_{0}^{(uv)}=\delta_{uv}I$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-More consisely
 \begin_inset Formula 
 \[
 \hat{Q}=\hat{a}^{H}\Sigma^{-1}\hat{a}
@@ -1317,10 +1301,19 @@ More consisely
 \end_inset
 
 where 
+\begin_inset Formula $\Sigma=\var\left([\begin{array}{ccc}
+\epsilon_{t}^{(1)T} & \epsilon_{t}^{(2)T} & \epsilon_{t}^{(3)T}\end{array}]^{T}\right)$
+\end_inset
+
+ is the residual variance.
+\end_layout
+
+\begin_layout Standard
+We use 
 \begin_inset Formula $\hat{Q}_{uv}$
 \end_inset
 
- is the 
+ to denote the 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1328,7 +1321,7 @@ where
 \begin_inset Formula $v$
 \end_inset
 
--th column of 
+-th column block of 
 \begin_inset Formula $\hat{Q}$
 \end_inset
 
@@ -1340,14 +1333,101 @@ where
 \begin_inset Formula $\hat{a}$
 \end_inset
 
+, 
+\begin_inset Formula $a_{j}^{(uv)}$
+\end_inset
+
+ to 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+, (and also 
+\begin_inset Formula $b$
+\end_inset
+
+, 
+\begin_inset Formula $c$
+\end_inset
+
+, see Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq: AR xy"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:AR xz"
+
+\end_inset
+
+).
+ Also note the time lag for coefficients are starting from 
+\begin_inset Formula $0$
+\end_inset
+
+, 
+\begin_inset Formula $a_{0}^{(uv)}=\delta_{uv}I$
+\end_inset
+
 .
 \end_layout
 
 \begin_layout Standard
-GC is 
+The block parts of 
+\begin_inset Formula $\hat{Q}$
+\end_inset
+
+, explicitly write down is:
 \begin_inset Formula 
 \[
-F_{y\rightarrow x|z}\approx\frac{1}{2\pi}\int_{[-\pi,\pi]}\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}\mathrm{\ d}w
+\hat{Q}_{uv}=\sum_{j,k=1}^{3}\left(\hat{a}^{(ju)}\right)^{H}\left(\Sigma^{-1}\right)^{(jk)}\hat{a}^{(kv)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(\Sigma^{-1}\right)^{(jk)}$
+\end_inset
+
+ means the 
+\begin_inset Formula $j$
+\end_inset
+
+-th row 
+\begin_inset Formula $k$
+\end_inset
+
+-th column block of 
+\begin_inset Formula $\Sigma^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Sometimes we need the operator 
+\begin_inset Formula $\left[\cdot\right]_{+}$
+\end_inset
+
+ to extract the positive time part (work in frequency domain):
+\begin_inset Formula 
+\[
+\left[f(w)\right]_{+}=\F_{\mathrm{DTFT}}\left[u(t)\F_{\mathrm{DTFT}}^{-1}\left[f(w),t\right](t),w\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u(t)=\begin{cases}
+1 & t>0\\
+0 & t\leq0
+\end{cases}.
 \]
 
 \end_inset
@@ -1355,8 +1435,100 @@ F_{y\rightarrow x|z}\approx\frac{1}{2\pi}\int_{[-\pi,\pi]}\frac{\hat{a}^{(12)}\h
 
 \end_layout
 
+\begin_layout Subsection
+The Approximations
+\end_layout
+
 \begin_layout Standard
-Under assumption (blocked diagonal matrix)
+The conditions of these approximations to work good will be discussed later.
+ Roughly speaking, that condition is weak conditional GC.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $x-y$
+\end_inset
+
+ regression coefficient formula Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b-from-a"
+
+\end_inset
+
+ can be approximated by
+\begin_inset Formula 
+\begin{equation}
+\hat{b}^{(12)}\approx\hat{a}^{(12)}-\left[\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\right]_{+}.\label{eq:b12-f-app}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+GC is 
+\begin_inset Formula 
+\begin{equation}
+F_{y\rightarrow x|z}\approx F_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{1}{2\pi}\int_{[-\pi,\pi]}\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}\mathrm{\ d}w.\label{eq:GC-app-freq}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Actually the frequency domain GC can also be approximated
+\begin_inset Formula 
+\begin{equation}
+f_{y\rightarrow x|z}\approx f_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}.\label{eq:GC-f-app}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One beauty thing is that the frequency domain GC approximation Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app"
+
+\end_inset
+
+ does not involve complicated 
+\begin_inset Quotes eld
+\end_inset
+
+renormalization
+\begin_inset Quotes erd
+\end_inset
+
+ operations discussed in Geweke 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geweke1984measures"
+
+\end_inset
+
+ when the residual variance 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is non-diagonal.
+\end_layout
+
+\begin_layout Subsection
+Approximations Under Certain (Restricted) Conditions
+\end_layout
+
+\begin_layout Standard
+Under the assumption that the variance of residual is blocked diagonal matrix
 \begin_inset Formula 
 \[
 \Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
@@ -1372,7 +1544,7 @@ Under assumption (blocked diagonal matrix)
 We have
 \begin_inset Formula 
 \[
-\hat{Q}_{zz}=\hat{a}_{xz}^{*T}\Sigma_{xx}^{-1}\hat{a}_{xz}+\hat{a}_{yz}^{*T}\Sigma_{yy}^{-1}\hat{a}_{yz}+\hat{a}_{zz}^{*T}\Sigma_{zz}^{-1}\hat{a}_{zz}
+\hat{Q}_{zz}=\left(\hat{a}^{(13)}\right)^{H}\left(\Sigma^{-1}\right)^{(11)}\hat{a}^{(13)}+\left(\hat{a}^{(23)}\right)^{H}\left(\Sigma^{-1}\right)^{(22)}\hat{a}^{(23)}+\left(\hat{a}^{(33)}\right)^{H}\left(\Sigma^{-1}\right)^{(33)}\hat{a}^{(33)}
 \]
 
 \end_inset
@@ -1380,7 +1552,7 @@ We have
 
 \begin_inset Formula 
 \[
-\hat{Q}_{zy}=\hat{a}_{xz}^{*T}\Sigma_{xx}^{-1}\hat{a}_{xy}+\hat{a}_{yz}^{*T}\Sigma_{yy}^{-1}\hat{a}_{yy}+\hat{a}_{zz}^{*T}\Sigma_{zz}^{-1}\hat{a}_{zy}
+\hat{Q}_{zy}=\left(\hat{a}^{(13)}\right)^{H}\left(\Sigma^{-1}\right)^{(11)}\hat{a}^{(12)}+\left(\hat{a}^{(23)}\right)^{H}\left(\Sigma^{-1}\right)^{(22)}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\left(\Sigma^{-1}\right)^{(33)}\hat{a}^{(32)}
 \]
 
 \end_inset
@@ -1389,7 +1561,90 @@ We have
 \end_layout
 
 \begin_layout Standard
-Hence
+To further simplify, the next assumption is: 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is diagonal matrix (i.e.
+ each block is also diagonal).
+ With this assumption, and the invariant property of GC under scalar transform
+ to variates, we can assume 
+\begin_inset Formula $\Sigma=I$
+\end_inset
+
+.
+ This leads to
+\begin_inset Formula 
+\begin{equation}
+\hat{Q}_{zz}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(13)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(23)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(33)},\label{eq:Qzz-f-app}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\hat{Q}_{zy}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(32)}.\label{eq:Qzy-f-app}
+\end{equation}
+
+\end_inset
+
+Note the coefficients here (Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Qzz-f-app"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Qzy-f-app"
+
+\end_inset
+
+, and later this sub-section) are properly scaled to reflect the normalization
+ of 
+\begin_inset Formula $\Sigma=I$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+a^{(uv)(\textrm{normalized})}=\frac{\Sigma^{(vv)}}{\Sigma^{(uu)}}a^{(uv)(\textrm{original})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Under these assumptions, the expressions Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app"
+
+\end_inset
+
+ now become more clean
+\begin_inset Formula 
+\[
+f_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})\left(\left(\hat{a}^{(12)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(22)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After that, an aggressive
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
