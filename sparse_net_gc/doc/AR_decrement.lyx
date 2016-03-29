@@ -1121,9 +1121,9 @@ GC
 
 :
 \begin_inset Formula 
-\[
-F_{y\rightarrow x|z}^{(\textrm{linear})}=\exp(F_{y\rightarrow x|z})-1=\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}
-\]
+\begin{equation}
+F_{y\rightarrow x|z}^{(\textrm{linear})}=\exp(F_{y\rightarrow x|z})-1=\frac{\vec{a}^{(12)}\left(Q^{(yy)}\right)^{-1}\left(\vec{a}^{(12)}\right)^{T}}{\mathrm{var}(\epsilon_{t}^{(1)})}\label{eq:GC-linear}
+\end{equation}
 
 \end_inset
 
@@ -1481,10 +1481,25 @@ F_{y\rightarrow x|z}\approx F_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac
 \end_layout
 
 \begin_layout Standard
+See Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-linear"
+
+\end_inset
+
+ for definition of 
+\begin_inset Formula $F_{y\rightarrow x|z}^{(\textrm{linear})}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 Actually the frequency domain GC can also be approximated
 \begin_inset Formula 
 \begin{equation}
-f_{y\rightarrow x|z}\approx f_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}.\label{eq:GC-f-app}
+f_{y\rightarrow x|z}\approx f_{y\rightarrow x|z}^{(\textrm{linear})}\approx f_{y\rightarrow x|z}^{(\textrm{app freq})}=\frac{\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})}.\label{eq:GC-f-app}
 \end{equation}
 
 \end_inset
@@ -1527,8 +1542,20 @@ key "geweke1984measures"
 Approximations Under Certain (Restricted) Conditions
 \end_layout
 
+\begin_layout Subsubsection
+Assumptions and approximation to GC
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Assumptions-and-approximation"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-Under the assumption that the variance of residual is blocked diagonal matrix
+(Assumption #1) Under the assumption that the variance of residual is blocked
+ diagonal matrix
 \begin_inset Formula 
 \[
 \Sigma=\mathrm{diag}\left(\left[\begin{array}{ccc}
@@ -1544,15 +1571,7 @@ Under the assumption that the variance of residual is blocked diagonal matrix
 We have
 \begin_inset Formula 
 \[
-\hat{Q}_{zz}=\left(\hat{a}^{(13)}\right)^{H}\left(\Sigma^{-1}\right)^{(11)}\hat{a}^{(13)}+\left(\hat{a}^{(23)}\right)^{H}\left(\Sigma^{-1}\right)^{(22)}\hat{a}^{(23)}+\left(\hat{a}^{(33)}\right)^{H}\left(\Sigma^{-1}\right)^{(33)}\hat{a}^{(33)}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\hat{Q}_{zy}=\left(\hat{a}^{(13)}\right)^{H}\left(\Sigma^{-1}\right)^{(11)}\hat{a}^{(12)}+\left(\hat{a}^{(23)}\right)^{H}\left(\Sigma^{-1}\right)^{(22)}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\left(\Sigma^{-1}\right)^{(33)}\hat{a}^{(32)}
+\hat{Q}_{yy}=\left(\hat{a}^{(12)}\right)^{H}\left(\Sigma^{-1}\right)^{(11)}\hat{a}^{(12)}+\left(\hat{a}^{(22)}\right)^{H}\left(\Sigma^{-1}\right)^{(22)}\hat{a}^{(22)}+\left(\hat{a}^{(32)}\right)^{H}\left(\Sigma^{-1}\right)^{(33)}\hat{a}^{(32)}
 \]
 
 \end_inset
@@ -1561,7 +1580,7 @@ We have
 \end_layout
 
 \begin_layout Standard
-To further simplify, the next assumption is: 
+(Assumption #2) To further simplify, the next assumption is: 
 \begin_inset Formula $\Sigma$
 \end_inset
 
@@ -1576,15 +1595,7 @@ To further simplify, the next assumption is:
  This leads to
 \begin_inset Formula 
 \begin{equation}
-\hat{Q}_{zz}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(13)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(23)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(33)},\label{eq:Qzz-f-app}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\hat{Q}_{zy}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(32)}.\label{eq:Qzy-f-app}
+\hat{Q}_{yy}=\left(\hat{a}^{(12)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(22)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)},\label{eq:Qyy-f-app}
 \end{equation}
 
 \end_inset
@@ -1593,14 +1604,7 @@ Note the coefficients here (Eq.
  
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Qzz-f-app"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Qzy-f-app"
+reference "eq:Qyy-f-app"
 
 \end_inset
 
@@ -1611,9 +1615,9 @@ reference "eq:Qzy-f-app"
 
 :
 \begin_inset Formula 
-\[
-a^{(uv)(\textrm{normalized})}=\frac{\Sigma^{(vv)}}{\Sigma^{(uu)}}a^{(uv)(\textrm{original})}.
-\]
+\begin{equation}
+a^{(uv)(\textrm{normalized})}=\frac{\Sigma^{(vv)}}{\Sigma^{(uu)}}a^{(uv)(\textrm{original})}.\label{eq:coef-normalize-var1}
+\end{equation}
 
 \end_inset
 
@@ -1629,10 +1633,196 @@ reference "eq:GC-f-app"
 
 \end_inset
 
- now become more clean
+ now become more clean (When we calculate GC, 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ are scalars, so the matrix inversion become division)
+\begin_inset Formula 
+\begin{equation}
+f_{y\rightarrow x|z}^{(\textrm{app freq})}=\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\left(\hat{a}^{(12)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(22)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)}}.\label{eq:GC-f-app-app2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(Assumption #3) After that, an aggressive approximation would be to drop
+ high order terms in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app-app2"
+
+\end_inset
+
+, usually (for small system and weak GC) that is 
+\begin_inset Formula $\left(\hat{a}^{(12)}\right)^{H}\hat{a}^{(12)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+f_{y\rightarrow x|z}^{(\textrm{app freq})}\approx\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\left(\hat{a}^{(22)}\right)^{H}\hat{a}^{(22)}}.\label{eq:GC-f-app-app3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note, for system involves hundreds of neurons, 
+\begin_inset Formula $\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)}$
+\end_inset
+
+ might not be drop.
+\end_layout
+
+\begin_layout Subsubsection
+Comparison to exact frequency domain GC
+\end_layout
+
+\begin_layout Standard
+The exact bivariate frequency domain GC is
+\begin_inset Formula 
+\begin{equation}
+\exp(f_{y\ra x})-1=\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}=\frac{1-\Upsilon^{2}}{\frac{1}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}\label{eq:GC-f-2var-exact}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\Upsilon=\Sigma^{(12)}$
+\end_inset
+
+, 
+\begin_inset Formula $r=\hat{a}^{(12)}/\hat{a}^{(22)}$
+\end_inset
+
+.
+ In Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-2var-exact"
+
+\end_inset
+
+, normalization to residual variance Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:coef-normalize-var1"
+
+\end_inset
+
+ is applied, but none of the assumptions #1, #2 and #3 is used.
+\end_layout
+
+\begin_layout Standard
+Case 1: 
+\begin_inset Formula $\Upsilon=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, 
 \begin_inset Formula 
 \[
-f_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\mathrm{var}(\epsilon_{t}^{(1)})\left(\left(\hat{a}^{(12)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(22)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(32)}\right)^{H}\hat{a}^{(32)}\right)}
+\exp(f_{y\ra x})-1=rr^{H}
+\]
+
+\end_inset
+
+which is exactly the Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app-app3"
+
+\end_inset
+
+.
+ One might also start from Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app-app2"
+
+\end_inset
+
+, and apply the function
+\begin_inset Formula 
+\[
+g(f)=\frac{1}{1/f-1}
+\]
+
+\end_inset
+
+to get a exact 
+\begin_inset Quotes eld
+\end_inset
+
+approximation
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\exp(f_{y\ra x})-1=g(f_{y\rightarrow x|z}^{(\textrm{app freq})})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Case 2: 
+\begin_inset Formula $\Upsilon\neq0$
+\end_inset
+
+ (no instantaneous correlation)
+\end_layout
+
+\begin_layout Standard
+Still, the 
+\begin_inset Formula $f_{y\rightarrow x|z}^{(\textrm{app freq})}$
+\end_inset
+
+ without assumptions (Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GC-f-app"
+
+\end_inset
+
+) (but with the residual variance normalization) is a good approximation
+\begin_inset Formula 
+\begin{eqnarray*}
+f_{y\rightarrow x|z}^{(\textrm{app freq})} & = & \hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}-(\hat{a}^{(22)H}\hat{a}^{(12)}+\hat{a}^{(12)H}\hat{a}^{(22)})\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}\\
+ & = & \frac{1}{\frac{1}{rr^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r}+1}=\frac{1}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If apply the function
+\begin_inset Formula 
+\[
+g_{\Upsilon}(f)=\frac{1-\Upsilon^{2}}{1/f-\frac{1}{1-\Upsilon^{2}}}
 \]
 
 \end_inset
@@ -1641,21 +1831,41 @@ f_{y\rightarrow x|z}^{(\textrm{linear})}\approx\frac{\hat{a}^{(12)}\left(\hat{a}
 \end_layout
 
 \begin_layout Standard
-After that, an aggressive
+The approximation can be more accurate: 
+\begin_inset Formula $\exp(f_{y\ra x})-1\approx g_{\Upsilon}(f_{y\rightarrow x|z}^{(\textrm{app freq})})$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\approx A_{xz}\left(A_{zz}^{-1}\Sigma_{zz}\left(A_{zz}^{*T}\right)^{-1}\right)\left(A_{yz}^{*T}\Sigma_{yy}^{-1}A_{yy}+A_{zz}^{*T}\Sigma_{zz}^{-1}A_{zy}\right)\approx A_{xz}\left(A_{zy}+A_{yz}^{*}\right)
-\]
+<TODO: pic to show that>
+\end_layout
+
+\begin_layout Subsubsection
+Approximation to 
+\begin_inset Quotes eld
+\end_inset
+
+auto
+\begin_inset Quotes erd
+\end_inset
+
+-regression coefficients
+\end_layout
+
+\begin_layout Standard
+Recall Eq.
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:b12-f-app"
 
 \end_inset
 
 
 \begin_inset Formula 
 \[
-B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
+\hat{b}^{(12)}\approx\hat{a}^{(12)}-\left[\hat{a}^{(13)}\hat{Q}_{zz}^{-1}\hat{Q}_{zy}\right]_{+}.
 \]
 
 \end_inset
@@ -1664,9 +1874,72 @@ B_{xy}\approx A_{xy}-\left[A_{xz}\left(A_{zy}+A_{yz}^{*}\right)\right]_{+}
 \end_layout
 
 \begin_layout Standard
+Follow the same assumptions in Sec 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Assumptions-and-approximation"
+
+\end_inset
+
+, we get:
+\end_layout
+
+\begin_layout Itemize
+Apply assumptions #1 and #2:
+\begin_inset Formula 
+\begin{equation}
+\hat{Q}_{zz}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(13)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(23)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(33)},\label{eq:Qzz-f-app}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\hat{Q}_{zy}=\left(\hat{a}^{(13)}\right)^{H}\hat{a}^{(12)}+\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(32)}.\label{eq:Qzy-f-app}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Apply also assumption #3:
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{b}^{(12)} & \approx & \hat{a}^{(12)}-\left[\hat{a}^{(13)}\left(\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(33)}\right)^{-1}\left(\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(22)}+\left(\hat{a}^{(33)}\right)^{H}\hat{a}^{(32)}\right)\right]_{+}.\\
+ & = & \hat{a}^{(12)}-\left[\hat{a}^{(13)}\left(\hat{a}^{(33)}\right)^{-1}\left(\left(\hat{a}^{(33)H}\right)^{-1}\left(\hat{a}^{(23)}\right)^{H}\hat{a}^{(22)}+\hat{a}^{(32)}\right)\right]_{+}.
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(assumption #4) If further, 
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $z$
+\end_inset
+
+ been jointly whiten before, i.e.
+ 
+\begin_inset Formula $\hat{a}^{(33)}\approx I$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{a}^{(22)}\approx I$
+\end_inset
+
+.
+ then
 \begin_inset Formula 
 \[
-Q_{zz}^{-1}=S_{zz}-S_{z,xy}S_{xy,xy}^{-1}S_{xy,z}
+\hat{b}^{(12)}\approx\hat{a}^{(12)}-\left[\hat{a}^{(13)}\left(\hat{a}^{(23)H}+\hat{a}^{(32)}\right)\right]_{+}.
 \]
 
 \end_inset
@@ -1675,7 +1948,11 @@ Q_{zz}^{-1}=S_{zz}-S_{z,xy}S_{xy,xy}^{-1}S_{xy,z}
 \end_layout
 
 \begin_layout Standard
-----------------
+---------------
+\end_layout
+
+\begin_layout Standard
+Full matrix form
 \end_layout
 
 \begin_layout Standard
@@ -1694,173 +1971,6 @@ O & A_{xy} & A_{xz}\\
 A_{yz} & O & A_{yz}\\
 \\
 \end{array}\right]^{*T}\right)=A(A+A^{*})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Assume no instantaneous correlation.
- Approximation (normalize first: 
-\begin_inset Formula $\var\left(\epsilon_{t}^{(u)}\right)=1$
-\end_inset
-
-, 
-\begin_inset Formula $u=1,2,3$
-\end_inset
-
-)
-\begin_inset Formula 
-\[
-\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}+\hat{a}^{(32)H}\hat{a}^{(32)}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For 2-var
-\begin_inset Formula 
-\[
-\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\frac{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}{\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}}=\frac{1}{1+\frac{\hat{a}^{(22)H}\hat{a}^{(22)}}{\hat{a}^{(12)}\left(\hat{a}^{(12)}\right)^{H}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Assume with instantaneous correlation
-\begin_inset Formula 
-\[
-\hat{a}^{(12)}\hat{Q}_{yy}^{-1}\left(\hat{a}^{(12)}\right)^{H}=\hat{a}^{(12)}\left(\hat{a}^{(12)H}\hat{a}^{(12)}+\hat{a}^{(22)H}\hat{a}^{(22)}-(\hat{a}^{(22)H}\hat{a}^{(12)}-\hat{a}^{(12)H}\hat{a}^{(22)})\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{-1}\left(\hat{a}^{(12)}\right)^{H}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-r=\hat{a}^{(12)}/\hat{a}^{(22)}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-=\frac{1}{\frac{1}{rr^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r}+1}=\frac{1}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The answer is
-\begin_inset Formula 
-\[
-\exp(F)-1=\frac{1-\Upsilon^{2}}{\frac{1}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}=\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Compare
-\begin_inset Formula 
-\[
-\frac{1}{1/x-1}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{1}{\frac{1}{rr^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r^{H}}-\frac{\Upsilon/(1-\Upsilon^{2})}{r}}<>\frac{1-\Upsilon^{2}}{\frac{1}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{1/x-(1-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2})}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}}<>\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This is good:
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{1/x-(\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}-\left(\frac{\Upsilon}{1-\Upsilon^{2}}\right)^{2})}
-\]
-
-\end_inset
-
- or
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{1/x-\frac{1}{1-\Upsilon^{2}}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}}<>\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\Upsilon\right|^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{\frac{1-\Upsilon^{2}}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+1-\Upsilon^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\frac{1-\Upsilon^{2}}{\left|\frac{1}{r}-\frac{\Upsilon}{1-\Upsilon^{2}}\right|^{2}+1-\left(\frac{1}{1-\Upsilon^{2}}\right)^{2}}=\frac{(1-\Upsilon^{2})^{2}}{\frac{1-\Upsilon^{2}}{rr^{H}}-\frac{\Upsilon}{r^{H}}-\frac{\Upsilon}{r}+\Upsilon^{2}}
 \]
 
 \end_inset
