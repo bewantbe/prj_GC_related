@@ -41,6 +41,9 @@ id_y = 0;
 while (id_y < 20)
 id_x = 2;
 id_y = id_y + 1;
+if id_y == id_x
+  id_y = id_y + 1;
+end
 %id_x = 1;
 %id_y = 2;
 
@@ -85,7 +88,7 @@ fprintf('GC : %.2e\n', GC(id_x, id_y));
   toc;
 %}
   % ======= spectrum way =========
-  fftlen  = 1024;
+  fftlen  = size(S, 3);
   HTR = @(x) permute(conj(x), [2, 1, 3:ndims(x)]);
 
   [p, m] = size(A2d);
@@ -109,8 +112,13 @@ fprintf('GC : %.2e\n', GC(id_x, id_y));
   % Show diff
   sq = @squeeze;
 
-  figure(10);  plot(sq(S(id_y,id_y,:)));
-  figure(11);  plot(sq(S(id_x,id_x,:)));
+  figure(10);  plot(fq, sq(S(id_y,id_y,:)));
+
+  figure(11);  plot(fq, sq(S(id_x,id_x,:)));
+  xlabel('frequency');  ylabel('spectrum density');
+  set(gca, 'fontsize', 20);
+  set(gca, 'linewidth', 1);
+  print('-depsc2', sprintf('pic_tmp/S_xx%d.eps', id_x));
 
   % frequency GC
   tic
@@ -121,8 +129,17 @@ fprintf('GC : %.2e\n', GC(id_x, id_y));
   wGc = singleGrangerFA(D, De0_star, B, De0, id_y, id_x, fftlen);
   toc
 
-  fq = 0:fftlen-1;
+  fq = (0:fftlen-1)/fftlen * 1000 / pm.stv;
   figure(2); plot(fq, wGc, fq, gc_sapp_f); legend('fgc', 'sapp');
-  figure(3); plot(wGc, gc_sapp_f, [0 max(wGc)], [0 max(wGc)]); hold on;
+  set(gca, 'fontsize', 20);
+  set(gca, 'linewidth', 1);
+  xlabel('frequency');  ylabel('exp(GC(w))-1');  legend('f^{(linear)}_{y\rightarrowx|z}', 'f^{(app freq)}_{y\rightarrowx|z}');
+  print('-depsc2', 'pic_tmp/GC_f_core_app.eps');
+
+  figure(3); plot(wGc, gc_sapp_f, [0 max(wGc)], [0 max(wGc)], '--'); hold on;
+  set(gca, 'fontsize', 20);
+  set(gca, 'linewidth', 1);
+  print('-depsc2', 'pic_tmp/GC_f_cmp_core_app.eps');
+
 %  figure(4); plot(wGc, 1 ./(1 ./gc_sapp_f-1), [0 max(wGc)], [0 max(wGc)]);
 end
