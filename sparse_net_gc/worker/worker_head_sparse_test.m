@@ -46,9 +46,13 @@ prefix_tmpdata = ['data/' identity_str '_'];
 % results will be saved here
 data_file_name = sprintf('scan_sparseness/scan_%s_sparse=%.1e-%.1e_p=%d_pr=%1.1f_ps=%.1e_sc=%.1e,%.1e,%.1e,%.1e_t=%1.1e_%s.mat', pm.neuron_model, s_sparseness(1), s_sparseness(end), net_param.p, pm.pr, pm.ps, pm.scee, pm.scie, pm.scei, pm.scii, pm.t, identity_str);
 
-rng('shuffle');             % make output of rand random.
-rng_state_curr = rng();     % used to reproduce the results.
-save('-v7', [data_file_name '.rng'], 'rng_state_curr');  % will be removed once job finished.
+if ~exist('rng_state_curr', 'var')
+  rng('shuffle');             % make output of rand random.
+  rng_state_curr = rng();     % used to reproduce the results.
+  save('-v7', [data_file_name '.rng'], 'rng_state_curr');  % will be removed once job finished.
+else
+  rng(rng_state_curr);
+end
 
 in_const_data.rng_state_curr = rng_state_curr;
 in_const_data.pm = pm;
@@ -66,7 +70,11 @@ end
 %prefix_tmpdata = 'data/';
 addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker']);
 t0 = tic();
-parallel_distributor;
-delete([data_file_name '.rng']);
+
+parallel_distributor;  % this is the main loop
+
+if ~isfield(in_const_data, 'no_postprocess') || ~in_const_data.no_postprocess
+  delete([data_file_name '.rng']);
+end
 fprintf('Elapsed time is %6.3f\n', (double(tic()) - double(t0))*1e-6 );
 
