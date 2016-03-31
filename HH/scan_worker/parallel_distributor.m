@@ -57,6 +57,9 @@ while ~isempty(id_jobs_head)
       if exist(output_fn, 'file')
         delete(output_fn);
       end
+      if exist([output_fn '.finished'], 'file')
+        delete([output_fn '.finished']);
+      end
       % run the worker in background
       cmd = sprintf('%s "%s(''%s'', ''%s'')" > %s 2>&1 &',...
                    exec_name, func_name, input_fn, output_fn,...

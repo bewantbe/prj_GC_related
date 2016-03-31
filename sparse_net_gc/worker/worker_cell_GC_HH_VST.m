@@ -24,7 +24,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
     save('-v7', [output_fn '.finished'], 's');
     return;
   end
-  if isfield(in, 'no_postprocess')
+  if isfield(in.const_data, 'no_postprocess')
     ou.need_postprocess = ['data postprocess ignored. '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
