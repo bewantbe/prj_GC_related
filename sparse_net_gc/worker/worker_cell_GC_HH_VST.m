@@ -24,7 +24,7 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
     save('-v7', [output_fn '.finished'], 's');
     return;
   end
-  if isfield(in.const_data, 'no_postprocess')
+  if isfield(in.const_data, 'no_postprocess') && in.const_data.no_postprocess
     ou.need_postprocess = ['data postprocess ignored. '  datestr(now, 30)];
     save('-v7', output_fn, 'ou');
     s = ou.need_postprocess;
@@ -32,9 +32,12 @@ function worker_cell_GC_HH_VST(input_fn, output_fn, need_postprocess)
     return;
   end
 
-  [X, ISI, ras, pm] = gen_HH(pm, 'rm,ext_T', data_dir_prefix);
+  [X, ISI, ras, pm] = gen_HH(pm, 'ext_T', data_dir_prefix);
   [p, len] = size(X);
 %  X = WhiteningFilter(X, 4);
+  if ~isfield(in.const_data, 'no_remove_simulation_data')
+    gen_HH(pm, 'rm', data_dir_prefix);
+  end
 
   ou.net_seed = net_param.seed;
   ou.ISI = ISI;
