@@ -4,7 +4,7 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 43;
+use_od = 200;
 m = use_od;
 
 ed = 0;
@@ -30,7 +30,7 @@ if ~exist('ed', 'var') || isempty(ed) || ~ed
 
   fftlen = max(pow2ceil(8*use_od), 1024);
   S = A2S(A2d, De, fftlen);
-%  S = StdWhiteS(S);
+  S = StdWhiteS(S);
   R = S2cov(S, use_od);
   tic
   [GC De A2d] = RGrangerTfast(R);
@@ -52,28 +52,17 @@ bigR = R2covz(R(:, 1:end-p));
 ib_odd_od  = mod(floor((0:p*m-1)/p), 2) == 0;
 ib_even_od = mod(floor((0:p*m-1)/p), 2) == 1;
 
-%B = A_even + A_odd * bigR(ib_even_od, ib_odd_od) / bigR(ib_even_od, ib_even_od);
-%maxerr(A2d_2 - B)
-
-%B = A_even + A_odd * bigR(ib_even_od, ib_odd_od) / bigR(ib_odd_od, ib_odd_od);
-%maxerr(A2d_2 - B)
-
+% downsampling coef formula
 B = A_even + A_odd * bigR(ib_odd_od, ib_even_od) / bigR(ib_even_od, ib_even_od);
 maxerr(A2d_2 - B)
 
+% downsampling coef formula using inverse matrix
 BigR_inv = inv(bigR);
 B = A_even - A_odd / BigR_inv(ib_odd_od, ib_odd_od) * BigR_inv(ib_odd_od, ib_even_od);
 maxerr(A2d_2 - B)
 
+% verify solution
 Ro = R(:, p+1:end);
-
-%maxerr(
-%[A_odd A_even] * [ ...
-%bigR(ib_even_od,ib_even_od)  bigR(ib_even_od,ib_odd_od)
-%bigR(ib_odd_od, ib_even_od)  bigR(ib_odd_od, ib_odd_od)] - ...
-%[Ro(:, ib_even_od) Ro(:, ib_odd_od)]
-%)
-
 maxerr(
 [A_odd A_even] * [ ...
 bigR(ib_odd_od, ib_odd_od)  bigR(ib_odd_od, ib_even_od)
@@ -99,13 +88,24 @@ maxerr( fft(R_if(:,:,2:2:end), [], 3) - V )
 % verify spectral approximation
 A_corr_f = mult3d(A_odd_f, rdiv3d(V, U));  % The spectral approximation
 A_corr = ifft(A_corr_f, [], 3);
-A_corr = A_corr(:,:,1:size(A_even,2)/size(A_even,1));
+A_corr = A_corr(:,:,2:size(A_even,2)/size(A_even,1)-1);
 A_corr = real(reshape(A_corr, p, []));
 
 A_corr_ans = B - A_even;
 
 figure(11); MatShow(A_corr_ans, -0.1);
 figure(12); MatShow(A_corr, -0.1);
+
+figure(13);
+plot(1:fit_od, A_corr_ans(1, 1:p:fit_od*p), '-o', ...
+     1:fit_od, A_corr(1, 1:p:fit_od*p), '-o');
+
+figure(14);
+plot(1:fit_od, A_corr_ans(1, 2:p:fit_od*p), '-o', ...
+     1:fit_od, A_corr(1, 2:p:fit_od*p), '-o');
+
+figure(15); plot(squeeze(U(1,1,:)));
+figure(16); plot(squeeze(V(1,2,:)));
 
 return
 
