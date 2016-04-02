@@ -4,10 +4,10 @@ pow2ceil = @(x) 2^ceil(log2(x));
 maxerr = @(x) max(abs(x(:)));
 
 fit_od = 40;
-use_od = 40;
+use_od = 43;
 m = use_od;
 
-%ed = 0;
+ed = 0;
 if ~exist('ed', 'var') || isempty(ed) || ~ed
   ed = true;
 
@@ -81,7 +81,7 @@ bigR(ib_even_od,ib_odd_od)  bigR(ib_even_od,ib_even_od)] - ...
 [Ro(:, ib_odd_od) Ro(:, ib_even_od)]
 )
 
-% spectral approximation
+% spectral squeeze (down sampling)
 A_even_f = fft(reshape([eye(p) A_even], p,p,[]), fftlen/2, 3);
 A_odd_f = fft(reshape([zeros(p) A_odd], p,p,[]), fftlen/2, 3);
 B_f = fft(reshape([eye(p) B], p,p,[]), fftlen/2, 3);
@@ -96,7 +96,16 @@ R_if = ifft(S, [], 3);
 maxerr( fft(R_if(:,:,1:2:end), [], 3) - U )
 maxerr( fft(R_if(:,:,2:2:end), [], 3) - V )
 
-A_odd_f * 
+% verify spectral approximation
+A_corr_f = mult3d(A_odd_f, rdiv3d(V, U));  % The spectral approximation
+A_corr = ifft(A_corr_f, [], 3);
+A_corr = A_corr(:,:,1:size(A_even,2)/size(A_even,1));
+A_corr = real(reshape(A_corr, p, []));
+
+A_corr_ans = B - A_even;
+
+figure(11); MatShow(A_corr_ans, -0.1);
+figure(12); MatShow(A_corr, -0.1);
 
 return
 
