@@ -465,7 +465,7 @@ Q_{\textrm{odd},\textrm{odd}}R_{\textrm{odd},\textrm{even}}+Q_{\textrm{odd},\tex
 so
 \begin_inset Formula 
 \[
-b=a_{(\textrm{even})}-a_{(\textrm{odd})}Q_{(\textrm{odd},\textrm{odd})}^{-1}Q_{(\textrm{even},\textrm{odd})}
+b=a_{(\textrm{even})}-a_{(\textrm{odd})}Q_{(\textrm{odd},\textrm{odd})}^{-1}Q_{(\textrm{odd},\textrm{even})}
 \]
 
 \end_inset
@@ -524,12 +524,52 @@ Therefore
 In scalar case, that is
 \begin_inset Formula 
 \[
-\hat{b}\approx\hat{a}_{(\textrm{even})}+\hat{a}_{(\textrm{odd})}e^{-\mathrm{i}w/2}\frac{s\left(\frac{w}{2}\right)-s\left(\frac{w}{2}+\pi\right)}{s\left(\frac{w}{2}\right)+s\left(\frac{w}{2}+\pi\right)}
+\hat{b}\approx\hat{a}_{(\textrm{even})}+\hat{a}_{(\textrm{odd})}e^{\mathrm{i}w/2}\frac{s\left(\frac{w}{2}\right)-s\left(\frac{w}{2}+\pi\right)}{s\left(\frac{w}{2}\right)+s\left(\frac{w}{2}+\pi\right)}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+alt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q_{\textrm{even},\textrm{odd}}Q_{(\textrm{odd},\textrm{odd})}^{-1}Q_{(\textrm{odd},\textrm{even})}+Q_{\textrm{even},\textrm{even}}=R_{\textrm{even},\textrm{even}}^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the step 
+\begin_inset Formula $\hat{a}_{(\textrm{odd})}v$
+\end_inset
+
+ for 
+\begin_inset Formula $a_{(\textrm{odd})}R_{\textrm{odd},\textrm{even}}$
+\end_inset
+
+ lose no accuracy.
+ Error comes from replacing operation on 
+\begin_inset Formula $R_{(\textrm{even},\textrm{even})}^{-1}$
+\end_inset
+
+ to 
+\begin_inset Formula $u^{-1}$
+\end_inset
+
+ (
+\begin_inset Formula $R_{(\textrm{even},\textrm{even})}^{-1}$
+\end_inset
+
+ is not a toeplitz matrix, although close to).
 \end_layout
 
 \begin_layout Standard
