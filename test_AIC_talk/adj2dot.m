@@ -5,7 +5,7 @@
 %
 % reference: http://graphviz.org
 
-function adj2dot(network, basename)
+function adj2dot(network, basename, b_fix)
 
 gheader0 = {
 'digraph "G" {',
@@ -42,25 +42,36 @@ arrayfun(...
   @(ii,jj) fprintf(fid, '  "%d" -> "%d";\n', jj,ii), ...
   conn_row, conn_col);
 
-%% output node position
-%n = size(network,1);
-%for k=1:n
-%%  if (mod(k,2)==1)
-%%    z = 0.15*n*exp(2*pi*I*k/n);
-%%  else
-%%    z = 0.2*n*exp(2*pi*I*k/n);
-%%  end
-%  z = 0.2*n*exp(2*pi*I*k/n);
-%  fprintf(fid, "  \"%d\" [pos = \"%f,%f!\"]\n", k, real(z), imag(z));
-%end
+if ~exist('b_fix', 'var') || ~b_fix
+    prog = 'dot';
+else
+    % output node position
+    n = size(network,1);
+    for k=1:n
+    %  if (mod(k,2)==1)
+    %    z = 0.15*n*exp(2*pi*I*k/n);
+    %  else
+    %    z = 0.2*n*exp(2*pi*I*k/n);
+    %  end
+      z = 0.2*n*exp(2*pi*1i*(k/n-0.25));
+      fprintf(fid, '  "%d" [pos = "%f,%f!"]\n', k, real(z), imag(z));
+    end
+    prog = 'neato';
+end
 
 fprintf(fid,'}\n');
 fclose(fid);
 
+if ~exist('b_fix', 'var') && size(network,1) <= 3
+    % use x,y,z instead of 1,2,3
+    system(sprintf('sed -i s/\\"1\\"/\\"x\\"/ "%s"', [basename,'.dot']));
+    system(sprintf('sed -i s/\\"2\\"/\\"y\\"/ "%s"', [basename,'.dot']));
+    system(sprintf('sed -i s/\\"3\\"/\\"z\\"/ "%s"', [basename,'.dot']));
+end
+
 % convert to picture
 %prog = 'circo'; % alternatives: 'twopi', 'dot'
-prog = 'neato';
-prog = 'dot';
+%prog = 'twopi';
 pic_format = 'eps';
 %pic_format = 'png';
 system([prog,' -T',pic_format,' ',basename,'.dot -o ',basename,'.',pic_format]);

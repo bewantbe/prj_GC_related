@@ -148,7 +148,7 @@
 \end_layout
 
 \begin_layout Title
-AR of Changed Sampling
+Autoregression of Different Sampling Rate
 \end_layout
 
 \begin_layout Section
@@ -157,9 +157,9 @@ Problem
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
+\[
 x(t)=\sum_{j=1}^{m}a(j)x(t-j)+\epsilon(t)
-\end{equation}
+\]
 
 \end_inset
 
@@ -173,9 +173,9 @@ x(t)=\sum_{j=1}^{m_{1}}a(2j-1)x(t-2j+1)+\sum_{j=1}^{m_{2}}a(2j)x(t-2j)+\epsilon(
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 x(t)=\sum_{j=1}^{m_{2}}b(j)x(t-2j)+\eta(t)
-\]
+\end{equation}
 
 \end_inset
 
@@ -391,7 +391,7 @@ easy to see that
 \end_layout
 
 \begin_layout Section
-The formula
+The formula for half sampling rate
 \end_layout
 
 \begin_layout Standard
@@ -411,7 +411,7 @@ r_{x|\textrm{odd}} & r_{x|\textrm{even}}\end{array}\right]
 
 \begin_inset Formula 
 \[
-\vec{b}R_{\textrm{even},\textrm{even}}=r_{x|\textrm{even}}
+bR_{\textrm{even},\textrm{even}}=r_{x|\textrm{even}}
 \]
 
 \end_inset
@@ -500,7 +500,7 @@ v^{H} & u
 It is easy to show
 \begin_inset Formula 
 \[
-\hat{Q}_{(\textrm{odd},\textrm{odd})}^{-1}\hat{Q}_{(\textrm{odd},\textrm{even})}=-v^{H}u^{-1}
+\hat{Q}_{(\textrm{odd},\textrm{odd})}^{-1}\hat{Q}_{(\textrm{odd},\textrm{even})}=-vu^{-1}
 \]
 
 \end_inset
@@ -513,6 +513,14 @@ Therefore
 \begin_inset Formula 
 \[
 \hat{b}\approx\hat{a}_{(\textrm{even})}+\hat{a}_{(\textrm{odd})}vu^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{b}\approx\hat{a}_{(\textrm{even})}+\hat{a}_{(\textrm{odd})}e^{\mathrm{i}w/2}\left(s(\frac{w}{2})-s(\frac{w}{2}+\pi)\right)\left(s(\frac{w}{2})+s(\frac{w}{2}+\pi)\right)^{-1}
 \]
 
 \end_inset
@@ -570,6 +578,72 @@ Note that the step
 \end_inset
 
  is not a toeplitz matrix, although close to).
+\end_layout
+
+\begin_layout Section
+General Formula
+\end_layout
+
+\begin_layout Standard
+Fitting
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x(t)=\sum_{j=1}^{m_{1}}a(lj-l+1)x(t-(lj-l+1))+\cdots+\sum_{j=1}^{m_{l}}a(lj)x(t-lj)+\epsilon(t)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x(t)=\sum_{j=1}^{m_{l}}b(j)x(t-lj)+\eta(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sat eqn
+\begin_inset Formula 
+\[
+\left[\begin{array}{cccc}
+a_{(1)} & a_{(2)} & \cdots & a_{(l)}\end{array}\right]\left[\begin{array}{cccc}
+R_{1,1} & R_{1,2} & \cdots & R_{1,l}\\
+R_{2,1}\\
+\vdots\\
+R_{l,1} &  &  & R_{l,l}
+\end{array}\right]=\left[\begin{array}{cccc}
+r_{x|1} & r_{x|2} & \cdots & r_{x|l}\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+bR_{l,l}=r_{x|l}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+has relation
+\begin_inset Formula 
+\[
+b=a_{(l)}+\left(\sum_{k=1}^{l-1}a_{(k)}R_{k,l}\right)R_{l,l}^{-1}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

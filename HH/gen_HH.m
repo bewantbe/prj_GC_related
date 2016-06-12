@@ -246,6 +246,9 @@ else
   program_name = sprintf('%s%sraster_tuning_%s',...
                          pathdir, filesep, pm.neuron_model);
 end
+if ~exist(program_name, 'file')
+  error(['Can not find simulator! "' program_name '"']);
+end
 cmdst = sprintf('%s -ng -v -inf - %s %s %s %s',...
                 program_name, st_neu_param, st_sim_param, st_paths, pm.extra_cmd);
 if mode_show_cmd
