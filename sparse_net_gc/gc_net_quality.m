@@ -14,5 +14,5 @@ function [p_correct, n_over, n_lack, n_conn] = gc_net_quality(GC, gc_zero_cut, n
   disp(['lack guess: ', num2str(n_lack)]);
   fprintf('connection: %d / %d = %.1f%%\n', n_conn, p*(p-1),...
           100*n_conn/(p*(p-1)));
-  disp(['overall correctness: ', num2str(100*p_correct)]);
+  fprintf('Overall correctness: %.1f %%\n', 100*p_correct);
 
