@@ -53,7 +53,7 @@ else
   ras2SpikeTrainFile(ras, p, floor(pm.t/pm.stv), pm.stv, path_ST);
   toc
 
-  use_od = 40;
+  use_od = 100;
   tic
   R = getcovpdFile(path_ST, p, use_od);  % 1459 s, p=900, od=40, L= 2e6
   toc
