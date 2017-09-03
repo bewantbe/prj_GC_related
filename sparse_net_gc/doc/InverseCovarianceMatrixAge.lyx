@@ -540,6 +540,100 @@ reference "eq:V-inv-app"
 \end_layout
 
 \begin_layout Section
+Exact Solution by Zero Padding
+\end_layout
+
+\begin_layout Standard
+Suppose we expend the fitting order to 
+\begin_inset Formula $3m$
+\end_inset
+
+ by zero padding.
+ (to be verified)
+\end_layout
+
+\begin_layout Standard
+That is:
+\begin_inset Formula 
+\[
+V_{\{3m\}}=\left[\begin{array}{cccc}
+R_{0} & R_{1} & \cdots & R_{3m-1}\\
+R_{-1} & R_{0} &  & \vdots\\
+\vdots &  & \ddots\\
+R_{1-3m} & \cdots &  & R_{0}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+A_{\{3m\}}^{H}=\left[\begin{array}{ccc}
+A^{H} & 0 & 0\\
+A_{\star}^{H} & A^{H} & 0\\
+0 & A_{\star}^{H} & A^{H}
+\end{array}\right],\quad A_{\star\{3m\}}^{H}=\left[\begin{array}{ccc}
+0 & 0 & A_{\star}^{H}\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then the solution is:
+\begin_inset Formula 
+\[
+V_{\{3m\}}^{-1}=A_{\{3m\}}^{H}\Gamma_{\{3m\}}^{-1}A_{\{3m\}}-\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+A^{H}\Gamma^{-1}A_{\star} & 0 & 0
+\end{array}\right](V_{\{3m\}}^{-1}+\left[\begin{array}{ccc}
+A_{\star}^{H}\Gamma^{-1}A_{\star} & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right])\left[\begin{array}{ccc}
+0 & 0 & A_{\star}^{H}\Gamma^{-1}A\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{\{3m\}}^{-1}=A_{\{3m\}}^{H}\Gamma^{-1}A_{\{3m\}}-\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})A_{\star}^{H}\Gamma^{-1}A
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{\{3m\}}^{-1}=\left[\begin{array}{ccc}
+A^{H}\Gamma^{-1}A & A^{H}\Gamma^{-1}A_{\star} & 0\\
+A_{\star}^{H}\Gamma^{-1}A & A_{\star}^{H}\Gamma^{-1}A_{\star}+A^{H}\Gamma^{-1}A & A^{H}\Gamma^{-1}A_{\star}\\
+0 & A_{\star}^{H}\Gamma^{-1}A & A_{\star}^{H}\Gamma^{-1}A_{\star}+A^{H}\Gamma^{-1}A-A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})A_{\star}^{H}\Gamma^{-1}A
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Comparison to Spectral Density Inversion Approximation
 \end_layout
 
@@ -547,7 +641,7 @@ Comparison to Spectral Density Inversion Approximation
 The inverse if spectral density of AR process can be easily calculated as
 \begin_inset Formula 
 \begin{equation}
-S^{-1}(w)=A^{H}(w)\Sigma A(w).\label{eq:S-inv}
+S^{-1}(w)=A^{H}(w)\Sigma^{-1}A(w).\label{eq:S-inv}
 \end{equation}
 
 \end_inset
