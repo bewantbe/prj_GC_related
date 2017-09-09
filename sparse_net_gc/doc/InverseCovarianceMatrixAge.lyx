@@ -540,7 +540,7 @@ reference "eq:V-inv-app"
 \end_layout
 
 \begin_layout Section
-Exact Solution by Zero Padding
+Solution by Zero Padding
 \end_layout
 
 \begin_layout Standard
@@ -549,7 +549,6 @@ Suppose we expend the fitting order to
 \end_inset
 
  by zero padding.
- (to be verified)
 \end_layout
 
 \begin_layout Standard
@@ -593,11 +592,11 @@ V_{\{3m\}}^{-1}=A_{\{3m\}}^{H}\Gamma_{\{3m\}}^{-1}A_{\{3m\}}-\left[\begin{array}
 0 & 0 & 0\\
 0 & 0 & 0\\
 A^{H}\Gamma^{-1}A_{\star} & 0 & 0
-\end{array}\right](V_{\{3m\}}^{-1}+\left[\begin{array}{ccc}
+\end{array}\right]\left(V_{\{3m\}}^{-1}+\left[\begin{array}{ccc}
 A_{\star}^{H}\Gamma^{-1}A_{\star} & 0 & 0\\
 0 & 0 & 0\\
 0 & 0 & 0
-\end{array}\right])\left[\begin{array}{ccc}
+\end{array}\right]\right)^{-1}\left[\begin{array}{ccc}
 0 & 0 & A_{\star}^{H}\Gamma^{-1}A\\
 0 & 0 & 0\\
 0 & 0 & 0
@@ -609,10 +608,10 @@ A_{\star}^{H}\Gamma^{-1}A_{\star} & 0 & 0\\
 
 \begin_inset Formula 
 \[
-V_{\{3m\}}^{-1}=A_{\{3m\}}^{H}\Gamma^{-1}A_{\{3m\}}-\left[\begin{array}{ccc}
+V_{\{3m\}}^{-1}\approx A_{\{3m\}}^{H}\Gamma^{-1}A_{\{3m\}}-\left[\begin{array}{ccc}
 0 & 0 & 0\\
 0 & 0 & 0\\
-0 & 0 & A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})A_{\star}^{H}\Gamma^{-1}A
+0 & 0 & A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})^{-1}A_{\star}^{H}\Gamma^{-1}A
 \end{array}\right]
 \]
 
@@ -621,11 +620,23 @@ V_{\{3m\}}^{-1}=A_{\{3m\}}^{H}\Gamma^{-1}A_{\{3m\}}-\left[\begin{array}{ccc}
 
 \begin_inset Formula 
 \[
-V_{\{3m\}}^{-1}=\left[\begin{array}{ccc}
+V_{\{3m\}}^{-1}\approx\left[\begin{array}{ccc}
 A^{H}\Gamma^{-1}A & A^{H}\Gamma^{-1}A_{\star} & 0\\
 A_{\star}^{H}\Gamma^{-1}A & A_{\star}^{H}\Gamma^{-1}A_{\star}+A^{H}\Gamma^{-1}A & A^{H}\Gamma^{-1}A_{\star}\\
-0 & A_{\star}^{H}\Gamma^{-1}A & A_{\star}^{H}\Gamma^{-1}A_{\star}+A^{H}\Gamma^{-1}A-A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})A_{\star}^{H}\Gamma^{-1}A
+0 & A_{\star}^{H}\Gamma^{-1}A & A_{\star}^{H}\Gamma^{-1}A_{\star}+A^{H}\Gamma^{-1}A-A^{H}\Gamma^{-1}A_{\star}(A^{H}\Gamma^{-1}A+A_{\star}^{H}\Gamma^{-1}A_{\star})^{-1}A_{\star}^{H}\Gamma^{-1}A
 \end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Not useful.
+\begin_inset Formula 
+\[
+(V^{-1}+A_{\star}^{H}\Gamma^{-1}A_{\star})^{-1}=V-VA_{\star}^{H}(\Gamma+A_{\star}VA_{\star}^{H})^{-1}A_{\star}V
 \]
 
 \end_inset
