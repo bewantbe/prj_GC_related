@@ -8,6 +8,9 @@ func_name = 'cal_cell_GC_V_ST';
 in_const_data.pm = pm;
 in_const_data.s_od = 1:99;           % fitting order scan
 in_const_data.hist_div = 0:1:500;    % ISI hist range
+in_const_data.fr_request = fr_request;
+in_const_data.s_pr_2d = s_pr_2d;
+in_const_data.s_ps_mV = s_ps_mV;
 
 % generate input parameter set
 s_jobs = cell(size(s_pr_2d));
@@ -27,7 +30,7 @@ tocs = @(st) fprintf('%s: t = %6.3fs\n', st, toc());
 st_extra = '_V_ST';
 
 % results will be saved here
-data_file_name = sprintf('scan_all_results/scan_all_%s_ps=%.2g-%.2fmV_fr=%.2g-%.2gmVHz_scee=%.2gmV_t=%1.1e%s.mat',...
+data_file_name = sprintf('scan_all_results/scan_all_%s_ps=%.2g-%.2fmV_fr=%.2g-%.2gHz_scee=%.2gmV_t=%1.1e%s.mat',...
   pm.neuron_model, s_ps_mV(1), s_ps_mV(end), fr_request(1), fr_request(end), pm.scee_mV, pm.t, st_extra);
 clear('st_extra');
 
