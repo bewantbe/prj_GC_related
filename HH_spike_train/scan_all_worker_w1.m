@@ -1,15 +1,26 @@
+% scan for pr and ps, with uniform firing rate along x-axis.
 addpath('/home/xyy/matcode/prj_GC_clean/HH/scan_worker/');
 
-% scan for
-s_pr_ps = linspace(0.7, 4.0, 20);
-ps_mV = 0.5;
+ngrid_x = 10;
+ngrid_y = 10;
+
+s_ps_mV = linspace(0.05, 2.0, ngrid_y);  % the y-axis
+s_pr_2d = zeros(numel(s_ps_mV), ngrid_x);
+
+fr_request = linspace(1, 80, ngrid_x);
+
+for k = 1 : numel(s_ps_mV)
+  s_pr_2d(k, :) = fr_interp(fr_request, s_ps_mV(k));
+end
+
+save('s_pr_2d.mat', 's_pr_2d');
 
 % fixed parameters
 pm.neuron_model = 'HH-GH';
 pm.net     = 'net_2_2';
 pm.scee_mV = 1.0;
-%pm.pr    = s_pr_ps(1) ./ ps_mV;
-%pm.ps_mV = ps_mV;
+%pm.pr    = 
+%pm.ps_mV = 
 pm.t    = 1e5;
 pm.stv  = 0.5;
 pm.extra_cmd = '';

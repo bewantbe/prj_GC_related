@@ -5,6 +5,7 @@
 
 function pr_at_ps_fr_request = fr_interp(fr_request, ps_request)
 
+addpath('~/code/point-neuron-network-simulator/mfile');
 PSP = get_neu_psp('HH-GH');
 ps_request = ps_request * PSP.mV_ps;
 
@@ -19,10 +20,10 @@ s_data_file_name = {
 'ISI_HH_ps=0.002_prps=3.0e-03~5.0e-01_t=4.00e+05'
 };
 
-pr_at_fr_request = zeros(size(s_data_file_name));
+prps_at_fr_request = zeros(numel(fr_request), numel(s_data_file_name));
 s_ps = zeros(size(s_data_file_name));
 
-for id_s_data = 1:length(s_data_file_name)
+for id_s_data = 1:numel(s_data_file_name)
   data_file_name = [path_prefix, s_data_file_name{id_s_data}, '.mat'];
   load(data_file_name);
   s_prps = zeros(size(s_jobs));
@@ -35,9 +36,15 @@ for id_s_data = 1:length(s_data_file_name)
   end
   s_ps(id_s_data) = in.ps;
   pp = pchip(s_prps, s_freq);
-  prps_at_fr_request(id_s_data) = fzero(
-    @(x) ppval(pp, x) - fr_request, s_prps([1 end]));
+  
+  for k = 1 : numel(fr_request)
+    prps_at_fr_request(k, id_s_data) = fzero(
+      @(x) ppval(pp, x) - fr_request(k), s_prps([1 end]));
+  end
 end
 
-pr_at_ps_fr_request = pchip(s_ps, prps_at_fr_request, ps_request) / ps_request;
+pr_at_ps_fr_request = zeros(size(fr_request));
+for k = 1 : numel(fr_request)
+  pr_at_ps_fr_request(k) = pchip(s_ps, prps_at_fr_request(k, :), ps_request) / ps_request;
+end
 
