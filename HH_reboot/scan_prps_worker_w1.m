@@ -30,4 +30,4 @@ pm.t    = 1e6;
 pm.stv  = 0.5;
 pm.extra_cmd = '';
 
-scan_all_worker_head;
+scan_prps_worker_head;

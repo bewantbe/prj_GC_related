@@ -5,7 +5,7 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
 % load results
 s_data_file_name = {
-'scan_all_HH-PT-GH_ps=0.05-2.00mV_fr=1-80Hz_scei=1mV_t=1.0e+06_V_ST'
+'scan_prps_HH-PT-GH_ps=0.05-2.00mV_fr=1-80Hz_scei=1mV_t=1.0e+06_V_ST'
 };
 
 p = 2;
@@ -20,7 +20,7 @@ gc_scale = 1e-4;
 
 for id_s_data = 1:length(s_data_file_name)
 
-  data_file_name = ['scan_all_results/' s_data_file_name{id_s_data} '.mat'];
+  data_file_name = ['scan_prps_results/' s_data_file_name{id_s_data} '.mat'];
   load(data_file_name);  % load 's_data', 's_jobs', 'in_const_data'
 
   s_pr_2d = zeros(size(s_jobs));
