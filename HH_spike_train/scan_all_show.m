@@ -5,7 +5,7 @@ addpath([getenv('HOME') '/matcode/GC_clean/GCcal/']);
 
 % load results
 s_data_file_name = {
-'scan_all_HH-PT-GH_ps=0.05-2.00mV_fr=1-80Hz_scee=1mV_t=1.0e+06_V_ST'
+'scan_all_HH-PT-GH_ps=0.05-2.00mV_fr=1-80Hz_scei=1mV_t=1.0e+06_V_ST'
 };
 
 p = 2;
@@ -68,59 +68,49 @@ for id_s_data = 1:length(s_data_file_name)
     s_freq(idi, idj, :) = 1000 ./ ou.ISI;
   end
 
-  cm = rainbow(length(s_ps_mV));
+  CodeConcatenate = @(varargin) 0;
+
+  pcolor_prps = @(dat2d, fname_prefix) CodeConcatenate( ...
+    pcolor(s_fr, s_ps_mV'*ones(size(s_ps_mV)), dat2d), ...
+    shading('flat'), ...
+    colorbar(), ...
+    xlabel('Firing Rate (Hz)'), ...
+    ylabel('f (mV)'), ...
+    pic_output_color([fname_prefix st_ext s_data_file_name{id_s_data}]) ...
+  );
+  
+  plot1d_prps = @(dat2d, yname, fname_prefix) CodeConcatenate( ...
+    cm = rainbow(length(s_ps_mV)),
+    hold('off'),
+    k = 1,
+    plot(s_fr(k, :), dat2d(k, :), 'color', cm(k,:)),
+    hold('on'),
+    arrayfun(...
+      @(k) plot(s_fr(k, :), dat2d(k, :), 'color', cm(k,:)), ...
+      2 : length(s_ps_mV)),
+    xlim([0, s_fr(end)]),
+    xlabel('Firing Rate (Hz)'),
+    ylabel(yname),
+    pic_output_color([fname_prefix st_ext s_data_file_name{id_s_data}])...
+  );
+
   figure(3);
-  cla
-  clf
-  hold on
-  for k = 1 : length(s_ps_mV)
-    plot(s_fr(k, :), s_gc(k,:,1)/gc_scale, 'color', cm(k,:));
-  end
-  xlim([0, s_fr(end)]);
-  xlabel('Firing Rate (Hz)');
-  ylabel(sprintf('GC (%g)', gc_scale));
-  pic_output_color(['GC1_1d_' st_ext s_data_file_name{id_s_data}]);
+  plot1d_prps(s_gc(:,:,1)/gc_scale, sprintf('GC (%g)', gc_scale), 'GC1_1d_');
 
   figure(4);
-  cla
-  clf
-  hold on
-  for k = 1 : length(s_ps_mV)
-    plot(s_fr(k, :), s_gc(k,:,2)/gc_scale, 'color', cm(k,:));
-  end
-  xlim([0, s_fr(end)]);
-  xlabel('Firing Rate (Hz)');
-  ylabel(sprintf('GC (%g)', gc_scale));
-  pic_output_color(['GC0_1d_' st_ext s_data_file_name{id_s_data}]);
+  plot1d_prps(s_gc(:,:,2)/gc_scale, sprintf('GC (%g)', gc_scale), 'GC0_1d_');
 
   figure(5);
-  cla
-  clf
-  hold on
-  for k = 1 : length(s_ps_mV)
-    plot(s_fr(k, :), s_BIC(k,:), 'color', cm(k,:));
-  end
-  xlim([0, s_fr(end)]);
-  ylim([0, ylim()(2)])
-  xlabel('Firing Rate (Hz)');
-  ylabel('BIC order');
-  pic_output_color(['BICod_1d_' st_ext s_data_file_name{id_s_data}]);
-
-  figure(15);
-  pcolor(s_fr, s_ps_mV'*ones(size(s_ps_mV)), s_BIC);
-  shading flat
-  colorbar();
-  xlabel('Firing Rate (Hz)');
-  ylabel('f (mV)');
-  pic_output_color(['BICod_2d_' st_ext s_data_file_name{id_s_data}]);
+  plot1d_prps(s_BIC, 'BIC order', 'BICod_1d_');
 
   figure(13);
-  pcolor(s_fr, s_ps_mV'*ones(size(s_ps_mV)), s_gc(:,:,1)/gc_scale);
-  shading flat
-  colorbar();
-  xlabel('Firing Rate (Hz)');
-  ylabel('f (mV)');
-  pic_output_color(['GC1_2d_' st_ext s_data_file_name{id_s_data}]);
+  pcolor_prps(s_gc(:,:,1)/gc_scale, 'GCx2y_2d_');
+
+  figure(14);
+  pcolor_prps(s_gc(:,:,2)/gc_scale, 'GCy2x_2d_');
+
+  figure(15);
+  pcolor_prps(s_BIC, 'BICod_2d_');
 
 %  figure(4);
 %  plot(s_freq(:,:,1)');

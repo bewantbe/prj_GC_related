@@ -29,9 +29,15 @@ tocs = @(st) fprintf('%s: t = %6.3fs\n', st, toc());
 
 st_extra = '_V_ST';
 
+if isfield(pm, 'scei_mV')
+  st_ei = sprintf('scei=%.2gmV', pm.scei_mV);
+else
+  st_ei = sprintf('scee=%.2gmV', pm.scee_mV);
+end
+
 % results will be saved here
-data_file_name = sprintf('scan_all_results/scan_all_%s_ps=%.2g-%.2fmV_fr=%.2g-%.2gHz_scee=%.2gmV_t=%1.1e%s.mat',...
-  pm.neuron_model, s_ps_mV(1), s_ps_mV(end), fr_request(1), fr_request(end), pm.scee_mV, pm.t, st_extra);
+data_file_name = sprintf('scan_all_results/scan_all_%s_ps=%.2g-%.2fmV_fr=%.2g-%.2gHz_%s_t=%1.1e%s.mat',...
+  pm.neuron_model, s_ps_mV(1), s_ps_mV(end), fr_request(1), fr_request(end), st_ei, pm.t, st_extra);
 clear('st_extra');
 
 prefix_tmpdata = 'scan_all_results/';
