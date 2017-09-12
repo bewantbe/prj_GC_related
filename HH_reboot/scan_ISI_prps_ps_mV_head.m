@@ -1,7 +1,7 @@
 % compute firing freq
 
 addpath([getenv('HOME') '/code/point-neuron-network-simulator/mfile/']);
-addpath('/home/xyy/matcode/prj_GC_clean/HH/scan_worker/');
+addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker/']);
 
 % function to calculate in each loop
 func_name = 'cal_cell_ISI';
