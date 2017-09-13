@@ -4,15 +4,21 @@ pic_common_include;
 % load results
 s_data_file_name = {
 'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+06'
+'ISI_HH-GH_ps=1mV_prps=0.089-15mVkHz_t=1.00e+06'
+'ISI_HH-GH_ps=0.5mV_prps=0.089-15mVkHz_t=1.00e+06'
+'ISI_HH-GH_ps=0.2mV_prps=0.089-15mVkHz_t=1.00e+06'
+'ISI_HH-GH_ps=0.1mV_prps=0.089-15mVkHz_t=1.00e+06'
+'ISI_HH-GH_ps=0.05mV_prps=0.089-15mVkHz_t=1.00e+06'
 };
 
 figure(1);
 hold off
-plot(5.5,0)
-hold on
 
 cm = rainbow(length(s_data_file_name));
 %cm = rainbow(1+length(s_data_file_name))(1:end-1,:);
+
+ss_ps_mV = zeros(size(s_data_file_name));
+
 for id_s_data = 1:length(s_data_file_name)
 
   data_file_name = ['ISI_results/', s_data_file_name{id_s_data}, '.mat'];
@@ -32,11 +38,30 @@ for id_s_data = 1:length(s_data_file_name)
 
   hd = plot(s_prps_mV, s_freq, '-o', 'color',...
             cm(id_s_data,:), 'markersize', 2);
-  hd = legend(hd, sprintf('f = %-5.2g mV', s_ps_mV(1)), 'location', 'southeast');
-  set(hd, 'fontsize', 18);
+  ss_ps_mV(id_s_data) = s_ps_mV(1);
+%  hd = legend(hd, sprintf('f = %-5.2g mV', s_ps_mV(1)), 'location', 'southeast');
+%  set(hd, 'fontsize', 18);
+  if id_s_data == 1
+    hold on
+  end
 end
 hold off
 ylabel('spike rate /Hz');
 xlabel('\mu\cdotf (kHz\cdotmV(EPSP))');
 axis([0, s_prps_mV(end), 0, 100]);
+
+c_ps_mV = cell(size(ss_ps_mV));
+for id_v = 1 : length(ss_ps_mV)
+  c_ps_mV{id_v} = sprintf('f = %-5.2g mV', ss_ps_mV(id_v));
+end
+
+%hd = legend(hd, 'location', 'southeast');
+%hd = legend(hd, c_ps_mV{:});
+%set(hd, 'fontsize', 18);
+%legend(hd, 'location', 'southeast');
+
+hd = legend(c_ps_mV{:});
+set(hd, 'fontsize', 18);
+legend('location', 'southeast');
+
 pic_output_color('Gain_func_prps_ps_mV');
