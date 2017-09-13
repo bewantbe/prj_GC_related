@@ -2,6 +2,7 @@
 
 addpath([getenv('HOME') '/code/point-neuron-network-simulator/mfile/']);
 addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker/']);
+addpath(fileparts(mfilename('fullpath')));
 
 % function to calculate in each loop
 func_name = 'cal_cell_ISI';
