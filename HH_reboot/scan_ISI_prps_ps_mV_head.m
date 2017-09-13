@@ -21,19 +21,8 @@ in_const_data.pm = pm;
 PSP = get_neu_psp(pm.neuron_model);
 
 % generate input parameter set
-simu_time = 1e5;
 
 %ps_mV = 0.05;  % called from external
-%ps_mV = 0.07;
-%ps_mV = 0.1;
-%ps_mV = 0.14;
-%ps_mV = 0.2;
-%ps_mV = 0.3;
-%ps_mV = 0.5;
-%ps_mV = 0.7;
-%ps_mV = 1.0;
-%ps_mV = 1.4;
-%ps_mV = 2.0;
 s_prps = linspace(0.003,0.5, 100) / PSP.mV_ps;
 
 s_pr = s_prps/ps_mV;
