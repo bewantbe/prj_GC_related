@@ -1,7 +1,10 @@
-% Parallel scan framework
-% Input:       type         what for
-%    s_jobs    cell array   input data for each job
-% in_const_data  (any)      extra input data for each job
+% Parallel scan framework.
+% Input           Type         What for
+% s_jobs          cell array   Input data for each job
+% in_const_data   (any)        Extra input data for each job
+% func_name       string       The function for each job
+% data_file_name  string       For saving results
+% prefix_tmpdata  string       Prefix for input/output file.
 
 if exist('OCTAVE_VERSION','builtin')
   exec_name = 'octave -qf --no-window-system --eval ';

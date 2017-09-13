@@ -3,7 +3,7 @@ pic_common_include;
 
 % load results
 s_data_file_name = {
-'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+05'
+'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+06'
 };
 
 figure(1);
