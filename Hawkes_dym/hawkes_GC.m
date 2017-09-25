@@ -8,11 +8,15 @@ set(0, 'defaultaxesfontsize', 22);
 pm = [];
 pm.neuron_model = 'Hawkes-GH';
 pm.simu_method = 'simple';
-pm.net     = 'net_3_06';
-pm.scee    = 0.2;
-pm.ps      = 0.1;
+pm.net     = 1 - eye(3);
+pm.nI      = 1;
+pm.scee    = 0.15;
+pm.scie    = 0.15;
+pm.scei    = 0.1;
+pm.scii    = 0.1;
+pm.ps      = 0.05;
 pm.pr      = 0;
-pm.t       = 1e7;
+pm.t       = 1e6;
 pm.seed    = 123354;
 pm.extra_cmd = '-v --verbose-echo';
 %pm.extra_cmd = '-v';
@@ -43,7 +47,8 @@ od = 15/st_stv;
 De
 mean(st')
 
-fg = @(t, tC, tCR) (exp(-t/tC) - exp(-t/tCR)) * (tC * tCR / (tC - tCR));
+fge = @(t, tC, tCR) (exp(-t/tC) - exp(-t/tCR)) * (tC * tCR / (tC - tCR));
+fgi = @(t, tC, tCR) (exp(-t/tC) - exp(-t/tCR)) * (tC * tCR / (tC - tCR));
 
 t_a = 1:od;
 
@@ -52,7 +57,11 @@ p = size(X, 1);
 for ii = 1:p
   for jj = 1:p
     figure(30+p*ii+jj);
-    plot(t_a, A(ii, jj:p:end), '-o', t_a, -st_stv * pm.net_adj(ii, jj) * pm.scee * fg(t_a * st_stv, 4.0, 0.5), '-o');
+    if (jj <= pm.nE)
+      plot(t_a, A(ii, jj:p:end), '-o', t_a, -st_stv * pm.net_adj(ii, jj) * pm.scee * fge(t_a * st_stv, 4.0, 0.5), '-o');
+    else
+      plot(t_a, A(ii, jj:p:end), '-o', t_a,  st_stv * pm.net_adj(ii, jj) * pm.scei * fge(t_a * st_stv, 4.0, 0.5), '-o');
+    end
     xlabel(sprintf("coef: %d -> %d", jj, ii));
   end
 end
