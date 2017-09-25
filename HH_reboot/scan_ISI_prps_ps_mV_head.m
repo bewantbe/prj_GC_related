@@ -8,24 +8,18 @@ addpath(fileparts(mfilename('fullpath')));
 func_name = 'cal_cell_ISI';
 
 pm = [];
-pm.neuron_model = 'HH-GH';
+pm.neuron_model = neuron_model;
 pm.simu_method = 'simple';
 pm.net     = 'net_1_0';
 %pm.pr    = 
 %pm.ps_mV = 
 %pm.t    = 1e5;
-pm.stv  = 1.0;
-pm.extra_cmd = '--set-threshold 20';
+pm.stv  = 100.0;
+pm.extra_cmd = extra_cmd;
 in_const_data.pm = pm;
 
-PSP = get_neu_psp(pm.neuron_model);
-
 % generate input parameter set
-
-%ps_mV = 0.05;  % called from external
-s_prps = linspace(0.003,0.5, 100) / PSP.mV_ps;
-
-s_pr = s_prps/ps_mV;
+s_pr = s_prps_mV / ps_mV;
 s_jobs = cell(size(s_pr));
 for k=1:numel(s_pr)
   in.ps_mV = ps_mV;
@@ -40,9 +34,8 @@ t0 = tic();
 tocs = @(st) fprintf('%s: t = %6.3fs\n', st, toc());
 
 % results will be saved here
-data_file_name = sprintf('ISI_results/ISI_%s_ps=%.2gmV_prps=%.2g-%.2gmVkHz_t=%1.2e.mat', pm.neuron_model, ps_mV, s_prps(1), s_prps(end), simu_time);
-
-prefix_tmpdata = 'ISI_results/';
+data_file_name = sprintf('%sISI_%s_ps=%.2gmV_prps=%.2g-%.2gmVkHz_t=%1.2e%s.mat',...
+  prefix_tmpdata, pm.neuron_model, ps_mV, s_prps_mV(1), s_prps_mV(end), simu_time, name_suffix);
 
 parallel_distributor;
 

@@ -2,13 +2,24 @@
 pic_common_include;
 
 % load results
+prefix_tmpdata = 'ISI_test/';
+
+%s_data_file_name = {
+%'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+07'
+%'ISI_HH-GH_ps=1mV_prps=0.089-15mVkHz_t=1.00e+07'
+%'ISI_HH-GH_ps=0.5mV_prps=0.089-15mVkHz_t=1.00e+07'
+%'ISI_HH-GH_ps=0.2mV_prps=0.089-15mVkHz_t=1.00e+07'
+%'ISI_HH-GH_ps=0.1mV_prps=0.089-15mVkHz_t=1.00e+07'
+%'ISI_HH-GH_ps=0.05mV_prps=0.089-15mVkHz_t=1.00e+07'
+%};
+
 s_data_file_name = {
-'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+07'
-'ISI_HH-GH_ps=1mV_prps=0.089-15mVkHz_t=1.00e+07'
-'ISI_HH-GH_ps=0.5mV_prps=0.089-15mVkHz_t=1.00e+07'
-'ISI_HH-GH_ps=0.2mV_prps=0.089-15mVkHz_t=1.00e+07'
-'ISI_HH-GH_ps=0.1mV_prps=0.089-15mVkHz_t=1.00e+07'
-'ISI_HH-GH_ps=0.05mV_prps=0.089-15mVkHz_t=1.00e+07'
+'ISI_LIF-GH_ps=0.05mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_LIF-GH_ps=0.1mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_LIF-GH_ps=0.2mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_LIF-GH_ps=0.5mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_LIF-GH_ps=1mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_LIF-GH_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+05'
 };
 
 %'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+06'
@@ -28,7 +39,7 @@ ss_ps_mV = zeros(size(s_data_file_name));
 
 for id_s_data = 1:length(s_data_file_name)
 
-  data_file_name = ['ISI_results/', s_data_file_name{id_s_data}, '.mat'];
+  data_file_name = [prefix_tmpdata, s_data_file_name{id_s_data}, '.mat'];
   load(data_file_name);
   
   s_pr    = zeros(size(s_jobs));
@@ -55,7 +66,8 @@ end
 hold off
 ylabel('spike rate /Hz');
 xlabel('\mu\cdotf (kHz\cdotmV(EPSP))');
-axis([0, s_prps_mV(end), 0, 100]);
+%axis([0, s_prps_mV(end), 0, 100]);
+xlim([0, s_prps_mV(end)]);
 
 c_ps_mV = cell(size(ss_ps_mV));
 for id_v = 1 : length(ss_ps_mV)
