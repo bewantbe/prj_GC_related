@@ -14,12 +14,12 @@ prefix_tmpdata = 'ISI_test/';
 %};
 
 s_data_file_name = {
-'ISI_LIF-GH_ps=0.05mV_prps=0.16-4.5mVkHz_t=1.00e+05'
-'ISI_LIF-GH_ps=0.1mV_prps=0.16-4.5mVkHz_t=1.00e+05'
-'ISI_LIF-GH_ps=0.2mV_prps=0.16-4.5mVkHz_t=1.00e+05'
-'ISI_LIF-GH_ps=0.5mV_prps=0.16-4.5mVkHz_t=1.00e+05'
-'ISI_LIF-GH_ps=1mV_prps=0.16-4.5mVkHz_t=1.00e+05'
-'ISI_LIF-GH_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+05'
+'ISI_HH-G_ps=0.05mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
+'ISI_HH-G_ps=0.1mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
+'ISI_HH-G_ps=0.2mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
+'ISI_HH-G_ps=0.5mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
+'ISI_HH-G_ps=1mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
+'ISI_HH-G_ps=2mV_prps=0.1-0.2mVkHz_t=1.00e+05_VT=20'
 };
 
 %'ISI_HH-GH_ps=2mV_prps=0.089-15mVkHz_t=1.00e+06'
