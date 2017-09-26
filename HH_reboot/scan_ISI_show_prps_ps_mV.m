@@ -4,6 +4,10 @@ pic_common_include;
 % load results
 prefix_tmpdata = 'ISI_test/';
 
+s_data_file_name = {
+'ISI_LIF-GH_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+};
+
 %s_data_file_name = {
 %'ISI_HH-GH_ps=0.05mV_prps=0.089-15mVkHz_t=1.00e+07'
 %'ISI_HH-GH_ps=0.1mV_prps=0.089-15mVkHz_t=1.00e+07'
@@ -31,14 +35,14 @@ prefix_tmpdata = 'ISI_test/';
 %'ISI_HH-G_ps=2mV_prps=0.1-15mVkHz_t=1.00e+07_VT=20'
 %};
 
-s_data_file_name = {
-'ISI_LIF-GH_ps=0.05mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-'ISI_LIF-GH_ps=0.1mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-'ISI_LIF-GH_ps=0.2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-'ISI_LIF-GH_ps=0.5mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-'ISI_LIF-GH_ps=1mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-'ISI_LIF-GH_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
-};
+%s_data_file_name = {
+%'ISI_LIF-GH_ps=0.05mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%'ISI_LIF-GH_ps=0.1mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%'ISI_LIF-GH_ps=0.2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%'ISI_LIF-GH_ps=0.5mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%'ISI_LIF-GH_ps=1mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%'ISI_LIF-GH_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
+%};
 
 %s_data_file_name = {
 %'ISI_LIF-G_ps=0.05mV_prps=0.16-4.5mVkHz_t=1.00e+07'
@@ -48,7 +52,7 @@ s_data_file_name = {
 %'ISI_LIF-G_ps=1mV_prps=0.16-4.5mVkHz_t=1.00e+07'
 %'ISI_LIF-G_ps=2mV_prps=0.16-4.5mVkHz_t=1.00e+07'
 %};
-s_prps_mV_local = 1.0;
+%s_prps_mV_local = 1.0;
 
 figure(1);
 hold off

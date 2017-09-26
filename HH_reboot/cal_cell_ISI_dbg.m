@@ -12,7 +12,13 @@ function cal_cell_ISI(input_fn, output_fn)
   end
 
   addpath([getenv('HOME') '/code/point-neuron-network-simulator/mfile/']);
-  [~, ISI] = gen_neu(pm, 'rm');
+  [V, ISI, RAS, pm] = gen_neu(pm, 'rm');
+
+  ou.V_beg = V(:, 1:100);
+  ou.V_end = V(:, end-100:end);
+  ou.RAS_beg = RAS(1:100, :);
+  ou.RAS_end = RAS(end-100:end, :);
+  ou.cmd_st = pm.cmd_st;
 
   ou.ISI = ISI;       % save the results in a struct named "ou"
   save('-v7', output_fn, 'ou');
