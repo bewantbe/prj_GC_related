@@ -18,7 +18,7 @@ function cal_cell_ISI(input_fn, output_fn)
   ou.V_end = V(:, end-100:end);
   ou.RAS_beg = RAS(1:100, :);
   ou.RAS_end = RAS(end-100:end, :);
-  ou.cmd_st = pm.cmd_st;
+  ou.cmd_str = pm.cmd_str;
 
   ou.ISI = ISI;       % save the results in a struct named "ou"
   save('-v7', output_fn, 'ou');
