@@ -17,3 +17,6 @@ name_suffix = '_VT=20';
 for ps_mV = s_ps_mV
   scan_ISI_prps_ps_mV_head;
 end
+
+% time cost:
+% 03:52:00 (Dalma 1n-28c)
