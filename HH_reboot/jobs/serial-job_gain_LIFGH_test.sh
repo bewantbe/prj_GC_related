@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=28
 #SBATCH --mem=32G
 # Walltime format hh:mm:ss
-#SBATCH --time=5:00:00
+#SBATCH --time=2:00:00
 # Output and error files
 #SBATCH -o job.%J.out
 #SBATCH -e job.%J.err
@@ -27,5 +27,7 @@ module load eigen
 module load gcc
 module load matlab
 
-matlab -nodesktop -nosplash -nodisplay -r "addpath('~/matcode/prj_GC_clean/HH_reboot/'); scan_ISI_prps_ps_mV_LIFGH_w1; exit;"
+export MATLABPATH=$HOME/matcode/prj_GC_clean/HH_reboot/
+
+matlab -nodesktop -nosplash -nodisplay -r "scan_ISI_prps_ps_mV_LIFGH_w1; exit;"
 
