@@ -5,7 +5,9 @@ addpath([getenv('HOME') '/matcode/prj_GC_clean/HH/scan_worker/']);
 addpath(fileparts(mfilename('fullpath')));
 
 % function to calculate in each loop
-func_name = 'cal_cell_ISI';
+if ~exist('func_name', 'var')
+  func_name = 'cal_cell_ISI';
+end
 
 pm = [];
 pm.neuron_model = neuron_model;
