@@ -1,9 +1,8 @@
 #!/bin/bash
-#SBATCH -p serial
 # Set number of nodes to run
 #SBATCH --nodes=1
 # Set number of tasks to run
-#SBATCH --ntasks=1
+#SBATCH --ntasks-per-node=1
 # Set number of cores per task (default is 1)
 #SBATCH --cpus-per-task=28
 #SBATCH --mem=32G
@@ -17,17 +16,14 @@
 
 # sbatch serial-job_gain.sh
 # squeue -u $USER
-# sacct --format="JobID,CPUTime,MaxRSS" -j <your-job-id>
+# sacct --format="JobID,JobName%-30,State,MaxRSS,Start,CPUTime,Elapsed,Timelimit"
 # scancel <your-job-id>
 
+# run on Prince
 module purge
-module load NYUAD/3.0
-module load boost
-module load eigen
-module load gcc
-module load matlab
+module load boost/gnu/1.62.0
+module load eigen/3.3.1
+module load matlab/2017a
 
-export MATLABPATH=$HOME/matcode/prj_GC_clean/HH_reboot/
-
-matlab -nodesktop -nosplash -nodisplay -r "scan_ISI_prps_ps_mV_LIFGH_w1; exit;"
+matlab -nodesktop -nosplash -nodisplay -r "addpath('~/matcode/prj_GC_clean/HH_reboot/'); scan_ISI_prps_ps_mV_LIFGH_w2; exit;"
 

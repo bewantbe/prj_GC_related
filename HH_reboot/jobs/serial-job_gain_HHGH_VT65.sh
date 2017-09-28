@@ -15,11 +15,6 @@
 ##SBATCH --mail-user=yx742@nyu.edu
 ##SBATCH --mail-type=ALL
 
-# sbatch serial-job_gain.sh
-# squeue -u $USER
-# sacct --format="JobID,CPUTime,MaxRSS" -j <your-job-id>
-# scancel <your-job-id>
-
 module purge
 module load NYUAD/3.0
 module load boost

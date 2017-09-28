@@ -15,11 +15,6 @@
 ##SBATCH --mail-user=yx742@nyu.edu
 ##SBATCH --mail-type=ALL
 
-# sbatch serial-job_gain.sh
-# squeue -u $USER
-# sacct --format="JobID,CPUTime,MaxRSS" -j <your-job-id>
-# scancel <your-job-id>
-
 module purge
 module load NYUAD/3.0
 module load boost
@@ -27,7 +22,5 @@ module load eigen
 module load gcc
 module load matlab
 
-export MATLABPATH=$HOME/matcode/prj_GC_clean/HH_reboot/
-
-matlab -nodesktop -nosplash -nodisplay -r "scan_ISI_prps_ps_mV_LIFGH_w1; exit;"
+matlab -nodesktop -nosplash -nodisplay -r "addpath('~/matcode/prj_GC_clean/HH_reboot/'); scan_ISI_prps_ps_mV_LIFGH_w2; exit;"
 

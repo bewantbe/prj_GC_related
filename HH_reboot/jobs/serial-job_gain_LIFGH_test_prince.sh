@@ -23,7 +23,6 @@
 module purge
 module load boost/gnu/1.62.0
 module load eigen/3.3.1
-module load gcc/6.3.0
 module load matlab/2017a
 
 export MATLABPATH=$HOME/matcode/prj_GC_clean/HH_reboot/

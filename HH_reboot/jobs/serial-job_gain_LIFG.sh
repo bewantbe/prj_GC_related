@@ -8,17 +8,12 @@
 #SBATCH --cpus-per-task=28
 #SBATCH --mem=32G
 # Walltime format hh:mm:ss
-#SBATCH --time=5:00:00
+#SBATCH --time=2:00:00
 # Output and error files
 #SBATCH -o job.%J.out
 #SBATCH -e job.%J.err
 ##SBATCH --mail-user=yx742@nyu.edu
 ##SBATCH --mail-type=ALL
-
-# sbatch serial-job_gain.sh
-# squeue -u $USER
-# sacct --format="JobID,CPUTime,MaxRSS" -j <your-job-id>
-# scancel <your-job-id>
 
 module purge
 module load NYUAD/3.0
