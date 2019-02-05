@@ -5,7 +5,7 @@
 %
 % reference: http://graphviz.org
 
-function adj2dot(network, basename, b_fix)
+function adj2dot(network, basename, b_fix, node_name)
 
 gheader0 = {
 'digraph "G" {',
@@ -58,9 +58,16 @@ else
           fprintf(fid, '  "%d" [pos = "%f,%f!"]\n', k, real(z), imag(z));
         end
     else
-        for k=1:n
-          fprintf(fid, '  "%d" [pos = "%f,%f!"]\n',...
-                       k, b_fix(k, 1), b_fix(k, 2));
+        if exist('node_name', 'var')
+            for k=1:n
+                fprintf(fid, '  "%s" [pos = "%f,%f!"]\n',...
+                             node_name{k}, b_fix(k, 1), b_fix(k, 2));
+            end
+        else
+            for k=1:n
+                fprintf(fid, '  "%d" [pos = "%f,%f!"]\n',...
+                             k, b_fix(k, 1), b_fix(k, 2));
+            end
         end
     end
     prog = 'neato';

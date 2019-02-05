@@ -1,7 +1,9 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass article
 \use_default_options true
 \maintain_unincluded_children false
@@ -9,16 +11,16 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -395,6 +397,20 @@ The formula for half sampling rate
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+R=\left[\begin{array}{cc}
+R_{\textrm{odd},\textrm{odd}} & R_{\textrm{odd},\textrm{even}}\\
+R_{\textrm{even},\textrm{odd}} & R_{\textrm{even},\textrm{even}}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The eqn
 \begin_inset Formula 
 \[
@@ -423,7 +439,7 @@ bR_{\textrm{even},\textrm{even}}=r_{x|\textrm{even}}
 Easy to see (verified)
 \begin_inset Formula 
 \[
-b=a_{(\textrm{even})}+a_{(\textrm{odd})}R_{\textrm{odd},\textrm{even}}R_{(\textrm{even},\textrm{even})}^{-1}.
+b=a_{(\textrm{even})}+a_{(\textrm{odd})}R_{\textrm{odd},\textrm{even}}R_{\textrm{even},\textrm{even}}^{-1}.
 \]
 
 \end_inset
@@ -578,6 +594,25 @@ Note that the step
 \end_inset
 
  is not a toeplitz matrix, although close to).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{a}_{(\textrm{odd})}vu^{-1}=\left[\begin{array}{ccc}
+\tilde{a}_{(\textrm{odd})}^{(11)} & \tilde{a}_{(\textrm{odd})}^{(12)} & \tilde{a}_{(\textrm{odd})}^{(13)}\\
+ & *\\
+ & *
+\end{array}\right]\left[\begin{array}{ccc}
+ & v^{(12)}\\
+* & v^{(22)} & *\\
+ & v^{(32)}
+\end{array}\right]u^{-1}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

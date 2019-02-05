@@ -2,6 +2,10 @@
 
 function [p_correct, n_over, n_lack, n_conn] = gc_net_quality(GC, gc_zero_cut, neu_network, p)
 
+  if ~exist('p', 'var')
+    p = length(neu_network);
+  end
+
   neu_network_guess = GC >= gc_zero_cut;
   adj_cmp = neu_network_guess - neu_network;
 
